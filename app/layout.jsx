@@ -1,6 +1,5 @@
 import { Lato } from "next/font/google";
 import "./globals.css";
-import OldFooter from "@/components/OldFooter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 

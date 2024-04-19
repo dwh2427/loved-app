@@ -12,8 +12,8 @@ const Iowan = localFont({
 
 export default function Header() {
   return (
-    <header className="flex h-24 w-screen items-center px-5 xl:h-[126.04px] xl:px-0">
-      <div className="mx-auto flex h-[74.01px] w-screen justify-between items-center xl:w-[1495px]">
+    <header className="flex h-24 w-screen items-center px-5 xl:h-[126.04px] ">
+      <div className="mx-auto flex h-[74.01px] w-screen items-center justify-between xl:w-[1495px]">
         <Link href="/">
           <Image src={Logo} alt="" className="xl:h-[74.01px] xl:w-[118.48px]" />
         </Link>
