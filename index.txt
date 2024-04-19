@@ -1,0 +1,88 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Loved.com is for Sale</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet" />
+        <style>
+            body {
+                margin: 30px;
+                width: 100%;
+                height: 100vh;
+                font-family: "Montserrat";
+                color: #fff;
+                background: #ff009e;
+                background-size: 400% 400%;
+                text-align: center;
+            }
+            .container {
+                width: 100%;
+                position: absolute;
+                top: 20%;
+                text-align: center;
+                margin: auto;
+            }
+              img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 200px;
+                height: 200px;
+      }   
+            h1 {
+                font-family: "Fuzzy Bubbles";
+                font-weight: 400;
+                font-style: normal;
+                font-size: 100px;
+            }
+            h2 {
+                font-family: "Montserrat";
+                font-weight: 400;
+                font-style: normal;
+                font-size: 50px;
+            }
+            p {
+                font-size: 18px;
+                font-weight: 200;
+            }
+            a {
+                text-decoration: none;
+                color: #212121;
+            }
+             @media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+                h1 {
+        font-size: 80px;
+    }
+                h2 {
+        font-size: 40px;
+    }
+                p {
+        font-size: 18px;
+    }
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <img src="hearthands.png" width="200" height="200">
+            <h1>Loved.com</h1>
+            <h2>For Sale</h2>
+            <br>
+            <p>Premium domain name represents a compelling opportunity for a worthy venture to build their brand.</p>
+            <br>
+            <p>As a single word, 5-letter domain name we anticipate this is a 7-figure domain name for the right buyer.</p>
+            <br>
+            <div class="my-4">
+                <a class="bg-yellow-300 px-8 py-3 rounded hover:bg-yellow-400 transition duration-300" href="mailto:premiumdomainagent@gmail.com?subject=Loved.com&body=I am interested in your domain name Loved.com. My offer is">Email Offer</a>
+            </div>
+        </div>
+    </body>
+</html>
