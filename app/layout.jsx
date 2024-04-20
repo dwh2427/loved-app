@@ -1,7 +1,5 @@
 import { Lato } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -16,12 +14,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${lato.className} mx-auto min-h-screen w-fit`}
-      >
-        <Header />
+      <body className={`${lato.className} mx-auto min-h-screen w-fit`}>
         {children}
-        <Footer />
       </body>
     </html>
   );

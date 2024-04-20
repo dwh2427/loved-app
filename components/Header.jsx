@@ -1,14 +1,8 @@
 import { Button } from "./ui/button";
-import localFont from "next/font/local";
 import Logo from "@/public/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
-
-const Iowan = localFont({
-  src: "../fonts/iowan-old.ttf",
-  display: "swap",
-});
 
 export default function Header() {
   return (
