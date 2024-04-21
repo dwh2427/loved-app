@@ -13,7 +13,7 @@ export default function Header() {
         </Link>
         <div className="hidden h-[62px] w-[301px] flex-shrink-0 items-center gap-x-[32px] md:flex">
           <Link
-            href={"/"}
+            href={"/login"}
             className="w-[54px] text-center text-[18px] font-[900] leading-[22px] text-black"
           >
             Sign in
