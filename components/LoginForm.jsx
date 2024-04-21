@@ -3,11 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,6 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/config";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   emailAddress: z.string().email({
@@ -27,6 +29,11 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,9 +42,18 @@ export default function LoginForm() {
     },
   });
 
-  const handleSubmit = (values) => {
-    console.log({ values });
+  const handleSubmit = async () => {
+    try {
+      const { emailAddress, password } = form.getValues(); 
+      const res = await signInWithEmailAndPassword(emailAddress, password);
+      console.log({ res });
+      form.reset();
+      router.push("/");
+    } catch (e) {
+      console.error(e);
+    }
   };
+
 
   return (
     <Form {...form}>
@@ -55,6 +71,9 @@ export default function LoginForm() {
               </FormLabel>
               <FormControl>
                 <Input
+                  value={email}
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="@.com"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:font-normal md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-[53px] md:placeholder:text-center md:placeholder:text-[18px] md:placeholder:font-normal md:placeholder:leading-[20px]"
                   {...field}
@@ -74,7 +93,10 @@ export default function LoginForm() {
               </FormLabel>
               <FormControl>
                 <Input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="@.com"
+                  type="password"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:font-normal md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-[53px] md:placeholder:text-center md:placeholder:text-[18px] md:placeholder:font-normal md:placeholder:leading-[20px]"
                   {...field}
                 />
@@ -107,7 +129,7 @@ export default function LoginForm() {
         >
           Sign in
         </Button>
-        <p className="hidden h-[30px] mx-auto w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:block md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
+        <p className="mx-auto hidden h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:block md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           Don&apos;t have an account?{" "}
           <Link href={""} className="font-bold">
             Sign up
