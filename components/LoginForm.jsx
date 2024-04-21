@@ -44,16 +44,23 @@ export default function LoginForm() {
 
   const handleSubmit = async () => {
     try {
-      const { emailAddress, password } = form.getValues(); 
+      const { emailAddress, password } = form.getValues();
       const res = await signInWithEmailAndPassword(emailAddress, password);
+
+      if (!res) {
+        alert("Incorrect email address or password. Please try again.");
+        return;
+      }
+
       console.log({ res });
+      sessionStorage.setItem("user", true);
+      alert("Login Successfully!");
       form.reset();
       router.push("/");
     } catch (e) {
       console.error(e);
     }
   };
-
 
   return (
     <Form {...form}>

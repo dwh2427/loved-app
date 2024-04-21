@@ -10,7 +10,13 @@ export default function Sidebar() {
         </h2>
         <div className="mx-auto mt-[64px] h-[122px] w-[337px]">
           <div className="relative mx-auto size-[52px]">
-            <Image src={Picture2} alt="" className="object-cover" fill />
+            <Image
+              src={Picture2}
+              alt=""
+              className="object-cover"
+              fill
+              sizes="100vw"
+            />
           </div>
           <h3 className="mt-[10px] h-[30px] w-full scroll-m-20 text-center text-[25px] font-bold leading-[30px]">
             Completed 1.5K Projects
@@ -21,7 +27,13 @@ export default function Sidebar() {
         </div>
         <div className="mx-auto mt-[64px] h-[122px] w-[337px]">
           <div className="relative mx-auto size-[52px]">
-            <Image src={Picture2} alt="" className="object-cover" fill />
+            <Image
+              src={Picture2}
+              alt=""
+              className="object-cover"
+              fill
+              sizes="100vw"
+            />
           </div>
           <h3 className="mt-[10px] h-[30px] w-full scroll-m-20 text-center text-[25px] font-bold leading-[30px]">
             Saved 6K hours of their lives
@@ -32,7 +44,13 @@ export default function Sidebar() {
         </div>
         <div className="mx-auto mt-[64px] h-[122px] w-[337px]">
           <div className="relative mx-auto size-[52px]">
-            <Image src={Picture2} alt="" className="object-cover" fill />
+            <Image
+              src={Picture2}
+              alt=""
+              className="object-cover"
+              fill
+              sizes="100vw"
+            />
           </div>
           <h3 className="mt-[10px] h-[60px] w-full scroll-m-20 text-center text-[25px] font-bold leading-[30px]">
             Have added $10M to their homes property values
