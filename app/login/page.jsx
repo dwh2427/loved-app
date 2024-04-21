@@ -9,9 +9,9 @@ export default function LoginPage() {
     <>
       <Link
         href="/"
-        className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center"
+        className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden"
       >
-        <div className="relative h-[118.62px] w-full max-w-[189.98px]">
+        <div className="relative h-[118.62px] w-full max-w-[189.98px] md:h-[74.01px] md:max-w-[118.48px]">
           <Image
             src={Logo}
             alt="Image"
@@ -21,36 +21,30 @@ export default function LoginPage() {
           />
         </div>
       </Link>
-      <h2 className="mx-auto max-h-[65px] max-w-[325px] whitespace-nowrap text-center text-[48.53px] font-black leading-[64.71px] tracking-[0.01em] text-black">
-        Welcome back
-      </h2>
-
-      <p className="mx-auto mt-[41.41px] max-h-[38px] w-40 max-w-[582.39px] text-center text-[32.36px] font-medium leading-[37.53px] text-black">
-        Sign in
-      </p>
-      <LoginForm />
-      <p className="mt-[41.41px] h-[30px] w-full max-w-[689.17px] self-start px-5 text-[25.88px] font-bold leading-[29.12px]">
-        Forgot Password?
-      </p>
-      <p className="mt-[41.41px] w-full max-w-[689.17px] px-5 text-[25.88px] leading-[29.12px]">
-        By clicking the Sign In button below, you agree to the Loved{" "}
-        <span className="border-b-[0.5px] border-black">Terms of Service</span>
-        and acknowledge the{" "}
-        <span className="border-b-[0.5px] border-black">Privacy Notice</span>.
-      </p>
-      <p className="mt-[41.41px] h-[30px] w-full max-w-[689.17px] self-start px-5 text-[25.88px] leading-[29.12px]">
-        Don&apos;t have an account?{" "}
-        <Link href={""} className="font-bold">
-          Sign up
-        </Link>
-      </p>
-      <div className="px-5">
-        <Button
-          variant={"default"}
-          className="mb-[42.24px] mt-[41.41px] h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50"
-        >
-          Sign in
-        </Button>
+      <Link
+        href="/"
+        className="mt-[70px] hidden md:mx-auto md:flex md:h-[74.01px] md:w-[118.48px]"
+      >
+        <div className="relative md:h-[74.01px] md:w-[118.48px]">
+          <Image
+            src={Logo}
+            alt="Image"
+            className="object-cover"
+            fill
+            sizes="100vw"
+          />
+        </div>
+      </Link>
+      <div className="md:mx-auto md:mt-[22px] md:h-[592px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:p-16">
+        <div className="md:h-[70px] md:w-[402px] md:space-y-[10px]">
+          <h2 className="mx-auto max-h-[65px] max-w-[325px] whitespace-nowrap text-center text-[48.53px] font-black leading-[64.71px] tracking-[0.01em] text-black md:h-[40px] md:w-[263px] md:text-[40px] md:leading-[40px]">
+            Welcome back
+          </h2>
+          <p className="mx-auto mt-[41.41px] max-h-[38px] w-40 max-w-[582.39px] text-center text-[32.36px] font-medium leading-[37.53px] text-black md:h-[20px] md:w-[402px] md:text-[18px] md:font-normal md:leading-[20px]">
+            Sign in
+          </p>
+        </div>
+        <LoginForm />
       </div>
     </>
   );
