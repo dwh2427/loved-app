@@ -2,7 +2,6 @@ import Image from "next/image";
 import Logo from "@/public/logo.png";
 import Link from "next/link";
 import LoginForm from "@/components/LoginForm";
-import { Button } from "@/components/ui/button";
 import Sidebar from "@/components/Sidebar";
 
 export default function LoginPage() {
