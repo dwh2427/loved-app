@@ -1,4 +1,4 @@
-import LogoutButton from "./logout-button.jsx";
+import LogoutButton from "./LogoutButton.jsx";
 
 export default function DashboardPage() {
   return (
