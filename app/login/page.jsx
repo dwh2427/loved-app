@@ -11,11 +11,11 @@ export default function LoginPage() {
       <Session />
       <div className="lg:flex lg:w-screen">
         <div className="lg:flex-1">
-          <Link
-            href="/"
-            className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden"
-          >
-            <div className="relative h-[118.62px] w-full max-w-[189.98px] md:h-[74.01px] md:max-w-[118.48px]">
+          <div className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden">
+            <Link
+              href="/"
+              className="relative h-[118.62px] w-full max-w-[189.98px] md:h-[74.01px] md:max-w-[118.48px]"
+            >
               <Image
                 src={Logo}
                 alt="Image"
@@ -23,8 +23,8 @@ export default function LoginPage() {
                 fill
                 sizes="100vw"
               />
-            </div>
-          </Link>
+            </Link>
+          </div>
           <Link
             href="/"
             className="mt-[70px] hidden md:mx-auto md:flex md:h-[74.01px] md:w-[118.48px]"
