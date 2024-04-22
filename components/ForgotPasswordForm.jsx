@@ -12,9 +12,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { auth } from "@/firebase/config";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const formSchema = z.object({
   emailAddress: z.string().email({
@@ -37,15 +38,12 @@ export default function ForgotPasswordForm() {
     try {
       const { emailAddress } = form.getValues();
 
-      /*  if (!res) {
-        alert("Incorrect email address or password. Please try again.");
-        return;
-      } */
-
-      console.log({ res });
-      alert("Check your email");
+      await sendPasswordResetEmail(auth, emailAddress);
       form.reset();
-      router.push("/");
+
+      alert(
+        "A password reset email has been sent to the provided email address, if it exists in our database.",
+      );
     } catch (e) {
       console.error(e);
     }
@@ -55,7 +53,7 @@ export default function ForgotPasswordForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="mx-auto flex p-[41.42px] max-w-[767px] flex-col items-center justify-between"
+        className="mx-auto flex max-w-[767px] flex-col items-center justify-between p-[41.42px]"
       >
         <h2 className="mx-auto max-h-[38px] w-full max-w-[582.53px] whitespace-nowrap text-center text-[32.36px] font-medium leading-[37.54px] tracking-[0.01em] text-black md:h-[40px] md:w-[263px] md:text-[40px] md:leading-[40px]">
           Forgot password
