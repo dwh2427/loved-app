@@ -4,6 +4,7 @@ import Logo from "@/public/logo.png";
 import Link from "next/link";
 import LoginForm from "@/components/LoginForm";
 import Sidebar from "@/components/Sidebar";
+import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
@@ -11,13 +12,15 @@ import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
-  const userSession = sessionStorage.getItem("user") || 0;
 
-  console.log({ user });
-
-  if (user && userSession) {
-    router.push("/dashboard");
-  }
+  useEffect(() => {
+    if (user) {
+      const userSession = sessionStorage.getItem("user");
+      if (userSession) {
+        router.push("/dashboard");
+      }
+    }
+  }, [user, router]);
   return (
     <div className="lg:flex lg:w-screen">
       <div className="lg:flex-1">
