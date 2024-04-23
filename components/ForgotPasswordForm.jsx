@@ -53,7 +53,7 @@ export default function ForgotPasswordForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="mx-auto flex max-w-[767px] flex-col items-center justify-between p-[41.42px] md:p-[64px]"
+        className="mx-auto flex max-w-[767px] flex-col items-center justify-between p-[41.42px] md:p-[64px] md:mt-[22px]"
       >
         <h2 className="mx-auto max-h-[38px] w-full max-w-[582.53px] whitespace-nowrap text-center text-[32.36px] font-medium leading-[37.54px] tracking-[0.01em] md:text-[#004318] md:max-h-[20px] md:w-[402px] md:text-[18px] md:leading-[20px]">
           Forgot password
