@@ -13,13 +13,13 @@ export default function DashboardPage() {
           </div>
           <Link
             href="/change-email"
-            className="h-[20px] text-center w-full text-[18px] leading-[20px] text-[#004318]"
+            className="h-[20px] text-center w-max mx-auto text-[18px] leading-[20px] text-[#004318]"
           >
             Change Email
           </Link>
           <Link
             href="/change-password"
-            className="h-[20px] text-center w-full text-[18px] leading-[20px] text-[#004318]"
+            className="h-[20px] text-center w-max mx-auto text-[18px] leading-[20px] text-[#004318]"
           >
             Change Password
           </Link>
