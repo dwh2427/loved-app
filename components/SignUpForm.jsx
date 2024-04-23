@@ -16,8 +16,28 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
+import { auth, firestore } from "@/firebase/config";
+import { collection, addDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
+
+async function addDataToFireStore(userId, firstName, lastName, emailAddress) {
+  try {
+    const docRef = await addDoc(collection(firestore, "users"), {
+      firstName,
+      lastName,
+      emailAddress,
+    });
+
+    // Use the userId as the document ID in Firestore
+    await setDoc(docRef, { userId }, { merge: true });
+
+    console.log("Document written with ID: ", docRef.id);
+    return true;
+  } catch (error) {
+    console.log("Error adding document", error);
+    return false;
+  }
+}
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -56,7 +76,8 @@ export default function LoginForm() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
   const router = useRouter();
 
   const form = useForm({
@@ -71,17 +92,27 @@ export default function LoginForm() {
 
   const handleSubmit = async () => {
     try {
-      const { emailAddress, password } = form.getValues();
+      const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(emailAddress, password);
 
-      console.log({ res });
-      alert("Account Added Successfully!");
-      form.reset();
-      router.push("/login");
+      // Check if user creation was successful
+      if (res.user) {
+        // Get the ID of the newly created user
+        const userId = res.user.uid;
+
+        // Add user data to Firestore with the same ID as the user
+        await addDataToFireStore(userId, firstName, lastName, emailAddress);
+
+        console.log({ res });
+        alert("Account Added Successfully!");
+        form.reset();
+        router.push("/login");
+      }
     } catch (e) {
       console.error(e);
     }
   };
+
 
   return (
     <Form {...form}>
@@ -89,12 +120,12 @@ export default function LoginForm() {
         onSubmit={form.handleSubmit(handleSubmit)}
         className="mt-[41.41px] flex flex-col items-center gap-y-[41.41px] md:gap-y-[16px]"
       >
-        <div className="md:flex mx-auto md:max-w-[385px] w-full space-y-[41.41px] md:space-y-0">
+        <div className="mx-auto w-full space-y-[41.41px] md:flex md:max-w-[385px] md:space-y-0">
           <FormField
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-[88px] md:w-[188px] mx-auto md:space-y-[8px]">
+              <FormItem className="mx-auto h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-[88px] md:w-[188px] md:space-y-[8px]">
                 <FormLabel className="h-[30px] max-w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:w-[75px] md:text-[12px] md:font-bold md:leading-[14.4px]">
                   First Name
                 </FormLabel>
@@ -103,7 +134,7 @@ export default function LoginForm() {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="First Name"
-                    className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] mx-auto md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
+                    className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
                   />
                 </FormControl>
@@ -115,7 +146,7 @@ export default function LoginForm() {
             control={form.control}
             name="lastName"
             render={({ field }) => (
-              <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-[88px] md:w-[188px] mx-auto md:ml-[9px] md:space-y-[8px]">
+              <FormItem className="mx-auto h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:ml-[9px] md:h-[88px] md:w-[188px] md:space-y-[8px]">
                 <FormLabel className="h-[30px] max-w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:w-[75px] md:text-[12px] md:font-bold md:leading-[14.4px]">
                   Last Name
                 </FormLabel>
@@ -124,7 +155,7 @@ export default function LoginForm() {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder="Last Name"
-                    className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] mx-auto md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
+                    className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
                   />
                 </FormControl>
