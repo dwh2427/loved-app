@@ -23,6 +23,7 @@ export default function LogoutButton() {
         signOut(auth);
         sessionStorage.removeItem("user");
       }}
+      className="h-[20px] w-full text-center text-[18px] font-normal leading-[20px] text-[#004318]"
     >
       Log out
     </button>
