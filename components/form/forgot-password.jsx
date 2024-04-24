@@ -57,7 +57,7 @@ export default function ForgotPasswordForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="mx-auto flex max-w-[767px] flex-col items-center justify-between p-[41.42px] md:mt-[22px] md:p-[64px]"
+        className="mx-auto flex max-w-[767px] flex-col items-center justify-between p-[41.42px] md:mt-[22px] md:p-16"
       >
         <h2 className="mx-auto max-h-[38px] w-full max-w-[582.53px] whitespace-nowrap text-center text-[32.36px] font-medium leading-[37.54px] tracking-[0.01em] md:max-h-[20px] md:w-[402px] md:text-[18px] md:leading-[20px] md:text-[#004318]">
           Forgot password
@@ -66,7 +66,7 @@ export default function ForgotPasswordForm() {
           control={form.control}
           name="emailAddress"
           render={({ field }) => (
-            <FormItem className="mt-[41.42px] h-[173.06px] w-[689.17px] space-y-[5.18px] md:mt-[16px] md:h-[90px] md:w-[385px] md:space-y-[8px]">
+            <FormItem className="mt-[41.42px] h-auto w-[689.17px] space-y-[5.18px] md:mt-[16px] md:h-auto md:w-[385px] md:space-y-[8px]">
               <FormLabel className="h-[30px] w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:min-h-[14px] md:w-[75px] md:text-[12px] md:font-bold md:leading-[14.4px]">
                 Email Address
               </FormLabel>

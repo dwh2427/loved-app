@@ -105,7 +105,7 @@ export default function ChangePasswordForm() {
           control={form.control}
           name="existingPassword"
           render={({ field }) => (
-            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-[88px] md:w-[385px] md:space-y-[8px]">
+            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-auto md:w-[385px] md:space-y-[8px]">
               <FormLabel className="h-[30px] max-w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:max-h-[14px] md:max-w-[57px] md:text-[12px] md:font-bold md:leading-[14.4px]">
                 Existing password
               </FormLabel>
@@ -127,7 +127,7 @@ export default function ChangePasswordForm() {
           control={form.control}
           name="newPassword"
           render={({ field }) => (
-            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-[88px] md:w-[385px] md:space-y-[8px]">
+            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-auto md:w-[385px] md:space-y-[8px]">
               <FormLabel className="h-[30px] max-w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:max-h-[14px] md:max-w-[57px] md:text-[12px] md:font-bold md:leading-[14.4px]">
                 New password
               </FormLabel>
@@ -149,7 +149,7 @@ export default function ChangePasswordForm() {
           control={form.control}
           name="confirmNewPassword"
           render={({ field }) => (
-            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-[88px] md:w-[385px] md:space-y-[8px]">
+            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-auto md:w-[385px] md:space-y-[8px]">
               <FormLabel className="h-[30px] max-w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:max-h-[14px] md:max-w-[57px] md:text-[12px] md:font-bold md:leading-[14.4px]">
                 Confirm new password
               </FormLabel>

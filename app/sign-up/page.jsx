@@ -37,7 +37,7 @@ export default function SignUpPage() {
               />
             </div>
           </Link>
-          <div className="md:mx-auto md:mt-[86px] md:h-[592px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:p-0">
+          <div className="md:mx-auto md:mt-[22px] md:h-[646px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:p-[64px]">
             <div className="md:mx-auto md:h-[70px] md:w-[402px] md:space-y-[10px]">
               <h2 className="mx-auto max-h-[40px] max-w-[169px] whitespace-nowrap text-center text-[40px] font-black leading-[40px] tracking-[0.01em] text-black md:h-[40px] md:w-[263px] md:text-[40px] md:leading-[40px]">
                 Welcome
