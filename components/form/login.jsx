@@ -52,7 +52,6 @@ export default function LoginForm() {
         return;
       }
 
-      console.log({ res });
       sessionStorage.setItem("user", true);
       alert("Login Successfully!");
       form.reset();
