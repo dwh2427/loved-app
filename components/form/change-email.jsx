@@ -15,25 +15,25 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { auth } from "@/firebase/config";
-import { updateEmail, verifyBeforeUpdateEmail } from "firebase/auth"; 
-import { useRouter } from "next/router";
+import { updateEmail, verifyBeforeUpdateEmail } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
 
 const formSchema = z
   .object({
     newEmail: z.string().email({
       message: "Please provide a valid email address",
     }),
-    confirmNewEmail: z.string().email({
-      message: "Please provide a valid email address",
-    }),
+    confirmNewEmail: z.string(),
   })
-  .refine((data) => data.newEmail === data.confirmNewEmail, {
+  .refine((data) => data.confirmNewEmail === data.newEmail, {
     message: "These emails do not match",
     path: ["confirmNewEmail"],
   });
 
 export default function ChangeEmailForm() {
   const [newEmail, setNewEmail] = useState("");
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -47,15 +47,21 @@ export default function ChangeEmailForm() {
     try {
       const { newEmail } = form.getValues();
 
-      try {
-        await verifyBeforeUpdateEmail(
-          auth.currentUser,
-          newEmail,
-        );
+      const isVerified = await verifyBeforeUpdateEmail(
+        auth.currentUser,
+        newEmail,
+      );
+
+      if (isVerified) {
         await updateEmail(auth.currentUser, newEmail);
-        console.log("--- Succeed ---");
-      } catch (e) {
-        console.log("--- Error ----", e);
+        alert("Email updated successfully!");
+      } else {
+        alert(
+          "Check your email and verify it first, then change the email again.",
+        );
+        signOut(auth);
+        sessionStorage.removeItem("user");
+        router.push("/login");
       }
     } catch (e) {
       console.error(e);
