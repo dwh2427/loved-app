@@ -4,7 +4,7 @@ import Picture from "@/public/image.png";
 import localFont from "next/font/local";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/header/landing";
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/footer/Footer";
 
 const Iowan = localFont({
   src: "../fonts/iowan-old.ttf",
