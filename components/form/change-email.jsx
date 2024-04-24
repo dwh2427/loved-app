@@ -14,12 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import {
-  useUpdateEmail,
-  useSignInWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
-import { useRouter } from "next/navigation";
+import { updateEmail, verifyBeforeUpdateEmail } from "firebase/auth"; 
+import { useRouter } from "next/router";
 
 const formSchema = z
   .object({
@@ -37,9 +34,6 @@ const formSchema = z
 
 export default function ChangeEmailForm() {
   const [newEmail, setNewEmail] = useState("");
-  const router = useRouter();
-  const [updateEmail] = useUpdateEmail(auth);
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -53,8 +47,16 @@ export default function ChangeEmailForm() {
     try {
       const { newEmail } = form.getValues();
 
-      // Update the user's email address
-      await updateEmail(newEmail);
+      try {
+        await verifyBeforeUpdateEmail(
+          auth.currentUser,
+          newEmail,
+        );
+        await updateEmail(auth.currentUser, newEmail);
+        console.log("--- Succeed ---");
+      } catch (e) {
+        console.log("--- Error ----", e);
+      }
     } catch (e) {
       console.error(e);
     }
