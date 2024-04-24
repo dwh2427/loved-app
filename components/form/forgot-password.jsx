@@ -16,6 +16,7 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { auth } from "@/firebase/config";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   emailAddress: z.string().email({
@@ -25,6 +26,7 @@ const formSchema = z.object({
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -44,6 +46,8 @@ export default function ForgotPasswordForm() {
       alert(
         "A password reset email has been sent to the provided email address, if it exists in our database.",
       );
+
+      router.push('/dashboard')
     } catch (e) {
       console.error(e);
     }

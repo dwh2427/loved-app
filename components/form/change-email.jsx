@@ -59,10 +59,10 @@ export default function ChangeEmailForm() {
         alert(
           "Check your email and verify it first, then change the email again.",
         );
-        signOut(auth);
-        sessionStorage.removeItem("user");
-        router.push("/login");
       }
+      signOut(auth);
+      sessionStorage.removeItem("user");
+      router.push("/login");
     } catch (e) {
       console.error(e);
     }

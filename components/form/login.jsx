@@ -111,9 +111,9 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <p className="mx-auto h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] font-bold leading-[29.12px] md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
+        <Link href='/forgot-password' className="mx-auto h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] font-bold leading-[29.12px] md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           Forgot Password?
-        </p>
+        </Link>
         <p className="w-full max-w-[689.17px] text-[25.88px] leading-[29.12px] md:mx-auto md:h-[28px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           By clicking the Sign In button below, you agree to the Loved{" "}
           <span className="border-b-[0.5px] border-black">
@@ -124,7 +124,7 @@ export default function LoginForm() {
         </p>
         <p className="mx-auto h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:hidden">
           Don&apos;t have an account?{" "}
-          <Link href={""} className="font-bold">
+          <Link href={"/sign-up"} className="font-bold">
             Sign up
           </Link>
         </p>
@@ -137,7 +137,7 @@ export default function LoginForm() {
         </Button>
         <p className="mx-auto hidden h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:block md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           Don&apos;t have an account?{" "}
-          <Link href={""} className="font-bold">
+          <Link href={"/sign-up"} className="font-bold">
             Sign up
           </Link>
         </p>
