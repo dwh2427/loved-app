@@ -1,10 +1,10 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import localFont from "next/font/local";
 import Logo2 from "@/public/logo2.png";
 import Image from "next/image";
 
 const Iowan = localFont({
-  src: "../fonts/iowan-old.ttf",
+  src: "../../fonts/iowan-old.ttf",
   display: "swap",
 });
 

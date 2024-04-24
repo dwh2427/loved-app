@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Logo from "@/public/logo.png";
 import Link from "next/link";
-import LoginForm from "@/components/LoginForm";
-import Sidebar from "@/components/Sidebar";
+import LoginForm from "@/components/form/login";
+import Sidebar from "@/components/sidebar/sidebar";
 import Session from "./session";
 
 export default function LoginPage() {
   return (
-    <>
-      <Session />
+    <Session>
       <div className="lg:flex lg:w-screen">
         <div className="lg:flex-1">
           <div className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden">
@@ -53,6 +52,6 @@ export default function LoginPage() {
         </div>
         <Sidebar />
       </div>
-    </>
+    </Session>
   );
 }

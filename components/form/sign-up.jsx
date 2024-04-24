@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, firestore } from "@/firebase/config";
@@ -71,7 +71,7 @@ const formSchema = z.object({
     ),
 });
 
-export default function LoginForm() {
+export default function SignUpForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -112,7 +112,6 @@ export default function LoginForm() {
       console.error(e);
     }
   };
-
 
   return (
     <Form {...form}>

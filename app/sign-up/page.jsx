@@ -1,14 +1,12 @@
 import Image from "next/image";
 import Logo from "@/public/logo.png";
 import Link from "next/link";
-import SignUpForm from "@/components/SignUpForm";
-import Sidebar from "@/components/Sidebar";
-// import Session from "./session";
+import SignUpForm from "@/components/form/sign-up";
+import Sidebar from "@/components/sidebar/sidebar";
 
 export default function SignUpPage() {
   return (
     <>
-      {/* <Session /> */}
       <div className="lg:flex lg:w-screen">
         <div className="lg:flex-1">
           <div className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden">
@@ -40,7 +38,7 @@ export default function SignUpPage() {
             </div>
           </Link>
           <div className="md:mx-auto md:mt-[86px] md:h-[592px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:p-0">
-            <div className="md:h-[70px] md:w-[402px] md:space-y-[10px] md:mx-auto">
+            <div className="md:mx-auto md:h-[70px] md:w-[402px] md:space-y-[10px]">
               <h2 className="mx-auto max-h-[40px] max-w-[169px] whitespace-nowrap text-center text-[40px] font-black leading-[40px] tracking-[0.01em] text-black md:h-[40px] md:w-[263px] md:text-[40px] md:leading-[40px]">
                 Welcome
               </h2>
@@ -48,7 +46,7 @@ export default function SignUpPage() {
                 Sign Up
               </p>
             </div>
-            <p className="mx-auto mt-[41.41px] h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:h-[14px] md:text-[12px] md:leading-[14.4px] md:max-w-[386px]">
+            <p className="mx-auto mt-[41.41px] h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:h-[14px] md:max-w-[386px] md:text-[12px] md:leading-[14.4px]">
               Already have an account?{" "}
               <Link href={"/login"} className="font-bold">
                 Sign in

@@ -1,4 +1,3 @@
-import { Button } from "./ui/button";
 import Logo3 from "@/public/logo3.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +16,7 @@ export default function DashBoardHeader() {
             <Image src={Bell} alt="" className="size-[37.5px]" />
           </div>
           <div className="grid size-[62px] cursor-pointer place-items-center rounded-[65.45px] border-[1.06px]">
-            <UserRound className="size-[37.5px]"/>
+            <UserRound className="size-[37.5px]" />
           </div>
         </div>
       </div>

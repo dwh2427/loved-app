@@ -12,9 +12,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
-import { useUpdateEmail } from "react-firebase-hooks/auth";
+import {
+  useUpdateEmail,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
 
@@ -34,8 +37,9 @@ const formSchema = z
 
 export default function ChangeEmailForm() {
   const [newEmail, setNewEmail] = useState("");
-  const [updateEmail] = useUpdateEmail(auth);
   const router = useRouter();
+  const [updateEmail] = useUpdateEmail(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -48,11 +52,9 @@ export default function ChangeEmailForm() {
   const handleSubmit = async () => {
     try {
       const { newEmail } = form.getValues();
-      await updateEmail(newEmail);
 
-      alert("Email Update Successfully!");
-      form.reset();
-      router.push("/");
+      // Update the user's email address
+      await updateEmail(newEmail);
     } catch (e) {
       console.error(e);
     }

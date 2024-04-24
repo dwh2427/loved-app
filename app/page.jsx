@@ -1,13 +1,10 @@
-import {
-  Card,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Picture from "@/public/image.png";
 import localFont from "next/font/local";
 import { Button } from "@/components/ui/button";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/header/landing";
+import Footer from "@/components/footer/footer";
 
 const Iowan = localFont({
   src: "../fonts/iowan-old.ttf",
