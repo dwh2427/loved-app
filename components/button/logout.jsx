@@ -1,7 +1,6 @@
 "use client";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
-import { useEffect } from "react";
 
 export default function LogoutButton() {
   return (
