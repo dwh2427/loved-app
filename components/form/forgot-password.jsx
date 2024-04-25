@@ -47,7 +47,7 @@ export default function ForgotPasswordForm() {
         "A password reset email has been sent to the provided email address, if it exists in our database.",
       );
 
-      router.push('/dashboard')
+      router.push('/login')
     } catch (e) {
       console.error(e);
     }

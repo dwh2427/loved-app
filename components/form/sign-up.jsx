@@ -15,7 +15,10 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import { auth, firestore } from "@/firebase/config";
 import { collection, addDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
@@ -78,6 +81,7 @@ export default function SignUpForm() {
   const [password, setPassword] = useState("");
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
 
   const form = useForm({
@@ -102,11 +106,11 @@ export default function SignUpForm() {
 
         // Add user data to Firestore with the same ID as the user
         await addDataToFireStore(userId, firstName, lastName, emailAddress);
-
+        await signInWithEmailAndPassword(emailAddress, password);
         console.log({ res });
         alert("Account Added Successfully!");
         form.reset();
-        router.push("/login");
+        router.push("/dashboard");
       }
     } catch (e) {
       console.error(e);
@@ -200,11 +204,11 @@ export default function SignUpForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage className='whitespace-nowrap'/>
+              <FormMessage className="whitespace-nowrap" />
             </FormItem>
           )}
         />
-        <p className="w-full max-w-[689.17px] text-[25.88px] leading-[29.12px] md:mx-auto md:h-[28px] md:w-[386px] md:mt-[16px] md:text-[12px] md:leading-[14.4px]">
+        <p className="w-full max-w-[689.17px] text-[25.88px] leading-[29.12px] md:mx-auto md:mt-[16px] md:h-[28px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           By clicking the Sign Up button below, you agree to the Loved{" "}
           <span className="border-b-[0.5px] border-black">
             Terms of Service{" "}
@@ -215,7 +219,7 @@ export default function SignUpForm() {
         <Button
           type="submit"
           variant={"default"}
-          className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] md:mt-[16px] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
+          className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[16px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
           Sign up
         </Button>

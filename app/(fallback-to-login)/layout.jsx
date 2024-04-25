@@ -1,7 +1,7 @@
 import Session from "./session";
 import DashBoardHeader from "@/components/header/dashboard";
 
-export default function AuthLayout({ children }) {
+export default function FallbackToLoginLayout({ children }) {
   return (
     <>
       <DashBoardHeader />
