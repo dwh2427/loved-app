@@ -38,11 +38,11 @@ export default function SignUpPage() {
             </div>
           </Link>
           <div className="md:mx-auto md:mt-[22px] md:h-[646px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:p-[64px]">
-            <div className="md:mx-auto md:h-[70px] md:w-[402px] md:space-y-[10px]">
-              <h2 className="mx-auto max-h-[40px] max-w-[169px] whitespace-nowrap text-center text-[40px] font-black leading-[40px] tracking-[0.01em] text-black md:h-[40px] md:w-[263px] md:text-[40px] md:leading-[40px]">
-                Welcome
+            <div className="md:mx-auto md:h-[70px] md:w-[402px] md:space-y-[10px] md:relative">
+              <h2 className="mx-auto max-h-[40px] whitespace-nowrap text-center text-[40px] font-black leading-[40px] tracking-[0.01em] text-black md:max-w-none md:absolute md:top-0 md:left-1/2 md:-translate-x-1/2 md:text-[40px] md:leading-[40px]">
+                Let&apos;s create your account
               </h2>
-              <p className="mx-auto mt-[41.41px] max-h-[38px] w-40 max-w-[582.39px] text-center text-[32.36px] font-medium leading-[37.53px] text-[#004318] md:h-[20px] md:w-[402px] md:text-[18px] md:font-normal md:leading-[20px]">
+              <p className="mx-auto md:absolute md:bottom-0 mt-[41.41px] max-h-[38px] w-40 max-w-[582.39px] text-center text-[32.36px] font-medium leading-[37.53px] text-[#004318] md:h-[20px] md:w-[402px] md:text-[18px] md:font-normal md:leading-[20px]">
                 Sign Up
               </p>
             </div>
