@@ -124,7 +124,7 @@ export default function LoginForm() {
         </p>
         <p className="mx-auto h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:hidden">
           Don&apos;t have an account?{" "}
-          <Link href={"/sign-up"} className="font-bold">
+          <Link href={"/getting-started"} className="font-bold">
             Sign up
           </Link>
         </p>
@@ -137,7 +137,7 @@ export default function LoginForm() {
         </Button>
         <p className="mx-auto hidden h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:block md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           Don&apos;t have an account?{" "}
-          <Link href={"/sign-up"} className="font-bold">
+          <Link href={"/getting-started"} className="font-bold">
             Sign up
           </Link>
         </p>

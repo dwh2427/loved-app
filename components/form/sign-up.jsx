@@ -23,12 +23,19 @@ import { auth, firestore } from "@/firebase/config";
 import { collection, addDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
-async function addDataToFireStore(userId, firstName, lastName, emailAddress) {
+async function addDataToFireStore(
+  userId,
+  firstName,
+  lastName,
+  emailAddress,
+  familyMemberType,
+) {
   try {
     const docRef = await addDoc(collection(firestore, "users"), {
       firstName,
       lastName,
       emailAddress,
+      familyMemberType,
     });
 
     // Use the userId as the document ID in Firestore
@@ -79,6 +86,9 @@ export default function SignUpForm() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [familyMemberType, setFamilyMemberType] = useState(
+    localStorage.getItem("familyMemberType") || "",
+  );
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -87,8 +97,8 @@ export default function SignUpForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      firstName: localStorage.getItem("firstName") || "",
+      lastName: localStorage.getItem("lastName") || "",
       emailAddress: "",
       password: "",
     },
@@ -99,18 +109,24 @@ export default function SignUpForm() {
       const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(emailAddress, password);
 
-      // Check if user creation was successful
       if (res.user) {
-        // Get the ID of the newly created user
         const userId = res.user.uid;
 
-        // Add user data to Firestore with the same ID as the user
-        await addDataToFireStore(userId, firstName, lastName, emailAddress);
+        await addDataToFireStore(
+          userId,
+          firstName,
+          lastName,
+          emailAddress,
+          familyMemberType,
+        );
         await signInWithEmailAndPassword(emailAddress, password);
-        console.log({ res });
         alert("Account Added Successfully!");
         form.reset();
-        router.push("/dashboard");
+        router.push("/create-loved");
+
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("familyMemberType");
       }
     } catch (e) {
       console.error(e);
