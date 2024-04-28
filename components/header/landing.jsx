@@ -18,12 +18,12 @@ export default function Header() {
           >
             Sign in
           </Link>
-          <Button
-            variant={"default"}
-            className="h-[62px] w-[215px] self-center rounded-[100px] bg-[#FF007A] px-[40px] py-[20px] text-[18px] font-[900] leading-[22px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50"
+          <Link
+            href='/getting-started'
+            className="h-[62px] w-[215px] whitespace-nowrap self-center rounded-[100px] bg-[#FF007A] px-[40px] py-[20px] text-[18px] font-[900] leading-[22px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50"
           >
             Start Loved page
-          </Button>
+          </Link>
         </div>
         <button className="md:hidden">
           <Menu className="size-10" />
