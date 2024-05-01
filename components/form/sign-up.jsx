@@ -20,34 +20,31 @@ import {
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import { auth, firestore } from "@/firebase/config";
-import { collection, addDoc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
 async function addDataToFireStore(
-  userId,
+  userId, 
   firstName,
   lastName,
   emailAddress,
   familyMemberType,
 ) {
   try {
-    const docRef = await addDoc(collection(firestore, "users"), {
+    const docRef = await setDoc(doc(collection(firestore, "users"), userId), {
       firstName,
       lastName,
       emailAddress,
       familyMemberType,
     });
 
-    // Use the userId as the document ID in Firestore
-    await setDoc(docRef, { userId }, { merge: true });
-
-    console.log("Document written with ID: ", docRef.id);
     return true;
   } catch (error) {
     console.log("Error adding document", error);
     return false;
   }
 }
+
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -67,11 +64,9 @@ const formSchema = z.object({
     })
     .refine(
       (password) => {
-        // Regular expressions to check for at least one special character and one number
         const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
         const numberRegex = /[0-9]/;
 
-        // Check if the password contains at least one special character and one number
         return specialCharRegex.test(password) && numberRegex.test(password);
       },
       {
@@ -111,7 +106,6 @@ export default function SignUpForm() {
 
       if (res.user) {
         const userId = res.user.uid;
-
         await addDataToFireStore(
           userId,
           firstName,
@@ -122,7 +116,6 @@ export default function SignUpForm() {
         await signInWithEmailAndPassword(emailAddress, password);
         alert("Account Added Successfully!");
         form.reset();
-        router.push("/create-loved");
 
         localStorage.removeItem("firstName");
         localStorage.removeItem("lastName");
@@ -132,6 +125,7 @@ export default function SignUpForm() {
       console.error(e);
     }
   };
+
 
   return (
     <Form {...form}>
