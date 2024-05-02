@@ -1,7 +1,16 @@
 // components/form/family-member.jsx
 "use client";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -14,16 +23,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -57,6 +56,7 @@ export default function FamilyMemberForm() {
     localStorage.setItem("familyMemberType", familyMemberType);
     router.push("/sign-up");
   };
+  
   return (
     <Form {...form}>
       <form

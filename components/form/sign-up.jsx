@@ -1,8 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -12,16 +9,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { Button } from "../ui/button";
+import { auth, firestore } from "@/firebase/config";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { addDoc, collection, setDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
-import { auth, firestore } from "@/firebase/config";
-import { collection, addDoc, setDoc } from "firebase/firestore";
-import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "../ui/button";
 
 async function addDataToFireStore(
   userId,
@@ -108,25 +108,38 @@ export default function SignUpForm() {
     try {
       const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(emailAddress, password);
+      if (res?.user) {
 
-      if (res.user) {
         const userId = res.user.uid;
+        const userData = {
+          uid: userId,
+          first_name: firstName,
+          last_name: lastName,
+          email: emailAddress,
+          family_member_type: familyMemberType
+        }
 
-        await addDataToFireStore(
-          userId,
-          firstName,
-          lastName,
-          emailAddress,
-          familyMemberType,
-        );
-        await signInWithEmailAndPassword(emailAddress, password);
-        alert("Account Added Successfully!");
-        form.reset();
-        router.push("/create-loved");
+        const createdUser = await axios.post(`/sign-up/api`, userData)
 
-        localStorage.removeItem("firstName");
-        localStorage.removeItem("lastName");
-        localStorage.removeItem("familyMemberType");
+        // await addDataToFireStore(
+        //   userId,
+        //   firstName,
+        //   lastName,
+        //   emailAddress,
+        //   familyMemberType,
+        // );
+        if (createdUser?.data) {
+          await signInWithEmailAndPassword(emailAddress, password);
+          localStorage.setItem('username', createdUser?.data?.username)
+          alert("Account Added Successfully!");
+          form.reset();
+          router.push(`/create-loved`);
+
+          localStorage.removeItem("firstName");
+          localStorage.removeItem("lastName");
+          localStorage.removeItem("familyMemberType");
+        }
+
       }
     } catch (e) {
       console.error(e);
