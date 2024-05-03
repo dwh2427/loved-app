@@ -99,8 +99,8 @@ export default function SignUpForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      firstName: localStorage.getItem('firstName') || "",
+      lastName: localStorage.getItem('lastName') || "",
       emailAddress: "",
       password: "",
     },
@@ -113,7 +113,7 @@ export default function SignUpForm() {
       const res = await createUserWithEmailAndPassword(emailAddress, password);
 
       if (res?.user) {
-        console.log(res)
+
         const userId = res.user.uid;
         const userData = {
           uid: userId,
