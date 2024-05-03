@@ -5,12 +5,12 @@ import leftArrow from '@/public/left-arrow.png';
 import Logo3 from "@/public/logo3.svg";
 import rightArrow from '@/public/right-arrow.png';
 import Image from 'next/image';
-export default function () {
+const User = function () {
     return <div className="max-w-screen overflow-hidden">
         <Header logo={Logo3} />
         <main className="w-full mx-auto px-4 md:w-[1248px] flex flex-col gap-[40px] mt-[72px]">
             <h1 className="font-bold text-3xl md:text-5xl leading-10 md:leading-14">Ash Good</h1>
-            <p className=" max-w-[721px] lg:text-[24px] text-[#A2AEBA] leading-[28.8px] md:leading-7">Hipster ipsum tattooed brunch I'm baby. Messenger aesthetic readymade jean yes vice copper freegan forage yes. Portland of knausgaard xoxo ethical food normcore try-hard flexitarian. Umami migas chartreuse aesthetic listicle. Lomo rights LaCroix austin book freegan pbr&b fanny distillery bodega.
+            <p className=" max-w-[721px] lg:text-[24px] text-[#A2AEBA] leading-[28.8px] md:leading-7">Hipster ipsum tattooed brunch I &apos m baby. Messenger aesthetic readymade jean yes vice copper freegan forage yes. Portland of knausgaard xoxo ethical food normcore try-hard flexitarian. Umami migas chartreuse aesthetic listicle. Lomo rights LaCroix austin book freegan pbr&b fanny distillery bodega.
                 <button className="text-black block">See more</button>
             </p>
 
@@ -37,3 +37,5 @@ export default function () {
         <PublictFooter />
     </div>
 }
+
+export default User

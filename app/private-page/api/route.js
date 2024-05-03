@@ -11,7 +11,7 @@ export async function GET(request) {
     return NextResponse.json(user);
   } catch (error) {
     console.error("Error creating user:", error);
-    NextResponse.json(error);
+    return NextResponse.json(error);
   }
 }
 
@@ -32,6 +32,6 @@ export async function PUT(request) {
     return NextResponse.json({ data: user, message: "Page Link is Updated" });
   } catch (error) {
     console.error("Error creating user:", error);
-    NextResponse.json(error);
+    return NextResponse.json(error);
   }
 }

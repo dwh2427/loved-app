@@ -7,12 +7,12 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Session from "./session";
 const base_url = process.env.NEXT_PUBLIC_BASE_URL
 export default function CreateLovedPage() {
-  const username = localStorage.getItem('username')
-  const [insertUsername, setInsertUserName] = useState(`${base_url}${username}`)
+
+  const [insertUsername, setInsertUserName] = useState(``)
   const [isUpdating, setIsUpdating] = useState(false)
   const user = useAuthState()
   const router = useRouter()
@@ -30,6 +30,10 @@ export default function CreateLovedPage() {
       console.log(error)
     } finally { setIsUpdating(false) }
   }
+  useEffect(() => {
+    const username = localStorage && localStorage.getItem('username')
+    setInsertUserName(`${base_url}${username}`)
+  }, [])
   return (
     <>
       <Session />
