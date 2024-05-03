@@ -89,6 +89,8 @@ export default function SignUpForm() {
   const [familyMemberType, setFamilyMemberType] = useState(
     localStorage.getItem("familyMemberType") || "",
   );
+  const [emailError, setEmialError] = useState('')
+  const [isCreating, setIsCreating] = useState(false)
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -97,8 +99,8 @@ export default function SignUpForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: localStorage.getItem("firstName") || "",
-      lastName: localStorage.getItem("lastName") || "",
+      firstName: "",
+      lastName: "",
       emailAddress: "",
       password: "",
     },
@@ -106,17 +108,18 @@ export default function SignUpForm() {
 
   const handleSubmit = async () => {
     try {
+      setIsCreating(true)
       const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(emailAddress, password);
-      if (res?.user) {
 
+      if (res?.user) {
+        console.log(res)
         const userId = res.user.uid;
         const userData = {
           uid: userId,
           first_name: firstName,
           last_name: lastName,
           email: emailAddress,
-          family_member_type: familyMemberType
         }
 
         const createdUser = await axios.post(`/sign-up/api`, userData)
@@ -128,22 +131,20 @@ export default function SignUpForm() {
         //   emailAddress,
         //   familyMemberType,
         // );
+
         if (createdUser?.data) {
           await signInWithEmailAndPassword(emailAddress, password);
           localStorage.setItem('username', createdUser?.data?.username)
-          alert("Account Added Successfully!");
           form.reset();
           router.push(`/create-loved`);
-
-          localStorage.removeItem("firstName");
-          localStorage.removeItem("lastName");
-          localStorage.removeItem("familyMemberType");
         }
 
-      }
+      } else (alert('Email already registered'))
+
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
+    finally { setIsCreating(false) }
   };
 
   return (
@@ -206,12 +207,13 @@ export default function SignUpForm() {
                 <Input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="@.com"
+                  placeholder="Enter email"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+
+              <FormMessage className="whitespace-nowrap" />
             </FormItem>
           )}
         />
@@ -227,7 +229,7 @@ export default function SignUpForm() {
                 <Input
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="@.com"
+                  placeholder="Enter password"
                   type="password"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
@@ -248,7 +250,8 @@ export default function SignUpForm() {
         <Button
           type="submit"
           variant={"default"}
-          className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[16px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
+          disabled={isCreating}
+          className="mx-auto disabled:opacity-50 h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[16px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
           Sign up
         </Button>

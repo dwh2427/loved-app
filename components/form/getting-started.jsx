@@ -1,10 +1,10 @@
 // components/form/getting-started.jsx
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useRouter } from "next/navigation";
 
 export default function GettingStartedForm() {
   const [selectedMemberType, setSelectedMemberType] = useState("");
@@ -14,9 +14,7 @@ export default function GettingStartedForm() {
     setSelectedMemberType(event.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     router.push(`/getting-started/${selectedMemberType}`);
   };
   return (

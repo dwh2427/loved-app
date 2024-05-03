@@ -21,14 +21,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  family_member_type: {
-    type: String,
-  },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

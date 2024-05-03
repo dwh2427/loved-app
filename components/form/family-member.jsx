@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useAuthState from "@/hooks/useAuthState";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -39,7 +40,7 @@ export default function FamilyMemberForm() {
   const [lastName, setLastName] = useState("");
   const router = useRouter();
   const pathname = usePathname();
-
+  const { user } = useAuthState()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,9 +55,13 @@ export default function FamilyMemberForm() {
     localStorage.setItem("firstName", firstName);
     localStorage.setItem("lastName", lastName);
     localStorage.setItem("familyMemberType", familyMemberType);
-    router.push("/sign-up");
+
+    if (user) {
+      router.push("/create-loved")
+    } else
+      router.push("/sign-up");
   };
-  
+
   return (
     <Form {...form}>
       <form
@@ -65,7 +70,7 @@ export default function FamilyMemberForm() {
       >
         {pathname === "/getting-started/family-member" && (
           <h3 className="mx-auto mt-[41.41px] w-4/5 text-center text-[40px] font-bold leading-[30px] md:mt-[46px] md:w-full md:whitespace-nowrap md:text-[25px]">
-            Who is the [family member]?
+            Who is the family member?
           </h3>
         )}
         {pathname === "/getting-started/yourself" && (
@@ -137,11 +142,11 @@ export default function FamilyMemberForm() {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="justify-start gap-x-1 text-[18px] font-normal leading-[20px] text-[#A2AEBA]">
-                      <SelectValue placeholder="Father" />
+                    <SelectTrigger className={`justify-start gap-x-1 text-[18px] font-normal leading-[20px] ${form.getValues().familyMemberType === '' ? 'text-[#A2AEBA]' : 'text-black'} `}>
+                      <SelectValue placeholder="Select" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent >
                     <SelectItem value="Father">Father</SelectItem>
                     <SelectItem value="Mother">Mother</SelectItem>
                     <SelectItem value="Sister">Sister</SelectItem>

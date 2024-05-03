@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 const useAuthState = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Initialize loading state to true
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -13,12 +14,13 @@ const useAuthState = () => {
         // User is signed out
         setUser(null);
       }
+      setLoading(false); // Set loading state to false once authentication status is determined
     });
 
     return () => unsubscribe();
   }, []);
 
-  return user;
+  return { user, loading }; // Return both user and loading state
 };
 
 export default useAuthState;

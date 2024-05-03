@@ -11,29 +11,41 @@ import { useEffect, useState } from "react";
 import Session from "./session";
 const base_url = process.env.NEXT_PUBLIC_BASE_URL
 export default function CreateLovedPage() {
-
   const [insertUsername, setInsertUserName] = useState(``)
   const [isUpdating, setIsUpdating] = useState(false)
-  const user = useAuthState()
+  const { user } = useAuthState()
   const router = useRouter()
-  const handlePageLinkEdit = async (newValue) => {
-    try {
-      const value = newValue.split('/')[3]
-      setIsUpdating(true)
-      const res = await axios.put('/private-page/api', { username: value, uid: user?.uid })
-      if (res.data) {
-        if (!res?.data?.data) return alert(res.data.message)
 
-        router.push('/private-page')
+  const handleCreatePage = async (newValue, uid) => {
+    try {
+      const first_name = localStorage.getItem("firstName");
+      const last_name = localStorage.getItem("lastName");
+      const family_member_type = localStorage.getItem("familyMemberType");
+      const value = newValue.split('/')[3]
+      const newLovedData = { family_member_type, last_name, first_name, username: value, uid, }
+
+      setIsUpdating(true)
+      const res = await axios.post('/create-loved/api', newLovedData)
+      if (res.data) {
+        console.log(res)
+        if (!res?.data?.data) return alert(res.data.message)
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("familyMemberType");
+        router.push(`/private-page?username=${res.data?.data?.username}`)
       }
     } catch (error) {
       console.log(error)
     } finally { setIsUpdating(false) }
+
   }
   useEffect(() => {
-    const username = localStorage && localStorage.getItem('username')
-    setInsertUserName(`${base_url}${username}`)
-  }, [])
+    const username = localStorage && localStorage.getItem('firstName')
+   
+    if (!username) router.replace('/')
+    setInsertUserName(`${base_url}${username}${Math.round(Math.random() * 265)}`)
+  }, [user, router])
+
   return (
     <>
       <Session />
@@ -82,8 +94,7 @@ export default function CreateLovedPage() {
 
           <button
             disabled={isUpdating}
-
-            onClick={() => handlePageLinkEdit(insertUsername)}
+            onClick={() => handleCreatePage(insertUsername, user?.uid)}
             className="mx-auto h-[102.71px] w-full disabled:opacity-50 max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[86px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
           >
             View and Edit Page

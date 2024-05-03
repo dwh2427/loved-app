@@ -12,29 +12,30 @@ import axios from "axios";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import EditCustomPageLink from "../../components/button/editCustomPageLink";
 const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 export default function PrivatePage() {
-  const user = useAuthState()
+  const { user } = useAuthState()
   const [userDetails, setUserDetails] = useState('')
   const [isUpdating, setIsUpdating] = useState(false)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const prevusername = searchParams.get('username')
+  const [username, setUsername] = useState(prevusername)
   const handlePageLinkEdit = async (newValue) => {
     try {
       setIsUpdating(true)
-      const res = await axios.put('/private-page/api', { username: newValue, uid: user?.uid })
+      const res = await axios.put('/create-loved/api', { username: newValue, uid: user?.uid })
       if (res.data) {
-        res?.data?.data && setUserDetails(res?.data?.data)
+        res?.data?.data && setUsername(res?.data?.data.username)
         alert(res.data.message)
       }
     } catch (error) {
       console.log(error)
     } finally { setIsUpdating(false) }
   }
-  useEffect(() => {
-    if (!user?.uid) return
-    axios.get(`/private-page/api?uid=${user?.uid}`).then(data => setUserDetails(data.data)).catch(error => console.log(error))
-  }, [user])
 
   function copyToClipboard(text) {
     // Check if the browser supports the Clipboard API
@@ -53,6 +54,16 @@ export default function PrivatePage() {
       });
   }
 
+  useEffect(() => {
+    if (!user?.uid) return
+    axios.get(`/private-page/api?uid=${user?.uid}`).then(data => setUserDetails(data.data)).catch(error => console.log(error))
+  }, [user])
+
+
+  useEffect(() => {
+    if (!router.query?.username) return
+    setUsername(router.query?.username)
+  }, [router.query])
   return (
     <>
       <header className="flex h-24 w-screen items-center border-b border-[#E9E9E9] px-5 md:h-[100px] md:px-16">
@@ -86,13 +97,13 @@ export default function PrivatePage() {
           <div className="mt-[16px] flex flex-col md:flex-row items-start md:items-center md:h-[49px] justify-between border-b pb-2 md:pb-0 border-[#E9E9E9]">
             <div className="mb-2 md:mb-0">
               <p className="text-[16px] font-medium leading-[19.2px] mb-1 md:mb-0">
-                {base_URL}{userDetails?.username} <EditCustomPageLink isUpdating={isUpdating} handleSubmit={handlePageLinkEdit} value={`${userDetails?.username}`} />
+                {base_URL}{username} <EditCustomPageLink isUpdating={isUpdating} handleSubmit={handlePageLinkEdit} value={`${username}`} />
               </p>
-              <Link href={`/${userDetails?.username}`} target="_blank" className="text-[12px] font-bold leading-[14.4px] text-[#FE5487]">
+              <Link href={`/${username}`} target="_blank" className="text-[12px] font-bold leading-[14.4px] text-[#FE5487]">
                 Preview Page
               </Link>
             </div>
-            <button onClick={() => copyToClipboard(`${base_URL}/${userDetails?.username}`)}  >
+            <button onClick={() => copyToClipboard(`${base_URL}/${username}`)}  >
               <Badge variant="outline" className="border-[#FE5487] text-[16px] font-medium leading-[19.2px] text-[#FE5487]">
                 Share Page Link
               </Badge>

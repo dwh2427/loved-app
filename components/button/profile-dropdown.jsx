@@ -31,7 +31,7 @@ export default function ProfileDropdown() {
               tabIndex={"-1"}
               className="text-[16px] font-bold leading-[19.2px] text-black/70"
             >
-              Mangage
+              Manage
             </button>
           </div>
           <div className="h-[35px] w-full border-b border-[#E9E9E9]">
