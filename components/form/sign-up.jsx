@@ -31,7 +31,7 @@ async function addDataToFireStore(
   familyMemberType,
 ) {
   try {
-    const docRef = await setDoc(doc(collection(firestore, "users"), userId), {
+    await setDoc(doc(collection(firestore, "users"), userId), {
       firstName,
       lastName,
       emailAddress,
@@ -81,13 +81,13 @@ export default function SignUpForm() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [familyMemberType, setFamilyMemberType] = useState(
     localStorage.getItem("familyMemberType") || "",
   );
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
-  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -101,6 +101,8 @@ export default function SignUpForm() {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
+
       const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(emailAddress, password);
 
@@ -114,18 +116,19 @@ export default function SignUpForm() {
           familyMemberType,
         );
         await signInWithEmailAndPassword(emailAddress, password);
-        alert("Account Added Successfully!");
         form.reset();
 
         localStorage.removeItem("firstName");
         localStorage.removeItem("lastName");
         localStorage.removeItem("familyMemberType");
       }
+
+      setLoading(false); 
     } catch (e) {
       console.error(e);
+      setLoading(false); 
     }
   };
-
 
   return (
     <Form {...form}>
@@ -229,6 +232,7 @@ export default function SignUpForm() {
         <Button
           type="submit"
           variant={"default"}
+          disabled={loading}
           className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[16px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
           Sign up
