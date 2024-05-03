@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -38,6 +38,7 @@ const formSchema = z.object({
 export default function FamilyMemberForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [familyMemberType, setFamilyMemberType] = useState("Aunt");
   const router = useRouter();
   const pathname = usePathname();
 
@@ -57,6 +58,11 @@ export default function FamilyMemberForm() {
     localStorage.setItem("familyMemberType", familyMemberType);
     router.push("/sign-up");
   };
+
+  const handleFamilyMemberTypeChange = (selectedType) => {
+    setFamilyMemberType(selectedType);
+  };
+
   return (
     <Form {...form}>
       <form
@@ -65,7 +71,7 @@ export default function FamilyMemberForm() {
       >
         {pathname === "/getting-started/family-member" && (
           <h3 className="mx-auto mt-[41.41px] w-4/5 text-center text-[40px] font-bold leading-[30px] md:mt-[46px] md:w-full md:whitespace-nowrap md:text-[25px]">
-            Who is the [family member]?
+            Who is your {familyMemberType || "[family member]"}?
           </h3>
         )}
         {pathname === "/getting-started/yourself" && (
@@ -92,7 +98,7 @@ export default function FamilyMemberForm() {
                   <Input
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First Name"
+                    placeholder="John"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
                   />
@@ -113,7 +119,7 @@ export default function FamilyMemberForm() {
                   <Input
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last Name"
+                    placeholder="Doe"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
                   />
@@ -133,23 +139,26 @@ export default function FamilyMemberForm() {
                   Family Member Type
                 </FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(selected) => {
+                    field.onChange(selected);
+                    handleFamilyMemberTypeChange(selected);
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="justify-start gap-x-1 text-[18px] font-normal leading-[20px] text-[#A2AEBA]">
+                    <SelectTrigger className="justify-start gap-x-1 text-[18px] font-normal leading-[20px]">
                       <SelectValue placeholder="Father" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Father">Father</SelectItem>
-                    <SelectItem value="Mother">Mother</SelectItem>
-                    <SelectItem value="Sister">Sister</SelectItem>
+                    <SelectItem value="Aunt">Aunt</SelectItem>
                     <SelectItem value="Brother">Brother</SelectItem>
+                    <SelectItem value="Father">Father</SelectItem>
                     <SelectItem value="GrandFather">GrandFather</SelectItem>
                     <SelectItem value="GrandMother">GrandMother</SelectItem>
+                    <SelectItem value="Mother">Mother</SelectItem>
+                    <SelectItem value="Sister">Sister</SelectItem>
                     <SelectItem value="Uncle">Uncle</SelectItem>
-                    <SelectItem value="Aunt">Aunt</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
