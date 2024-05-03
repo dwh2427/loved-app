@@ -1,11 +1,26 @@
+'use client'
 import PublictFooter from '@/components/footer/PublicFooter';
 import Header from '@/components/header/landing';
+import Loading from '@/components/loading/loading';
 import womenPhoto from '@/public/image 86.png';
 import leftArrow from '@/public/left-arrow.png';
 import Logo3 from "@/public/logo3.svg";
 import rightArrow from '@/public/right-arrow.png';
+import axios from 'axios';
 import Image from 'next/image';
-const User = function () {
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+const User = function ({ params }) {
+    const [loading, setLoading] = useState(true)
+    const router = useRouter()
+    useEffect(() => {
+        axios.get(`/${params.slug}/api`).then(res => {
+            console.log(res);
+            res.data.data === null && router.push('/page_not_found/non_exited')
+        }).catch(() => router.push('/page_not_found/non_exited')).finally(setLoading(false))
+    }, [params.slug, router])
+
+    if (loading) return <Loading />
     return <div className="max-w-screen overflow-hidden">
         <Header logo={Logo3} />
         <main className="w-full mx-auto px-4 md:w-[1248px] flex flex-col gap-[40px] mt-[72px]">
