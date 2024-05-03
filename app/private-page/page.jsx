@@ -86,7 +86,7 @@ export default function PrivatePage() {
           <div className="mt-[16px] flex flex-col md:flex-row items-start md:items-center md:h-[49px] justify-between border-b pb-2 md:pb-0 border-[#E9E9E9]">
             <div className="mb-2 md:mb-0">
               <p className="text-[16px] font-medium leading-[19.2px] mb-1 md:mb-0">
-                {base_URL}/{userDetails?.username} <EditCustomPageLink isUpdating={isUpdating} handleSubmit={handlePageLinkEdit} value={`${userDetails?.username}`} />
+                {base_URL}{userDetails?.username} <EditCustomPageLink isUpdating={isUpdating} handleSubmit={handlePageLinkEdit} value={`${userDetails?.username}`} />
               </p>
               <Link href={`/${userDetails?.username}`} target="_blank" className="text-[12px] font-bold leading-[14.4px] text-[#FE5487]">
                 Preview Page
