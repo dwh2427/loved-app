@@ -12,7 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import {
@@ -21,7 +20,6 @@ import {
 } from "react-firebase-hooks/auth";
 import { auth, firestore } from "@/firebase/config";
 import { collection, doc, setDoc } from "firebase/firestore";
-import { useRouter } from "next/navigation";
 
 async function addDataToFireStore(
   userId, 
@@ -83,7 +81,9 @@ export default function SignUpForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [familyMemberType, setFamilyMemberType] = useState(
-    localStorage.getItem("familyMemberType") || "",
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("familyMemberType") || ""
+      : "",
   );
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
@@ -92,8 +92,14 @@ export default function SignUpForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: localStorage.getItem("firstName") || "",
-      lastName: localStorage.getItem("lastName") || "",
+      firstName:
+        typeof window !== "undefined"
+          ? window.localStorage.getItem("firstName") || ""
+          : "",
+      lastName:
+        typeof window !== "undefined"
+          ? window.localStorage.getItem("lastName") || ""
+          : "",
       emailAddress: "",
       password: "",
     },
