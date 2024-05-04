@@ -1,3 +1,4 @@
+import Loved from "@/models/loved";
 import User from "@/models/user";
 import connectDB from "@/mongodb.config";
 import { NextResponse } from "next/server";
@@ -7,8 +8,10 @@ export async function GET(request) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const uid = searchParams.get("uid");
+    const username = searchParams.get("username");
     const user = await User.findOne({ uid });
-    return NextResponse.json(user);
+    const loved = await Loved.findOne({ uid, username });
+    return NextResponse.json({ user, loved });
   } catch (error) {
     console.error("Error creating user:", error);
     return NextResponse.json(error);
