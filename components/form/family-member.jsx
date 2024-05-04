@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -46,7 +46,7 @@ export default function FamilyMemberForm() {
     defaultValues: {
       firstName: "",
       lastName: "",
-      familyMemberType: "",
+      familyMemberType: "Aunt",
     },
   });
 
@@ -146,7 +146,7 @@ export default function FamilyMemberForm() {
                 >
                   <FormControl>
                     <SelectTrigger className="justify-start gap-x-1 text-[18px] font-normal leading-[20px]">
-                      <SelectValue placeholder="Father" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
