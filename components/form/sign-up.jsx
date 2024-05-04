@@ -17,35 +17,10 @@ import {
   useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
-import { auth, firestore } from "@/firebase/config";
-import { collection, addDoc, setDoc } from "firebase/firestore";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { collection, doc, setDoc } from "firebase/firestore";
-
-async function addDataToFireStore(
-  userId, 
-  firstName,
-  lastName,
-  emailAddress,
-  familyMemberType,
-) {
-  try {
-    await setDoc(doc(collection(firestore, "users"), userId), {
-      firstName,
-      lastName,
-      emailAddress,
-      familyMemberType,
-    });
-
-    return true;
-  } catch (error) {
-    console.log("Error adding document", error);
-    return false;
-  }
-}
-
+import { Button } from "../ui/button";
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
