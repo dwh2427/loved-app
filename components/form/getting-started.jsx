@@ -1,4 +1,3 @@
-// components/form/getting-started.jsx
 "use client";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -9,15 +8,20 @@ import { useRouter } from "next/navigation";
 export default function GettingStartedForm() {
   const [selectedMemberType, setSelectedMemberType] = useState("");
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleMemberTypeChange = (event) => {
     setSelectedMemberType(event.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 1));
     router.push(`/getting-started/${selectedMemberType}`);
+    setLoading(false);
   };
   return (
     <div className="md:mx-auto md:mt-[22px] md:h-[508px] md:w-[591px] md:rounded-[16px] md:p-16">
@@ -72,7 +76,7 @@ export default function GettingStartedForm() {
         <Button
           onClick={handleSubmit}
           variant={"default"}
-          disabled={!selectedMemberType}
+          disabled={!selectedMemberType || loading}
           className={`mx-auto mt-[86px] h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px] ${selectedMemberType ? "" : "cursor-not-allowed"}`}
         >
           Continue
