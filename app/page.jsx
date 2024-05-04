@@ -1,17 +1,35 @@
+'use client'
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/landing";
+import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+import { auth } from '@/firebase/config';
 import Picture from "@/public/image.png";
 import localFont from "next/font/local";
-import { Button } from "@/components/ui/button";
-import Header from "@/components/header/landing";
-import Footer from "@/components/footer/Footer";
-
+import Image from "next/image";
+import { useEffect, useState } from "react";
 const Iowan = localFont({
   src: "../fonts/iowan-old.ttf",
   display: "swap",
 });
 
 export default function HomePage() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        // User is signed in
+        setUser(authUser);
+      } else {
+        // User is signed out
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+  console.log(user)
   return (
     <>
       <Header />

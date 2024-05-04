@@ -1,10 +1,39 @@
-import Image from "next/image";
-import Logo from "@/public/logo.png";
-import Link from "next/link";
+'use client'
 import Sidebar from "@/components/sidebar/sidebar";
+import { Input } from "@/components/ui/input";
+import useAuthState from "@/hooks/useAuthState";
+import Logo from "@/public/logo.png";
+import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Session from "./session";
-
+const base_url = process.env.NEXT_PUBLIC_BASE_URL
 export default function CreateLovedPage() {
+
+  const [insertUsername, setInsertUserName] = useState(``)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const user = useAuthState()
+  const router = useRouter()
+  const handlePageLinkEdit = async (newValue) => {
+    try {
+      const value = newValue.split('/')[3]
+      setIsUpdating(true)
+      const res = await axios.put('/private-page/api', { username: value, uid: user?.uid })
+      if (res.data) {
+        if (!res?.data?.data) return alert(res.data.message)
+
+        router.push('/private-page')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally { setIsUpdating(false) }
+  }
+  useEffect(() => {
+    const username = localStorage && localStorage.getItem('username')
+    setInsertUserName(`${base_url}${username}`)
+  }, [])
   return (
     <>
       <Session />
@@ -44,21 +73,25 @@ export default function CreateLovedPage() {
           <p className="mx-auto mt-[41.41px] text-center text-[25px] font-bold leading-[30px] md:mt-[46px]">
             Your Page URL is
           </p>
-          <Link
-            href=""
+          <Input
+            onChange={(e) => setInsertUserName(e.target.value)}
+            value={insertUsername}
             className="mx-auto mt-[16px] h-[62px] w-[384px] rounded-[8px] border border-black/70 px-[25px] py-[20px] text-center text-[18px] font-bold leading-[22px] text-black/70"
-          >
-            loved.com/daveh
-          </Link>
-          <Link
-            href={"/private-page"}
-            className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[86px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
+          />
+
+
+          <button
+            disabled={isUpdating}
+
+            onClick={() => handlePageLinkEdit(insertUsername)}
+            className="mx-auto h-[102.71px] w-full disabled:opacity-50 max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[86px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
           >
             View and Edit Page
-          </Link>
+          </button>
         </div>
         <Sidebar />
       </div>
     </>
   );
 }
+

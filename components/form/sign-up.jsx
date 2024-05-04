@@ -1,8 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -12,13 +9,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
+import { auth, firestore } from "@/firebase/config";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useState } from "react";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import { auth, firestore } from "@/firebase/config";
+import { collection, addDoc, setDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { collection, doc, setDoc } from "firebase/firestore";
 
 async function addDataToFireStore(
@@ -111,28 +114,33 @@ export default function SignUpForm() {
 
       const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(emailAddress, password);
-
-      if (res.user) {
+      if (res?.user) {
         const userId = res.user.uid;
-        await addDataToFireStore(
-          userId,
-          firstName,
-          lastName,
-          emailAddress,
-          familyMemberType,
-        );
-        await signInWithEmailAndPassword(emailAddress, password);
-        form.reset();
+        const userData = {
+          uid: userId,
+          first_name: firstName,
+          last_name: lastName,
+          email: emailAddress,
+          family_member_type: familyMemberType,
+        };
 
-        localStorage.removeItem("firstName");
-        localStorage.removeItem("lastName");
-        localStorage.removeItem("familyMemberType");
+        const createdUser = await axios.post(`/sign-up/api`, userData);
+
+        if (createdUser?.data) {
+          await signInWithEmailAndPassword(emailAddress, password);
+          localStorage.setItem("username", createdUser.data.username);
+          form.reset();
+          router.push(`/create-loved`);
+
+          localStorage.removeItem("firstName");
+          localStorage.removeItem("lastName");
+          localStorage.removeItem("familyMemberType");
+        }
       }
-
-      setLoading(false); 
+      setLoading(false);
     } catch (e) {
       console.error(e);
-      setLoading(false); 
+      setLoading(false);
     }
   };
 

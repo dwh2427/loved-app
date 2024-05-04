@@ -1,17 +1,14 @@
 "use client";
-import { UserRound } from "lucide-react";
-import Link from "next/link";
-import LogoutButton from "./logout";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
+import { UserRound } from "lucide-react";
+import Link from "next/link";
+import LogoutButton from "./logout";
 
 export default function ProfileDropdown() {
   return (
@@ -28,6 +25,15 @@ export default function ProfileDropdown() {
               Your Profile
             </DialogTitle>
           </DialogHeader>
+          <div className="h-[35px] w-full border-b border-[#E9E9E9]">
+            <button
+              // href="/change-password"
+              tabIndex={"-1"}
+              className="text-[16px] font-bold leading-[19.2px] text-black/70"
+            >
+              Mangage
+            </button>
+          </div>
           <div className="h-[35px] w-full border-b border-[#E9E9E9]">
             <Link
               href="/change-password"
