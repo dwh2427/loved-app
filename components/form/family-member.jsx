@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -35,8 +36,7 @@ const formSchema = z.object({
 });
 
 export default function FamilyMemberForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [loading, setLoading] = useState("");
   const [familyMemberType, setFamilyMemberType] = useState("Aunt");
   const router = useRouter();
   const pathname = usePathname();
@@ -51,6 +51,7 @@ export default function FamilyMemberForm() {
   });
 
   const handleSubmit = () => {
+    setLoading(true);
     const { firstName, lastName, familyMemberType } = form.getValues();
     localStorage.setItem("firstName", firstName);
     localStorage.setItem("lastName", lastName);
@@ -84,7 +85,6 @@ export default function FamilyMemberForm() {
           </h3>
         )}
         <div className="mx-auto w-full space-y-[41.41px] md:mt-[16px] md:flex md:max-w-[385px] md:space-y-0">
-          {/* First Name Field */}
           <FormField
             control={form.control}
             name="firstName"
@@ -95,8 +95,6 @@ export default function FamilyMemberForm() {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
                     placeholder="John"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
@@ -116,8 +114,6 @@ export default function FamilyMemberForm() {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
                     placeholder="Doe"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
@@ -169,8 +165,10 @@ export default function FamilyMemberForm() {
         <Button
           type="submit"
           variant={"default"}
+          disabled={loading}
           className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[86px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
+          {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
           Continue
         </Button>
       </form>

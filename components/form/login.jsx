@@ -13,11 +13,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   emailAddress: z.string().email({
@@ -29,6 +31,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -50,7 +53,10 @@ export default function LoginForm() {
       const res = await signInWithEmailAndPassword(emailAddress, password);
 
       if (!res) {
-        alert("Incorrect email address or password. Please try again.");
+        toast({
+          variant: "destructive",
+          title: "Incorrect email address or password. Please try again.",
+        });
         return;
       }
 
@@ -60,7 +66,7 @@ export default function LoginForm() {
     } catch (e) {
       console.error(e);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -138,6 +144,7 @@ export default function LoginForm() {
           variant={"default"}
           className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
+          {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
           Sign in
         </Button>
         <p className="mx-auto hidden h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:block md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">

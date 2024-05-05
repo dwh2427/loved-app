@@ -12,11 +12,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 import { useState } from "react";
 import { auth } from "@/firebase/config";
 import { verifyBeforeUpdateEmail } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z
   .object({
@@ -31,8 +33,9 @@ const formSchema = z
   });
 
 export default function ChangeEmailForm() {
-  const [newEmail, setNewEmail] = useState("");
+  const { toast } = useToast();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -44,6 +47,7 @@ export default function ChangeEmailForm() {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
       const { newEmail } = form.getValues();
 
       const isVerified = await verifyBeforeUpdateEmail(
@@ -52,11 +56,16 @@ export default function ChangeEmailForm() {
       );
 
       if (!isVerified) {
-        alert("Please check your inbox on your new email address.");
+        setLoading(false)
+        toast({
+          variant: "success",
+          title: "Please check your inbox on your new email address.",
+        });
         router.back();
       }
     } catch (e) {
       console.error(e);
+      setLoading(false); 
     }
   };
 
@@ -76,9 +85,6 @@ export default function ChangeEmailForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  value={newEmail}
-                  // type="email"
-                  onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="@.com"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[386px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:font-normal md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-[53px] md:placeholder:text-center md:placeholder:text-[18px] md:placeholder:font-normal md:placeholder:leading-[20px]"
                   {...field}
@@ -110,8 +116,10 @@ export default function ChangeEmailForm() {
         <Button
           type="submit"
           variant={"default"}
+          disabled={loading}
           className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
+          {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
           Confirm
         </Button>
       </form>

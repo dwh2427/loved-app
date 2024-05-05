@@ -22,6 +22,8 @@ import {
   EmailAuthProvider,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z
   .object({
@@ -54,8 +56,8 @@ const formSchema = z
   });
 
 export default function ChangePasswordForm() {
-  const [existingPassword, setExistingPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
   const [user] = useAuthState(auth);
   const router = useRouter();
 
@@ -70,28 +72,35 @@ export default function ChangePasswordForm() {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
       const { existingPassword, newPassword } = form.getValues();
 
       if (user) {
-        // Re-authenticate the user with their existing password
         const credential = EmailAuthProvider.credential(
           user.email,
           existingPassword,
         );
         await reauthenticateWithCredential(user, credential);
 
-        // Update the user's password with the new password
         await updatePassword(user, newPassword);
 
-        // Password updated successfully
-        alert("Password updated!");
+        toast({
+          variant: "success",
+          title: "Password updated!",
+        });
         router.push("/dashboard");
       } else {
-        // User is not authenticated
-        console.error("User is not authenticated");
+        toast({
+          variant: "destructive",
+          title: "User is not authenticated",
+        });
       }
     } catch (error) {
-      console.error("Error updating password:", error);
+      setLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Invalid credentials!",
+      });
     }
   };
 
@@ -111,8 +120,6 @@ export default function ChangePasswordForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  value={existingPassword}
-                  onChange={(e) => setExistingPassword(e.target.value)}
                   placeholder="@.com"
                   type="password"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:font-normal md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-[53px] md:placeholder:text-center md:placeholder:text-[18px] md:placeholder:font-normal md:placeholder:leading-[20px]"
@@ -133,8 +140,6 @@ export default function ChangePasswordForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="@.com"
                   type="password"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:font-normal md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-[53px] md:placeholder:text-center md:placeholder:text-[18px] md:placeholder:font-normal md:placeholder:leading-[20px]"
@@ -168,8 +173,10 @@ export default function ChangePasswordForm() {
         <Button
           type="submit"
           variant={"default"}
+          disabled={loading}
           className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
+          {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
           Confirm
         </Button>
       </form>

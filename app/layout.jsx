@@ -1,5 +1,6 @@
 import { Lato } from "next/font/google";
 import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${lato.className} mx-auto min-h-screen w-fit`}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -20,6 +20,8 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Loader2 } from "lucide-react";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -52,8 +54,8 @@ const formSchema = z.object({
 });
 
 export default function SignUpForm() {
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const router = useRouter();
   const [familyMemberType, setFamilyMemberType] = useState(
     typeof window !== "undefined"
@@ -81,7 +83,6 @@ export default function SignUpForm() {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      setError(""); // Clear any existing error
 
       const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(
@@ -93,7 +94,12 @@ export default function SignUpForm() {
         .catch((error) => {
           console.log(error.code);
           if (error.code === "auth/email-already-in-use") {
-            setError("auth/email-already-in-use"); // Set the error state
+            toast({
+              variant: "destructive",
+              title: "Email already exists!",
+            });
+            setLoading(false);
+            form.reset();
           }
         });
 
@@ -126,10 +132,6 @@ export default function SignUpForm() {
     }
   };
 
-  const handleInputChange = () => {
-    setError(""); // Clear the error when any input field changes
-  };
-
   return (
     <Form {...form}>
       <form
@@ -150,10 +152,6 @@ export default function SignUpForm() {
                     placeholder="First Name"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleInputChange();
-                    }}
                   />
                 </FormControl>
               </FormItem>
@@ -172,10 +170,6 @@ export default function SignUpForm() {
                     placeholder="Last Name"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleInputChange();
-                    }}
                   />
                 </FormControl>
               </FormItem>
@@ -195,10 +189,6 @@ export default function SignUpForm() {
                   placeholder="@.com"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleInputChange();
-                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -218,18 +208,9 @@ export default function SignUpForm() {
                   type="password"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleInputChange();
-                  }}
                 />
               </FormControl>
               <FormMessage className="whitespace-nowrap" />
-              {error === "auth/email-already-in-use" && (
-                <div className="mt-[16px] w-full max-w-[414px] text-[25.88px] font-semibold leading-[29.12px] text-[#C9534B] md:max-w-full md:text-[12px] md:font-bold md:leading-[14.4px]">
-                  Email already exists!
-                </div>
-              )}
             </FormItem>
           )}
         />
