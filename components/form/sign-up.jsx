@@ -9,18 +9,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { auth, firestore } from "@/firebase/config";
+import { auth } from "@/firebase/config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useState } from "react";
 import {
-  useCreateUserWithEmailAndPassword,
+  // useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { collection, doc, setDoc } from "firebase/firestore";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -53,18 +54,16 @@ const formSchema = z.object({
 });
 
 export default function SignUpForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [error, setError] = useState("");
   const [familyMemberType, setFamilyMemberType] = useState(
     typeof window !== "undefined"
       ? window.localStorage.getItem("familyMemberType") || ""
       : "",
   );
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
+  /* const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth); */
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   const form = useForm({
@@ -88,7 +87,17 @@ export default function SignUpForm() {
       setLoading(true);
 
       const { emailAddress, password, firstName, lastName } = form.getValues();
-      const res = await createUserWithEmailAndPassword(emailAddress, password);
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        emailAddress,
+        password,
+      )
+        .then()
+        .catch((error) => {
+          console.log(error.code);
+          setError(error.code);
+        });
+
       if (res?.user) {
         const userId = res.user.uid;
         const userData = {
@@ -136,8 +145,6 @@ export default function SignUpForm() {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
                     placeholder="First Name"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
@@ -156,8 +163,6 @@ export default function SignUpForm() {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
                     placeholder="Last Name"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
@@ -177,8 +182,6 @@ export default function SignUpForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="@.com"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
@@ -198,18 +201,21 @@ export default function SignUpForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="@.com"
                   type="password"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
                 />
               </FormControl>
               <FormMessage className="whitespace-nowrap" />
+              {error === "auth/email-already-in-use" && (
+                <div className="w-full max-w-[414px] text-[25.88px] font-semibold leading-[29.12px] text-[#C9534B] md:max-w-full md:text-[12px] md:font-bold md:leading-[14.4px] mt-[16px]">
+                  Email already exists!
+                </div>
+              )}
             </FormItem>
           )}
         />
+
         <p className="w-full max-w-[689.17px] text-[25.88px] leading-[29.12px] md:mx-auto md:mt-[16px] md:h-[28px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           By clicking the Sign Up button below, you agree to the Loved{" "}
           <span className="border-b-[0.5px] border-black">
