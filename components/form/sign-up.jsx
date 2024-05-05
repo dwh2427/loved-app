@@ -13,10 +13,7 @@ import { auth } from "@/firebase/config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useState } from "react";
-import {
-  // useCreateUserWithEmailAndPassword,
-  useSignInWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -55,15 +52,13 @@ const formSchema = z.object({
 
 export default function SignUpForm() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [error, setError] = useState("");
+  const router = useRouter();
   const [familyMemberType, setFamilyMemberType] = useState(
     typeof window !== "undefined"
       ? window.localStorage.getItem("familyMemberType") || ""
       : "",
   );
-  /* const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth); */
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   const form = useForm({
@@ -85,6 +80,7 @@ export default function SignUpForm() {
   const handleSubmit = async () => {
     try {
       setLoading(true);
+      setError(""); // Clear any existing error
 
       const { emailAddress, password, firstName, lastName } = form.getValues();
       const res = await createUserWithEmailAndPassword(
@@ -95,7 +91,9 @@ export default function SignUpForm() {
         .then()
         .catch((error) => {
           console.log(error.code);
-          setError(error.code);
+          if (error.code === "auth/email-already-in-use") {
+            setError("auth/email-already-in-use"); // Set the error state
+          }
         });
 
       if (res?.user) {
@@ -128,6 +126,10 @@ export default function SignUpForm() {
     }
   };
 
+  const handleInputChange = () => {
+    setError(""); // Clear the error when any input field changes
+  };
+
   return (
     <Form {...form}>
       <form
@@ -148,6 +150,10 @@ export default function SignUpForm() {
                     placeholder="First Name"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange();
+                    }}
                   />
                 </FormControl>
               </FormItem>
@@ -166,6 +172,10 @@ export default function SignUpForm() {
                     placeholder="Last Name"
                     className="mx-auto h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] text-black placeholder:text-[#A2AEBA] md:h-[44px] md:w-[188px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                     {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange();
+                    }}
                   />
                 </FormControl>
               </FormItem>
@@ -185,6 +195,10 @@ export default function SignUpForm() {
                   placeholder="@.com"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange();
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -204,18 +218,21 @@ export default function SignUpForm() {
                   type="password"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange();
+                  }}
                 />
               </FormControl>
               <FormMessage className="whitespace-nowrap" />
               {error === "auth/email-already-in-use" && (
-                <div className="w-full max-w-[414px] text-[25.88px] font-semibold leading-[29.12px] text-[#C9534B] md:max-w-full md:text-[12px] md:font-bold md:leading-[14.4px] mt-[16px]">
+                <div className="mt-[16px] w-full max-w-[414px] text-[25.88px] font-semibold leading-[29.12px] text-[#C9534B] md:max-w-full md:text-[12px] md:font-bold md:leading-[14.4px]">
                   Email already exists!
                 </div>
               )}
             </FormItem>
           )}
         />
-
         <p className="w-full max-w-[689.17px] text-[25.88px] leading-[29.12px] md:mx-auto md:mt-[16px] md:h-[28px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
           By clicking the Sign Up button below, you agree to the Loved{" "}
           <span className="border-b-[0.5px] border-black">
