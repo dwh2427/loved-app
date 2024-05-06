@@ -3,6 +3,7 @@
 import ProfileDropdown from "@/components/button/profile-dropdown";
 import PublictFooter from "@/components/footer/PublicFooter";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "@/components/ui/use-toast";
 import useAuthState from "@/hooks/useAuthState";
 import useClientError from "@/hooks/useClientError";
 import copyToClipboard from "@/lib/copyToClipboard";
@@ -15,15 +16,15 @@ import axios from "axios";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import EditCustomPageLink from "../../components/button/editCustomPageLink";
 
 const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 export default function PrivatePage() {
   const { user } = useAuthState()
   const [userDetails, setUserDetails] = useState('')
-  const [pageData, setPageData] = useState({})
+  const [pageData, setPageData] = useState(null)
   const [isUpdating, setIsUpdating] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -32,16 +33,36 @@ export default function PrivatePage() {
   const [file, setFile] = useState(null);
   const handleClientError = useClientError()
   const [isUploading, setIsUploading] = useState(false)
+  const pathname = usePathname()
+
+  // Get a new searchParams string by merging the current
+  // searchParams with a provided key/value pair
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+      return params.toString()
+    },
+    [searchParams]
+  )
+
   const handlePageLinkEdit = async (newValue) => {
+
     try {
       setIsUpdating(true)
-      const res = await axios.put('/create-loved/api', { username: newValue, uid: user?.uid })
-      if (res.data) {
-        res?.data?.data && setUsername(res?.data?.data.username)
-        alert(res.data.message)
+      const res = await axios.put(`/private-page/api`, { newUsername: newValue, username: pageData.username, uid: user?.uid, })
+      if (res?.data?.data) {
+        setUsername(res?.data?.data.username)
+        router.push(pathname + '?' + createQueryString('username', res?.data?.data.username))
       }
+      toast({
+        variant: "success",
+        title: res.data.message,
+      });
+
+
     } catch (error) {
-      console.log(error)
+      handleClientError(error)
     } finally { setIsUpdating(false) }
   }
 
@@ -50,6 +71,7 @@ export default function PrivatePage() {
     if (!user?.uid) return
     axios.get(`/private-page/api?uid=${user?.uid}&username=${username}`)
       .then(res => {
+        console.log(res.data)
         setUserDetails(res.data?.user)
         setPageData(res.data?.loved)
       }).catch(error => console.log(error))
@@ -85,7 +107,7 @@ export default function PrivatePage() {
     }
   };
 
-  console.log(pageData)
+
   return (
     <>
       <header className="flex h-24 w-screen items-center border-b border-[#E9E9E9] px-5 md:h-[100px] md:px-16">
@@ -119,9 +141,9 @@ export default function PrivatePage() {
           <div className="mt-[16px] flex flex-col md:flex-row items-start md:items-center md:h-[49px] justify-between border-b pb-2 md:pb-0 border-[#E9E9E9]">
             <div className="mb-2 md:mb-0">
               <p className="text-[16px] font-medium leading-[19.2px] mb-1 md:mb-0">
-                {base_URL}{username} <EditCustomPageLink isUpdating={isUpdating} handleSubmit={handlePageLinkEdit} value={`${username}`} />
+                {base_URL}{pageData?.username} {pageData && <EditCustomPageLink isUpdating={isUpdating} handleSubmit={handlePageLinkEdit} value={`${pageData?.username}`} />}
               </p>
-              <Link href={`/${username}`} target="_blank" className="text-[12px] font-bold leading-[14.4px] text-[#FE5487]">
+              <Link href={`/${pageData?.username}`} target="_blank" className="text-[12px] font-bold leading-[14.4px] text-[#FE5487]">
                 Preview Page
               </Link>
             </div>
@@ -132,9 +154,9 @@ export default function PrivatePage() {
             </button>
           </div>
 
-          {/* <div className="mt-[16px] h-[35px] border-b border-[#E9E9E9]">
+          <Link className="mt-[16px] block h-[35px] border-b border-[#E9E9E9]" href={'/getting-started'} >
             Create new page
-          </div> */}
+          </Link>
 
 
         </div>
@@ -154,12 +176,13 @@ export default function PrivatePage() {
               <input
                 type="file"
                 id="fileInput"
+
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
               />
 
               {/* Image */}
-              <label htmlFor="fileInput" className="cursor-pointer block">
+              <label htmlFor={`${pageData && 'fileInput'}`} className={`${pageData && 'cursor-pointer'} block`}>
                 <Image src={addPhoto} alt="" width={100} height={100} className="rounded-md" />
               </label>
 
@@ -172,6 +195,7 @@ export default function PrivatePage() {
             </div>
           </div>
         </div>
+
       </div>
 
       <PublictFooter />

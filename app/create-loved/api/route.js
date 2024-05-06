@@ -1,3 +1,4 @@
+import { createError, errorResponse } from "@/lib/server-error";
 import Loved from "@/models/loved";
 import connectDB from "@/mongodb.config";
 import { NextResponse } from "next/server";
@@ -9,9 +10,7 @@ export async function POST(request) {
     const { first_name, last_name, family_member_type, username, uid } = body;
     const isPagesLinkExist = await Loved.findOne({ username });
     if (isPagesLinkExist) {
-      return NextResponse.json({
-        message: "Sorry! This link is already taken",
-      });
+      return createError("Sorry! This link is already taken", 400);
     }
     const newLove = new Loved({
       first_name,
@@ -22,10 +21,9 @@ export async function POST(request) {
     });
 
     await newLove.save();
-    return NextResponse.json({ data: newLove });
+    return NextResponse.json({ data: newLove }, { status: 200 });
   } catch (error) {
-    console.error("Error creating user:", error);
-    return NextResponse.json(error);
+    return errorResponse(error);
   }
 }
 

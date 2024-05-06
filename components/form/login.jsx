@@ -1,8 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,14 +10,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { auth } from "@/firebase/config";
+import useClientError from "@/hooks/useClientError";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
   emailAddress: z.string().email({
@@ -37,7 +38,7 @@ export default function LoginForm() {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
+  const handleClientError = useClientError()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,9 +63,9 @@ export default function LoginForm() {
 
       sessionStorage.setItem("user", true);
       form.reset();
-      router.push("/dashboard");
+      router.push("/private-page");
     } catch (e) {
-      console.error(e);
+      handleClientError(e)
     } finally {
       setLoading(false);
     }

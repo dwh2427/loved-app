@@ -2,6 +2,7 @@
 import Sidebar from "@/components/sidebar/sidebar";
 import { Input } from "@/components/ui/input";
 import useAuthState from "@/hooks/useAuthState";
+import useClientError from "@/hooks/useClientError";
 import Logo from "@/public/logo.png";
 import axios from "axios";
 import Image from "next/image";
@@ -16,7 +17,7 @@ export default function CreateLovedPage() {
   const [isUpdating, setIsUpdating] = useState(false)
   const { user } = useAuthState()
   const router = useRouter()
-
+  const handleClientError = useClientError()
   const handleCreatePage = async (newValue, uid) => {
     try {
       const first_name = localStorage.getItem("firstName");
@@ -28,7 +29,6 @@ export default function CreateLovedPage() {
       setIsUpdating(true)
       const res = await axios.post('/create-loved/api', newLovedData)
       if (res.data) {
-        console.log(res)
         if (!res?.data?.data) return alert(res.data.message)
         localStorage.removeItem("firstName");
         localStorage.removeItem("lastName");
@@ -36,14 +36,14 @@ export default function CreateLovedPage() {
         router.push(`/private-page?username=${res.data?.data?.username}`)
       }
     } catch (error) {
-      console.log(error);
+      handleClientError(error)
     } finally {
       setIsUpdating(false);
     }
   };
   useEffect(() => {
     const username = localStorage && localStorage.getItem('firstName')
-   
+
     if (!username) router.replace('/')
     setInsertUserName(`${base_url}${username}${Math.round(Math.random() * 265)}`)
   }, [user, router])
