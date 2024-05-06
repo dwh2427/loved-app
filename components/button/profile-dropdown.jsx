@@ -26,15 +26,15 @@ export default function ProfileDropdown() {
             </DialogTitle>
           </DialogHeader>
           <div className="h-[35px] w-full border-b border-[#E9E9E9]">
-            <button
-              // href="/change-password"
+            <Link
+              href="/change-password"
               tabIndex={"-1"}
               className="text-[16px] font-bold leading-[19.2px] text-black/70"
             >
-              Mangage
-            </button>
+              Settings
+            </Link>
           </div>
-          <div className="h-[35px] w-full border-b border-[#E9E9E9]">
+          <div className="mt-[10px] h-[35px] w-full border-b border-[#E9E9E9]">
             <Link
               href="/change-password"
               tabIndex={"-1"}
