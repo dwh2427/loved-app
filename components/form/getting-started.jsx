@@ -1,9 +1,9 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useRouter } from "next/navigation";
 
 export default function GettingStartedForm() {
   const [selectedMemberType, setSelectedMemberType] = useState("");

@@ -20,7 +20,6 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Loader2 } from "lucide-react";
-import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
@@ -117,13 +116,9 @@ export default function SignUpForm() {
 
         if (createdUser?.data) {
           await signInWithEmailAndPassword(emailAddress, password);
-          localStorage.setItem("username", createdUser.data.username);
+          localStorage.setItem('username', createdUser?.data?.username)
           form.reset();
           router.push(`/create-loved`);
-
-          localStorage.removeItem("firstName");
-          localStorage.removeItem("lastName");
-          localStorage.removeItem("familyMemberType");
         }
       }
     } catch (e) {
@@ -191,7 +186,8 @@ export default function SignUpForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+
+              <FormMessage className="whitespace-nowrap" />
             </FormItem>
           )}
         />

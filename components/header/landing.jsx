@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import Logo from "@/public/logo.png";
 import { Menu } from "lucide-react";
 import Image from "next/image";

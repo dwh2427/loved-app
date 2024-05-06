@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import useAuthState from "@/hooks/useAuthState";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,13 +22,6 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
@@ -40,7 +41,7 @@ export default function FamilyMemberForm() {
   const [familyMemberType, setFamilyMemberType] = useState("Aunt");
   const router = useRouter();
   const pathname = usePathname();
-
+  const { user } = useAuthState()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,7 +57,11 @@ export default function FamilyMemberForm() {
     localStorage.setItem("firstName", firstName);
     localStorage.setItem("lastName", lastName);
     localStorage.setItem("familyMemberType", familyMemberType);
-    router.push("/sign-up");
+
+    if (user) {
+      router.push("/create-loved")
+    } else
+      router.push("/sign-up");
   };
 
   const handleFamilyMemberTypeChange = (selectedType) => {
