@@ -15,9 +15,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import EditCustomPageLink from "../../components/button/editCustomPageLink";
-
 const base_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
 export default function PrivatePage() {
   const { user } = useAuthState();
   const [userDetails, setUserDetails] = useState("");
@@ -147,7 +145,7 @@ export default function PrivatePage() {
               <Image
                 src={man_woman_photo}
                 alt=""
-                className=" size-full rounded-[8px] border  border-[#650031] md:size-[216px]"
+                className=" size-full rounded-[8px] border border-[1px] border-[#650031] md:size-[216px]"
               />
               <button>
                 <Image
