@@ -54,7 +54,7 @@ export default function ProfileDropdown() {
           </div>
           <div className="mt-[10px] h-[35px] w-full border-b border-[#E9E9E9]">
             <LogoutButton className="text-[16px] font-bold leading-[19.2px] text-black/70">
-              Sign out
+              {/* Sign out */}
             </LogoutButton>
           </div>
         </DialogContent>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -12,12 +13,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { auth } from "@/firebase/config";
+import useAuthState from "@/hooks/useAuthState";
+
 import useClientError from "@/hooks/useClientError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,6 +36,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const { toast } = useToast();
+  const { user, loading: isAuthLoading } = useAuthState()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -62,15 +66,18 @@ export default function LoginForm() {
       }
 
       sessionStorage.setItem("user", true);
-      form.reset();
       router.push("/private-page");
+      form.reset();
     } catch (e) {
       handleClientError(e)
     } finally {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    if (isAuthLoading) return;
+    user && router.push('/dashboard')
+  }, [isAuthLoading])
   return (
     <Form {...form}>
       <form
