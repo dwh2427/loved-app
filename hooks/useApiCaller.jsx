@@ -1,4 +1,6 @@
+import { auth } from "@/firebase/config";
 import axios from "axios";
+
 import { useState } from "react";
 
 const useApiCaller = () => {
@@ -13,8 +15,8 @@ const useApiCaller = () => {
 
         // Add a request interceptor to set the authorization token
         instance.interceptors.request.use(
-            (config) => {
-                const accessToken = localStorage.getItem("accToken");
+            async (config) => {
+                const accessToken = await auth.currentUser.getIdToken() || localStorage.getItem("accToken");
                 if (accessToken) {
                     config.headers.Authorization = `Bearer ${accessToken}`;
                 }

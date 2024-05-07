@@ -114,17 +114,18 @@ export default function SignUpForm() {
           family_member_type: familyMemberType,
         };
 
-        const createdUser = await axios.post(`/sign-up/api`, userData);
-        if (createdUser?.data) {
-          const res = await signInWithEmailAndPassword(emailAddress, password);
-          localStorage.setItem('accToken', await res.user.getIdToken())
-          localStorage.setItem('username', createdUser?.data?.username)
-          form.reset();
-          router.push(`/create-loved`);
-        }
+        axios.post(`/sign-up/api`, userData);
+
+
+        const signInUser = await signInWithEmailAndPassword(emailAddress, password);
+        localStorage.setItem('accToken', await signInUser.user.getIdToken())
+        form.reset();
+        router.push(`/create-loved`);
+
       }
     } catch (e) {
       handleClientError(e)
+
     } finally { setLoading(false); }
   };
 
