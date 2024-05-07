@@ -101,7 +101,6 @@ export default function SignUpForm() {
             form.reset();
           }
         });
-
       if (res?.user) {
         const userId = res.user.uid;
         const userData = {
@@ -116,9 +115,12 @@ export default function SignUpForm() {
 
         if (createdUser?.data) {
           await signInWithEmailAndPassword(emailAddress, password);
-          localStorage.setItem('username', createdUser?.data?.username)
-          form.reset();
+          localStorage.setItem("username", createdUser?.data?.username);
+          localStorage.removeItem("lastName");
+          localStorage.removeItem("firstName");
+          localStorage.removeItem("familyMemberType");
           router.push(`/create-loved`);
+          form.reset();
         }
       }
     } catch (e) {
