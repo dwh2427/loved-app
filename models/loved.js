@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  images: [{ type: String }],
 });
 
 const Loved = mongoose.models.Loved || mongoose.model("Loved", userSchema);

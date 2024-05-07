@@ -1,3 +1,5 @@
+import { createError, errorResponse } from "@/lib/server-error";
+import Loved from "@/models/loved";
 import User from "@/models/user";
 import connectDB from "@/mongodb.config";
 import { NextResponse } from "next/server";
@@ -7,8 +9,11 @@ export async function GET(request) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const uid = searchParams.get("uid");
+    const username = searchParams.get("username");
     const user = await User.findOne({ uid });
-    return NextResponse.json(user);
+    const loved = await Loved.findOne({ username });
+
+    return NextResponse.json({ user, loved });
   } catch (error) {
     console.error("Error creating user:", error);
     return NextResponse.json(error);
@@ -18,20 +23,24 @@ export async function GET(request) {
 export async function PUT(request) {
   try {
     const body = await request.json();
-    const { uid, username } = body;
-    const checkUser = await User.findOne({ username });
+    const { newUsername, username } = body;
+
+    const checkUser = await Loved.findOne({ username: newUsername });
     if (checkUser) {
-      return NextResponse.json({ message: "This link is already used" });
+      return createError("This link is already used", 400);
     }
-    const user = await User.findOneAndUpdate(
-      { uid },
+
+    const user = await Loved.findOneAndUpdate(
       { username },
+      { username: newUsername },
       { new: true },
     );
 
-    return NextResponse.json({ data: user, message: "Page Link is Updated" });
+    return NextResponse.json(
+      { data: user, message: "Page Link is Updated" },
+      { status: 200 },
+    );
   } catch (error) {
-    console.error("Error creating user:", error);
-    return NextResponse.json(error);
+    return errorResponse(error);
   }
 }

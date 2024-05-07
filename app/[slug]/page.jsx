@@ -19,7 +19,7 @@ const User = function ({ params }) {
         res.data.data === null && router.push("/page_not_found/non_exited");
       })
       .catch(() => router.push("/page_not_found/non_exited"))
-      .finally(setLoading(false));
+    // .finally(setLoading(false));
   }, [params.slug, router]);
 
   return (
