@@ -4,6 +4,7 @@ import ProfileDropdown from "@/components/button/profile-dropdown";
 import PublictFooter from "@/components/footer/PublicFooter";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/use-toast";
+import useApiCaller from "@/hooks/useApiCaller";
 import useAuthState from "@/hooks/useAuthState";
 import useClientError from "@/hooks/useClientError";
 import copyToClipboard from "@/lib/copyToClipboard";
@@ -34,7 +35,7 @@ export default function PrivatePage() {
   const handleClientError = useClientError()
   const [isUploading, setIsUploading] = useState(false)
   const pathname = usePathname()
-
+  const apiCaller = useApiCaller()
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
   const createQueryString = useCallback(
@@ -69,13 +70,13 @@ export default function PrivatePage() {
 
   useEffect(() => {
     if (!user?.uid) return
-    axios.get(`/private-page/api?uid=${user?.uid}&username=${username}`)
+    apiCaller.get(`/private-page/api?username=${username}`)
       .then(res => {
         // console.log(res.data)
         setUserDetails(res.data?.user)
         setPageData(res.data?.loved)
-      }).catch(error => console.log(error))
-  }, [user, username])
+      }).catch(error => console.log(handleClientError(error)))
+  }, [user, username, apiCaller])
 
 
   useEffect(() => {

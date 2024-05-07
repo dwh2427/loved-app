@@ -66,6 +66,7 @@ export default function LoginForm() {
       }
 
       sessionStorage.setItem("user", true);
+      localStorage.setItem('accToken', await res.user.getIdToken())
       router.push("/private-page");
       form.reset();
     } catch (e) {
