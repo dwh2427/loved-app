@@ -71,7 +71,7 @@ export default function PrivatePage() {
     if (!user?.uid) return
     axios.get(`/private-page/api?uid=${user?.uid}&username=${username}`)
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setUserDetails(res.data?.user)
         setPageData(res.data?.loved)
       }).catch(error => console.log(error))

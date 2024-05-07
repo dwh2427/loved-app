@@ -1,14 +1,17 @@
 "use client";
-import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { cn } from "@/lib/utils";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function LogoutButton({ className }) {
+  const router = useRouter()
   return (
     <button
       onClick={() => {
         signOut(auth);
         sessionStorage.removeItem("user");
+        router.push('/login')
       }}
       tabIndex={"-1"}
       className={cn(

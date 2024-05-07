@@ -6,8 +6,8 @@ import { NextResponse } from "next/server";
 
 connectDB();
 export async function GET(request) {
+  const searchParams = request.nextUrl.searchParams;
   try {
-    const searchParams = request.nextUrl.searchParams;
     const uid = searchParams.get("uid");
     const username = searchParams.get("username");
     const user = await User.findOne({ uid });
