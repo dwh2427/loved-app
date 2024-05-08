@@ -119,7 +119,6 @@ export default function PrivatePage() {
       } catch (error) {
         handleClientError(error)
       } finally { setIsUploading(false) }
-
     }
   };
 
