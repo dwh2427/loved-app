@@ -4,8 +4,10 @@ import ProfileDropdown from "@/components/button/profile-dropdown";
 import PublictFooter from "@/components/footer/PublicFooter";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/use-toast";
+import useApiCaller from "@/hooks/useApiCaller";
 import useAuthState from "@/hooks/useAuthState";
 import useClientError from "@/hooks/useClientError";
+import useConvertHeicFile from "@/hooks/useConvertHeicFIle";
 import copyToClipboard from "@/lib/copyToClipboard";
 import addPhoto from '@/public/add-photo.png';
 import Logo3 from "@/public/logo3.svg";
@@ -19,11 +21,11 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import EditCustomPageLink from "../../components/button/editCustomPageLink";
-
 const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 export default function PrivatePage() {
   const { user } = useAuthState()
   const [userDetails, setUserDetails] = useState('')
+  const [isCovertingFile, setIsConvertingFile] = useState(false)
   const [pageData, setPageData] = useState(null)
   const [isUpdating, setIsUpdating] = useState(false)
   const router = useRouter()
@@ -34,7 +36,8 @@ export default function PrivatePage() {
   const handleClientError = useClientError()
   const [isUploading, setIsUploading] = useState(false)
   const pathname = usePathname()
-
+  const convertHeicToJpeg = useConvertHeicFile()
+  const apiCaller = useApiCaller()
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
   const createQueryString = useCallback(
@@ -45,6 +48,7 @@ export default function PrivatePage() {
     },
     [searchParams]
   )
+
 
   const handlePageLinkEdit = async (newValue) => {
 
@@ -69,13 +73,13 @@ export default function PrivatePage() {
 
   useEffect(() => {
     if (!user?.uid) return
-    axios.get(`/private-page/api?uid=${user?.uid}&username=${username}`)
+    apiCaller.get(`/private-page/api?username=${username}`)
       .then(res => {
         // console.log(res.data)
         setUserDetails(res.data?.user)
         setPageData(res.data?.loved)
-      }).catch(error => console.log(error))
-  }, [user, username])
+      }).catch(error => console.log(handleClientError(error)))
+  }, [user, username, apiCaller])
 
 
   useEffect(() => {
@@ -84,15 +88,27 @@ export default function PrivatePage() {
   }, [router.query])
 
 
+
+
   const handleFileChange = async (event) => {
-    setIsUploading(true)
+
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
+
     if (selectedFile) {
+      setIsUploading(true)
       const formData = new FormData();
+      // let file = selectedFile
+      // if (selectedFile.name.slice(((selectedFile.name.lastIndexOf('.') - 1) >>> 0) + 2) === 'HEIC') {
+      //   setIsConvertingFile(true)
+      //   file = await convertHeicToJpeg(file)
+      //   setIsConvertingFile(false)
+      // }
+
       formData.append('file', selectedFile);
       formData.append('username', username);
       formData.append('uid', user?.uid);
+
       try {
         const response = await axios.post('/private-page/api/image-upload', formData, {
           headers: {
@@ -189,7 +205,7 @@ export default function PrivatePage() {
               {/* Overlay with loading message */}
               {isUploading && (
                 <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-70 flex justify-center items-center z-10">
-                  <p className="text-lg font-semibold">Uploading...</p>
+                  <p className="text-lg font-semibold">{isCovertingFile ? 'Converting...' : 'Uploading...'}</p>
                 </div>
               )}
             </div>

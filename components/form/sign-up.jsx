@@ -9,18 +9,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { auth } from "@/firebase/config";
+import useClientError from "@/hooks/useClientError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { Loader2 } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -54,6 +55,7 @@ const formSchema = z.object({
 
 export default function SignUpForm() {
   const { toast } = useToast();
+  const handleClientError = useClientError()
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [familyMemberType, setFamilyMemberType] = useState(
@@ -111,22 +113,18 @@ export default function SignUpForm() {
           family_member_type: familyMemberType,
         };
 
-        const createdUser = await axios.post(`/sign-up/api`, userData);
+        axios.post(`/sign-up/api`, userData);
 
-        if (createdUser?.data) {
-          await signInWithEmailAndPassword(emailAddress, password);
-          localStorage.setItem("username", createdUser?.data?.username);
-          localStorage.removeItem("lastName");
-          localStorage.removeItem("firstName");
-          localStorage.removeItem("familyMemberType");
-          router.push(`/create-loved`);
-          form.reset();
-        }
+
+        const signInUser = await signInWithEmailAndPassword(emailAddress, password);
+        localStorage.setItem('accToken', await signInUser.user.getIdToken())
+        form.reset();
+        router.push(`/create-loved`);
       }
     } catch (e) {
-      console.error(e);
-      setLoading(false);
-    }
+      handleClientError(e)
+
+    } finally { setLoading(false); }
   };
 
   return (
