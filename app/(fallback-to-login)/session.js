@@ -1,22 +1,22 @@
-'use client';
+"use client";
 import { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
+
+import useAuthState from "@/hooks/useAuthState";
 import { useRouter } from "next/navigation";
 
 export default function Session({ children }) {
-  const [user] = useAuthState(auth);
+  const { user, loading } = useAuthState();
   const router = useRouter();
 
   useEffect(() => {
     if (!user && typeof window !== "undefined") {
       const userSession = sessionStorage.getItem("user");
-      if (!userSession) {
+      if (!loading && userSession) {
         router.push("/login");
       } else {
       }
-    } 
-  }, [user, router]);
+    }
+  }, [user, router, loading]);
 
   return children;
 }

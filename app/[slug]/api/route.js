@@ -1,13 +1,14 @@
+import { createError, errorResponse } from "@/lib/server-error";
 import Loved from "@/models/loved";
-import { NextResponse } from "next/server";
 
 export async function GET(request) {
+  const username = request.nextUrl.pathname.split("/")[1];
+
   try {
-    const username = request.nextUrl.pathname.split("/")[1];
     const user = await Loved.findOne({ username });
-    return NextResponse.json({ data: user, success: true });
+    if (!user) return createError("not found", 404);
+    return Response.json({ data: user, success: true });
   } catch (error) {
-    console.error("Error creating user:", error);
-    return NextResponse.json({ data: error, success: false });
+    return errorResponse(error);
   }
 }

@@ -67,7 +67,7 @@ export default function LoginForm() {
 
       sessionStorage.setItem("user", true);
       localStorage.setItem('accToken', await res.user.getIdToken())
-      router.push("/private-page");
+      router.push("/dashboard");
       form.reset();
     } catch (e) {
       handleClientError(e)

@@ -33,7 +33,7 @@ export default function CreateLovedPage() {
         localStorage.removeItem("firstName");
         localStorage.removeItem("lastName");
         localStorage.removeItem("familyMemberType");
-        router.push(`/private-page?username=${res.data?.data?.username}`)
+        router.push(`/dashboard`)
       }
     } catch (error) {
       handleClientError(error)

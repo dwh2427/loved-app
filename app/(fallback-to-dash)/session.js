@@ -1,22 +1,21 @@
 "use client";
-import { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
+import useAuthState from "@/hooks/useAuthState";
 import { useRouter } from "next/navigation";
-
+import { useEffect } from "react";
 export default function Session({ children }) {
-  const [user] = useAuthState(auth);
+  const { user, loading } = useAuthState();
   const router = useRouter();
 
   useEffect(() => {
     if (
+      !loading &&
       user &&
       typeof window !== "undefined" &&
       sessionStorage.getItem("user")
     ) {
       router.push("/dashboard");
     }
-  }, [user, router]);
+  }, [user, router, loading]);
 
   return children;
 }

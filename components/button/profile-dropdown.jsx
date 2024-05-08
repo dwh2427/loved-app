@@ -25,7 +25,7 @@ export default function ProfileDropdown() {
               Your Profile
             </DialogTitle>
           </DialogHeader>
-          <div className="h-[35px] w-full border-b border-[#E9E9E9]">
+          {/* <div className="h-[35px] w-full border-b border-[#E9E9E9]">
             <Link
               href="/change-password"
               tabIndex={"-1"}
@@ -33,7 +33,7 @@ export default function ProfileDropdown() {
             >
               Settings
             </Link>
-          </div>
+          </div> */}
           <div className="mt-[10px] h-[35px] w-full border-b border-[#E9E9E9]">
             <Link
               href="/change-password"

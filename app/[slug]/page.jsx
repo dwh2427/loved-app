@@ -1,6 +1,7 @@
 'use client'
 import PublictFooter from "@/components/footer/PublicFooter";
 import Header from "@/components/header/landing";
+import useClientError from "@/hooks/useClientError";
 import womenPhoto from "@/public/image 86.png";
 import leftArrow from "@/public/left-arrow.png";
 import Logo3 from "@/public/logo3.svg";
@@ -8,18 +9,20 @@ import rightArrow from "@/public/right-arrow.png";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const User = function ({ params }) {
   const router = useRouter();
+  const [pageData, setPageData] = useState(null)
+  const handleClientError = useClientError()
   useEffect(() => {
     axios
       .get(`/${params.slug}/api`)
       .then((res) => {
-        console.log(res);
-        res.data.data === null && router.push("/page_not_found/non_exited");
+        setPageData(res.data.data)
       })
-      .catch(() => router.push("/page_not_found/non_exited"))
+      .catch((error) => { router.push("/page_not_found/non_exited"); handleClientError(error) })
     // .finally(setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.slug, router]);
 
   return (
@@ -44,16 +47,25 @@ const User = function ({ params }) {
           </h3>
           <div className="relative">
             <div className="flex gap-[16px] ">
-              <Image
-                src={womenPhoto}
+              {pageData?.images ? pageData?.images.map((i, ind) => <Image
+                src={i}
                 alt=""
+                width={100}
+                height={345}
+                key={ind}
                 className="h-[200px] w-full rounded-[8px]  md:h-[345px]"
-              />
-              <Image
-                src={womenPhoto}
-                alt=""
-                className="h-[200px] w-full rounded-[8px]  md:h-[345px]"
-              />
+              />)
+                : <>
+                  <Image
+                    src={womenPhoto}
+                    alt=""
+                    className="h-[200px] w-full rounded-[8px]  md:h-[345px]"
+                  />
+                  <Image
+                    src={womenPhoto}
+                    alt=""
+                    className="h-[200px] w-full rounded-[8px]  md:h-[345px]"
+                  /></>}
             </div>
 
             <button className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
