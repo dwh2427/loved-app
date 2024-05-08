@@ -103,7 +103,6 @@ export default function SignUpForm() {
             form.reset();
           }
         });
-
       if (res?.user) {
         const userId = res.user.uid;
         const userData = {
@@ -121,7 +120,6 @@ export default function SignUpForm() {
         localStorage.setItem('accToken', await signInUser.user.getIdToken())
         form.reset();
         router.push(`/create-loved`);
-
       }
     } catch (e) {
       handleClientError(e)
