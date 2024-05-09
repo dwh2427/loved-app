@@ -30,11 +30,7 @@ const User = function ({ params }) {
           Ash Good
         </h1>
         <p className=" max-w-[721px] leading-[28.8px] text-[#A2AEBA] md:leading-7 lg:text-[24px]">
-          Hipster ipsum tattooed brunch I &apos m baby. Messenger aesthetic
-          readymade jean yes vice copper freegan forage yes. Portland of
-          knausgaard xoxo ethical food normcore try-hard flexitarian. Umami
-          migas chartreuse aesthetic listicle. Lomo rights LaCroix austin book
-          freegan pbr&b fanny distillery bodega.
+          {pageData?.story}
           <button className="block text-black">See more</button>
         </p>
 

@@ -71,7 +71,7 @@ const PageDetaisl = ({ item }) => {
                 Page Link
             </p>
             <p className="text-[16px] leading-[19.2px] text-[#A2AEBA]">
-                Raise money for charities and personal causes
+                {pageData?.story}
             </p>
             <div className="mt-[16px] flex flex-col md:flex-row items-start md:items-center md:h-[49px] justify-between border-b pb-2 md:pb-0 border-[#E9E9E9]">
                 <div className="mb-2 md:mb-0">
