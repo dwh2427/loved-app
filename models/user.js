@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  page: { type: mongoose.Schema.ObjectId, ref: "Loved" },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

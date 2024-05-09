@@ -1,13 +1,14 @@
 "use client";
 import Sidebar from "@/components/sidebar/sidebar";
 import { Input } from "@/components/ui/input";
+import useApiCaller from "@/hooks/useApiCaller";
 import useAuthState from "@/hooks/useAuthState";
 import useClientError from "@/hooks/useClientError";
 import Logo from "@/public/logo.png";
-import axios from "axios";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Session from "./session";
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
@@ -18,35 +19,32 @@ export default function CreateLovedPage() {
   const { user } = useAuthState()
   const router = useRouter()
   const handleClientError = useClientError()
-  const handleCreatePage = async (newValue, uid) => {
+  const pathname = usePathname()
+  const apiCaller = useApiCaller()
+  const [pageId, setPageId] = useState('')
+  const searchParams = useSearchParams()
+  const handleUpdatePageLink = async (newValue) => {
     try {
-      const first_name = localStorage.getItem("firstName");
-      const last_name = localStorage.getItem("lastName");
-      const family_member_type = localStorage.getItem("familyMemberType");
       const value = newValue.split('/')[3]
-      const newLovedData = { family_member_type, last_name, first_name, username: value, uid, }
-
       setIsUpdating(true)
-      const res = await axios.post('/create-loved/api', newLovedData)
-      if (res.data) {
-        if (!res?.data?.data) return alert(res.data.message)
-        localStorage.removeItem("firstName");
-        localStorage.removeItem("lastName");
-        localStorage.removeItem("familyMemberType");
-        router.push(`/dashboard`)
-      }
+      await apiCaller.put('/dashboard/api', { newUsername: value, _id: pageId })
+      localStorage.removeItem('pageId')
+      router.push(`/dashboard`)
+
     } catch (error) {
       handleClientError(error)
     } finally {
       setIsUpdating(false);
     }
   };
-  useEffect(() => {
-    const username = localStorage && localStorage.getItem('firstName')
 
-    if (!username) router.replace('/')
-    setInsertUserName(`${base_url}${username}${Math.round(Math.random() * 265)}`)
-  }, [user, router])
+  useEffect(() => {
+    const username = searchParams.get('url_path')
+    const pageId = localStorage.getItem('pageId')
+    if (!username && !pageId) router.replace('/')
+    setPageId(pageId)
+    setInsertUserName(`${base_url}${username}`)
+  }, [user, router, searchParams])
 
   return (
     <>
@@ -95,9 +93,10 @@ export default function CreateLovedPage() {
 
           <button
             disabled={isUpdating}
-            onClick={() => handleCreatePage(insertUsername, user?.uid)}
-            className="mx-auto h-[102.71px] w-full disabled:opacity-50 max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[86px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
+            onClick={() => handleUpdatePageLink(insertUsername)}
+            className="mx-auto h-[102.71px] w-full gap-4 flex justify-center disabled:opacity-50 max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[86px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
           >
+            {isUpdating && <Loader2 />}
             View and Edit Page
           </button>
         </div>

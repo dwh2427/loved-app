@@ -7,8 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useApiCaller from "@/hooks/useApiCaller";
 import useAuthState from "@/hooks/useAuthState";
+import useClientError from "@/hooks/useClientError";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -21,10 +26,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, {
@@ -39,8 +40,11 @@ const formSchema = z.object({
 export default function FamilyMemberForm() {
   const [loading, setLoading] = useState("");
   const [familyMemberType, setFamilyMemberType] = useState("Aunt");
+  const handleClientError = useClientError()
   const router = useRouter();
+  const apiCaller = useApiCaller()
   const pathname = usePathname();
+  const params = useParams()
   const { user } = useAuthState()
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -51,18 +55,40 @@ export default function FamilyMemberForm() {
     },
   });
 
+  const handleCreatePage = async (params) => {
+    try {
+      const { family_member_type, last_name, first_name, pageFor, } = params
+      const username = `${first_name.split(' ')[0]}${Math.ceil(Math.random() * 235)}`
+      const newPageData = { family_member_type, last_name, first_name, pageFor, username }
+      const { data } = await apiCaller.post('/getting-started/api', { pageData: newPageData })
+      localStorage.setItem('pageId', data?._id)
+      router.push(`/add-photo`)
+
+    } catch (error) {
+      handleClientError(error)
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = () => {
     setLoading(true);
-    const { firstName, lastName, familyMemberType } = form.getValues();
-    localStorage.setItem("firstName", firstName);
-    localStorage.setItem("lastName", lastName);
-    localStorage.setItem("familyMemberType", familyMemberType);
-
+    const { firstName, lastName, familyMemberType, } = form.getValues();
     if (user) {
-      router.push("/create-loved")
-    } else
+      return handleCreatePage({
+        first_name: firstName,
+        last_name: lastName,
+        family_member_type: familyMemberType,
+        pageFor: params.slug
+      })
+      
+    } else {
+      localStorage.setItem("firstName", firstName);
+      localStorage.setItem("lastName", lastName);
+      localStorage.setItem("familyMemberType", familyMemberType);
       router.push("/sign-up");
-  };
+    }
+  }
 
   const handleFamilyMemberTypeChange = (selectedType) => {
     setFamilyMemberType(selectedType);

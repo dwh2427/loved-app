@@ -2,11 +2,11 @@ import Sidebar from "@/components/sidebar/sidebar";
 import Logo from "@/public/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import Session from "../session";
 import AddPhoto from "./(components)/addPhotos";
-
 export default function AddAttachments() {
     return (
-        <>
+        <Session>
             <div className="lg:flex lg:w-screen">
                 <div className="lg:flex-1">
                     <div className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden">
@@ -44,11 +44,11 @@ export default function AddAttachments() {
                             </h2>
                         </div>
 
-                        <AddPhoto />
+                        <AddPhoto id={'dasdf'} />
                     </div>
                 </div>
                 <Sidebar />
             </div>
-        </>
+        </Session>
     );
 }

@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  story: { type: String },
+  pageFor: {
+    type: String,
+    enum: ["friend", "family_member", "yourself"],
+    required: true,
+  },
   images: [{ type: String }],
 });
 

@@ -16,7 +16,7 @@ const useApiCaller = () => {
         // Add a request interceptor to set the authorization token
         instance.interceptors.request.use(
             async (config) => {
-                const accessToken = await auth.currentUser.getIdToken() || localStorage.getItem("accToken");
+                const accessToken = await auth.currentUser?.getIdToken() || localStorage.getItem("accToken");
                 if (accessToken) {
                     config.headers.Authorization = `Bearer ${accessToken}`;
                 }

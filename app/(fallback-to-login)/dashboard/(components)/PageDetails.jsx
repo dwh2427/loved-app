@@ -8,10 +8,8 @@ import useApiCaller from "@/hooks/useApiCaller";
 import useClientError from "@/hooks/useClientError";
 import copyToClipboard from "@/lib/copyToClipboard";
 import addPhoto from '@/public/add-photo.png';
-import man_woman_photo from '@/public/man-woman.png';
-import threeDot from '@/public/three-dot.png';
-import women from '@/public/women.png';
 import axios from "axios";
+import { Loader2 } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -29,17 +27,11 @@ const PageDetaisl = ({ item }) => {
         try {
             setIsUpdating(true)
             const res = await apiCaller.put(`/dashboard/api`, { newUsername: newValue, _id: pageData._id, })
-            if (res?.data?.data) {
-                // setUsername(res?.data?.data.username)
-                // router.push(pathname + '?' + createQueryString('username', res?.data?.data.username))
-                setPageData(res.data?.data)
-            }
+            setPageData(res.data?.data)
             toast({
                 variant: "success",
                 title: res.data.message,
             });
-
-
         } catch (error) {
             handleClientError(error)
         } finally { setIsUpdating(false) }
@@ -105,18 +97,22 @@ const PageDetaisl = ({ item }) => {
             <h3 className="font-[900] size-[18px] leading-[22px] mb-[16px] text-[#650031]">Moments</h3>
             <div className="flex flex-col md:flex-row gap-[16px]">
                 <div className="relative w-full md:w-[216px]">
-                    <Image src={pageData?.images && pageData.images[0] || man_woman_photo} alt="" width={216} height={216} className=" size-full md:size-[216px] border border-[1px] border-[#650031] rounded-[8px]" />
-                    <button><Image src={threeDot} alt="" className="size-[20px] absolute top-[11px] right-[6px]" /></button>
+                    {
+                        pageData && pageData?.images?.slice(1, pageData.images.length).map((i, ind) =>
+                            <Image
+                                key={ind} src={i}
+                                alt="" width={100}
+                                height={100}
+                                className="size-[100px] rounded-[8px]" />)}
                 </div>
 
                 <div className="flex flex-wrap gap-[16px]">
-                    {pageData?.images?.length > 1 ?
-                        pageData.images.slice(1, pageData.images.length).map((i, ind) => <Image key={ind} src={i} alt="" width={100} height={100} className="size-[100px] rounded-[8px]" />) :
-                        <Image src={women} alt="" width={100} height={100} className="size-[100px] rounded-[8px]" />}
+                    {
+                        pageData?.images?.slice(1, pageData.images.length).map((i, ind) => <Image key={ind} src={i} alt="" width={100} height={100} className="size-[100px] rounded-[8px]" />)
+                    }
                     <input
                         type="file"
                         id={pageData._id}
-
                         style={{ display: 'none' }}
                         onChange={handleFileChange}
                     />
@@ -125,18 +121,11 @@ const PageDetaisl = ({ item }) => {
                     <label htmlFor={`${pageData && pageData._id}`} className={`${pageData && 'cursor-pointer'} block relative`}>
                         {isUploading && ( // Conditionally render the overlay when uploading
                             <div className="absolute inset-0 bg-white bg-opacity-70 flex justify-center items-center z-10">
-                                <p className="text-lg font-semibold">Uploading...</p> {/* Loading text */}
+                                {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
                             </div>
                         )}
                         <Image src={addPhoto} alt="" width={100} height={100} className="rounded-md" />
                     </label>
-
-                    {/* Overlay with loading message */}
-                    {/* {isUploading && (
-                        <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-70 flex justify-center items-center z-10">
-                            <p className="text-lg font-semibold">{'Uploading...'}</p>
-                        </div>
-                    )} */}
                 </div>
             </div>
         </div>

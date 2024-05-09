@@ -58,11 +58,6 @@ export default function SignUpForm() {
   const handleClientError = useClientError()
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [familyMemberType, setFamilyMemberType] = useState(
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("familyMemberType") || ""
-      : "",
-  );
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   const form = useForm({
@@ -80,6 +75,25 @@ export default function SignUpForm() {
       password: "",
     },
   });
+
+  const handleCreatePage = async (params) => {
+    try {
+      const { family_member_type, last_name, first_name, pageFor, } = params
+      const username = `${first_name.split(' ')[0]}${Math.ceil(Math.random() * 235)}`
+      const newPageData = { family_member_type, last_name, first_name, pageFor, username }
+      const { data } = await apiCaller.put('/dashboard/api', newPageData)
+      localStorage.removeItem("firstName");
+      localStorage.removeItem("lastName");
+      localStorage.removeItem("familyMemberType");
+      localStorage.removeItem("pageFor");
+
+
+    } catch (error) {
+      handleClientError(error)
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -103,6 +117,7 @@ export default function SignUpForm() {
             form.reset();
           }
         });
+
       if (res?.user) {
         const userId = res.user.uid;
         const userData = {
@@ -110,16 +125,29 @@ export default function SignUpForm() {
           first_name: firstName,
           last_name: lastName,
           email: emailAddress,
-          family_member_type: familyMemberType,
         };
 
-        axios.post(`/sign-up/api`, userData);
 
+        // collect data for page 
+        const pageFor = localStorage.getItem('pageFor')
+        const first_name = localStorage.getItem('firstName')
+        const last_name = localStorage.getItem('lastName')
+        const family_member_type = localStorage.getItem('familyMemberType')
+        const username = `${first_name.split(' ')[0]}${Math.ceil(Math.random() * 235)}`
+        const pageData = {
+          pageFor, first_name, last_name, family_member_type, username
+        }
 
+        const { data } = await axios.post(`/sign-up/api`, { userData, pageData });
         const signInUser = await signInWithEmailAndPassword(emailAddress, password);
         localStorage.setItem('accToken', await signInUser.user.getIdToken())
         form.reset();
-        router.push(`/create-loved`);
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("familyMemberType");
+        localStorage.removeItem("pageFor");
+        localStorage.setItem('pageId', data.newPage._id)
+        router.push(`/add-photo`)
       }
     } catch (e) {
       handleClientError(e)

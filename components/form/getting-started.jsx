@@ -1,27 +1,44 @@
 "use client";
+import useApiCaller from '@/hooks/useApiCaller';
+import useAuthState from '@/hooks/useAuthState';
+import useClientError from '@/hooks/useClientError';
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-
+import { toast } from '../ui/use-toast';
 export default function GettingStartedForm() {
   const [selectedMemberType, setSelectedMemberType] = useState("");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+  const { user, loading: authLoading } = useAuthState()
   const handleMemberTypeChange = (event) => {
     setSelectedMemberType(event.target.value);
   };
-
+  const apiCaller = useApiCaller()
+  const handleClientError = useClientError()
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
+    // await new Promise((resolve) => setTimeout(resolve, 1));
+    try {
+      if (user && selectedMemberType === 'yourself') {
+        const fetchUser = await apiCaller.get(`/getting-started/api/get_login_user_data`)
+        if (fetchUser.data?.page) {
+          setLoading(false);
+          return toast({ title: 'You can not create multiple page yourself', variant: 'destructive' })
+        }
+      }
+      localStorage.setItem('pageFor', selectedMemberType)
+      router.push(`/getting-started/${selectedMemberType}`);
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
-    router.push(`/getting-started/${selectedMemberType}`);
-    setLoading(false);
+    } catch (error) {
+      handleClientError(error)
+
+    } finally { setLoading(false) }
+
   };
   return (
     <div className="md:mx-auto md:mt-[22px] md:h-[508px] md:w-[591px] md:rounded-[16px] md:p-16">
@@ -79,6 +96,7 @@ export default function GettingStartedForm() {
           disabled={!selectedMemberType || loading}
           className={`mx-auto mt-[86px] h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px] ${selectedMemberType ? "" : "cursor-not-allowed"}`}
         >
+          {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
           Continue
         </Button>
       </div>
