@@ -8,21 +8,20 @@ import Logo from "@/public/logo.png";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Session from "./session";
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function CreateLovedPage() {
+  const { user } = useAuthState()
   const [insertUsername, setInsertUserName] = useState(``)
   const [isUpdating, setIsUpdating] = useState(false)
-  const { user } = useAuthState()
   const router = useRouter()
   const handleClientError = useClientError()
-  const pathname = usePathname()
   const apiCaller = useApiCaller()
   const [pageId, setPageId] = useState('')
-  const searchParams = new URLSearchParams(pathname)
+
   const handleUpdatePageLink = async (newValue) => {
     try {
       const value = newValue.split('/')[3]
@@ -39,12 +38,12 @@ export default function CreateLovedPage() {
   };
 
   useEffect(() => {
-    const username = searchParams.get('url_path')
+    const username = localStorage.getItem('username')
     const pageId = localStorage.getItem('pageId')
     if (!username && !pageId) router.replace('/')
     setPageId(pageId)
     setInsertUserName(`${base_url}${username}`)
-  }, [user, router, pathname, searchParams])
+  }, [user, router,])
 
   return (
     <>

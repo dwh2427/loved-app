@@ -76,7 +76,9 @@ const AddPhoto = () => {
                             key={ind} src={i}
                             alt="" width={100}
                             height={100}
-                            className="size-[100px] rounded-[8px] border border-[1px] border-[#650031]" />)}
+                            className="size-[100px] rounded-[8px] border border-[1px] border-[#650031]"
+                        />)
+                }
                 <input
                     type="file"
                     id={'pageData._id'}
