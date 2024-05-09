@@ -1,13 +1,10 @@
 'use client'
+import CustomSlider from "@/components/carousel/public-page-carousel";
 import PublictFooter from "@/components/footer/PublicFooter";
 import Header from "@/components/header/landing";
 import useClientError from "@/hooks/useClientError";
-import womenPhoto from "@/public/image 86.png";
-import leftArrow from "@/public/left-arrow.png";
 import Logo3 from "@/public/logo3.svg";
-import rightArrow from "@/public/right-arrow.png";
 import axios from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 const User = function ({ params }) {
@@ -45,35 +42,16 @@ const User = function ({ params }) {
           <h3 className="mb-[8px]  text-[30px] font-[900]  leading-[36px]  text-[#650031]">
             Moments
           </h3>
-          <div className="relative">
-            <div className="flex gap-[16px] ">
-              {pageData?.images ? pageData?.images.map((i, ind) => <Image
-                src={i}
-                alt=""
-                width={100}
-                height={345}
-                key={ind}
-                className="h-[200px] w-full rounded-[8px]  md:h-[345px]"
-              />)
-                : <>
-                  <Image
-                    src={womenPhoto}
-                    alt=""
-                    className="h-[200px] w-full rounded-[8px]  md:h-[345px]"
-                  />
-                  <Image
-                    src={womenPhoto}
-                    alt=""
-                    className="h-[200px] w-full rounded-[8px]  md:h-[345px]"
-                  /></>}
-            </div>
 
-            <button className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
+
+          <div className="relative">
+            {pageData && <CustomSlider slides={pageData.images} />}
+            {/* <button className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
               <Image src={leftArrow} alt="" className="h-8 w-6 md:w-8" />
             </button>
             <button className="absolute right-0 top-1/2 z-10  -translate-y-1/2 transform md:-right-10">
               <Image src={rightArrow} alt="" className="h-8 w-6 md:w-8" />
-            </button>
+            </button> */}
           </div>
         </div>
       </main>

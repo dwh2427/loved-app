@@ -3,7 +3,6 @@ import Loved from "@/models/loved";
 
 export async function GET(request) {
   const username = request.nextUrl.pathname.split("/")[1];
-
   try {
     const user = await Loved.findOne({ username });
     if (!user) return createError("not found", 404);

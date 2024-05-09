@@ -10,7 +10,7 @@ import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import PageDetaisl from "./api/(components)/PageDetails";
+import PageDetaisl from "./(components)/PageDetails";
 
 export default function PrivatePage() {
   const { user } = useAuthState()

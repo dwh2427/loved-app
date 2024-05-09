@@ -3,7 +3,6 @@ import { createError, errorResponse } from "@/lib/server-error";
 import Loved from "@/models/loved";
 import User from "@/models/user";
 import connectDB from "@/mongodb.config";
-import { NextResponse } from "next/server";
 
 connectDB();
 // This function handles GET requests, typically used to retrieve resources.
@@ -19,7 +18,7 @@ export async function GET(request) {
     const loved = await Loved.find({ uid: authUser.uid });
 
     // Returns a JSON response containing data for the authenticated user and the user specified by the username.
-    return NextResponse.json({ user, loved });
+    return Response.json({ user, loved });
   } catch (error) {
     // If an error occurs during the process, returns an error response.
     return errorResponse(error);
@@ -58,7 +57,7 @@ export async function PUT(request) {
     );
 
     // Returns a success response with the updated user data.
-    return NextResponse.json(
+    return Response.json(
       { data: user, message: "Page Link is Updated" },
       { status: 200 }, // HTTP status code indicating success
     );

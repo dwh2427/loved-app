@@ -35,12 +35,15 @@
     "react-dom": "^18",
     "react-firebase-hooks": "^5.1.1",
     "react-hook-form": "^7.51.3",
+    "react-slick": "^0.30.2",
     "sharp": "^0.33.3",
+    "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.5"
   },
   "devDependencies": {
+    "@types/react": "18.3.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "postcss": "^8",
