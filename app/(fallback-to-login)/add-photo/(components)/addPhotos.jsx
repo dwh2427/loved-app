@@ -1,57 +1,43 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import { Button } from '@/components/ui/button';
-import { auth } from '@/firebase/config';
+import Popup from '@/components/ui/popup';
 import useApiCaller from '@/hooks/useApiCaller';
 import useAuthState from '@/hooks/useAuthState';
 import useClientError from '@/hooks/useClientError';
+import useImageUpload from '@/hooks/useImageUpload';
 import addPhoto from '@/public/add-photo.png';
 import threeDot from '@/public/three-dot.png';
-import axios from 'axios';
 import { Loader2 } from 'lucide-react';
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import CropEasy from './crop-images';
 const AddPhoto = () => {
+    const { user, loading } = useAuthState()
     const apiCaller = useApiCaller()
     const [isDataLoading, setIsDataLoading] = useState(true)
-    const [isUploading, setIsUploading] = useState(false)
     const [pageData, setPageData] = useState(null)
-    const [pageId, setPageId] = useState('')
+    // const [pageId, setPageId] = useState('')
     const handleClientError = useClientError()
     const router = useRouter()
     const [isContinue, setIsContinue] = useState(false)
 
+    const {
+        imageUrl,
+        handleFileChange,
+        handleFileUpload,
+        isCropping,
+        setImageUrl,
+        isUploading,
+        setIsCropping
+    } = useImageUpload(pageData, setPageData)
 
-    const handleFileChange = async (event) => {
-        const selectedFile = event.target.files[0];
-        // setFile(selectedFile);
-        if (selectedFile) {
-            setIsUploading(true)
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('pageId', pageData?._id);
 
-            try {
-                const { data } = await axios.post('/dashboard/api/image-upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        "Authorization": `Bearer ${await auth.currentUser.getIdToken()}`
-                    },
-
-                });
-
-                setPageData(data.data)
-            } catch (error) {
-                handleClientError(error)
-            } finally { setIsUploading(false) }
-        }
-    };
-    const { user, loading } = useAuthState()
     useEffect(() => {
         if (!loading && !user) router.push('/login')
         const pagId = window !== undefined && localStorage.getItem('pageId')
-        setPageId(pagId)
+        // setPageId(pagId)
         if (user) {
             apiCaller.get(`/add-photo/api?pageId=${pagId}`).
                 then(data => setPageData(data.data))
@@ -62,6 +48,7 @@ const AddPhoto = () => {
     }, [user, loading])
 
     if (isDataLoading) { return 'Loading ...' }
+
     return <div className=" flex flex-col items-center">
         <div className="flex flex-col md:flex-row gap-[16px]">
             {pageData?.images.length > 0 && <div className="relative w-full md:w-[216px]">
@@ -104,6 +91,18 @@ const AddPhoto = () => {
             {isContinue && <Loader2 className="mr-2 size-6 animate-spin" />}
             Continue
         </Button>
+
+
+        {/* modals  */}
+        <Popup isOpen={isCropping} closeModal={() => setIsCropping(false)}>
+            <div >
+                <CropEasy photoURL={imageUrl}
+                    setOpenCrop={setIsCropping}
+                    setPhotoURL={setImageUrl}
+                    handlImageUpload={handleFileUpload}
+                />
+            </div>
+        </Popup>
     </div>
 
 }

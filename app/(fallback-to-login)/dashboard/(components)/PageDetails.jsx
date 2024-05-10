@@ -2,27 +2,37 @@
 "use client"
 import EditCustomPageLink from "@/components/button/editCustomPageLink";
 import { Badge } from "@/components/ui/badge";
+import Popup from "@/components/ui/popup";
 import { toast } from "@/components/ui/use-toast";
-import { auth } from "@/firebase/config";
 import useApiCaller from "@/hooks/useApiCaller";
 import useClientError from "@/hooks/useClientError";
 import copyToClipboard from "@/lib/copyToClipboard";
 import addPhoto from '@/public/add-photo.png';
 import threeDot from '@/public/three-dot.png';
-import axios from "axios";
 import { Loader2 } from "lucide-react";
 
+import useImageUpload from "@/hooks/useImageUpload";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import CropEasy from "../../add-photo/(components)/crop-images";
 const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 const PageDetaisl = ({ item }) => {
     const [pageData, setPageData] = useState(item)
     const [isUpdating, setIsUpdating] = useState(false)
-    const [file, setFile] = useState(null);
-    const [isUploading, setIsUploading] = useState(false)
     const apiCaller = useApiCaller()
     const handleClientError = useClientError()
+
+    const {
+        imageUrl,
+        handleFileChange,
+        handleFileUpload,
+        isCropping,
+        setImageUrl,
+        isUploading,
+        setIsCropping
+    } = useImageUpload(pageData, setPageData)
+
     useEffect(() => { setPageData(item) }, [item])
     const handlePageLinkEdit = async (newValue) => {
         try {
@@ -37,33 +47,6 @@ const PageDetaisl = ({ item }) => {
             handleClientError(error)
         } finally { setIsUpdating(false) }
     }
-
-
-    const handleFileChange = async (event) => {
-        const selectedFile = event.target.files[0];
-        setFile(selectedFile);
-        if (selectedFile) {
-            setIsUploading(true)
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('pageId', pageData?._id);
-
-            try {
-                const { data } = await axios.post('/dashboard/api/image-upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        "Authorization": `Bearer ${await auth.currentUser.getIdToken()}`
-                    },
-
-                });
-
-                setPageData(data.data)
-            } catch (error) {
-                handleClientError(error)
-            } finally { setIsUploading(false) }
-        }
-    };
-
 
     return (<div className="pb-6 border-b border-1 border-gray-300">
         <div className="  w-full max-w-[450px]">
@@ -114,7 +97,7 @@ const PageDetaisl = ({ item }) => {
                     />
 
                     {/* Image */}
-                    <label htmlFor={`${pageData && pageData._id}`} className={`${pageData && 'cursor-pointer'} block relative`}>
+                    <label htmlFor={`${pageData && pageData._id}`} className={`${pageData && 'cursor-pointer'} z-0 block relative`}>
                         <Image src={addPhoto} alt="" width={100} height={100} className="rounded-md" />
                         {<div className="absolute inset-0 bg-white bg-opacity-70 flex justify-center items-center z-10">
                             {isUploading && <Loader2 className="mr-2 size-6 animate-spin" />}
@@ -123,6 +106,17 @@ const PageDetaisl = ({ item }) => {
                 </div>
             </div>
         </div>
+
+        {/* modals  */}
+        <Popup isOpen={isCropping} closeModal={() => setIsCropping(false)}>
+            <div >
+                <CropEasy photoURL={imageUrl}
+                    setOpenCrop={setIsCropping}
+                    setPhotoURL={setImageUrl}
+                    handlImageUpload={handleFileUpload}
+                />
+            </div>
+        </Popup>
     </div>)
 }
 
