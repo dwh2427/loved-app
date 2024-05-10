@@ -16,8 +16,7 @@ export async function POST(request) {
     const { uid, first_name: fn, last_name: ln, email } = userData;
 
     // Destructure individual fields from pageData
-    const { pageFor, first_name, last_name, family_member_type, username } =
-      pageData;
+    const { pageFor, first_name, last_name, family_member_type } = pageData;
 
     // Check if all fields in userData are not empty
     const isUserData = Object.values(userData).every(
@@ -26,7 +25,7 @@ export async function POST(request) {
 
     // Check if all fields in pageData are not empty
     const isPageData = Object.values(pageData).every(
-      (i, ind, arr) => i && arr.length === 5,
+      (i, ind, arr) => i && arr.length === 4,
     );
 
     // If any required params are missing, return a 400 error
@@ -48,7 +47,6 @@ export async function POST(request) {
       first_name,
       last_name,
       family_member_type,
-      username,
     });
 
     // Save the new User and Loved instances to the database

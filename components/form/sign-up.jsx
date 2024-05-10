@@ -133,9 +133,8 @@ export default function SignUpForm() {
         const first_name = localStorage.getItem('firstName')
         const last_name = localStorage.getItem('lastName')
         const family_member_type = localStorage.getItem('familyMemberType')
-        const username = `${first_name.split(' ')[0]}${Math.ceil(Math.random() * 235)}`
         const pageData = {
-          pageFor, first_name, last_name, family_member_type, username
+          pageFor, first_name, last_name, family_member_type,
         }
 
         const { data } = await axios.post(`/sign-up/api`, { userData, pageData });

@@ -12,6 +12,7 @@ import threeDot from '@/public/three-dot.png';
 import { Loader2 } from "lucide-react";
 
 import useImageUpload from "@/hooks/useImageUpload";
+import { countWords, getFirstWords } from "@/lib/countWord";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -47,6 +48,7 @@ const PageDetaisl = ({ item }) => {
             handleClientError(error)
         } finally { setIsUpdating(false) }
     }
+    const [showFullStory, setShowFullSotry] = useState(false)
 
     return (<div className="pb-6 border-b border-1 border-gray-300">
         <div className="  w-full max-w-[450px]">
@@ -54,7 +56,9 @@ const PageDetaisl = ({ item }) => {
                 Page Link
             </p>
             <p className="text-[16px] leading-[19.2px] text-[#A2AEBA]">
-                {pageData?.story}
+                {showFullStory ? pageData?.story : getFirstWords(pageData?.story, 20)}
+                {
+                    countWords(pageData?.story) > 20 && <button className="block text-black" onClick={() => setShowFullSotry(p => !p)}>{showFullStory ? 'See less' : 'See more'}</button>}
             </p>
             <div className="mt-[16px] flex flex-col md:flex-row items-start md:items-center md:h-[49px] justify-between border-b pb-2 md:pb-0 border-[#E9E9E9]">
                 <div className="mb-2 md:mb-0">

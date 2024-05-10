@@ -14,7 +14,7 @@ export async function POST(request) {
     const { pageData } = body;
 
     // Destructure individual fields from pageData
-    const { first_name, last_name, family_member_type, username } = pageData;
+    const { first_name, last_name, family_member_type } = pageData;
 
     let pageFor = pageData.pageFor;
     if (pageFor === "family-member") {
@@ -45,7 +45,6 @@ export async function POST(request) {
       first_name,
       last_name,
       family_member_type,
-      username,
     });
 
     await newPage.save();
