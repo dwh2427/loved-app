@@ -44,12 +44,6 @@ const User = function ({ params }) {
 
           <div className="relative">
             {pageData && <CustomSlider slides={pageData.images} />}
-            {/* <button className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
-              <Image src={leftArrow} alt="" className="h-8 w-6 md:w-8" />
-            </button>
-            <button className="absolute right-0 top-1/2 z-10  -translate-y-1/2 transform md:-right-10">
-              <Image src={rightArrow} alt="" className="h-8 w-6 md:w-8" />
-            </button> */}
           </div>
         </div>
       </main>

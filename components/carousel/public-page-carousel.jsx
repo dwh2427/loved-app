@@ -3,6 +3,7 @@ import leftArrow from "@/public/left-arrow.png";
 import rightArrow from "@/public/right-arrow.png";
 import Image from 'next/image';
 import { useState } from 'react';
+
 const CustomSlider = ({ slides }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,47 +19,39 @@ const CustomSlider = ({ slides }) => {
         );
     };
 
+    let translateX;
+
+    if (slides.length > 1) {
+        translateX = -(currentIndex * (50 / (slides.length - 2))); // Adjusted translation for multiple images
+    } else {
+        translateX = 0; // Center the only image if only one exists
+    }
+
     return (
         <div className="relative">
             <div className="overflow-hidden rounded-lg">
                 <div
-                    className="flex transition-transform ease-in-out duration-300 transform"
-                    style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                    className="w-full px-10 flex items-center transition-transform ease-in-out duration-300 transform"
+                    style={{ transform: `translateX(${translateX}%)` }}
                 >
-                    {slides.map((slide, index) => (
-
-                        <div key={index} className="w-1/2 flex-shrink-0">
+                    {slides.map((slide, index, arr) => (
+                        <div key={index} className={`${arr.length === 1 ? 'w-full' : 'w-1/2 '} flex-shrink-0 flex items-center justify-center`}> {/* Adjusted width */}
                             <img
                                 src={slide}
                                 alt={`Slide ${index + 1}`}
-                                width={100}
-                                height={345}
-                                className="w-full rounded-[8px] md:h-[345px]"
+                                className="rounded-[8px] md:h-[345px] shadow"
                             />
                         </div>
                     ))}
                 </div>
             </div>
 
-            <button onClick={prevSlide} className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
+            <button onClick={prevSlide} disabled={slides.length === 2} className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
                 <Image src={leftArrow} alt="" className="h-8 w-6 md:w-8" />
             </button>
-            <button onClick={nextSlide} className="absolute right-0 top-1/2 z-10  -translate-y-1/2 transform md:-right-10">
+            <button onClick={nextSlide} disabled={slides.length === 2} className="absolute right-0 top-1/2 z-10  -translate-y-1/2 transform md:-right-10">
                 <Image src={rightArrow} alt="" className="h-8 w-6 md:w-8" />
             </button>
-            {/* <button
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md"
-                onClick={prevSlide}
-            >
-                &lt;
-            </button>
-
-            <button
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md"
-            
-            >
-                &gt;
-            </button> */}
         </div>
     );
 };
