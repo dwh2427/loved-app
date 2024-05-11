@@ -47,6 +47,9 @@ export async function POST(request) {
       email,
     });
 
+    // Save the new User and Loved instances to the database
+    await newUser.save();
+
     // Create a new Loved instance with the provided pageData
     const newPage = new Loved({
       uid,
@@ -55,10 +58,8 @@ export async function POST(request) {
       last_name,
       family_member_type,
       username: `${Date.now()}`,
+      user: newUser._id,
     });
-
-    // Save the new User and Loved instances to the database
-    await newUser.save();
     await newPage.save();
 
     // If family_member_type is "yourself" and newUser exists,

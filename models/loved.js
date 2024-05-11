@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
+    user: { type: mongoose.Schema.ObjectId, ref: "User" },
     uid: {
       type: String,
       required: true,
@@ -30,6 +31,16 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     images: [{ type: String }],
+    additional_info: {
+      stripe_acc_id: { type: String },
+      date_of_birth: { type: Date, required: true },
+      country: { type: String, enum: ["AU"], default: "AU" },
+      city: { type: String, required: true },
+      state: { type: String, required: true },
+      address: { type: String, required: true },
+      phone: { type: Number, required: true },
+      postal_code: { type: Number, required: true },
+    },
   },
   { timestamps: true },
 );

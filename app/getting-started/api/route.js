@@ -39,6 +39,7 @@ export async function POST(request) {
     // If any required params are missing, return a 400 error
     if (!isPageData) return createError("missing required params", 400);
     // Create a new Loved instance with the provided pageData
+
     const newPage = new Loved({
       uid: user.uid,
       pageFor,
@@ -46,6 +47,7 @@ export async function POST(request) {
       last_name,
       family_member_type,
       username: `${Date.now()}`,
+      user: fetchUser._id,
     });
 
     await newPage.save();
