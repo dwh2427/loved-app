@@ -33,7 +33,7 @@ export async function POST(request) {
     }
     // Check if all fields in pageData are not empty
     const isPageData = Object.values(pageData).every(
-      (i, ind, arr) => i && arr.length === 5,
+      (i, ind, arr) => i && arr.length === 4,
     );
 
     // If any required params are missing, return a 400 error
@@ -45,6 +45,7 @@ export async function POST(request) {
       first_name,
       last_name,
       family_member_type,
+      username: `${Date.now()}`,
     });
 
     await newPage.save();

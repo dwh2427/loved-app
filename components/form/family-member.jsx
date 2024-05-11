@@ -57,12 +57,10 @@ export default function FamilyMemberForm() {
 
   const handleCreatePage = async (params) => {
     try {
-      const { family_member_type, last_name, first_name, pageFor, } = params
-      const username = `${first_name.split(' ')[0]}${Math.ceil(Math.random() * 235)}`
-      const newPageData = { family_member_type, last_name, first_name, pageFor }
+      const { family_member_type, last_name, first_name, pageFor } = params
+      const newPageData = { family_member_type, last_name, first_name, pageFor, }
       const { data } = await apiCaller.post('/getting-started/api', { pageData: newPageData })
       localStorage.setItem('pageId', data?._id)
-      localStorage.setItem('username', username)
       router.push(`/add-photo`)
 
     } catch (error) {
@@ -75,12 +73,15 @@ export default function FamilyMemberForm() {
   const handleSubmit = () => {
     setLoading(true);
     const { firstName, lastName, familyMemberType, } = form.getValues();
+    const username = `${firstName.split(' ')[0]}${Math.ceil(Math.random() * 235)}`
+    localStorage.setItem('username', username)
     if (user) {
       return handleCreatePage({
         first_name: firstName,
         last_name: lastName,
         family_member_type: familyMemberType,
-        pageFor: params.slug
+        pageFor: params.slug,
+
       })
 
     } else {

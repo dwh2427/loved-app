@@ -16,7 +16,7 @@ export async function POST(request) {
     const { uid, first_name: fn, last_name: ln, email } = userData;
 
     // Destructure individual fields from pageData
-    const { pageFor, first_name, last_name, family_member_type } = pageData;
+    const { first_name, last_name, family_member_type } = pageData;
 
     // Check if all fields in userData are not empty
     const isUserData = Object.values(userData).every(
@@ -28,9 +28,16 @@ export async function POST(request) {
       (i, ind, arr) => i && arr.length === 4,
     );
 
+    let pageFor = pageData.pageFor;
+    if (pageFor === "family-member") {
+      pageFor = "family_member";
+    }
+
     // If any required params are missing, return a 400 error
-    if (!isPageData && !isUserData)
+    if (!isPageData && !isUserData) {
+      console.log(isPageData, isUserData);
       return createError("missing required params", 400);
+    }
 
     // Create a new User instance with the provided userData
     const newUser = new User({
@@ -47,6 +54,7 @@ export async function POST(request) {
       first_name,
       last_name,
       family_member_type,
+      username: `${Date.now()}`,
     });
 
     // Save the new User and Loved instances to the database
