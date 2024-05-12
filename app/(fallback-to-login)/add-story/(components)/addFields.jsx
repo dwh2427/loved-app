@@ -21,8 +21,8 @@ const AddStory = () => {
                 return toast({ variant: 'destructive', title: 'Please type your story' })
             }
             setIsAdding(true)
-            const { data } = await apiCaller.put('/add-story/api', { pageId, story })
-            toast({ variant: 'success', title: data.message })
+            await apiCaller.put('/add-story/api', { pageId, story })
+
             router.push(`/create-loved`)
         } catch (error) {
             handleClientError(error)

@@ -20,10 +20,10 @@ export async function POST(request) {
     if (pageFor === "family-member") {
       pageFor = "family_member";
     }
-
+    
     let fetchUser = null;
+    fetchUser = await User.findOne({ uid: user.uid });
     if (pageFor === "yourself") {
-      fetchUser = await User.findOne({ uid: user.uid });
       if (fetchUser?.page) {
         return createError(
           "You can not create multiple page for yourself",
@@ -47,7 +47,7 @@ export async function POST(request) {
       last_name,
       family_member_type,
       username: `${Date.now()}`,
-      user: fetchUser._id,
+      user: fetchUser?._id,
     });
 
     await newPage.save();

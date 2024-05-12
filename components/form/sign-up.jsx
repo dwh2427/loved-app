@@ -146,7 +146,7 @@ export default function SignUpForm() {
         localStorage.removeItem("familyMemberType");
         localStorage.removeItem("pageFor");
         localStorage.setItem('pageId', data.newPage._id)
-        router.push(`/add-photo`)
+        router.push(`/additional-details`)
       }
     } catch (e) {
       handleClientError(e)

@@ -24,8 +24,15 @@ export async function POST(req) {
     // Parse request payload
     const payload = await req.json();
     // Destructure payload
-    const { pageId, date_of_birth, city, address, state, postal_code, phone } =
-      payload;
+    const {
+      pageId,
+      date_of_birth,
+      city,
+      street_address,
+      state,
+      postal_code,
+      phone,
+    } = payload;
 
     // Array to store missing parameters
     const missing_params = [];
@@ -37,7 +44,7 @@ export async function POST(req) {
           return false; // Indicate that at least one required parameter is missing
         }
         return true;
-      }) && Object.keys(payload).length === 7;
+      }) && Object.keys(payload).length === 8;
 
     // If any required parameter is missing, throw an error
     !isPayloads &&
@@ -47,7 +54,6 @@ export async function POST(req) {
     const page = await Loved.findOne({ uid: user.uid, _id: pageId });
     // If page is not found, throw an error
     !page && createError("Page not found", 404);
-
     // Create account details object for Stripe
     const accountDetails = {
       type: "custom",
@@ -56,11 +62,11 @@ export async function POST(req) {
       business_profile: {
         mcc: "5734",
         name: page.email,
-        url: process.env.NEXTAUTH_URL,
+        url: process.env.NEXT_BUSENESS_URL,
       },
       individual: {
         email: page.email,
-        phone: "+61" + phone,
+        phone: `+61${phone.slice(-9)}`,
         first_name: page.first_name,
         last_name: page.last_name,
         dob: {
@@ -72,14 +78,14 @@ export async function POST(req) {
           city: city,
           state: state,
           country: "AU",
-          line1: address,
+          line1: street_address,
           postal_code: postal_code,
         },
         address: {
           city,
           state,
           country: "AU",
-          line1: address,
+          line1: street_address,
           postal_code,
         },
       },
@@ -88,7 +94,7 @@ export async function POST(req) {
         transfers: { requested: true },
       },
       tos_acceptance: {
-        date: Date.now(),
+        date: Math.floor(Date.now() / 1000),
         ip: ip,
         user_agent: user_agent,
       },
@@ -98,12 +104,23 @@ export async function POST(req) {
     const account = await stripe.accounts.create(accountDetails);
 
     // Insert Stripe account ID to Loved page model
-    page.stripe_acc_id = account.id;
-
-    // Save page data
-    await page.save();
+    const updatePage = await Loved.findByIdAndUpdate(
+      pageId,
+      {
+        additional_info: {
+          ...payload,
+          stripe_acc_id: account.id,
+          phone: `+61${phone.slice(-9)}`,
+        },
+      },
+      { new: true },
+    );
+    return Response.json(updatePage, { status: 201 });
   } catch (error) {
     // Return error response
+    if (error.raw) {
+      error = error.raw;
+    }
     return errorResponse(error);
   }
 }
