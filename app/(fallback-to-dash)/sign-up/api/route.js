@@ -16,7 +16,7 @@ export async function POST(request) {
     const { uid, first_name: fn, last_name: ln, email } = userData;
 
     // Destructure individual fields from pageData
-    const { first_name, last_name, family_member_type } = pageData;
+    const { first_name, last_name, family_member_type, country } = pageData;
 
     // Check if all fields in userData are not empty
     const isUserData = Object.values(userData).every(
@@ -25,7 +25,7 @@ export async function POST(request) {
 
     // Check if all fields in pageData are not empty
     const isPageData = Object.values(pageData).every(
-      (i, ind, arr) => i && arr.length === 4,
+      (i, ind, arr) => i && arr.length === 5,
     );
 
     let pageFor = pageData.pageFor;
@@ -59,6 +59,7 @@ export async function POST(request) {
       family_member_type,
       username: `${Date.now()}`,
       user: newUser._id,
+      additional_info: { country },
     });
     await newPage.save();
 

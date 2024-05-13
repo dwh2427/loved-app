@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
     additional_info: {
       stripe_acc_id: { type: String },
       date_of_birth: { type: Date },
-      country: { type: String, enum: ["AU"], default: "AU" },
+      country: { type: String },
       city: { type: String },
       state: { type: String },
       street_address: { type: String },

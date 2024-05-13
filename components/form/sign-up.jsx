@@ -129,22 +129,14 @@ export default function SignUpForm() {
 
 
         // collect data for page 
-        const pageFor = localStorage.getItem('pageFor')
-        const first_name = localStorage.getItem('firstName')
-        const last_name = localStorage.getItem('lastName')
-        const family_member_type = localStorage.getItem('familyMemberType')
-        const pageData = {
-          pageFor, first_name, last_name, family_member_type,
-        }
-
-        const { data } = await axios.post(`/sign-up/api`, { userData, pageData });
+        const newPageDataJson = localStorage.getItem('newPageData')
+        const newPageData = JSON.parse(newPageDataJson)
+        console.log(newPageData)
+        const { data } = await axios.post(`/sign-up/api`, { userData, newPageData });
         const signInUser = await signInWithEmailAndPassword(emailAddress, password);
         localStorage.setItem('accToken', await signInUser.user.getIdToken())
         form.reset();
-        localStorage.removeItem("firstName");
-        localStorage.removeItem("lastName");
-        localStorage.removeItem("familyMemberType");
-        localStorage.removeItem("pageFor");
+        localStorage.removeItem("newPageData");
         localStorage.setItem('pageId', data.newPage._id)
         router.push(`/additional-details`)
       }
