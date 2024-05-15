@@ -1,10 +1,11 @@
 // app/getting-started/page.jsx
 
-import Image from "next/image";
-import Logo from "@/public/logo.png";
-import Link from "next/link";
-import Sidebar from "@/components/sidebar/sidebar";
 import GettingStartedForm from "@/components/form/getting-started";
+import Sidebar from "@/components/sidebar/sidebar";
+import Logo from "@/public/logo.png";
+import Image from "next/image";
+import Link from "next/link";
+
 
 export default function GettingStartedPage() {
   return (

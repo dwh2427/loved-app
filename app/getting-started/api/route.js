@@ -14,7 +14,7 @@ export async function POST(request) {
     const { pageData } = body;
 
     // Destructure individual fields from pageData
-    const { first_name, last_name, family_member_type } = pageData;
+    const { first_name, last_name, family_member_type, country } = pageData;
 
     let pageFor = pageData.pageFor;
     if (pageFor === "family-member") {
@@ -22,8 +22,8 @@ export async function POST(request) {
     }
 
     let fetchUser = null;
+    fetchUser = await User.findOne({ uid: user.uid });
     if (pageFor === "yourself") {
-      fetchUser = await User.findOne({ uid: user.uid });
       if (fetchUser?.page) {
         return createError(
           "You can not create multiple page for yourself",
@@ -32,13 +32,12 @@ export async function POST(request) {
       }
     }
     // Check if all fields in pageData are not empty
-    const isPageData = Object.values(pageData).every(
-      (i, ind, arr) => i && arr.length === 4,
-    );
+    const isPageData = Object.values(pageData).every((i, ind, arr) => i);
 
     // If any required params are missing, return a 400 error
     if (!isPageData) return createError("missing required params", 400);
     // Create a new Loved instance with the provided pageData
+
     const newPage = new Loved({
       uid: user.uid,
       pageFor,
@@ -46,6 +45,8 @@ export async function POST(request) {
       last_name,
       family_member_type,
       username: `${Date.now()}`,
+      user: fetchUser?._id,
+      additional_info: { country },
     });
 
     await newPage.save();

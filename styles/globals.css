@@ -12,3 +12,8 @@
 html {
   scroll-behavior: smooth;
 }
+/* .phone-input-custom .form-control {
+  width: 100% !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+} */

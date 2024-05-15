@@ -14,6 +14,7 @@ import { auth } from "@/firebase/config";
 import useClientError from "@/hooks/useClientError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+// import validator from 'email-validation';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -22,7 +23,6 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
-
 const formSchema = z.object({
   firstName: z.string().min(1, {
     message: "First name is required",
@@ -33,6 +33,7 @@ const formSchema = z.object({
   emailAddress: z.string().email({
     message: "Please provide a valid email address",
   }),
+
   password: z
     .string()
     .min(6, {
@@ -53,53 +54,45 @@ const formSchema = z.object({
     ),
 });
 
+
 export default function SignUpForm() {
   const { toast } = useToast();
   const handleClientError = useClientError()
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  // collect data for page 
+  const newPageDataJson = typeof window !== "undefined" && window.localStorage.getItem('newPageData')
+  const newPageData = JSON.parse(newPageDataJson)
+
+  // // Email Validation
+  // const validateEmail = (e) => {
+  //   var email = e.target.value
+  //   if (validator.isEmail(email)) {
+  //     form.setError('emailAddress', 'Valid Email')
+  //   } else {
+  //     form.setError('emailAddress', 'Enter valid Email!')
+
+  //   }
+  // }
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName:
-        typeof window !== "undefined"
-          ? window.localStorage.getItem("firstName") || ""
-          : "",
-      lastName:
-        typeof window !== "undefined"
-          ? window.localStorage.getItem("lastName") || ""
-          : "",
+      firstName: (newPageData?.pageFor === 'yourself') ? newPageData?.first_name : "",
+      lastName: (newPageData?.pageFor === 'yourself') ? newPageData?.last_name : "",
       emailAddress: "",
       password: "",
     },
   });
 
-  const handleCreatePage = async (params) => {
-    try {
-      const { family_member_type, last_name, first_name, pageFor, } = params
-      const username = `${first_name.split(' ')[0]}${Math.ceil(Math.random() * 235)}`
-      const newPageData = { family_member_type, last_name, first_name, pageFor, username }
-      const { data } = await apiCaller.put('/dashboard/api', newPageData)
-      localStorage.removeItem("firstName");
-      localStorage.removeItem("lastName");
-      localStorage.removeItem("familyMemberType");
-      localStorage.removeItem("pageFor");
-
-
-    } catch (error) {
-      handleClientError(error)
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-
+      
       const { emailAddress, password, firstName, lastName } = form.getValues();
+      console.log(form.getValues())
       const res = await createUserWithEmailAndPassword(
         auth,
         emailAddress,
@@ -127,26 +120,15 @@ export default function SignUpForm() {
           email: emailAddress,
         };
 
-
-        // collect data for page 
-        const pageFor = localStorage.getItem('pageFor')
-        const first_name = localStorage.getItem('firstName')
-        const last_name = localStorage.getItem('lastName')
-        const family_member_type = localStorage.getItem('familyMemberType')
-        const pageData = {
-          pageFor, first_name, last_name, family_member_type,
-        }
-
-        const { data } = await axios.post(`/sign-up/api`, { userData, pageData });
+        const newPageDataJson = typeof window !== "undefined" && window.localStorage.getItem('newPageData')
+        const newPageData = JSON.parse(newPageDataJson)
+        const { data } = await axios.post(`/sign-up/api`, { userData, pageData: newPageData });
         const signInUser = await signInWithEmailAndPassword(emailAddress, password);
         localStorage.setItem('accToken', await signInUser.user.getIdToken())
         form.reset();
-        localStorage.removeItem("firstName");
-        localStorage.removeItem("lastName");
-        localStorage.removeItem("familyMemberType");
-        localStorage.removeItem("pageFor");
+        localStorage.removeItem("newPageData");
         localStorage.setItem('pageId', data.newPage._id)
-        router.push(`/add-photo`)
+        router.push(`/additional-details`)
       }
     } catch (e) {
       handleClientError(e)
@@ -208,6 +190,7 @@ export default function SignUpForm() {
               </FormLabel>
               <FormControl>
                 <Input
+                  // onChange={(e) => validateEmail(e)}
                   placeholder="@.com"
                   className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
                   {...field}

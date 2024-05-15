@@ -1,9 +1,13 @@
-import Image from "next/image";
-import Logo from "@/public/logo.png";
-import Link from "next/link";
-import Sidebar from "@/components/sidebar/sidebar";
 import FamilyMemberForm from "@/components/form/family-member";
+import Sidebar from "@/components/sidebar/sidebar";
+import Logo from "@/public/logo.png";
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+
+
+
+
 
 export default function FamilyMemberPage({ params }) {
   if (!["family-member", "friend", "yourself"].includes(params.slug)) {
