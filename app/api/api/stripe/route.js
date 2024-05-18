@@ -22,7 +22,7 @@ export async function POST(req) {
   try {
     // Verify user token
     const user = await verifyIdToken(req);
-   
+
     // Parse request payload
     const payload = await req.json();
     // Destructure payload
@@ -61,13 +61,16 @@ export async function POST(req) {
       (i) => i.country_code === page?.additional_info?.country,
     );
 
+    console.log(country);
+
     const { day, month, year } = getDateParts(date_of_birth);
+    if(!country)return Response.json({message:'country not supported'})
     const accountDetails = {
       type: "custom",
       country: country?.country_code,
       business_type: "individual",
       email: user.email,
-      default_currency: country.currency_code,
+      default_currency: country?.currency,
       business_profile: {
         mcc: "5734",
         name: `${page.first_name} ${page.last_name}`,

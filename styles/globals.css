@@ -17,3 +17,24 @@ html {
   padding-top: 2px !important;
   padding-bottom: 2px !important;
 } */
+.ReactSelectFlags-module_buttonSelect__CxH4w {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.custom-datepickers input {
+  padding: 7.5px 14px !important;
+  overflow: hidden !important;
+}
+.css-10o2lyd-MuiStack-root {
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.custom-datepickers {
+  width: 100% !important;
+}
+
+.MuiStack-root {
+  overflow: hidden !important;
+}

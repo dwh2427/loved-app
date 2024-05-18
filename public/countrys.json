@@ -1,88 +1,5 @@
 [
-  {
-    "name": "Afghanistan",
-    "currency": "AFN",
-    "calling_code": 93,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg",
-    "country_code": "AF"
-  },
-  {
-    "name": "Åland Islands",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/52/Flag_of_%C3%85land.svg",
-    "country_code": null
-  },
-  {
-    "name": "Albania",
-    "currency": "ALL",
-    "calling_code": 355,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Albania.svg",
-    "country_code": "AL"
-  },
-  {
-    "name": "Algeria",
-    "currency": "DZD",
-    "calling_code": 213,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Algeria.svg",
-    "country_code": "DZ"
-  },
-  {
-    "name": "American Samoa",
-    "currency": "USD",
-    "calling_code": 1684,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/87/Flag_of_American_Samoa.svg",
-    "country_code": "AS"
-  },
-  {
-    "name": "Andorra",
-    "currency": "EUR",
-    "calling_code": 376,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Andorra.svg",
-    "country_code": "AD"
-  },
-  {
-    "name": "Angola",
-    "currency": "AOA",
-    "calling_code": 244,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Angola.svg",
-    "country_code": "AO"
-  },
-  {
-    "name": "Anguilla",
-    "currency": "XCD",
-    "calling_code": 1264,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Anguilla.svg",
-    "country_code": "AI"
-  },
-  {
-    "name": "Antigua and Barbuda",
-    "currency": "XCD",
-    "calling_code": 1268,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Antigua_and_Barbuda.svg",
-    "country_code": "AG"
-  },
-  {
-    "name": "Argentina",
-    "currency": "ARS",
-    "calling_code": 54,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
-    "country_code": "AR"
-  },
-  {
-    "name": "Armenia",
-    "currency": "AMD",
-    "calling_code": 374,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg",
-    "country_code": "AM"
-  },
-  {
-    "name": "Aruba",
-    "currency": "AWG",
-    "calling_code": 297,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Aruba.svg",
-    "country_code": "AW"
-  },
+  
   {
     "name": "Australia",
     "currency": "AUD",
@@ -97,48 +14,7 @@
     "icon": "//upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg",
     "country_code": "AT"
   },
-  {
-    "name": "Azerbaijan",
-    "currency": "AZN",
-    "calling_code": 994,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Azerbaijan.svg",
-    "country_code": "AZ"
-  },
-  {
-    "name": "Bahamas",
-    "currency": "BSD",
-    "calling_code": 1242,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/93/Flag_of_the_Bahamas.svg",
-    "country_code": "BS"
-  },
-  {
-    "name": "Bahrain",
-    "currency": "BHD",
-    "calling_code": 973,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Bahrain.svg",
-    "country_code": "BH"
-  },
-  {
-    "name": "Bangladesh",
-    "currency": "BDT",
-    "calling_code": 880,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg",
-    "country_code": "BD"
-  },
-  {
-    "name": "Barbados",
-    "currency": "BBD",
-    "calling_code": 1246,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/ef/Flag_of_Barbados.svg",
-    "country_code": "BB"
-  },
-  {
-    "name": "Belarus",
-    "currency": "BYR",
-    "calling_code": 375,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/85/Flag_of_Belarus.svg",
-    "country_code": "BY"
-  },
+  
   {
     "name": "Belgium",
     "currency": "EUR",
@@ -146,62 +22,7 @@
     "icon": "//upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Belgium.svg",
     "country_code": "BE"
   },
-  {
-    "name": "Belize",
-    "currency": "BZD",
-    "calling_code": 501,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/e7/Flag_of_Belize.svg",
-    "country_code": "BZ"
-  },
-  {
-    "name": "Benin",
-    "currency": "XOF",
-    "calling_code": 229,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Benin.svg",
-    "country_code": "BJ"
-  },
-  {
-    "name": "Bermuda",
-    "currency": "BMD",
-    "calling_code": 1441,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bermuda.svg",
-    "country_code": "BM"
-  },
-  {
-    "name": "Bhutan",
-    "currency": "BTN",
-    "calling_code": 975,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_Bhutan.svg",
-    "country_code": "BT"
-  },
-  {
-    "name": "Bolivia (Plurinational State of)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/b3/Bandera_de_Bolivia_%28Estado%29.svg",
-    "country_code": null
-  },
-  {
-    "name": "Bonaire - Sint Eustatius and Saba",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/20/Flag_of_the_Netherlands.svg",
-    "country_code": null
-  },
-  {
-    "name": "Bosnia and Herzegovina",
-    "currency": "BAM",
-    "calling_code": 387,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bosnia_and_Herzegovina.svg",
-    "country_code": "BA"
-  },
-  {
-    "name": "Botswana",
-    "currency": "BWP",
-    "calling_code": 267,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_Botswana.svg",
-    "country_code": "BW"
-  },
+  
   {
     "name": "Brazil",
     "currency": "BRL",
@@ -209,20 +30,7 @@
     "icon": "//upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
     "country_code": "BR"
   },
-  {
-    "name": "British Indian Ocean Territory",
-    "currency": "USD",
-    "calling_code": 246,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_the_Commissioner_of_the_British_Indian_Ocean_Territory.svg",
-    "country_code": "IO"
-  },
-  {
-    "name": "Brunei Darussalam",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Brunei.svg",
-    "country_code": null
-  },
+  
   {
     "name": "Bulgaria",
     "currency": "BGN",
@@ -231,165 +39,19 @@
     "country_code": "BG"
   },
   {
-    "name": "Burkina Faso",
-    "currency": "XOF",
-    "calling_code": 226,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Burkina_Faso.svg",
-    "country_code": "BF"
-  },
-  {
-    "name": "Burundi",
-    "currency": "BIF",
-    "calling_code": 257,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/50/Flag_of_Burundi.svg",
-    "country_code": "BI"
-  },
-  {
-    "name": "Cabo Verde",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Cape_Verde.svg",
-    "country_code": null
-  },
-  {
-    "name": "Cambodia",
-    "currency": "KHR",
-    "calling_code": 855,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_Cambodia.svg",
-    "country_code": "KH"
-  },
-  {
-    "name": "Cameroon",
-    "currency": "XAF",
-    "calling_code": 237,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/4f/Flag_of_Cameroon.svg",
-    "country_code": "CM"
-  },
-  {
     "name": "Canada",
     "currency": "CAD",
     "calling_code": 1,
     "icon": "//upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg",
     "country_code": "CA"
   },
-  {
-    "name": "Cayman Islands",
-    "currency": "KYD",
-    "calling_code": 1345,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_the_Cayman_Islands.svg",
-    "country_code": "KY"
-  },
-  {
-    "name": "Central African Republic",
-    "currency": "XAF",
-    "calling_code": 236,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Central_African_Republic.svg",
-    "country_code": "CF"
-  },
-  {
-    "name": "Chad",
-    "currency": "XAF",
-    "calling_code": 235,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/4b/Flag_of_Chad.svg",
-    "country_code": "TD"
-  },
-  {
-    "name": "Chile",
-    "currency": "CLP",
-    "calling_code": 56,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/78/Flag_of_Chile.svg",
-    "country_code": "CL"
-  },
-  {
-    "name": "China",
-    "currency": "CNY",
-    "calling_code": 86,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg",
-    "country_code": "CN"
-  },
-  {
-    "name": "Christmas Island",
-    "currency": "AUD",
-    "calling_code": 61,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/67/Flag_of_Christmas_Island.svg",
-    "country_code": "CX"
-  },
-  {
-    "name": "Cocos (Keeling) Islands",
-    "currency": "AUD",
-    "calling_code": 61,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/74/Flag_of_the_Cocos_%28Keeling%29_Islands.svg",
-    "country_code": "CC"
-  },
-  {
-    "name": "Colombia",
-    "currency": "COP",
-    "calling_code": 57,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg",
-    "country_code": "CO"
-  },
-  {
-    "name": "Comoros",
-    "currency": "KMF",
-    "calling_code": 269,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/94/Flag_of_the_Comoros.svg",
-    "country_code": "KM"
-  },
-  {
-    "name": "Congo",
-    "currency": "XAF",
-    "calling_code": 242,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/92/Flag_of_the_Republic_of_the_Congo.svg",
-    "country_code": "CG"
-  },
-  {
-    "name": "Congo - Democratic Republic of the",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg",
-    "country_code": null
-  },
-  {
-    "name": "Cook Islands",
-    "currency": "NZD",
-    "calling_code": 682,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_the_Cook_Islands.svg",
-    "country_code": "CK"
-  },
-  {
-    "name": "Costa Rica",
-    "currency": "CRC",
-    "calling_code": 506,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f2/Flag_of_Costa_Rica.svg",
-    "country_code": "CR"
-  },
-  {
-    "name": "Côte d'Ivoire",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg",
-    "country_code": null
-  },
+  
   {
     "name": "Croatia",
     "currency": "EUR",
     "calling_code": 385,
     "icon": "//upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Croatia.svg",
     "country_code": "HR"
-  },
-  {
-    "name": "Cuba",
-    "currency": "CUP",
-    "calling_code": 53,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bd/Flag_of_Cuba.svg",
-    "country_code": "CU"
-  },
-  {
-    "name": "Curaçao",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_Cura%C3%A7ao.svg",
-    "country_code": null
   },
   {
     "name": "Cyprus",
@@ -399,11 +61,11 @@
     "country_code": "CY"
   },
   {
-    "name": "Czechia",
-    "currency": null,
-    "calling_code": null,
+    "name": "Czech Republic",
+    "currency": "CZK",
+    "calling_code": 420,
     "icon": "//upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Czech_Republic.svg",
-    "country_code": null
+    "country_code": "CZ"
   },
   {
     "name": "Denmark",
@@ -411,63 +73,7 @@
     "calling_code": 45,
     "icon": "//upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",
     "country_code": "DK"
-  },
-  {
-    "name": "Djibouti",
-    "currency": "DJF",
-    "calling_code": 253,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/34/Flag_of_Djibouti.svg",
-    "country_code": "DJ"
-  },
-  {
-    "name": "Dominica",
-    "currency": "XCD",
-    "calling_code": 1767,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/c/c4/Flag_of_Dominica.svg",
-    "country_code": "DM"
-  },
-  {
-    "name": "Dominican Republic",
-    "currency": "DOP",
-    "calling_code": 1849,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_the_Dominican_Republic.svg",
-    "country_code": "DO"
-  },
-  {
-    "name": "Ecuador",
-    "currency": "ECS",
-    "calling_code": 593,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/e8/Flag_of_Ecuador.svg",
-    "country_code": "EC"
-  },
-  {
-    "name": "Egypt",
-    "currency": "EGP",
-    "calling_code": 20,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg",
-    "country_code": "EG"
-  },
-  {
-    "name": "El Salvador",
-    "currency": "SVC",
-    "calling_code": 503,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/34/Flag_of_El_Salvador.svg",
-    "country_code": "SV"
-  },
-  {
-    "name": "Equatorial Guinea",
-    "currency": "XAF",
-    "calling_code": 240,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Equatorial_Guinea.svg",
-    "country_code": "GQ"
-  },
-  {
-    "name": "Eritrea",
-    "currency": "ERN",
-    "calling_code": 291,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/29/Flag_of_Eritrea.svg",
-    "country_code": "ER"
-  },
+  },  
   {
     "name": "Estonia",
     "currency": "EUR",
@@ -475,41 +81,7 @@
     "icon": "//upload.wikimedia.org/wikipedia/commons/8/8f/Flag_of_Estonia.svg",
     "country_code": "EE"
   },
-  {
-    "name": "Eswatini",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fb/Flag_of_Eswatini.svg",
-    "country_code": null
-  },
-  {
-    "name": "Ethiopia",
-    "currency": "ETB",
-    "calling_code": 251,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/71/Flag_of_Ethiopia.svg",
-    "country_code": "ET"
-  },
-  {
-    "name": "Falkland Islands (Malvinas)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_Falkland_Islands.svg",
-    "country_code": null
-  },
-  {
-    "name": "Faroe Islands",
-    "currency": "DKK",
-    "calling_code": 298,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/3c/Flag_of_the_Faroe_Islands.svg",
-    "country_code": "FO"
-  },
-  {
-    "name": "Fiji",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Fiji.svg",
-    "country_code": null
-  },
+  
   {
     "name": "Finland",
     "currency": "EUR",
@@ -525,53 +97,11 @@
     "country_code": "FR"
   },
   {
-    "name": "French Polynesia",
-    "currency": "XPF",
-    "calling_code": 689,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/db/Flag_of_French_Polynesia.svg",
-    "country_code": "PF"
-  },
-  {
-    "name": "French Southern Territories",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/a/a7/Flag_of_the_French_Southern_and_Antarctic_Lands.svg",
-    "country_code": null
-  },
-  {
-    "name": "Gabon",
-    "currency": "XAF",
-    "calling_code": 241,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/04/Flag_of_Gabon.svg",
-    "country_code": "GA"
-  },
-  {
-    "name": "Gambia",
-    "currency": "GMD",
-    "calling_code": 220,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_The_Gambia.svg",
-    "country_code": "GM"
-  },
-  {
-    "name": "Georgia",
-    "currency": "GEL",
-    "calling_code": 995,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Georgia.svg",
-    "country_code": "GE"
-  },
-  {
     "name": "Germany",
     "currency": "EUR",
     "calling_code": 49,
     "icon": "//upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg",
     "country_code": "DE"
-  },
-  {
-    "name": "Ghana",
-    "currency": "GHS",
-    "calling_code": 233,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Ghana.svg",
-    "country_code": "GH"
   },
   {
     "name": "Gibraltar",
@@ -588,90 +118,6 @@
     "country_code": "GR"
   },
   {
-    "name": "Greenland",
-    "currency": "DKK",
-    "calling_code": 299,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_Greenland.svg",
-    "country_code": "GL"
-  },
-  {
-    "name": "Grenada",
-    "currency": "XCD",
-    "calling_code": 1473,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Grenada.svg",
-    "country_code": "GD"
-  },
-  {
-    "name": "Guam",
-    "currency": "USD",
-    "calling_code": 1671,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/07/Flag_of_Guam.svg",
-    "country_code": "GU"
-  },
-  {
-    "name": "Guatemala",
-    "currency": "QTQ",
-    "calling_code": 502,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/ec/Flag_of_Guatemala.svg",
-    "country_code": "GT"
-  },
-  {
-    "name": "Guernsey",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_Guernsey.svg",
-    "country_code": "GG"
-  },
-  {
-    "name": "Guinea",
-    "currency": "GNF",
-    "calling_code": 224,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/ed/Flag_of_Guinea.svg",
-    "country_code": "GN"
-  },
-  {
-    "name": "Guinea-Bissau",
-    "currency": "CFA",
-    "calling_code": 245,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Guinea-Bissau.svg",
-    "country_code": "GW"
-  },
-  {
-    "name": "Guyana",
-    "currency": "GYD",
-    "calling_code": 592,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_Guyana.svg",
-    "country_code": "GY"
-  },
-  {
-    "name": "Haiti",
-    "currency": "HTG",
-    "calling_code": 509,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Haiti.svg",
-    "country_code": "HT"
-  },
-  {
-    "name": "Heard Island and McDonald Islands",
-    "currency": "AUD",
-    "calling_code": 672,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bb/Proposed_flag_of_Antarctica_%28Graham_Bartram%29.svg",
-    "country_code": "HM"
-  },
-  {
-    "name": "Holy See",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_the_Vatican_City.svg",
-    "country_code": null
-  },
-  {
-    "name": "Honduras",
-    "currency": "HNL",
-    "calling_code": 504,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/82/Flag_of_Honduras.svg",
-    "country_code": "HN"
-  },
-  {
     "name": "Hong Kong",
     "currency": "HKD",
     "calling_code": 852,
@@ -686,39 +132,11 @@
     "country_code": "HU"
   },
   {
-    "name": "Iceland",
-    "currency": "ISK",
-    "calling_code": 354,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Iceland.svg",
-    "country_code": "IS"
-  },
-  {
     "name": "India",
     "currency": "INR",
     "calling_code": 91,
     "icon": "//upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg",
     "country_code": "IN"
-  },
-  {
-    "name": "Indonesia",
-    "currency": "IDR",
-    "calling_code": 62,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg",
-    "country_code": "ID"
-  },
-  {
-    "name": "Iran (Islamic Republic of)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/c/ca/Flag_of_Iran.svg",
-    "country_code": null
-  },
-  {
-    "name": "Iraq",
-    "currency": "IQD",
-    "calling_code": 964,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Iraq.svg",
-    "country_code": "IQ"
   },
   {
     "name": "Ireland",
@@ -728,32 +146,11 @@
     "country_code": "IE"
   },
   {
-    "name": "Isle of Man",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_the_Isle_of_Man.svg",
-    "country_code": "IM"
-  },
-  {
-    "name": "Israel",
-    "currency": "ILS",
-    "calling_code": 972,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Israel.svg",
-    "country_code": "IL"
-  },
-  {
     "name": "Italy",
     "currency": "EUR",
     "calling_code": 39,
     "icon": "//upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg",
     "country_code": "IT"
-  },
-  {
-    "name": "Jamaica",
-    "currency": "JMD",
-    "calling_code": 1876,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg",
-    "country_code": "JM"
   },
   {
     "name": "Japan",
@@ -763,109 +160,11 @@
     "country_code": "JP"
   },
   {
-    "name": "Jersey",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/1c/Flag_of_Jersey.svg",
-    "country_code": "JE"
-  },
-  {
-    "name": "Jordan",
-    "currency": "JOD",
-    "calling_code": 962,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/c/c0/Flag_of_Jordan.svg",
-    "country_code": "JO"
-  },
-  {
-    "name": "Kazakhstan",
-    "currency": "KZT",
-    "calling_code": 7,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Kazakhstan.svg",
-    "country_code": "KZ"
-  },
-  {
-    "name": "Kenya",
-    "currency": "KES",
-    "calling_code": 254,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Kenya.svg",
-    "country_code": "KE"
-  },
-  {
-    "name": "Kiribati",
-    "currency": "AUD",
-    "calling_code": 686,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Kiribati.svg",
-    "country_code": "KI"
-  },
-  {
-    "name": "Korea (Democratic People's Republic of)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/51/Flag_of_North_Korea.svg",
-    "country_code": null
-  },
-  {
-    "name": "Korea - Republic of",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg",
-    "country_code": null
-  },
-  {
-    "name": "Kuwait",
-    "currency": "KWD",
-    "calling_code": 965,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/a/aa/Flag_of_Kuwait.svg",
-    "country_code": "KW"
-  },
-  {
-    "name": "Kyrgyzstan",
-    "currency": "KGS",
-    "calling_code": 996,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/c/c7/Flag_of_Kyrgyzstan.svg",
-    "country_code": "KG"
-  },
-  {
-    "name": "Lao People's Democratic Republic",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Laos.svg",
-    "country_code": null
-  },
-  {
     "name": "Latvia",
     "currency": "EUR",
     "calling_code": 371,
     "icon": "//upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Latvia.svg",
     "country_code": "LV"
-  },
-  {
-    "name": "Lebanon",
-    "currency": "LBP",
-    "calling_code": 961,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/59/Flag_of_Lebanon.svg",
-    "country_code": "LB"
-  },
-  {
-    "name": "Lesotho",
-    "currency": "LSL",
-    "calling_code": 266,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/4a/Flag_of_Lesotho.svg",
-    "country_code": "LS"
-  },
-  {
-    "name": "Liberia",
-    "currency": "LRD",
-    "calling_code": 231,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Liberia.svg",
-    "country_code": "LR"
-  },
-  {
-    "name": "Libya",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_Libya.svg",
-    "country_code": null
   },
   {
     "name": "Liechtenstein",
@@ -889,46 +188,11 @@
     "country_code": "LU"
   },
   {
-    "name": "Macao",
-    "currency": null,
-    "calling_code": 853,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/63/Flag_of_Macau.svg",
-    "country_code": "MO"
-  },
-  {
-    "name": "Madagascar",
-    "currency": "MGF",
-    "calling_code": 261,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Madagascar.svg",
-    "country_code": "MG"
-  },
-  {
-    "name": "Malawi",
-    "currency": "MWK",
-    "calling_code": 265,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d1/Flag_of_Malawi.svg",
-    "country_code": "MW"
-  },
-  {
     "name": "Malaysia",
     "currency": "MYR",
     "calling_code": 60,
     "icon": "//upload.wikimedia.org/wikipedia/commons/6/66/Flag_of_Malaysia.svg",
     "country_code": "MY"
-  },
-  {
-    "name": "Maldives",
-    "currency": "MVR",
-    "calling_code": 960,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Maldives.svg",
-    "country_code": "MV"
-  },
-  {
-    "name": "Mali",
-    "currency": "XOF",
-    "calling_code": 223,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/92/Flag_of_Mali.svg",
-    "country_code": "ML"
   },
   {
     "name": "Malta",
@@ -938,117 +202,13 @@
     "country_code": "MT"
   },
   {
-    "name": "Marshall Islands",
-    "currency": "USD",
-    "calling_code": 692,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/2e/Flag_of_the_Marshall_Islands.svg",
-    "country_code": "MH"
-  },
-  {
-    "name": "Mauritania",
-    "currency": "MRO",
-    "calling_code": 222,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/43/Flag_of_Mauritania.svg",
-    "country_code": "MR"
-  },
-  {
-    "name": "Mauritius",
-    "currency": "MUR",
-    "calling_code": 230,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Mauritius.svg",
-    "country_code": "MU"
-  },
-  {
     "name": "Mexico",
     "currency": "MXN",
     "calling_code": 52,
     "icon": "//upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg",
     "country_code": "MX"
   },
-  {
-    "name": "Micronesia (Federated States of)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/e4/Flag_of_the_Federated_States_of_Micronesia.svg",
-    "country_code": null
-  },
-  {
-    "name": "Moldova - Republic of",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/27/Flag_of_Moldova.svg",
-    "country_code": null
-  },
-  {
-    "name": "Monaco",
-    "currency": "EUR",
-    "calling_code": 377,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/ea/Flag_of_Monaco.svg",
-    "country_code": "MC"
-  },
-  {
-    "name": "Mongolia",
-    "currency": "MNT",
-    "calling_code": 976,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Mongolia.svg",
-    "country_code": "MN"
-  },
-  {
-    "name": "Montenegro",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Montenegro.svg",
-    "country_code": "ME"
-  },
-  {
-    "name": "Montserrat",
-    "currency": "XCD",
-    "calling_code": 1664,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Montserrat.svg",
-    "country_code": "MS"
-  },
-  {
-    "name": "Morocco",
-    "currency": "MAD",
-    "calling_code": 212,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Morocco.svg",
-    "country_code": "MA"
-  },
-  {
-    "name": "Mozambique",
-    "currency": "MZN",
-    "calling_code": 258,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Mozambique.svg",
-    "country_code": "MZ"
-  },
-  {
-    "name": "Myanmar",
-    "currency": "MMR",
-    "calling_code": 95,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/8c/Flag_of_Myanmar.svg",
-    "country_code": "MM"
-  },
-  {
-    "name": "Namibia",
-    "currency": "NAD",
-    "calling_code": 264,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_Namibia.svg",
-    "country_code": "NA"
-  },
-  {
-    "name": "Nauru",
-    "currency": "AUD",
-    "calling_code": 674,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/30/Flag_of_Nauru.svg",
-    "country_code": "NR"
-  },
-  {
-    "name": "Nepal",
-    "currency": "NPR",
-    "calling_code": 977,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg",
-    "country_code": "NP"
-  },
+  
   {
     "name": "Netherlands",
     "currency": "EUR",
@@ -1057,67 +217,11 @@
     "country_code": "NL"
   },
   {
-    "name": "New Caledonia",
-    "currency": "XPF",
-    "calling_code": 687,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/0c/Drapeau_de_Nouvelle-Cal%C3%A9donie.png",
-    "country_code": "NC"
-  },
-  {
     "name": "New Zealand",
     "currency": "NZD",
     "calling_code": 64,
     "icon": "//upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg",
     "country_code": "NZ"
-  },
-  {
-    "name": "Nicaragua",
-    "currency": "NIO",
-    "calling_code": 505,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Nicaragua.svg",
-    "country_code": "NI"
-  },
-  {
-    "name": "Niger",
-    "currency": "XOF",
-    "calling_code": 227,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f4/Flag_of_Niger.svg",
-    "country_code": "NE"
-  },
-  {
-    "name": "Nigeria",
-    "currency": "NGN",
-    "calling_code": 234,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_Nigeria.svg",
-    "country_code": "NG"
-  },
-  {
-    "name": "Niue",
-    "currency": "NZD",
-    "calling_code": 683,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Niue.svg",
-    "country_code": "NU"
-  },
-  {
-    "name": "Norfolk Island",
-    "currency": "AUD",
-    "calling_code": 672,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Norfolk_Island.svg",
-    "country_code": "NF"
-  },
-  {
-    "name": "North Macedonia",
-    "currency": "MKD",
-    "calling_code": 389,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_North_Macedonia.svg",
-    "country_code": "MK"
-  },
-  {
-    "name": "Northern Mariana Islands",
-    "currency": "USD",
-    "calling_code": 1670,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/e0/Flag_of_the_Northern_Mariana_Islands.svg",
-    "country_code": "MP"
   },
   {
     "name": "Norway",
@@ -1141,62 +245,6 @@
     "country_code": "PK"
   },
   {
-    "name": "Palau",
-    "currency": "USD",
-    "calling_code": 680,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Palau.svg",
-    "country_code": "PW"
-  },
-  {
-    "name": "Palestine - State of",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_Palestine.svg",
-    "country_code": null
-  },
-  {
-    "name": "Panama",
-    "currency": "PAB",
-    "calling_code": 507,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/a/ab/Flag_of_Panama.svg",
-    "country_code": "PA"
-  },
-  {
-    "name": "Papua New Guinea",
-    "currency": "PGK",
-    "calling_code": 675,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/e3/Flag_of_Papua_New_Guinea.svg",
-    "country_code": "PG"
-  },
-  {
-    "name": "Paraguay",
-    "currency": "PYG",
-    "calling_code": 595,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/27/Flag_of_Paraguay.svg",
-    "country_code": "PY"
-  },
-  {
-    "name": "Peru",
-    "currency": "PEN",
-    "calling_code": 51,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Peru.svg",
-    "country_code": "PE"
-  },
-  {
-    "name": "Philippines",
-    "currency": "PHP",
-    "calling_code": 63,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_the_Philippines.svg",
-    "country_code": "PH"
-  },
-  {
-    "name": "Pitcairn",
-    "currency": null,
-    "calling_code": 64,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_the_Pitcairn_Islands.svg",
-    "country_code": "PN"
-  },
-  {
     "name": "Poland",
     "currency": "PLN",
     "calling_code": 48,
@@ -1211,20 +259,6 @@
     "country_code": "PT"
   },
   {
-    "name": "Puerto Rico",
-    "currency": "USD",
-    "calling_code": 1939,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_Puerto_Rico.svg",
-    "country_code": "PR"
-  },
-  {
-    "name": "Qatar",
-    "currency": "QAR",
-    "calling_code": 974,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Qatar.svg",
-    "country_code": "QA"
-  },
-  {
     "name": "Romania",
     "currency": "RON",
     "calling_code": 40,
@@ -1232,123 +266,11 @@
     "country_code": "RO"
   },
   {
-    "name": "Russian Federation",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg",
-    "country_code": null
-  },
-  {
-    "name": "Rwanda",
-    "currency": "RWF",
-    "calling_code": 250,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Rwanda.svg",
-    "country_code": "RW"
-  },
-  {
-    "name": "Saint Barthélemy",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg",
-    "country_code": null
-  },
-  {
-    "name": "Saint Helena - Ascension and Tristan da Cunha",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg",
-    "country_code": null
-  },
-  {
-    "name": "Saint Kitts and Nevis",
-    "currency": "XCD",
-    "calling_code": 1869,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Saint_Kitts_and_Nevis.svg",
-    "country_code": "KN"
-  },
-  {
-    "name": "Saint Lucia",
-    "currency": "XCD",
-    "calling_code": 1758,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Saint_Lucia.svg",
-    "country_code": "LC"
-  },
-  {
-    "name": "Saint Martin (French part)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg",
-    "country_code": null
-  },
-  {
-    "name": "Saint Vincent and the Grenadines",
-    "currency": "XCD",
-    "calling_code": 1784,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/6d/Flag_of_Saint_Vincent_and_the_Grenadines.svg",
-    "country_code": "VC"
-  },
-  {
-    "name": "Samoa",
-    "currency": "WST",
-    "calling_code": 685,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Samoa.svg",
-    "country_code": "WS"
-  },
-  {
-    "name": "San Marino",
-    "currency": "EUR",
-    "calling_code": 378,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_San_Marino.svg",
-    "country_code": "SM"
-  },
-  {
-    "name": "Sao Tome and Principe",
-    "currency": "STD",
-    "calling_code": 239,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/4f/Flag_of_Sao_Tome_and_Principe.svg",
-    "country_code": "ST"
-  },
-  {
-    "name": "Senegal",
-    "currency": "XOF",
-    "calling_code": 221,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_Senegal.svg",
-    "country_code": "SN"
-  },
-  {
-    "name": "Serbia",
-    "currency": "RSD",
-    "calling_code": 381,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/ff/Flag_of_Serbia.svg",
-    "country_code": "RS"
-  },
-  {
-    "name": "Seychelles",
-    "currency": "SCR",
-    "calling_code": 248,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Seychelles.svg",
-    "country_code": "SC"
-  },
-  {
-    "name": "Sierra Leone",
-    "currency": "SLL",
-    "calling_code": 232,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Sierra_Leone.svg",
-    "country_code": "SL"
-  },
-  {
     "name": "Singapore",
     "currency": "SGD",
     "calling_code": 65,
     "icon": "//upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Singapore.svg",
     "country_code": "SG"
-  },
-  {
-    "name": "Sint Maarten (Dutch part)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Sint_Maarten.svg",
-    "country_code": null
   },
   {
     "name": "Slovakia",
@@ -1365,74 +287,11 @@
     "country_code": "SI"
   },
   {
-    "name": "Solomon Islands",
-    "currency": "SBD",
-    "calling_code": 677,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/74/Flag_of_the_Solomon_Islands.svg",
-    "country_code": "SB"
-  },
-  {
-    "name": "Somalia",
-    "currency": "SOS",
-    "calling_code": 252,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_Somalia.svg",
-    "country_code": "SO"
-  },
-  {
-    "name": "South Africa",
-    "currency": "ZAR",
-    "calling_code": 27,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/a/af/Flag_of_South_Africa.svg",
-    "country_code": "ZA"
-  },
-  {
-    "name": "South Georgia and the South Sandwich Islands",
-    "currency": "GBP",
-    "calling_code": 500,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/e/ed/Flag_of_South_Georgia_and_the_South_Sandwich_Islands.svg",
-    "country_code": "GS"
-  },
-  {
-    "name": "South Sudan",
-    "currency": "SSP",
-    "calling_code": 211,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/7/7a/Flag_of_South_Sudan.svg",
-    "country_code": "SS"
-  },
-  {
     "name": "Spain",
     "currency": "EUR",
     "calling_code": 34,
     "icon": "//upload.wikimedia.org/wikipedia/commons/8/89/Bandera_de_Espa%C3%B1a.svg",
     "country_code": "ES"
-  },
-  {
-    "name": "Sri Lanka",
-    "currency": "LKR",
-    "calling_code": 94,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Sri_Lanka.svg",
-    "country_code": "LK"
-  },
-  {
-    "name": "Sudan",
-    "currency": "SDG",
-    "calling_code": 249,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Sudan.svg",
-    "country_code": "SD"
-  },
-  {
-    "name": "Suriname",
-    "currency": "SRD",
-    "calling_code": 597,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/60/Flag_of_Suriname.svg",
-    "country_code": "SR"
-  },
-  {
-    "name": "Svalbard and Jan Mayen",
-    "currency": "NOK",
-    "calling_code": 47,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",
-    "country_code": "SJ"
   },
   {
     "name": "Sweden",
@@ -1449,116 +308,11 @@
     "country_code": "CH"
   },
   {
-    "name": "Syrian Arab Republic",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/5/53/Flag_of_Syria.svg",
-    "country_code": null
-  },
-  {
-    "name": "Tajikistan",
-    "currency": "TJS",
-    "calling_code": 992,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Tajikistan.svg",
-    "country_code": "TJ"
-  },
-  {
-    "name": "Tanzania - United Republic of",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Tanzania.svg",
-    "country_code": null
-  },
-  {
     "name": "Thailand",
     "currency": "THB",
     "calling_code": 66,
     "icon": "//upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg",
     "country_code": "TH"
-  },
-  {
-    "name": "Timor-Leste",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/26/Flag_of_East_Timor.svg",
-    "country_code": "TL"
-  },
-  {
-    "name": "Togo",
-    "currency": "XOF",
-    "calling_code": 228,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/68/Flag_of_Togo.svg",
-    "country_code": "TG"
-  },
-  {
-    "name": "Tokelau",
-    "currency": "NZD",
-    "calling_code": 690,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/8e/Flag_of_Tokelau.svg",
-    "country_code": "TK"
-  },
-  {
-    "name": "Tonga",
-    "currency": "TOP",
-    "calling_code": 676,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Tonga.svg",
-    "country_code": "TO"
-  },
-  {
-    "name": "Trinidad and Tobago",
-    "currency": "TTD",
-    "calling_code": 1868,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Trinidad_and_Tobago.svg",
-    "country_code": "TT"
-  },
-  {
-    "name": "Tunisia",
-    "currency": "TND",
-    "calling_code": 216,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg",
-    "country_code": "TN"
-  },
-  {
-    "name": "Türkiye",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg",
-    "country_code": null
-  },
-  {
-    "name": "Turkmenistan",
-    "currency": "TMT",
-    "calling_code": 993,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Turkmenistan.svg",
-    "country_code": "TM"
-  },
-  {
-    "name": "Turks and Caicos Islands",
-    "currency": "USD",
-    "calling_code": 1649,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_the_Turks_and_Caicos_Islands.svg",
-    "country_code": "TC"
-  },
-  {
-    "name": "Tuvalu",
-    "currency": "AUD",
-    "calling_code": 688,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Tuvalu.svg",
-    "country_code": "TV"
-  },
-  {
-    "name": "Uganda",
-    "currency": "UGX",
-    "calling_code": 256,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/4e/Flag_of_Uganda.svg",
-    "country_code": "UG"
-  },
-  {
-    "name": "Ukraine",
-    "currency": "UAH",
-    "calling_code": 380,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg",
-    "country_code": "UA"
   },
   {
     "name": "United Arab Emirates",
@@ -1568,11 +322,11 @@
     "country_code": "AE"
   },
   {
-    "name": "United Kingdom of Great Britain and Northern Ireland",
-    "currency": null,
-    "calling_code": null,
+    "name": "United Kingdom",
+    "currency": "GBP",
+    "calling_code": 44,
     "icon": "//upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg",
-    "country_code": null
+    "country_code": "GB"
   },
   {
     "name": "United States of America",
@@ -1580,89 +334,5 @@
     "calling_code": 1,
     "icon": "//upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg",
     "country_code": "US"
-  },
-  {
-    "name": "United States Minor Outlying Islands",
-    "currency": "USD",
-    "calling_code": 1,
-    "icon": "//upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg",
-    "country_code": "UM"
-  },
-  {
-    "name": "Uruguay",
-    "currency": "UYU",
-    "calling_code": 598,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg",
-    "country_code": "UY"
-  },
-  {
-    "name": "Uzbekistan",
-    "currency": "UZS",
-    "calling_code": 998,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg",
-    "country_code": "UZ"
-  },
-  {
-    "name": "Vanuatu",
-    "currency": "VUV",
-    "calling_code": 678,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/6e/Flag_of_Vanuatu_%28official%29.svg",
-    "country_code": "VU"
-  },
-  {
-    "name": "Venezuela (Bolivarian Republic of)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg",
-    "country_code": null
-  },
-  {
-    "name": "Viet Nam",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg",
-    "country_code": null
-  },
-  {
-    "name": "Virgin Islands (British)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_British_Virgin_Islands.svg",
-    "country_code": null
-  },
-  {
-    "name": "Virgin Islands (U.S.)",
-    "currency": null,
-    "calling_code": null,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f8/Flag_of_the_United_States_Virgin_Islands.svg",
-    "country_code": null
-  },
-  {
-    "name": "Wallis and Futuna",
-    "currency": "XPF",
-    "calling_code": 681,
-    "icon": "//upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg",
-    "country_code": "WF"
-  },
-  {
-    "name": "Yemen",
-    "currency": "YER",
-    "calling_code": 967,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Yemen.svg",
-    "country_code": "YE"
-  },
-  {
-    "name": "Zambia",
-    "currency": "ZMW",
-    "calling_code": 260,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Zambia.svg",
-    "country_code": "ZM"
-  },
-  {
-    "name": "Zimbabwe",
-    "currency": "ZWD",
-    "calling_code": 263,
-    "icon": "//upload.wikimedia.org/wikipedia/commons/6/6a/Flag_of_Zimbabwe.svg",
-    "country_code": "ZW"
   }
 ]
