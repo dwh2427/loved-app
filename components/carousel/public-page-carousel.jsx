@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import leftArrow from "@/public/left-arrow.png";
-import rightArrow from "@/public/right-arrow.png";
+import leftArrow from "@/public/left-arrow.svg";
+import rightArrow from "@/public/right-arrow.svg";
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -31,7 +31,7 @@ const CustomSlider = ({ slides }) => {
         <div className="relative">
             <div className="overflow-hidden rounded-lg">
                 <div
-                    className="w-full px-10 flex items-center transition-transform ease-in-out duration-300 transform"
+                    className="w-full px-2 flex items-center transition-transform ease-in-out duration-300 transform gap-2"
                     style={{ transform: `translateX(${translateX}%)` }}
                 >
                     {slides.map((slide, index, arr) => (
@@ -39,7 +39,7 @@ const CustomSlider = ({ slides }) => {
                             <img
                                 src={slide}
                                 alt={`Slide ${index + 1}`}
-                                className="rounded-[8px] md:h-[345px] shadow"
+                                className="rounded-[8px] md:h-[345px] w-[616px] shadow"
                             />
                         </div>
                     ))}

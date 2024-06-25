@@ -1,28 +1,48 @@
+import createStripeAccount from "@/lib/createStripeAccount";
 import verifyIdToken from "@/lib/server-auth";
 import { createError, errorResponse } from "@/lib/server-error";
 import Loved from "@/models/loved";
 import User from "@/models/user";
 import connectDB from "@/mongodb.config";
-
+import countrys from "@/public/countrys.json";
+import { headers } from "next/headers"; // Import headers from Next.js
 connectDB();
+
 export async function POST(request) {
+  // Extract IP address from headers
+  const ip = (headers().get("x-forwarded-for") ?? "127.0.0.1").split(",")[0];
+  // Extract user agent from headers
+  const user_agent = headers().get("user-agent");
+  let fetchUser = null;
+  let page = null;
+  let pageFor = null;
+  let authUser = null;
   try {
     const user = await verifyIdToken(request);
+
+    authUser = user;
     // Parse the JSON body of the request
     const body = await request.json();
     // Destructure the userData and pageData from the request body
     const { pageData } = body;
 
     // Destructure individual fields from pageData
-    const { first_name, last_name, family_member_type, country } = pageData;
+    const {
+      first_name,
+      last_name,
+      username,
+      page_name,
+      family_member_type,
+      currency,
+    } = pageData;
+    // console.log(currency);
 
-    let pageFor = pageData.pageFor;
+    pageFor = pageData.pageFor;
     if (pageFor === "family-member") {
       pageFor = "family_member";
     }
 
-    let fetchUser = null;
-    fetchUser = await User.findOne({ uid: user.uid });
+    fetchUser = await User.findOne({ _id: user._id });
     if (pageFor === "yourself") {
       if (fetchUser?.page) {
         return createError(
@@ -44,23 +64,74 @@ export async function POST(request) {
       first_name,
       last_name,
       family_member_type,
-      username: `${Date.now()}`,
+      username,
+      page_name,
       user: fetchUser?._id,
-      additional_info: { country },
+      currency: currency,
     });
 
+    page = newPage;
     await newPage.save();
 
+    // Create account with Stripe
+    if (!newPage && !fetchUser?.additional_info)
+      return createError("invalid request", 400);
+
+    const account = await createStripeAccount({
+      page: newPage,
+      user: fetchUser,
+      ip,
+      user_agent,
+    });
+
+    newPage.stripe_acc_id = account.id;
+    await newPage.save();
+
+    console.log(newPage);
     // If family_member_type is "yourself" and newUser exists,
     // update the User document to include the newPage's ID
     if (pageFor === "yourself") {
-      await User.findOneAndUpdate({ uid: user.uid }, { page: newPage._id });
+      await User.findOneAndUpdate({ _id: user._id }, { page: newPage._id });
     }
 
     // Return a JSON response with the newly created user data
     return Response.json(newPage);
   } catch (error) {
     // If an error occurs, return an error response
+    if (error.raw) {
+      error = error.raw;
+      if (error.param === "currency") {
+        try {
+          const contry = countrys.find(
+            (i) => i.country_code === fetchUser.additional_info.country,
+          );
+
+          page.currency = contry.currency;
+
+          const account = await createStripeAccount({
+            page: page,
+            user: fetchUser,
+            ip,
+            user_agent,
+          });
+          page.stripe_acc_id = account.id;
+
+          const newPage = await page.save();
+          if (pageFor === "yourself") {
+            await User.findOneAndUpdate(
+              { _id: authUser._id },
+              { page: newPage._id },
+            );
+          }
+
+          // Return a JSON response with the newly created user data
+          return Response.json(newPage);
+        } catch (error) {
+          error.raw && (error = error.raw);
+          return errorResponse(error);
+        }
+      }
+    }
     return errorResponse(error);
   }
 }

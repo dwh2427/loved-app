@@ -3,22 +3,38 @@ import { createError, errorResponse } from "@/lib/server-error";
 import Loved from "@/models/loved";
 import User from "@/models/user";
 import connectDB from "@/mongodb.config";
-
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.NEXT_STRIPE_SECRET_KEY);
 connectDB();
 // This function handles GET requests, typically used to retrieve resources.
 export async function GET(request) {
   try {
     // Verifies the Firebase ID token from the request to authenticate the user.
     const authUser = await verifyIdToken(request);
-
     // Retrieves the authenticated user's data from the database based on the UID.
     const user = await User.findOne({ uid: authUser.uid });
 
     // Retrieves data for the user specified by the username.
-    const loved = await Loved.find({ uid: authUser.uid });
+    let loved = await Loved.find({ uid: authUser.uid }).sort({
+      createdAt: -1,
+    });
+
+    // Filter out the loved items that do not have a stripe_acc_id.
+    loved = loved.filter((i) => i?.stripe_acc_id);
+
+    // Iterate over each loved item and retrieve the balance.
+    const newLovePages = await Promise.all(
+      loved.map(async (i) => {
+        const balance = await stripe.balance.retrieve({
+          stripeAccount: i.stripe_acc_id,
+        });
+        console.log(balance);
+        return { ...i._doc, balance };
+      }),
+    );
 
     // Returns a JSON response containing data for the authenticated user and the user specified by the username.
-    return Response.json({ user, loved });
+    return Response.json({ user, loved: newLovePages });
   } catch (error) {
     // If an error occurs during the process, returns an error response.
     return errorResponse(error);
@@ -50,15 +66,16 @@ export async function PUT(request) {
     }
 
     // Updates the username of the authenticated user in the database.
-    const user = await Loved.findOneAndUpdate(
+
+    const page = await Loved.findOneAndUpdate(
       findQuery, // Find query to identify the user
       { username: newUsername }, // New username to update
       { new: true }, // Returns the updated document
     );
-
+    console.log(newUsername, page);
     // Returns a success response with the updated user data.
     return Response.json(
-      { data: user, message: "Page Link is Updated" },
+      { data: page, message: "Page Link is Updated" },
       { status: 200 }, // HTTP status code indicating success
     );
   } catch (error) {

@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import useApiCaller from "@/hooks/useApiCaller";
 import useAuthState from "@/hooks/useAuthState";
 import useClientError from "@/hooks/useClientError";
-import { useGetCountryByCountryCode } from "@/hooks/useGetCountry";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { es } from "date-fns/locale/es";
 import { Loader2 } from "lucide-react";
@@ -27,6 +26,7 @@ import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocomplet
 import { useForm } from "react-hook-form";
 import { isValidPhoneNumber } from "react-phone-number-input";
 // "With country select" component.
+import countrys from '@/public/countrys.json';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -37,50 +37,10 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "react-phone-number-input/style.css";
 import { z } from "zod";
-import ip3country from "ip3country";
-
 registerLocale("es", es);
 
-const validateDate = (date) => {
-  // Get the year, month, and day from the Date object
-  const year = date?.getFullYear();
-  const month = date?.getMonth() + 1; // Month is zero-based, so add 1
-  const day = date?.getDate();
-
-  const nowDate = new Date();
-  const nowYear = nowDate.getFullYear();
-
-  // Check if year is within 4 digits
-  if (year < 1000 || year > 9999) return false;
-
-  // Check if month is within the range of 1-12
-  if (month < 1 || month > 12) return false;
-
-  // Check if day is within the range of 1-31
-  if (day < 1 || day > 31) return false;
-
-  // Additional checks for specific months (e.g., February)
-  // Add more specific checks if needed
-
-  return true; // Date is valid
-};
 
 const formSchema = z.object({
-  // date_of_birth: z.date().refine((dateStr) => validateDate(dateStr), {
-  //     message: "Invalid date format or out of range",
-  // }).refine((dob) => {
-  //     const today = new Date();
-  //     const dobDate = new Date(dob);
-  //     const age = today.getFullYear() - dobDate.getFullYear();
-  //     const monthDiff = today.getMonth() - dobDate.getMonth();
-  //     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
-  //         return age - 1;
-  //     }
-  //     return age;
-  // }, {
-  //     message: 'User must be at least 13 years old',
-  // }),
-
   city: z.string().min(1, {
     message: "City is required",
   }),
@@ -98,6 +58,7 @@ export default function AdditionalDetailsForm() {
   const [loading, setLoading] = useState("");
   const handleClientError = useClientError();
   const { user } = useAuthState();
+  const [country, setCountry] = useState('')
   const router = useRouter();
   const apiCaller = useApiCaller();
   const form = useForm({
@@ -131,8 +92,8 @@ export default function AdditionalDetailsForm() {
     }
   };
 
-  const { country, isLoading } = useGetCountryByCountryCode();
   const [selectedCountry, setSelectedCountry] = useState(null);
+
   const handleSubmit = async () => {
     if (!selectedCountry) return;
     if (
@@ -148,11 +109,14 @@ export default function AdditionalDetailsForm() {
     }
     setLoading(true);
     const pageId = localStorage.getItem("pageId");
+
     try {
       if (user) {
         const formdata = form.getValues();
-        const data = { ...formdata, pageId, date_of_birth: selectedDates };
-        const res = await apiCaller.post("/api/api/stripe", data);
+        const data = { ...formdata, country, date_of_birth: selectedDates, pageId };
+        const res = await apiCaller.post("/api/api/add_additional_details", data);
+        const defaultCurrency = countrys.find(i => i.country_code === country)
+        localStorage.setItem('defaultCurrency', defaultCurrency?.currency)
         router.push("/add-photo");
       }
     } catch (error) {
@@ -195,27 +159,27 @@ export default function AdditionalDetailsForm() {
             component.types.includes(type),
           );
         };
+
         // Extract city, state, postal code, and country code
         const cityComponent = getComponentByType("locality");
-        const stateComponent = getComponentByType(
-          "administrative_area_level_1",
-        );
+        const stateComponent = getComponentByType("administrative_area_level_1");
         const postalCodeComponent = getComponentByType("postal_code");
-        // const countryComponent = getComponentByType('country');
+        const countryComponent = getComponentByType("country");
 
         const city = cityComponent ? cityComponent.long_name : "";
         const state = stateComponent ? stateComponent.long_name : "";
-        const postalCode = postalCodeComponent
-          ? postalCodeComponent.long_name
-          : "";
+        const postalCode = postalCodeComponent ? postalCodeComponent.long_name : "";
+        const country = countryComponent ? countryComponent.short_name : "";
 
         form.setValue("city", city);
         form.setValue("state", state);
         form.setValue("postal_code", postalCode);
+        setCountry(country)
         form.clearErrors();
         setIsCloseSearch(false);
       },
     );
+
     form.setValue(
       "street_address",
       selectedLocation?.description.split(",")[0],
@@ -223,16 +187,15 @@ export default function AdditionalDetailsForm() {
     setSearchLocation(selectedLocation?.description.split(",")[0]);
   };
 
-  const [windo, setWindo] = useState(null);
+
+
   useEffect(() => {
     getPlacePredictions({ input: searchLocation });
     form.setValue("street_address", searchLocation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchLocation]);
 
-  useEffect(() => {
-    typeof window !== "undefined" && setWindo(window);
-  }, []);
+
 
   const checkFormErrors = () => {
     if (selectedDates === null) {
@@ -245,7 +208,6 @@ export default function AdditionalDetailsForm() {
 
   useEffect(() => {
     const phoneInputContainer = document.querySelector(".react-tel-input");
-
     const handleClick = (event) => {
       if (event.target.getAttribute("role") === "option") {
         form.setValue("phone", "");
@@ -256,15 +218,16 @@ export default function AdditionalDetailsForm() {
     return () => {
       phoneInputContainer.removeEventListener("click", handleClick);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="mt-[41.41px] flex flex-col items-center gap-y-[41.41px] md:gap-y-[0px]"
+        className=" flex flex-col items-center gap-y-[41.41px] md:gap-y-[0px]"
       >
-        <h3 className="mx-auto mt-[41.41px] w-4/5 text-center text-[40px] font-bold leading-[30px] md:mt-[46px] md:w-full md:whitespace-nowrap md:text-[25px]">
+        <h3 className="mx-auto w-4/5 text-center text-[40px] font-bold leading-[30px] md:mt-[46px] md:w-full md:whitespace-nowrap md:text-[25px]">
           We need some <br /> additional information
         </h3>
 
@@ -318,7 +281,7 @@ export default function AdditionalDetailsForm() {
                     <FormControl>
                       <PhoneInput
                         value={selectedPhones}
-                        country={country?.country_code.toLowerCase()}
+                        country={country.toLowerCase() || 'au'}
                         isValid={(value, country) => {
                           if (country?.name !== selectedCountry?.name) {
                             setSelectedPhones(country?.dialCode);

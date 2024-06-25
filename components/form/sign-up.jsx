@@ -1,5 +1,6 @@
 "use client";
 
+import { generateUserId } from "@/app/utils/generateUserId";
 import {
   Form,
   FormControl,
@@ -10,16 +11,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { auth } from "@/firebase/config";
 import useClientError from "@/hooks/useClientError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-// import validator from 'email-validation';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -60,21 +57,9 @@ export default function SignUpForm() {
   const handleClientError = useClientError()
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   // collect data for page 
-  const newPageDataJson = typeof window !== "undefined" && window.localStorage.getItem('newPageData')
+  const newPageDataJson = typeof window !== "undefined" && localStorage.getItem('newPageData')
   const newPageData = JSON.parse(newPageDataJson)
-
-  // // Email Validation
-  // const validateEmail = (e) => {
-  //   var email = e.target.value
-  //   if (validator.isEmail(email)) {
-  //     form.setError('emailAddress', 'Valid Email')
-  //   } else {
-  //     form.setError('emailAddress', 'Enter valid Email!')
-
-  //   }
-  // }
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -86,50 +71,56 @@ export default function SignUpForm() {
     },
   });
 
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    const newUserId = generateUserId();
+    setUserId(newUserId);
+  }, []);
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      
+
       const { emailAddress, password, firstName, lastName } = form.getValues();
-      console.log(form.getValues())
-      const res = await createUserWithEmailAndPassword(
-        auth,
-        emailAddress,
-        password,
-      )
-        .then()
-        .catch((error) => {
-          console.log(error.code);
-          if (error.code === "auth/email-already-in-use") {
-            toast({
-              variant: "destructive",
-              title: "Email already exists!",
-            });
-            setLoading(false);
-            form.reset();
-          }
+      const res = await axios.post(`/sign-up/api/check_email_exits`, {
+        email: emailAddress
+      })
+
+      if (res.data?.result) {
+        toast({
+          variant: "destructive",
+          title: "Email already exists!",
         });
 
-      if (res?.user) {
-        const userId = res.user.uid;
+        setLoading(false);
+        return
+      }
+
+
+      if (res?.data?.result === false) {
+
         const userData = {
           uid: userId,
           first_name: firstName,
           last_name: lastName,
           email: emailAddress,
+          password,
         };
 
         const newPageDataJson = typeof window !== "undefined" && window.localStorage.getItem('newPageData')
         const newPageData = JSON.parse(newPageDataJson)
+
         const { data } = await axios.post(`/sign-up/api`, { userData, pageData: newPageData });
-        const signInUser = await signInWithEmailAndPassword(emailAddress, password);
-        localStorage.setItem('accToken', await signInUser.user.getIdToken())
+        localStorage.setItem('accToken', data.token)
         form.reset();
         localStorage.removeItem("newPageData");
         localStorage.setItem('pageId', data.newPage._id)
-        router.push(`/additional-details`)
+        localStorage.setItem('pageName', data.newPage.username)
+        window.location.replace('/additional-details');
+
       }
+
     } catch (e) {
       handleClientError(e)
 

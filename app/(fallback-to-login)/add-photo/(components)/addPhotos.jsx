@@ -18,7 +18,6 @@ const AddPhoto = () => {
     const apiCaller = useApiCaller()
     const [isDataLoading, setIsDataLoading] = useState(true)
     const [pageData, setPageData] = useState(null)
-    // const [pageId, setPageId] = useState('')
     const handleClientError = useClientError()
     const router = useRouter()
     const [isContinue, setIsContinue] = useState(false)
@@ -37,7 +36,6 @@ const AddPhoto = () => {
     useEffect(() => {
         if (!loading && !user) router.push('/login')
         const pagId = window !== undefined && localStorage.getItem('pageId')
-        // setPageId(pagId)
         if (user) {
             apiCaller.get(`/add-photo/api?pageId=${pagId}`).
                 then(data => setPageData(data.data))
@@ -52,7 +50,7 @@ const AddPhoto = () => {
     return <div className=" flex flex-col items-center">
         <div className="flex flex-col md:flex-row gap-[16px]">
             {pageData?.images.length > 0 && <div className="relative w-full md:w-[216px]">
-                <Image src={pageData?.images[0]} alt="" width={216} height={216} className=" size-full md:size-[216px] border border-[1px] border-[#650031] rounded-[8px]" />
+                <Image src={pageData?.images[0]} alt="" width={216} height={216} className=" size-full md:size-[216px] border border-[#650031] rounded-[8px]" />
                 <button><Image src={threeDot} alt="" className="size-[20px] absolute top-[11px] right-[6px]" /></button>
             </div>}
 
@@ -63,7 +61,7 @@ const AddPhoto = () => {
                             key={ind} src={i}
                             alt="" width={100}
                             height={100}
-                            className="size-[100px] rounded-[8px] border border-[1px] border-[#650031]"
+                            className="size-[100px] rounded-[8px] border border-[#650031]"
                         />)
                 }
                 <input
@@ -86,7 +84,7 @@ const AddPhoto = () => {
             onClick={() => { setIsContinue(true); router.push(`/add-story`) }}
             variant={"default"}
             // disabled={loading}
-            className=" h-[102.71px] text-center w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[16px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
+            className=" h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:mt-[16px] md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
         >
             {isContinue && <Loader2 className="mr-2 size-6 animate-spin" />}
             Continue

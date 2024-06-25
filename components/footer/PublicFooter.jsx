@@ -1,12 +1,12 @@
 import Facebook from "@/public/facebook.svg";
 import Instagram from "@/public/instagram.svg";
 import LinkedIn from "@/public/linkedin.svg";
-import Logo3 from "@/public/logo3.svg";
+import Logo3 from "@/public/lovedLogo.svg";
 import Twitter from "@/public/twitter.svg";
 import Image from "next/image";
 import Link from "next/link";
 const PublictFooter = () => {
-    return <footer className="mt-[50px]  w-screen  bg-[#ECFEFF] px-5 lg:py-[50px] md:px-[32.52px]">
+    return <footer className="mt-[50px] w-screen  bg-[#ECFEFF] px-5 lg:py-[50px] md:px-[32.52px]">
         <div className="max-w-[1495px] mx-auto">
             <div className="mx-auto flex h-[66px] items-center justify-between md:max-w-[1665px]">
                 <Link href="/">

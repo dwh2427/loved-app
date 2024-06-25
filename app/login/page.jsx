@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "@/public/logo.png";
+import Logo from "@/public/lovedLogo.svg";
 import Link from "next/link";
 import LoginForm from "@/components/form/login";
 import Sidebar from "@/components/sidebar/sidebar";
@@ -17,26 +17,28 @@ export default function LoginPage() {
               src={Logo}
               alt="Image"
               className="object-cover"
-              fill
+              width={165}
+              height={40}
               sizes="100vw"
             />
           </Link>
         </div>
         <Link
           href="/"
-          className="mt-[70px] hidden md:mx-auto md:flex md:h-[74.01px] md:w-[118.48px]"
+          className="mt-[150px] hidden md:mx-auto md:flex md:h-[74.01px] md:w-[118.48px]"
         >
           <div className="relative md:h-[74.01px] md:w-[118.48px]">
             <Image
               src={Logo}
               alt="Image"
               className="object-cover"
-              fill
+              width={165}
+              height={40}
               sizes="100vw"
             />
           </div>
         </Link>
-        <div className="md:mx-auto md:mt-[22px] md:h-[592px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:p-16">
+        <div className="md:mx-auto md:h-[592px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:px-16">
           <div className="md:h-[70px] md:w-[402px] md:space-y-[10px]">
             <h2 className="mx-auto max-h-[65px] max-w-[325px] whitespace-nowrap text-center text-[48.53px] font-black leading-[64.71px] tracking-[0.01em] text-black md:h-[40px] md:w-[263px] md:text-[40px] md:leading-[40px]">
               Welcome back

@@ -1,14 +1,12 @@
-import verifyIdToken from "@/lib/server-auth";
 import { createError, errorResponse } from "@/lib/server-error";
 import { uploadFileToGCS } from "@/lib/uploadFIleToGCS";
+import { uploadImage } from "@/lib/uploadImage";
 import Loved from "@/models/loved";
 export const POST = async (request) => {
   try {
-    const user = await verifyIdToken(request);
     const form = await request.formData();
     const file = form.get("file");
     const _id = form.get("pageId");
-    console.log(_id);
 
     if (!file || !_id)
       return createError("Required parameters are missing", 400);
@@ -46,7 +44,8 @@ export const POST = async (request) => {
       return createError("Sorry! Currently this file type is not supported");
     } else {
       // If file type is not HEIC, directly upload to cloud and update database
-      const imageLink = await uploadFileToGCS(file);
+      // const imageLink = await uploadFileToGCS(file);
+      const imageLink = await uploadImage(file);
 
       const update = await Loved.findOneAndUpdate(
         { _id },

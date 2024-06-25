@@ -11,7 +11,14 @@ export default function LogoutButton({ className }) {
       onClick={() => {
         signOut(auth);
         sessionStorage.removeItem("user");
-        router.push('/login')
+        localStorage.clear();
+        localStorage.removeItem("accToken");
+        localStorage.removeItem("pageId");
+        localStorage.removeItem("pageName");
+        localStorage.removeItem("username");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("email");
+        window.location.replace("/");
       }}
       tabIndex={"-1"}
       className={cn(

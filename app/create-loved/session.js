@@ -12,7 +12,7 @@ export default function Session() {
     if (!user && typeof window !== "undefined") {
       const userSession = sessionStorage.getItem("user");
       if (!userSession) {
-        router.push("/login");
+        // router.push("/login");
       }
     }
   }, [user, router]);

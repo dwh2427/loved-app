@@ -12,11 +12,7 @@
 html {
   scroll-behavior: smooth;
 }
-/* .phone-input-custom .form-control {
-  width: 100% !important;
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-} */
+
 .ReactSelectFlags-module_buttonSelect__CxH4w {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
@@ -37,4 +33,90 @@ html {
 
 .MuiStack-root {
   overflow: hidden !important;
+}
+
+.plus-jakarta-sans-font-face {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.MuiSlider-rail{
+  background-color: #A5B5D4 !important;
+}
+.MuiSlider-thumb{
+  background-color: #FF4195 !important;
+}
+.MuiSlider-track{
+  background-color: #FF318C !important;
+}
+/* Custom Modal Styles */
+.custom-modal {
+  background-color: white;
+  border-radius: 30px;
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.custom-modal-header {
+  background-color: #2E266F;
+  padding: 24px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-modal-header .modal-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.custom-modal-header .modal-icon {
+  margin-bottom: 8px;
+}
+
+.custom-modal-header .modal-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.custom-modal-header .close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: white;
+  font-size: 34px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.custom-modal-body {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.custom-modal-body button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.custom-modal-body button span {
+  color: black;
+  font-weight: bold;
 }

@@ -5,9 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useGetCountry from "@/hooks/useGetCountry";
 import Image from "next/image";
-import { useEffect } from "react";
 import {
   FormControl,
   FormField,
@@ -16,14 +14,7 @@ import {
   FormMessage
 } from "../ui/form";
 
-const SelectInputField = ({ control, name, label, options, onChange, form ,defaultValue='' }) => {
-  const { data, countryLoading } = useGetCountry()
-  useEffect(() => {
-    if (name === 'country' && !countryLoading && data) {
-      form.setValue('country', data.country_code)
-    }
-  }, [countryLoading, data, form, name])
-  // if (name === 'country' && countryLoading) return <Loader2 className="mt-4" />
+const SelectInputField = ({ control, name, label, options, onChange, form, defaultValue = '' }) => {
   return (
     <FormField
       control={control}
@@ -38,7 +29,7 @@ const SelectInputField = ({ control, name, label, options, onChange, form ,defau
               field.onChange(selected);
               onChange(selected);
             }}
-            defaultValue={field.name === 'country' ? defaultValue : field.value}
+            defaultValue={field.value}
           >
             <FormControl>
               <SelectTrigger className="justify-start gap-x-1 text-[18px] font-normal leading-[20px]">
@@ -46,8 +37,8 @@ const SelectInputField = ({ control, name, label, options, onChange, form ,defau
               </SelectTrigger>
             </FormControl>
             <SelectContent className="max-h-[200px]">
-              {options.map(option => (
-                <SelectItem key={option.value} value={option.value}>
+              {options.map((option, ind) => (
+                <SelectItem key={ind} value={option.value} >
                   <span className="flex gap-1 items-center">{option.icon && <Image className="rounded-[2px]" src={`https:${option.icon}`} alt="" width={15} height={10} />}{option.label}</span>
                 </SelectItem>
               ))}

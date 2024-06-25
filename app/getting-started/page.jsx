@@ -2,10 +2,9 @@
 
 import GettingStartedForm from "@/components/form/getting-started";
 import Sidebar from "@/components/sidebar/sidebar";
-import Logo from "@/public/logo.png";
+import Logo from "@/public/lovedLogo.svg";
 import Image from "next/image";
 import Link from "next/link";
-
 
 export default function GettingStartedPage() {
   return (
@@ -20,21 +19,23 @@ export default function GettingStartedPage() {
               src={Logo}
               alt="Image"
               className="object-cover"
-              fill
               sizes="100vw"
+              width={165}
+              height={40}
             />
           </Link>
         </div>
         <Link
           href="/"
-          className="mt-[70px] hidden md:mx-auto md:flex md:h-[74.01px] md:w-[118.48px]"
+          className="mt-[70px] hidden md:mx-auto md:flex md:w-[118.48px]"
         >
-          <div className="relative md:h-[74.01px] md:w-[118.48px]">
+          <div className="relative md:w-[118.48px] mt-20">
             <Image
               src={Logo}
               alt="Image"
               className="object-cover"
-              fill
+              width={165}
+              height={40}
               sizes="100vw"
             />
           </div>

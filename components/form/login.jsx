@@ -12,16 +12,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { auth } from "@/firebase/config";
 import useAuthState from "@/hooks/useAuthState";
 
 import useClientError from "@/hooks/useClientError";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -39,7 +38,6 @@ export default function LoginForm() {
   const { user, loading: isAuthLoading } = useAuthState()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleClientError = useClientError()
@@ -55,9 +53,9 @@ export default function LoginForm() {
     try {
       setLoading(true);
       const { emailAddress, password } = form.getValues();
-      const res = await signInWithEmailAndPassword(emailAddress, password);
+      const res = await axios.post("/login/api", { email: emailAddress, password })
 
-      if (!res) {
+      if (res?.data?.status === false) {
         toast({
           variant: "destructive",
           title: "Incorrect email address or password. Please try again.",
@@ -66,7 +64,7 @@ export default function LoginForm() {
       }
 
       sessionStorage.setItem("user", true);
-      localStorage.setItem('accToken', await res.user.getIdToken())
+      localStorage.setItem('accToken', await res.data.token)
       router.push("/dashboard");
       form.reset();
     } catch (e) {
@@ -75,10 +73,12 @@ export default function LoginForm() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     if (isAuthLoading) return;
     user && router.push('/dashboard')
   }, [isAuthLoading])
+
   return (
     <Form {...form}>
       <form

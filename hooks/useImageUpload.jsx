@@ -1,6 +1,4 @@
 "use client";
-
-import { auth } from "@/firebase/config";
 import axios from "axios";
 import { useState } from "react";
 import useClientError from "./useClientError";
@@ -10,6 +8,7 @@ const useImageUpload = (pageData, setPageData) => {
   const handleClientError = useClientError();
   const [isCropping, setIsCropping] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const token = typeof window !== "undefined" && window.localStorage.getItem("accToken");
 
   const handleFileUpload = async (file) => {
     setIsUploading(true);
@@ -23,7 +22,7 @@ const useImageUpload = (pageData, setPageData) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
+            Authorization: `Bearer ${token}`,
           },
         },
       );
@@ -42,7 +41,6 @@ const useImageUpload = (pageData, setPageData) => {
       const reader = new FileReader();
       reader.onload = () => {
         const base64URL = reader.result;
-        console.log(selectedFile);
         // setFile(selectedFile);
         setImageUrl(base64URL); // Assuming you have a state variable to store the image URL
         setIsCropping(true);

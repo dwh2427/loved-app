@@ -1,8 +1,8 @@
+import ProfileDropdown from "@/components/button/profile-dropdown";
+import Bell from "@/public/bell.svg";
 import Logo3 from "@/public/logo3.svg";
 import Image from "next/image";
 import Link from "next/link";
-import Bell from "@/public/bell.svg";
-import ProfileDropdown from "@/components/button/profile-dropdown";
 
 export default function DashBoardHeader() {
   return (
@@ -16,7 +16,7 @@ export default function DashBoardHeader() {
             <Image src={Bell} alt="" className="size-[37.5px]" />
           </div>
           {/* <div className="grid bg-red-500 size-[62px] cursor-pointer place-items-center rounded-[65.45px] border-[1.06px]"> */}
-            <ProfileDropdown />
+          <ProfileDropdown />
           {/* </div> */}
         </div>
       </div>

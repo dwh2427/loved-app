@@ -1,24 +1,33 @@
-import { auth } from '@/firebase/config'; // Assuming you have a firebase.js file with Firebase configuration
+'use client'
 import { useEffect, useState } from 'react';
+import useApiCaller from './useApiCaller';
 
 const useAuthState = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Initialize loading state to true
 
+  const apiCaller = useApiCaller()
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        // User is signed in
-        setUser(authUser);
-      } else {
-        // User is signed out
-        setUser(null);
+    const token = typeof window !== "undefined" ? localStorage.getItem('accToken') : false;
+    const getUser = async () => {
+      try {
+        const res = await apiCaller.post('/sign-up/api/check_token_valid',)
+        if (res.data.result) {
+          setUser(res?.data?.data)
+        } else {
+          setUser(null)
+        }
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
       }
-      setLoading(false); // Set loading state to false once authentication status is determined
-    });
+    }
 
-    return () => unsubscribe();
-  }, []);
+    if (token) {
+      getUser();
+    }
+
+  }, [apiCaller]);
 
   return { user, loading }; // Return both user and loading state
 };
