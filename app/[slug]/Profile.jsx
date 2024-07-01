@@ -6,14 +6,11 @@ import LovedMsgLogo from "@/public/loved-msg-person.svg";
 import LovedLogo from "@/public/white-loved-logo.svg";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
-export const metadata = {
-	title: '...',
-	description: '...',
-}
 
 const UserProfile = function ({ params }) {
 	const router = useRouter();
@@ -22,8 +19,10 @@ const UserProfile = function ({ params }) {
 	const [showFullStory, setShowFullSotry] = useState(false)
 	const [comments, setComment] = useState([])
 	const handleClientError = useClientError()
+	const shareUrl = "https://loved-project.vercel.app/Saidur2058";
+	const shareText = "Check out this awesome website!";
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		axios
 			.get(`/${params.slug}/api`)
 			.then((res) => {
@@ -73,6 +72,20 @@ const UserProfile = function ({ params }) {
 
 	return (
 		<div className="min-h-screen overflow-hidden flex flex-col h-fit w-full">
+			<Head>
+				<meta property="og:title" content="Loved" />
+				<meta property="og:description" content="A brief description of your website." />
+				<meta property="og:image" content={pageData?.images[0]} />
+				<meta property="og:url" content={shareUrl} />
+				<meta property="og:type" content="website" />
+				<meta property="og:site_name" content="Your Site Name" />
+
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content="Loved" />
+				<meta name="twitter:description" content="A brief description of your website." />
+				<meta name="twitter:image" content={pageData?.images[0]} />
+				<meta name="twitter:url" content={shareUrl} />
+			</Head>
 			{loading ?
 				<div className="flex flex-col items-center justify-center mt-32">
 					<Loader2 className="mr-2 size-6 animate-spin text-center" />

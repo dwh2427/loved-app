@@ -17,6 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import CropEasy from "../../add-photo/(components)/crop-images";
+import Transacation from "./Transacation";
 const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 const PageDetaisl = ({ item }) => {
     const [pageData, setPageData] = useState(item)
@@ -24,7 +25,7 @@ const PageDetaisl = ({ item }) => {
     const [showFullStory, setShowFullSotry] = useState(false)
     const apiCaller = useApiCaller()
     const handleClientError = useClientError()
-
+    const [transacationList, setTransactionList] = useState()
     const {
         imageUrl,
         handleFileChange,
@@ -51,6 +52,14 @@ const PageDetaisl = ({ item }) => {
     }
 
 
+
+    const createFinancialAccount = async () => {
+        try {
+            const res = await apiCaller.post()
+        } catch (error) {
+            handleClientError(error)
+        }
+    }
     return (
         <div className="pb-6 border-b border-1 border-gray-300">
             <div className="  w-full max-w-[450px]">
@@ -92,7 +101,7 @@ const PageDetaisl = ({ item }) => {
                         <button><Image src={threeDot} alt="" className="size-[20px] absolute top-[11px] right-[6px]" /></button>
                     </div>}
 
-                    <div className="grid grid-rows-2 grid-cols-3 gap-[16px]">
+                    <div className="grid grid-rows-1 grid-cols-3 gap-[16px]">
                         {
                             pageData?.images?.slice(1, pageData.images.length).map((i, ind) => <Image key={ind} src={i} alt="" width={100} height={100} className="size-[100px] rounded-[8px]" />)
                         }
@@ -111,8 +120,12 @@ const PageDetaisl = ({ item }) => {
                             </div>}
                         </label>
                     </div>
+
+
                 </div>
             </div>
+            <Transacation conncetId={item.stripe_acc_id} />
+
 
             {/* modals  */}
             <Popup isOpen={isCropping} closeModal={() => setIsCropping(false)}>

@@ -155,7 +155,7 @@ export default function SendLove() {
         // setValue("username", suggestion?.username);
         setValue("pageName", suggestion?.username);
         setValue("pageOwnerId", suggestion?.uid);
-
+        console.log(suggestion)
         setFilteredSuggestions([]);
     };
 
@@ -208,7 +208,7 @@ export default function SendLove() {
             formData.append("username", data.username);
             formData.append("email", email);
             formData.append("application_fee", application_amount_fee);
-            formData.append("page_name", data.pageName);
+            formData.append("page_name", selectedPage.username);
             formData.append("comment", data.text);
             formData.append("tipAmount", tipAmount);
             formData.append("page_owner_id", selectedPage.uid);
@@ -246,15 +246,12 @@ export default function SendLove() {
                 }
 
                 setIsPaymentProccess(true);
+                const { token, error } = await stripe.createToken(cardNumberElement);
 
-                const paymentIntent = await createPaymentIntent(data.tipAmount, selectedPage.currency, 'card', selectedPage.stripe_acc_id, application_amount_fee);
-                if (paymentIntent.client_secret) {
-                    const result = await stripe.confirmCardPayment(paymentIntent.client_secret, {
-                        payment_method: {
-                            card: cardNumberElement,
+                const token2 = await stripe.createToken(cardNumberElement);
 
-                        },
-                    });
+                if (token) {
+                    const result =  await confirmPaymentIntent(token, token2, data.text, data.username, email, tipAmount, selectedPage.currency, application_amount_fee, selectedPage.stripe_acc_id);
 
                     if (result.error) {
                         setIsPaymentProccess(false);
@@ -301,22 +298,25 @@ export default function SendLove() {
         },
     };
 
-    const createPaymentIntent = async (amount, currency, paymentType, connectedAccountId, application_amount_fee) => {
+  const confirmPaymentIntent = async (cardNumberElement, tokenId, comments, name, email, amount, currency, application_amount_fee, connectedAccountId) => {
 
-        try {
-            const response = await apiCaller
-                .post('send-loved/api/create-payment-intent', {
-                    amount: tipAmount,
-                    currency,
-                    payment_method_types: [paymentType],
-                    connectedAccountId,
-                    application_amount_fee
-                });
-            return response.data;
-        } catch (error) {
-            handleClientError(error);
-        }
-    };
+    try {
+      const response = await apiCaller.post('send-loved/api/confirm-payment-intent', {
+        cardNumberElement,
+        tokenId,
+        comments,
+        name,
+        email,
+        amount,
+        currency,
+        application_amount_fee,
+        connectedAccountId,
+      });
+      return response.data;
+    } catch (error) {
+      handleClientError(error);
+    }
+  };
 
 
     const toTitleCase = str => str?.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
@@ -345,11 +345,12 @@ export default function SendLove() {
     }, [getTipAmmountPercent, tipAmount]);
 
     const handleUsernameInput = (event) => {
-        const regex = /^[a-zA-Z-]*$/;
+        const regex = /^[a-zA-Z\s-]*$/; // Allow letters, spaces, and hyphens
         if (!regex.test(event.target.value)) {
-            event.target.value = event.target.value.replace(/[^a-zA-Z-]/g, '');
+            event.target.value = event.target.value.replace(/[^a-zA-Z\s-]/g, ''); // Remove all characters except letters, spaces, and hyphens
         }
     };
+    
 
     return (
         <>

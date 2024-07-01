@@ -11,20 +11,26 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Session from "./session";
+import Head from "next/head";
 const base_urls = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function CreateLovedPage() {
     const { user } = useAuthState()
 
     const base_url = base_urls.replace(/^https?:\/\//i, "");
+    const customBaseUrl = base_urls.replace(/^https?:\/\//i, "");
 
-    const [insertUsername, setInsertUserName] = useState(``)
+    const [insertUsername, setInsertUserName] = useState(``);
+    const [shareUrl, setShareUrl] = useState(``);
     const [isUpdating, setIsUpdating] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);  // State to control modal visibility
     const router = useRouter()
     const handleClientError = useClientError()
     const apiCaller = useApiCaller()
     const [pageId, setPageId] = useState('')
+
+    //const insertUsername = base_url;
+    const shareText = "Check out this awesome website!";
 
 
     const handleUpdatePageLink = async (newValue) => {
@@ -50,6 +56,7 @@ export default function CreateLovedPage() {
         if (!username && !pageId) router.replace('/')
         setPageId(pageId)
         setInsertUserName(`${base_url}${username}${Math.ceil(Math.random() * 10)}`)
+        setShareUrl(`${customBaseUrl}${username}${Math.ceil(Math.random() * 10)}`)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [base_url, user])
 
@@ -88,7 +95,7 @@ export default function CreateLovedPage() {
                     </Link>
                     <h3 className="mx-auto mt-[41.41px] w-4/5 text-center text-[40px] font-bold leading-[30px] text-[#650031] md:mt-[86px] md:w-full md:whitespace-nowrap md:text-[25px]">
                         Congrats your page for Dave is ready
-                    </h3>
+                    </h3>   
                     <p className="mx-auto mt-[41.41px] text-center text-[25px] font-bold leading-[30px] md:mt-[46px]">
                         Your Page URL is
                     </p>
@@ -109,7 +116,7 @@ export default function CreateLovedPage() {
 
                     <button
                         disabled={isUpdating}
-                        onClick={() => handleUpdatePageLink(insertUsername)}
+                        onClick={() => handleUpdatePageLink(shareUrl)}
                         className="mx-auto h-[60px] w-full gap-2 flex justify-center max-w-[400px] rounded-[30px] border-2 border-[#FF007A] bg-transparent px-[20px] py-[15px] text-center text-[18px] font-black leading-[22px] text-[#FF007A] hover:bg-[#FF007A] hover:text-[#FFFFFF] focus:bg-[#FF007A] focus:text-[#FFFFFF] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 md:mt-[20px]"
                     >
                         {isUpdating && <Loader2 />}
@@ -131,7 +138,12 @@ export default function CreateLovedPage() {
                                         <Image src="/share-ink.svg" alt="Share link" width={40} height={40} />
                                         <span>Share link</span>
                                     </button>
-                                    <button className="flex items-center gap-2">
+                                    <button
+                                        onClick={() => window.open(
+                                            `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+                                            '_blank'
+                                        )}
+                                        className="flex items-center gap-2">
                                         <Image src="/x.svg" alt="X" width={40} height={40} />
                                         <span>X</span>
                                     </button>
@@ -139,15 +151,30 @@ export default function CreateLovedPage() {
                                         <Image src="/email.svg" alt="Email" width={40} height={40} />
                                         <span>Email</span>
                                     </button>
-                                    <button className="flex items-center gap-2">
+                                    <button
+                                        onClick={() => window.open(
+                                            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+                                            '_blank'
+                                        )}
+                                        className="flex items-center gap-2">
                                         <Image src="/share-facebook.svg" alt="Facebook" width={40} height={40} />
                                         <span>Facebook</span>
                                     </button>
-                                    <button className="flex items-center gap-2">
+                                    <button
+                                        onClick={() => window.open(
+                                            `fb-messenger://share?link=${encodeURIComponent(shareUrl)}&app_id=3485738945794`,
+                                            '_blank'
+                                        )}
+                                        className="flex items-center gap-2">
                                         <Image src="/messenger.svg" alt="Messenger" width={40} height={40} />
                                         <span>Messenger</span>
                                     </button>
-                                    <button className="flex items-center gap-2">
+                                    <button
+                                        onClick={() => window.open(
+                                            `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`,
+                                            '_blank'
+                                        )}
+                                        className="flex items-center gap-2">
                                         <Image src="/whatsapp.svg" alt="WhatsApp" width={40} height={40} />
                                         <span>WhatsApp</span>
                                     </button>

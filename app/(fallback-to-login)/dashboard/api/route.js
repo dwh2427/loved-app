@@ -28,7 +28,6 @@ export async function GET(request) {
         const balance = await stripe.balance.retrieve({
           stripeAccount: i.stripe_acc_id,
         });
-        console.log(balance);
         return { ...i._doc, balance };
       }),
     );
