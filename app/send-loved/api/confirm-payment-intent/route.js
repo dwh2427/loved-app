@@ -9,6 +9,7 @@ connectDB();
 export async function POST(req) {
   try {
     const {
+      radarSession,
       cardNumberElement,
       tokenId,
       comments,
@@ -21,6 +22,38 @@ export async function POST(req) {
     } = await req.json();
     
     const token = cardNumberElement.id;
+
+    const amountInCents = Math.round(Number(amount) * 100);
+    const applicationAmountFeeInCents = Math.round(Number(application_amount_fee) * 100);
+    
+    if(applicationAmountFeeInCents> 0){
+
+    const customerMain = await stripe.customers.create({
+      email: email,
+      name: name,
+    });
+
+    const source2 = await stripe.customers.createSource(customerMain.id, {
+      source: tokenId.token.id,
+    });
+    const Fee = await stripe.charges.create({
+      amount: applicationAmountFeeInCents,
+      customer:customerMain.id,
+      currency: 'usd',
+      source: source2.id,
+      description: comments,
+      radar_options: {
+        session: radarSession.id,
+      },
+      metadata: {
+        name: name,
+        customer_email: email,
+        comments: comments,
+      },
+    });
+
+  }
+
 
     //const tokenObject =JSON.stringify(cardNumberElement);
     const customer = await stripe.customers.create({
@@ -37,39 +70,20 @@ export async function POST(req) {
     });
 
 
-    const amountInCents = Math.round(Number(amount) * 100);
-    const applicationAmountFeeInCents = Math.round(Number(application_amount_fee) * 100);
     const confirmIntent = await stripe.charges.create({
       amount: amountInCents,
       currency: currency,
       customer: customer.id,
       description: comments,
       source: source.id,
+      metadata: {
+        name: name,
+        customer_email: email,
+        comments: comments,
+      },
     },{
           stripeAccount: connectedAccountId,
     });
-
-    
-    if(applicationAmountFeeInCents> 0){
-      const customerMain = await stripe.customers.create({
-        email: email,
-        name: name,
-      });
-
-      const source2 = await stripe.customers.createSource(customerMain.id, {
-        source: tokenId.token.id,
-      });
-      const Fee = await stripe.charges.create({
-        amount: applicationAmountFeeInCents,
-        customer:customerMain.id,
-        currency: 'usd',
-        source: source2.id,
-        description: comments,
-      });
-
-    }
-
-
 
     return new Response(JSON.stringify(confirmIntent), { status: 200 });
   } catch (error) {

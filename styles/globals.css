@@ -120,3 +120,72 @@ html {
   color: black;
   font-weight: bold;
 }
+
+.custom-btn{
+  border: 3px solid #FF318C;
+  color: #FF318C;
+  font-weight: 500;
+}
+
+.custom-btn:hover{
+  border: 3px solid #FFFFFF;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.message-sent{
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.want-more{
+  font-weight: 700;
+  font-size: 24px;
+  color: #2E266F;
+}
+
+.more-page{
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.custom-body .button-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Adjust gap as needed */
+}
+
+.custom-body .left-buttons,
+.custom-body .right-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Adjust gap as needed */
+}
+
+.custom-body button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adjust gap as needed */
+  text-align: left;
+}
+
+.custom-body button span {
+  color: #2E266F;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.message-sent {
+  font-size: 2rem;
+}
+
+.want-more,
+.more-page {
+  font-size: 1.5rem;
+}
+
+.custom-link-text{
+  font-weight: 500 !important;
+  color: #A5B5D4 !important;
+  font-size: 14px !important;
+}

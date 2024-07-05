@@ -1,6 +1,10 @@
+import axios from "axios"
 import UserProfile from "./Profile"
 const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 export async function generateMetadata({ params }) {
+  const { data } = await axios
+    .get(`${base_URL}${params.slug}/api`)
+console.log(data)
   return {
     title: `Send loved to ${params.slug} | share Your Love`,
     description: `Share your love with ${params.slug}`,
@@ -10,7 +14,7 @@ export async function generateMetadata({ params }) {
       url: base_URL + `${params.slug}`,
       images: [
         {
-          url: 'https://loved-project.vercel.app/_next/image?url=https%3A%2F%2Fi.ibb.co%2FhmhqZns%2Fcroped1717571929480.jpg&w=640&q=75', // Must be an absolute URL
+          url: data?.data?.images[0], // Must be an absolute URL
           width: 800,
           height: 600,
         },

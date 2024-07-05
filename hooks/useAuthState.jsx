@@ -11,7 +11,8 @@ const useAuthState = () => {
     const token = typeof window !== "undefined" ? localStorage.getItem('accToken') : false;
     const getUser = async () => {
       try {
-        const res = await apiCaller.post('/sign-up/api/check_token_valid',)
+        const res = await apiCaller.post('/sign-up/api/check_token_valid')
+
         if (res.data.result) {
           setUser(res?.data?.data)
         } else {

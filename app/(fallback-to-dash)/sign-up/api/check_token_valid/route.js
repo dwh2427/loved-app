@@ -8,6 +8,7 @@ export async function POST(request) {
   // check user email exits or not
   try {
     const verifyuser = await verifyIdToken(request);
+  
     const user = await User.findOne({ email: verifyuser?.email });
 
     if (user) {
@@ -15,6 +16,7 @@ export async function POST(request) {
     }
     return Response.json({ result: false });
   } catch (error) {
+ 
     return errorResponse(error);
   }
 }

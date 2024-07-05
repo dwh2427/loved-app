@@ -19,8 +19,10 @@ const UserProfile = function ({ params }) {
 	const [showFullStory, setShowFullSotry] = useState(false)
 	const [comments, setComment] = useState([])
 	const handleClientError = useClientError()
-	const shareUrl = "https://loved-project.vercel.app/Saidur2058";
-	const shareText = "Check out this awesome website!";
+	const base_URL = process.env.NEXT_PUBLIC_BASE_URL
+
+	const shareUrl = `${base_URL}${params?.slug}`;
+
 
 	useLayoutEffect(() => {
 		axios
@@ -51,11 +53,37 @@ const UserProfile = function ({ params }) {
 
 	}, [params.slug])
 
+	const [isModalOpen, setIsModalOpen] = useState(false);  // State to control modal visibility
+	const [isCopied, setIsCopied] = useState(false);
+
+	
+		const shareText = "Check out this awesome website!";
+
+		const twitterText = `Share Your Love with ${pageData?.first_name} ${pageData?.last_name}`;
+		const EmailSubject = `Check out ${pageData?.first_name} ${pageData?.last_name}’s Loved page`;
+		const emailText = `Hello,\n\nI thought you might be interested in adding something nice to ${pageData?.first_name} ${pageData?.last_name}’s Loved page, ${shareUrl}\n\nA nice note and contribution would really be a nice way to show your gratitude and care. Otherwise, please feel free to forward this onto someone else that may be interested.`;
+		const whatsappText = `Hi, I thought you’d be interested in the Loved page of ${pageData?.first_name} ${pageData?.last_name}.\nYou can add a message to the page, make a contribution or share it with your friends.\nVisit page ${shareUrl}`;
+
+	
+
 	useEffect(() => {
 		if (isComment) {
 			setComment(allComment)
 		}
 	}, [allComment, isComment])
+
+	
+    const copyToClipboardDynamic = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+        });
+      };
+
+    const handleEmailShare = () => {
+        const mailtoUrl = `mailto:?subject=${encodeURIComponent(EmailSubject)}&body=${encodeURIComponent(emailText)}`;
+        window.location.href = mailtoUrl;
+    };
 
 
 	const capitalize = (text) => {
@@ -69,8 +97,9 @@ const UserProfile = function ({ params }) {
 		// localStorage.setItem('comment_page_id', pageData?.uid);
 		router.push(`/send-loved/?page_username=${params.slug}`)
 	}
-
+	
 	return (
+
 		<div className="min-h-screen overflow-hidden flex flex-col h-fit w-full">
 			<Head>
 				<meta property="og:title" content="Loved" />
@@ -109,7 +138,7 @@ const UserProfile = function ({ params }) {
 								</div>
 							</div>
 
-							<div onClick={() => router.push(`/send-loved/?page_username=${params.slug}`)} className="mt-[54px] cursor-pointer shadow-md min-w-[500px] max-w-[500] h-[430px] xl:max-w-[550px] rounded-[64px] overflow-hidden">
+							<div  className="mt-[54px] cursor-pointer shadow-md min-w-[500px] max-w-[500] h-[430px] xl:max-w-[550px] rounded-[64px] overflow-hidden">
 								<div className="h-[430px]">
 									<div className="bg-[#2E266F] flex flex-col justify-center items-center h-[40%]">
 										<div className="avatar-section">
@@ -122,8 +151,9 @@ const UserProfile = function ({ params }) {
 										<div className="flex items-center">
 											<p className="text-2xl text-[#A5B5D4] absolute top-[30%] left-[29%]">Your message</p>
 										</div>
-										<div className="flex flex-col justify-end items-center absolute w-full bottom-6">
-											<button className="w-[80%] text-center items-end justify-end bg-[#FF318C] text-white mt-6 rounded-full py-3 hover:bg-[#FF318C]">Send Love</button>
+										<div className="flex flex-col justify-end items-center w-full mt-auto pb-6 space-y-4">
+											<button onClick={() => router.push(`/send-loved/?page_username=${params.slug}`)} className="w-[80%] text-center bg-[#FF318C] text-white rounded-full py-3 hover:bg-[#FF318C]">Share love with {capitalize(pageData?.first_name)} {capitalize(pageData?.last_name)}</button>
+											<button  onClick={() => setIsModalOpen(true)} className="w-[80%] text-center bg-[#FFFFFF] custom-btn text-white rounded-full py-3 hover:bg-[#FF318C]">Share Page with Friends</button>
 										</div>
 									</div>
 								</div>
@@ -134,7 +164,7 @@ const UserProfile = function ({ params }) {
 							<h3 className="mb-10 text-center text-[30px] font-[900]  leading-[36px]  text-[#650031]">
 								Gallery
 							</h3>
-
+							whatsappText
 							<div className="relative">
 								{pageData && <CustomSlider slides={pageData.images} />}
 							</div>
@@ -166,6 +196,91 @@ const UserProfile = function ({ params }) {
 						}
 					</section>
 				</>}
+
+				{isModalOpen && (
+					<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+						<div className="custom-modal">
+							<div className="custom-modal-header">
+								<button onClick={() => setIsModalOpen(false)} className="close-button">X</button>
+								<div className="modal-center-content">
+									<Image src="/share-loved.svg" alt="Logo" width={54} height={54} className="modal-icon" />
+									<h2 className="modal-title">Share With Friends</h2>
+								</div>
+							</div>
+
+							<div className="custom-modal-body">
+							<button className="flex items-center gap-2" onClick={() => copyToClipboardDynamic(shareUrl)}>
+									{isCopied ? (
+										<>
+											<Image src="/checkmark.svg" alt="Link copied" width={54} height={54} />
+											<span>Link copied</span>
+										</>
+									) : (
+										<>
+											<Image src="/share-ink.svg" alt="Share link" width={54} height={54} />
+											<span>Share link</span>
+										</>
+									)}
+								</button>
+								<button
+									onClick={() => window.open(
+										`https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(shareUrl)}`,
+										'_blank'
+									)}
+									className="flex items-center gap-2">
+									<Image src="/x.svg" alt="X" width={54} height={54} />
+									<span>X</span>
+								</button>
+								<button className="flex items-center gap-2" onClick={handleEmailShare}>
+									<Image src="/email.svg" alt="Email" width={54} height={54} />
+									<span>Email</span>
+								</button>
+								<button
+									onClick={() => window.open(
+										`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+										'_blank'
+									)}
+									className="flex items-center gap-2">
+									<Image src="/share-facebook.svg" alt="Facebook" width={54} height={54} />
+									<span>Facebook</span>
+								</button>
+								<button
+									onClick={() => {
+									const fallbackUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}&app_id=2480962782120712&redirect_uri=${encodeURIComponent(window.location.href)}`;
+
+									const fbMessengerUrl = `fb-messenger://share?link=${encodeURIComponent(shareUrl)}&app_id=3485738945794`;
+
+									const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+									const isAndroid = /Android/.test(navigator.userAgent);
+
+									if (isIOS || isAndroid) {
+										window.location.href = fbMessengerUrl;
+										setTimeout(() => {
+											window.open(fallbackUrl, '_blank');
+										}, 500);
+									} else {
+										window.open(fallbackUrl, '_blank');
+									}
+
+								}}
+								
+									className="flex items-center gap-2">
+									<Image src="/messenger.svg" alt="Messenger" width={54} height={54} />
+									<span>Messenger</span>
+								</button>
+								<button
+									onClick={() => window.open(
+										`https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappText)}`,
+										'_blank'
+									)}
+									className="flex items-center gap-2">
+									<Image src="/whatsapp.svg" alt="WhatsApp" width={54} height={54} />
+									<span>WhatsApp</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				)}
 
 		</div>
 	);

@@ -1,6 +1,7 @@
 'use client'
 import LovedAnimate from "@/components/lotties/loved-animate";
 // import LovedBoxHeader from "@/components/loved-box/lovedBoxHeader";
+import useAuthState from "@/hooks/useAuthState";
 import { useToast } from "@/components/ui/use-toast";
 import useApiCaller from "@/hooks/useApiCaller";
 import useClientError from "@/hooks/useClientError";
@@ -23,6 +24,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Lottie from "react-lottie";
 import { z } from "zod";
+const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 const LovedBoxHeader = dynamic(() => import('@/components/loved-box/lovedBoxHeader'), {
     ssr: false,
@@ -36,7 +38,16 @@ const formSchema = z.object({
 
 });
 
+const capitalizeWords = (str) => {
+    if (typeof str !== 'string') {
+        return '';
+    }
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+  
+
 export default function SendLove() {
+    const { user, loading } = useAuthState()
     const { toast } = useToast();
     const [lovedMsg, setLovedMsg] = useState('');
     const [pages, setPages] = useState([]);
@@ -63,6 +74,10 @@ export default function SendLove() {
     const elements = useElements();
     const apiCaller = useApiCaller();
     const [errorMessage, setErrorMessage] = useState("");
+    // const [twitterText, settwitterText] = useState('')
+    // const [EmailSubject, setEmailSubject] = useState('')
+    // const [emailText, setemailText] = useState('')
+    // const [whatsappText, setwhatsappText] = useState('')
 
     const {
         register,
@@ -250,8 +265,10 @@ export default function SendLove() {
 
                 const token2 = await stripe.createToken(cardNumberElement);
 
+                const {radarSession} = await stripe.createRadarSession();
+
                 if (token) {
-                    const result =  await confirmPaymentIntent(token, token2, data.text, data.username, email, tipAmount, selectedPage.currency, application_amount_fee, selectedPage.stripe_acc_id);
+                    const result =  await confirmPaymentIntent(radarSession, token, token2, data.text, data.username, email, tipAmount, selectedPage.currency, application_amount_fee, selectedPage.stripe_acc_id);
 
                     if (result.error) {
                         setIsPaymentProccess(false);
@@ -262,6 +279,7 @@ export default function SendLove() {
                     }
                 }
             }
+
             setLovedLoading(true);
             const response = await axios.post('/send-loved/api', formData, {
                 headers: {
@@ -298,10 +316,11 @@ export default function SendLove() {
         },
     };
 
-  const confirmPaymentIntent = async (cardNumberElement, tokenId, comments, name, email, amount, currency, application_amount_fee, connectedAccountId) => {
+  const confirmPaymentIntent = async (radarSession,cardNumberElement, tokenId, comments, name, email, amount, currency, application_amount_fee, connectedAccountId) => {
 
     try {
       const response = await apiCaller.post('send-loved/api/confirm-payment-intent', {
+        radarSession,
         cardNumberElement,
         tokenId,
         comments,
@@ -350,13 +369,34 @@ export default function SendLove() {
             event.target.value = event.target.value.replace(/[^a-zA-Z\s-]/g, ''); // Remove all characters except letters, spaces, and hyphens
         }
     };
+
     
+    const shareText = "Check out this awesome website!";
+    const [isCopied, setIsCopied] = useState(false);
+    const shareUrl = `${base_URL}${selectedPage?.username}`;
+
+    const twitterText =`Share Your Love with ${capitalizeWords(inputValue)}`;
+    const EmailSubject =`Check out ${capitalizeWords(inputValue)}’s Loved page`;
+    const emailText =`Hello,\n\nI thought you might be interested in adding something nice to ${capitalizeWords(inputValue)}’s Loved page, ${shareUrl}\n\nA nice note and contribution would really be a nice way to show your gratitude and care. Otherwise, please feel free to forward this onto someone else that may be interested.`;
+    const whatsappText =`Hi, I thought you’d be interested in the Loved page of ${capitalizeWords(inputValue)}.\nYou can add a message to the page, make a contribution or share it with your friends.\nVisit page ${shareUrl}`;    
+    
+    const handleEmailShare = () => {
+        const mailtoUrl = `mailto:?subject=${encodeURIComponent(EmailSubject)}&body=${encodeURIComponent(emailText)}`;
+        window.location.href = mailtoUrl;
+    };
+
+  const copyToClipboardDynamic = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+    });
+  };
 
     return (
         <>
             <LovedBoxHeader pageLink={pageLink} />
             <div className='mx-auto px-5 max-w-[1495px] flex justify-center items-center'>
-                <div className="w-[400px] flex justify-center items-center mx-auto py-10">
+                <div className="w-[560px] flex justify-center items-center mx-auto py-10">
                     {
                         pageLoading || lovedLoading ? <div className="flex flex-col items-center justify-center h-[530px]">
                             {
@@ -367,8 +407,96 @@ export default function SendLove() {
                                 />
                             }
 
-                            {stopLovedLoading && <Image src={LovedLogo} alt="Loved Logo" width={50} height={47} />}
-                            {lovedMsg && <p className="mt-3 text-[#2E266F] text-center text-4xl">Your message <br /> has been sent</p>}
+                        {stopLovedLoading && <Image src={LovedLogo} alt="Loved Logo" width={50} height={47} />}
+                        {lovedMsg && <p className="mt-3 message-sent text-[#2E266F] text-center text-4xl">Your message has <br /> been sent</p>}
+                        {lovedMsg && (
+                        <div className="custom-body text-center mt-5">
+                            <p className="mt-3 text-[#2E266F] want-more text-center text-4xl">Want to help more?</p>
+                            <p className="text-[#2E266F] more-page text-center">Let people know about this page.</p>
+                            <div className="button-container mt-10">
+                            <div className="left-buttons">
+                                <button className="flex items-center gap-2" onClick={() => copyToClipboardDynamic(shareUrl)}>
+                                {isCopied ? (
+                                    <>
+                                    <Image src="/checkmark.svg" alt="Link copied" width={54} height={54} />
+                                    <div className="text-left">
+                                        <span>Link copied</span>
+                                        <br />
+                                        <span className="custom-link-text">{shareUrl}</span>
+                                    </div>
+                                    </>
+                                ) : (
+                                    <>
+                                    <Image src="/share-ink.svg" alt="Share link" width={54} height={54} />
+                                    <div className="text-left">
+                                        <span>Share link</span>
+                                        <br />
+                                        <span className="custom-link-text">{shareUrl}</span>
+                                    </div>
+                                    </>
+                                )}
+                                </button>
+                                <button
+                                onClick={() => window.open(
+                                    `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(shareUrl)}`,
+                                    '_blank'
+                                )}
+                                className="flex items-center gap-2">
+                                <Image src="/x.svg" alt="X" width={54} height={54} />
+                                <span>X</span>
+                                </button>
+                                <button className="flex items-center gap-2" onClick={handleEmailShare}>
+                                <Image src="/email.svg" alt="Email" width={54} height={54} />
+                                <span>Email</span>
+                                </button>
+                            </div>
+                            <div className="right-buttons">
+                                <button
+                                onClick={() => window.open(
+                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+                                    '_blank'
+                                )}
+                                className="flex items-center gap-2">
+                                <Image src="/share-facebook.svg" alt="Facebook" width={54} height={54} />
+                                <span>Facebook</span>
+                                </button>
+                                <button
+                                onClick={() => {
+                                    const fallbackUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}&app_id=5480962782120712&redirect_uri=${encodeURIComponent(window.location.href)}`;
+
+                                    const fbMessengerUrl = `fb-messenger://share?link=${encodeURIComponent(shareUrl)}&app_id=3485738945794`;
+
+                                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                    const isAndroid = /Android/.test(navigator.userAgent);
+
+                                    if (isIOS || isAndroid) {
+                                    window.location.href = fbMessengerUrl;
+                                    setTimeout(() => {
+                                        window.open(fallbackUrl, '_blank');
+                                    }, 500);
+                                    } else {
+                                    window.open(fallbackUrl, '_blank');
+                                    }
+                                }}
+                                className="flex items-center gap-2">
+                                <Image src="/messenger.svg" alt="Messenger" width={54} height={54} />
+                                <span>Messenger</span>
+                                </button>
+                                <button
+                                onClick={() => window.open(
+                                    `https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappText)}`,
+                                    '_blank'
+                                )}
+                                className="flex items-center gap-2">
+                                <Image src="/whatsapp.svg" alt="WhatsApp" width={54} height={54} />
+                                <span>WhatsApp</span>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                        )}
+
+
                         </div>
                             :
                             <div className="flex flex-col items-center justify-center">
@@ -382,6 +510,7 @@ export default function SendLove() {
                                         <input value={inputValue && toTitleCase(inputValue)}
                                             {...register("inputValue")}
                                             onChange={handleChange}
+                                            autoComplete="new-password"
                                             className={`w-[330px] focus:outline-none  bg-[#F1F1F1] pl-10 p-3 ${filteredSuggestions.length > 0 ? "rounded-t-[25px] rounded-tl-[25px] rounded-tr-[25px]" : "rounded-full"}`}
                                             type="text"
                                             placeholder="Find or add a loved one" />
@@ -429,18 +558,8 @@ export default function SendLove() {
                                     <div className="px-2 py-2  rounded-[25px] mt-5 bg-[#F1F1F1] form-group relative">
                                         <div className=" flex justify-between items-center  ">
                                             <label className="block flex items-center gap-1" type="text"  >
-                                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.5" d="M12.1357 22.1238C17.3322 22.1238 21.5447 17.9113 21.5447 12.7148C21.5447 7.51826 17.3322 3.30566 12.1357 3.30566C6.93916 3.30566 2.72656 7.51826 2.72656 12.7148C2.72656 17.9113 6.93916 22.1238 12.1357 22.1238Z" stroke="#A5B5D4" />
-                                                    <g clip-path="url(#clip0_1794_5249)">
-                                                        <path d="M11.9991 12.8057C11.5772 12.8057 11.1725 12.9733 10.8742 13.2716C10.5758 13.57 10.4082 13.9746 10.4082 14.3966C10.4082 14.8185 10.5758 15.2232 10.8742 15.5215C11.1725 15.8199 11.5772 15.9875 11.9991 15.9875C12.421 15.9875 12.8257 15.8199 13.1241 15.5215C13.4224 15.2232 13.59 14.8185 13.59 14.3966C13.59 13.9746 13.4224 13.57 13.1241 13.2716C12.8257 12.9733 12.421 12.8057 11.9991 12.8057ZM11.3173 14.3966C11.3173 14.2157 11.3891 14.0423 11.517 13.9145C11.6449 13.7866 11.8183 13.7148 11.9991 13.7148C12.1799 13.7148 12.3534 13.7866 12.4812 13.9145C12.6091 14.0423 12.6809 14.2157 12.6809 14.3966C12.6809 14.5774 12.6091 14.7508 12.4812 14.8787C12.3534 15.0066 12.1799 15.0784 11.9991 15.0784C11.8183 15.0784 11.6449 15.0066 11.517 14.8787C11.3891 14.7508 11.3173 14.5774 11.3173 14.3966Z" fill="#586580" />
-                                                        <path d="M14.5111 9.44974L13.0661 7.42383L7.75293 11.6684L7.45838 11.6652V11.6697H7.22656V17.1243H16.772V11.6697H16.3347L15.4647 9.12474L14.5111 9.44974ZM15.3743 11.6697H10.8161L14.2111 10.5125L14.9029 10.2911L15.3743 11.6697ZM13.6129 9.7561L10.1084 10.9506L12.8838 8.73337L13.6129 9.7561ZM8.13565 15.3829V13.4102C8.32742 13.3422 8.50161 13.2323 8.64552 13.0885C8.78942 12.9447 8.89941 12.7706 8.96747 12.5788H15.0311C15.0991 12.7706 15.2091 12.9448 15.353 13.0887C15.4969 13.2326 15.6711 13.3426 15.8629 13.4106V15.3834C15.6711 15.4514 15.4969 15.5614 15.353 15.7053C15.2091 15.8492 15.0991 16.0234 15.0311 16.2152H8.96838C8.90028 16.0232 8.79018 15.8489 8.64612 15.7049C8.50205 15.5609 8.32765 15.4509 8.13565 15.3829Z" fill="#586580" />
-                                                    </g>
-                                                    <defs>
-                                                        <clipPath id="clip0_1794_5249">
-                                                            <rect width="10.9091" height="10.9091" fill="white" transform="translate(6.54492 7.12402)" />
-                                                        </clipPath>
-                                                    </defs>
-                                                </svg> Cash Donation <span className="bg-[#CBD3E2] p-1 text-white text-[12px] rounded-lg">{selectedPage?.currency || 'USD'}</span>
+                                             <Image src="/cash-donations.svg" alt="donations" className="mr-2" width={24} height={25} />
+                                               Cash Donation <span className="bg-[#CBD3E2] p-1 text-white text-[12px] rounded-lg">{selectedPage?.currency || 'USD'}</span>
                                             </label>
                                             <div>$
                                                 <input
@@ -461,10 +580,7 @@ export default function SendLove() {
                                     {tipAmount > 0 && <div className="px-2 py-2  rounded-[25px] mt-5 bg-[#F1F1F1] form-group relative">
                                         <div className=" flex justify-between items-center  ">
                                             <label className="flex items-center gap-1 " type="text" >
-                                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path opacity="0.5" d="M12.1357 22.3504C17.3322 22.3504 21.5447 18.1378 21.5447 12.9413C21.5447 7.74482 17.3322 3.53223 12.1357 3.53223C6.93916 3.53223 2.72656 7.74482 2.72656 12.9413C2.72656 18.1378 6.93916 22.3504 12.1357 22.3504Z" stroke="#A5B5D4" />
-                                                    <path d="M12.4432 8.58765C13.0341 8.16219 13.7196 7.94947 14.4937 7.94947C14.9191 7.94947 15.3859 8.06174 15.8941 8.2981C16.4023 8.52856 16.8041 8.80038 17.0996 9.11356C17.7082 9.86992 17.9623 10.7504 17.8737 11.7549C17.7791 12.7595 17.4482 13.5454 16.875 14.1008L12.39 18.5858C12.2777 18.6981 12.1359 18.7513 11.9705 18.7513C11.805 18.7513 11.6691 18.6981 11.5568 18.5858C11.5022 18.532 11.4593 18.4675 11.4308 18.3963C11.4023 18.3251 11.3889 18.2488 11.3914 18.1722C11.3914 18.0067 11.4446 17.8649 11.5568 17.7527L14.2691 15.0404C14.4168 14.9104 14.4168 14.7745 14.2691 14.6267C14.1214 14.479 13.9855 14.479 13.8555 14.6267L11.1432 17.339C11.0885 17.3941 11.023 17.4372 10.9508 17.4657C10.8786 17.4942 10.8012 17.5074 10.7237 17.5045C10.5582 17.5045 10.4223 17.4513 10.31 17.339C10.2554 17.2852 10.2125 17.2207 10.184 17.1495C10.1555 17.0783 10.1421 17.002 10.1446 16.9254C10.1446 16.7599 10.1977 16.6181 10.31 16.5058L13.0223 13.7936C13.1818 13.6458 13.1818 13.4981 13.0223 13.3504C12.8864 13.2026 12.7564 13.2026 12.6087 13.3504L9.89638 16.0922C9.84107 16.1464 9.77544 16.189 9.70338 16.2174C9.63131 16.2459 9.55428 16.2595 9.47684 16.2577C9.31138 16.2577 9.16956 16.2045 9.04547 16.0922C8.92729 15.9799 8.8682 15.844 8.8682 15.6786C8.8682 15.5131 8.9332 15.3654 9.0632 15.2354L11.7814 12.5172C11.9291 12.3695 11.9291 12.2336 11.7814 12.1036C11.6337 11.9736 11.4918 11.9736 11.3618 12.1036L8.62002 14.8277C8.49002 14.9458 8.35411 15.0108 8.20638 15.0108C8.04093 15.0108 7.89911 14.9517 7.79274 14.8277C7.68047 14.7095 7.62138 14.5676 7.62138 14.4022C7.62138 14.2367 7.68047 14.1008 7.79274 13.9886C9.60093 12.1686 10.7177 11.0695 11.1432 10.6617L13.2468 12.7417C13.4773 12.9604 13.7432 13.0726 14.0682 13.0726C14.4818 13.0726 14.8068 12.9072 15.0491 12.5763C15.2146 12.334 15.2737 12.0681 15.2264 11.7726C15.1791 11.4772 15.055 11.229 14.8541 11.0222L12.4432 8.58765ZM13.6605 12.3281L11.1432 9.80492L6.95956 13.9886C6.4632 13.4863 6.17956 12.7181 6.11456 11.6722C6.04956 10.6322 6.3332 9.7281 6.95956 8.97174C7.66274 8.27447 8.50184 7.91992 9.47684 7.91992C10.4577 7.91992 11.2909 8.27447 11.9705 8.97174L14.4937 11.4949C14.6059 11.6072 14.6591 11.7431 14.6591 11.9086C14.6591 12.074 14.6059 12.2158 14.4937 12.3281C14.3814 12.4345 14.2455 12.4936 14.0682 12.4936C13.9087 12.4936 13.7727 12.4345 13.6605 12.3281Z" fill="#586580" />
-                                                </svg>
+                                              <Image src="/tip.svg" alt="tip" width={24} height={25} />
                                                 Tip the loved service <span className="bg-[#CBD3E2] p-1 text-white text-[12px] rounded-lg">{selectedPage?.currency || 'USD'}</span>
                                             </label>
                                         </div>
@@ -527,18 +643,7 @@ export default function SendLove() {
                                     {/* {Number(tipAmount) > 0 && */}
                                     <div className='form-group relative mt-5 bg-[#F1F1F1] px-2 py-4 rounded-[25px] max-w-[330px]'>
                                         <p className='text-[#2E266F] mb-1 flex itemx-center gap-1'>
-                                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path opacity="0.5" d="M12.1357 21.8035C17.3322 21.8035 21.5447 17.5909 21.5447 12.3944C21.5447 7.19795 17.3322 2.98535 12.1357 2.98535C6.93916 2.98535 2.72656 7.19795 2.72656 12.3944C2.72656 17.5909 6.93916 21.8035 12.1357 21.8035Z" stroke="#A5B5D4" />
-                                                <g clip-path="url(#clip0_1797_6293)">
-                                                    <path d="M6.98672 10.2579H17.013V9.83323C17.013 8.8929 16.5337 8.41797 15.5794 8.41797H8.42029C7.46613 8.41797 6.98652 8.8929 6.98652 9.83342L6.98672 10.2579ZM6.98672 14.6868C6.98672 15.6273 7.46594 16.0976 8.42029 16.0976H15.5794C16.5335 16.0976 17.0131 15.6273 17.0131 14.6868V11.2945H6.98633L6.98672 14.6868ZM8.51165 13.5727V12.728C8.51165 12.4724 8.6897 12.2897 8.95912 12.2897H10.0777C10.3471 12.2897 10.5252 12.4724 10.5252 12.728V13.5727C10.5252 13.833 10.3471 14.011 10.0777 14.011H8.95893C8.68951 14.011 8.51165 13.833 8.51165 13.5727Z" fill="#586580" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_1797_6293">
-                                                        <rect width="10.9091" height="10.9091" fill="white" transform="translate(6.54492 6.80371)" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-
+                                          <Image src="/credit-card.svg" alt="card" width="24" height="25"/>
                                             Credit or Debit Payment Information</p>
                                         <div className="form-group p-2 my-2">
                                             <CardNumberElement
