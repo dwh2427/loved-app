@@ -1,6 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+* {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.font-plus-jakarta-sans {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.plus-jakarta-sans-300 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.comfortaa-300 {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
 
 .reactEasyCrop_Container {
   width: 450px;
@@ -41,14 +69,14 @@ html {
   font-weight: 500;
   font-style: normal;
 }
-.MuiSlider-rail{
-  background-color: #A5B5D4 !important;
+.MuiSlider-rail {
+  background-color: #a5b5d4 !important;
 }
-.MuiSlider-thumb{
-  background-color: #FF4195 !important;
+.MuiSlider-thumb {
+  background-color: #ff4195 !important;
 }
-.MuiSlider-track{
-  background-color: #FF318C !important;
+.MuiSlider-track {
+  background-color: #ff318c !important;
 }
 /* Custom Modal Styles */
 .custom-modal {
@@ -60,7 +88,6 @@ html {
 }
 
 .custom-modal-header {
-  background-color: #2E266F;
   padding: 24px;
   position: relative;
   text-align: center;
@@ -82,9 +109,11 @@ html {
 }
 
 .custom-modal-header .modal-title {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2E266F;
+  line-height: 21px;
+  font-family: "Comfortaa"
 }
 
 .custom-modal-header .close-button {
@@ -117,34 +146,43 @@ html {
 }
 
 .custom-modal-body button span {
-  color: black;
-  font-weight: bold;
+  color: #2E266F;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: "Plus Jakarta Sans";
+  line-height: 28px;
 }
 
-.custom-btn{
-  border: 3px solid #FF318C;
-  color: #FF318C;
+.custom-btn {
+  border: 3px solid #ff318c;
+  color: #ff318c;
+  font-weight: 500;
+}
+.share-url-hints{
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: "15px";
+  font-family: "Plus Jakarta Sans";
+}
+.custom-btn:hover {
+  border: 3px solid #ffffff;
+  color: #ffffff;
   font-weight: 500;
 }
 
-.custom-btn:hover{
-  border: 3px solid #FFFFFF;
-  color: #FFFFFF;
-  font-weight: 500;
-}
-
-.message-sent{
+.message-sent {
   font-weight: 700;
   font-size: 36px;
 }
 
-.want-more{
+.want-more {
   font-weight: 700;
   font-size: 24px;
-  color: #2E266F;
+  color: #2e266f;
 }
 
-.more-page{
+.more-page {
   font-weight: 500;
   font-size: 24px;
 }
@@ -170,7 +208,7 @@ html {
 }
 
 .custom-body button span {
-  color: #2E266F;
+  color: #2e266f;
   font-weight: 500;
   font-size: 24px;
 }
@@ -184,8 +222,158 @@ html {
   font-size: 1.5rem;
 }
 
-.custom-link-text{
+.custom-link-text {
   font-weight: 500 !important;
-  color: #A5B5D4 !important;
+  color: #a5b5d4 !important;
   font-size: 14px !important;
+}
+
+.plus-jakarta-sans-300 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.plus-jakarta-sans-500 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.plus-jakarta-sans-700 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.comfortaa-300 {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@media (max-width: 720px) {
+  .d-rs-full {
+    width: 100% !important;
+  }
+
+  .d-rs-nav-height {
+    height: 80px;
+  }
+
+  .d-rs-block {
+    display: block !important;
+  }
+
+  .d-rs-hidden {
+    display: none !important;
+  }
+
+  .d-rs-none {
+    display: none !important;
+  }
+
+  .d-rs-flex {
+    display: flex !important;
+  }
+
+  .d-rs-justify-center {
+    justify-content: center !important;
+  }
+  .d-rs-flex-row {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .d-rs-flex-between {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .d-rs-col {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .rs-gap-10 {
+    gap: 20px !important;
+  }
+
+  .font-w-300 {
+    font-weight: 300 !important;
+  }
+
+  .custom-modal-body {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+  .custom-modal{
+    height: 100%;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+}
+}
+
+.web-page-heading{
+ font-family: "Comfortaa";
+ color: #2E266F;
+ font-size: 48px;
+ line-height: 50px;
+ font-weight: 700;
+ margin-bottom: 10px; /* This adds the paragraph spacing */
+}
+
+.web-page-date{
+  color: #A5B5D4;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.web-page-paragraph{
+  color: #586580;
+  margin-top: 15px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.custom-fsl-padding {
+  padding: 6px 16px 6px 0px;
+}
+
+.header, .footer {
+  z-index: 99; /* Ensure this is less than the modal's z-index */
+}
+
+/* Additional styles for preventing body scroll */
+body.modal-open {
+  overflow: hidden;
+}
+
+.custom-modal {
+  position: relative;
+  z-index: 10001; /* Ensuring it's above the overlay */
+  max-height: 100vh; /* Adjust as needed */
+  overflow-y: auto;
+}
+
+/* Additional styles for preventing body scroll */
+body.modal-open {
+  overflow: hidden;
+}
+
+.custom-modal-container{
+  -webkit-overflow-scrolling: touch;
+  overflow:auto;
 }

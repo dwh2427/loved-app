@@ -53,19 +53,19 @@ export default function CreateLovedPage() {
     const [isCopied, setIsCopied] = useState(false);
 
 
-    
+
     useEffect(() => {
-        if(!loading){
+        if (!loading) {
             const username = localStorage.getItem('username')
             const pageId = localStorage.getItem('pageId')
             if (!username && !pageId) router.replace('/')
             setPageId(pageId)
             setInsertUserName(`${base_url}${username}`)
-    
+
             settwitterText(`Share Your Love with ${user.first_name} ${user.last_name}`);
             setEmailSubject(`Check out ${user.first_name} ${user.last_name}’s Loved page`);
             setemailText(`Hello,\n\nI thought you might be interested in adding something nice to ${user.first_name} ${user.last_name}’s Loved page, ${shareUrl}\n\nA nice note and contribution would really be a nice way to show your gratitude and care. Otherwise, please feel free to forward this onto someone else that may be interested.`);
-            setwhatsappText(`Hi, I thought you’d be interested in the Loved page of ${user.first_name} ${user.last_name}.\nYou can add a message to the page, make a contribution or share it with your friends.\nVisit page ${shareUrl}`);    
+            setwhatsappText(`Hi, I thought you’d be interested in the Loved page of ${user.first_name} ${user.last_name}.\nYou can add a message to the page, make a contribution or share it with your friends.\nVisit page ${shareUrl}`);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +87,7 @@ export default function CreateLovedPage() {
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
         });
-      };
+    };
 
     const handleEmailShare = () => {
         const mailtoUrl = `mailto:?subject=${encodeURIComponent(EmailSubject)}&body=${encodeURIComponent(emailText)}`;
@@ -176,10 +176,10 @@ export default function CreateLovedPage() {
                                         <h2 className="modal-title">Share With Friends</h2>
                                     </div>
                                 </div>
-                       
+
 
                                 <div className="custom-modal-body">
-                                <button className="flex items-center gap-2" onClick={() => copyToClipboardDynamic(shareUrl)}>
+                                    <button className="flex items-center gap-2" onClick={() => copyToClipboardDynamic(shareUrl)}>
                                         {isCopied ? (
                                             <>
                                                 <Image src="/checkmark.svg" alt="Link copied" width={54} height={54} />
@@ -215,25 +215,25 @@ export default function CreateLovedPage() {
                                         <span>Facebook</span>
                                     </button>
                                     <button
-                                      onClick={() => {
-                                        const fallbackUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}&app_id=2480962782120712&redirect_uri=${encodeURIComponent(window.location.href)}`;
+                                        onClick={() => {
+                                            const fallbackUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}&app_id=2480962782120712&redirect_uri=${encodeURIComponent(window.location.href)}`;
 
-                                        const fbMessengerUrl = `fb-messenger://share?link=${encodeURIComponent(shareUrl)}&app_id=3485738945794`;
+                                            const fbMessengerUrl = `fb-messenger://share?link=${encodeURIComponent(shareUrl)}&app_id=3485738945794`;
 
-                                        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                                        const isAndroid = /Android/.test(navigator.userAgent);
+                                            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                            const isAndroid = /Android/.test(navigator.userAgent);
 
-                                        if (isIOS || isAndroid) {
-                                            window.location.href = fbMessengerUrl;
-                                            setTimeout(() => {
+                                            if (isIOS || isAndroid) {
+                                                window.location.href = fbMessengerUrl;
+                                                setTimeout(() => {
+                                                    window.open(fallbackUrl, '_blank');
+                                                }, 500);
+                                            } else {
                                                 window.open(fallbackUrl, '_blank');
-                                            }, 500);
-                                        } else {
-                                            window.open(fallbackUrl, '_blank');
-                                        }
+                                            }
 
-                                    }}
-                                    
+                                        }}
+
                                         className="flex items-center gap-2">
                                         <Image src="/messenger.svg" alt="Messenger" width={54} height={54} />
                                         <span>Messenger</span>

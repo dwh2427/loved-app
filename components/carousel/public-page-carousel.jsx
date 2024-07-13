@@ -46,12 +46,12 @@ const CustomSlider = ({ slides }) => {
                 </div>
             </div>
 
-            <button onClick={prevSlide} disabled={slides.length === 2} className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
+            {/* <button onClick={prevSlide} disabled={slides.length === 2} className="absolute left-0 top-1/2 z-10  -translate-y-1/2 transform md:-left-10">
                 <Image src={leftArrow} alt="" className="h-8 w-6 md:w-8" />
             </button>
             <button onClick={nextSlide} disabled={slides.length === 2} className="absolute right-0 top-1/2 z-10  -translate-y-1/2 transform md:-right-10">
                 <Image src={rightArrow} alt="" className="h-8 w-6 md:w-8" />
-            </button>
+            </button> */}
         </div>
     );
 };

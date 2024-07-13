@@ -9,11 +9,13 @@ import {
 import { UserRound } from "lucide-react";
 import Link from "next/link";
 import LogoutButton from "./logout";
+import Image from "next/image";
 
 export default function ProfileDropdown() {
   return (
     <>
       <Dialog tabIndex={"-1"}>
+      <Image src="/notifications.svg" alt="" width="22" height="22"className="cursor-pointer size-[66px]" />
         <DialogTrigger asChild tabIndex={"-1"}>
           <div className="grid size-[62px] cursor-pointer place-items-center rounded-[65.45px] border-[1.06px]">
             <UserRound className="size-[37.5px] cursor-pointer" />

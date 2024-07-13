@@ -58,7 +58,7 @@ export default function FindLoved() {
 				</div>
 			</div>
 			<div className="mt-10">
-				<div className="grid grid-cols-3 gap-4">
+				<div className="grid md:grid-cols-3 gap-4 sm:gird-cols-1 d-rs-justify-center">
 					{
 						loading ?
 							Array.from({ length: 6 }).map((_, index) => (

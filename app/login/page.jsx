@@ -6,13 +6,10 @@ import Sidebar from "@/components/sidebar/sidebar";
 
 export default function LoginPage() {
   return (
-    <div className="lg:flex lg:w-screen">
-      <div className="lg:flex-1">
-        <div className="mx-auto flex h-[183.13px] w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden">
-          <Link
-            href="/"
-            className="relative h-[118.62px] w-full max-w-[189.98px] md:h-[74.01px] md:max-w-[118.48px]"
-          >
+    <div className="flex flex-col lg:flex-row w-full">
+      <div className="flex-1 flex flex-col items-center lg:items-start">
+        <div className="mx-auto h-[183.13px] w-full max-w-[766.82px] flex flex-col items-center justify-center lg:hidden">
+          <Link href="/" className="relative h-[118.62px] w-full max-w-[189.98px]">
             <Image
               src={Logo}
               alt="Image"
@@ -25,9 +22,9 @@ export default function LoginPage() {
         </div>
         <Link
           href="/"
-          className="mt-[150px] hidden md:mx-auto md:flex md:h-[74.01px] md:w-[118.48px]"
+          className="mt-[150px] hidden lg:mx-auto lg:flex lg:h-[74.01px] lg:w-[118.48px]"
         >
-          <div className="relative md:h-[74.01px] md:w-[118.48px]">
+          <div className="relative h-[74.01px] w-[118.48px]">
             <Image
               src={Logo}
               alt="Image"
@@ -38,12 +35,12 @@ export default function LoginPage() {
             />
           </div>
         </Link>
-        <div className="md:mx-auto md:h-[592px] md:w-[530px] md:space-y-[16px] md:rounded-[16px] md:px-16">
-          <div className="md:h-[70px] md:w-[402px] md:space-y-[10px]">
-            <h2 className="mx-auto max-h-[65px] max-w-[325px] whitespace-nowrap text-center text-[48.53px] font-black leading-[64.71px] tracking-[0.01em] text-black md:h-[40px] md:w-[263px] md:text-[40px] md:leading-[40px]">
+        <div className="w-full px-4 lg:px-0 lg:mx-auto lg:w-[530px] lg:space-y-[16px] lg:rounded-[16px] lg:px-16">
+          <div className="lg:h-[70px] lg:w-[402px] lg:space-y-[10px] text-center">
+            <h2 className="mx-auto max-h-[65px] max-w-[325px] whitespace-nowrap text-[32px] font-black leading-[40px] tracking-[0.01em] text-black lg:h-[40px] lg:w-[263px] lg:text-[40px] lg:leading-[40px]">
               Welcome back
             </h2>
-            <p className="mx-auto mt-[41.41px] max-h-[38px] w-40 max-w-[582.39px] text-center text-[32.36px] font-medium leading-[37.53px] text-black md:h-[20px] md:w-[402px] md:text-[18px] md:font-normal md:leading-[20px]">
+            <p className="mx-auto mt-[20px] max-h-[38px] max-w-[582.39px] text-[18px] font-medium leading-[22px] text-black lg:h-[20px] lg:w-[402px] lg:text-[18px] lg:font-normal lg:leading-[20px]">
               Sign in
             </p>
           </div>

@@ -8,8 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import LovedBox from "@/components/loved-box/lovedBox";
 
-export default function HomePage() {
 
+
+export default async function HomePage() {
 
   return (
     <div className="relative">
@@ -23,6 +24,7 @@ export default function HomePage() {
             <p className="mt-4 text-center text-[16px]">Your space to honour, treasure and <br /> celebrate those you love and have loved.</p>
           </div>
 
+         
           <div className="flex justify-between gap-4 mt-8 px-4">
             <div className="p-4 w-[270px] h-[500px] rounded-[32px] bg-[#2E266F] items-center justify-center flex flex-col text-white">
               <div className="avatar-section">
@@ -184,3 +186,4 @@ export default function HomePage() {
     </div>
   );
 }
+
