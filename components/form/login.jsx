@@ -20,7 +20,7 @@ import axios from "axios";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -35,7 +35,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const { toast } = useToast();
-  const { user, loading: isAuthLoading } = useAuthState()
+  const { user, loading: isAuthLoading, setUser, setLoading: setAuthLoading } = useAuthState()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,10 +62,12 @@ export default function LoginForm() {
         });
         return;
       }
-
+      setAuthLoading(false)
+      setUser(res?.data?.user)
       sessionStorage.setItem("user", true);
       localStorage.setItem('accToken', await res.data.token)
-      router.push("/dashboard");
+      window.location.reload('/dashboard')
+      // router.push("/dashboard");
       form.reset();
     } catch (e) {
       handleClientError(e)
@@ -74,10 +76,7 @@ export default function LoginForm() {
     }
   };
 
-  useEffect(() => {
-    if (isAuthLoading) return;
-    user && router.push('/dashboard')
-  }, [isAuthLoading])
+
 
   return (
     <Form {...form}>

@@ -1,12 +1,13 @@
-import Image from "next/image";
-import Logo from "@/public/lovedLogo.svg";
-import Link from "next/link";
 import SignUpForm from "@/components/form/sign-up";
 import Sidebar from "@/components/sidebar/sidebar";
+import Logo from "@/public/lovedLogo.svg";
+import Image from "next/image";
+import Link from "next/link";
+import FallbackToDashboard from "../layout";
 
 export default function SignUpPage() {
   return (
-    <>
+    <FallbackToDashboard>
       <div className="lg:flex lg:w-screen">
         <div className="lg:flex-1">
           <div className="mx-auto flex w-screen max-w-[766.82px] flex-col items-center justify-center md:hidden">
@@ -59,6 +60,6 @@ export default function SignUpPage() {
         </div>
         <Sidebar />
       </div>
-    </>
+    </FallbackToDashboard>
   );
 }

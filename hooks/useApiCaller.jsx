@@ -1,10 +1,9 @@
-import { auth } from "@/firebase/config";
 import axios from "axios";
-import { signOut } from "firebase/auth";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const useApiCaller = () => {
+    const router = useRouter()
     const [apiCaller] = useState(() => {
         const instance = axios.create({
             baseURL: "/", // Your API base URL
@@ -37,16 +36,9 @@ const useApiCaller = () => {
                 // Custom logic for handling errors
                 const errorResponse = error.response
                 if (errorResponse.status === 401) {
-                    signOut(auth);
                     sessionStorage.removeItem("user");
                     localStorage.clear();
-                    localStorage.removeItem("accToken");
-                    localStorage.removeItem("pageId");
-                    localStorage.removeItem("pageName");
-                    localStorage.removeItem("username");
-                    localStorage.removeItem("userId");
-                    localStorage.removeItem("email");
-                    window.location.replace("/");
+                    router.push("/login");
                 }
                 return Promise.reject(error);
             }

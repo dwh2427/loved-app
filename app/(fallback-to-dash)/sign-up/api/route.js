@@ -56,6 +56,7 @@ export async function POST(request) {
     // Create a new User instance with the provided userData
     const newUser = new User({
       uid,
+
       first_name: fn,
       last_name: ln,
       email,

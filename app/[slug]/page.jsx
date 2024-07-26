@@ -4,7 +4,7 @@ const base_URL = process.env.NEXT_PUBLIC_BASE_URL
 export async function generateMetadata({ params }) {
   const { data } = await axios
     .get(`${base_URL}${params.slug}/api`)
-console.log(data)
+
   return {
     title: `Send loved to ${params.slug} | share Your Love`,
     description: `Share your love with ${params.slug}`,

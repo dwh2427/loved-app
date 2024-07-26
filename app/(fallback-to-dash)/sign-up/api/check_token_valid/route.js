@@ -14,6 +14,7 @@ export async function POST(request) {
     if (user) {
       return Response.json({ result: true, data: user });
     }
+    
     return Response.json({ result: false });
   } catch (error) {
  

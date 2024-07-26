@@ -1,15 +1,15 @@
 'use client'
 import useAuthState from '@/hooks/useAuthState';
 import loveLogo from '@/public/lovedLogo.svg';
-import { Menu, X, ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, Loader2, Menu, Search, X } from "lucide-react";
 import Image from "next/image";
-import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from "react";
 import ProfileDropdown from '../button/profile-dropdown';
 
 export default function Header() {
-    const { user } = useAuthState();
+    const { user, loading } = useAuthState();
     const pathname = usePathname().split('/')[1];
     const expectedPath = ["send-loved", "getting-started"];
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -28,6 +28,16 @@ export default function Header() {
     }
 
     const handleClickOutside = (event) => {
+        // Check if the click is outside the mobile menu or on a link
+        if (
+            (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) ||
+            event.target.tagName === 'A' // Check if clicked element is a link
+        ) {
+            setIsMobileMenuOpen(false);
+        }
+        // if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+        //     setIsMobileMenuOpen(false);
+        // }
         if (sendingRef.current && !sendingRef.current.contains(event.target)) {
             setIsSendingOpen(false);
         }
@@ -75,9 +85,9 @@ export default function Header() {
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
-                document.getElementById('header').classList.add('shadow-md');
+                document.getElementById('header')?.classList?.add('shadow-md');
             } else {
-                document.getElementById('header').classList.remove('shadow-md');
+                document.getElementById('header')?.classList?.remove('shadow-md');
             }
         };
         window.addEventListener('scroll', handleScroll);
@@ -93,7 +103,7 @@ export default function Header() {
                     <div className="max-w-[1495px] mx-auto flex h-[111px] p-[9px] items-center justify-between w-full">
 
                         <Link href="/find-loved" className="flex gap-1 sm:hidden">
-                            <svg className="size-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#000000" >
+                            <svg className="size-[24px] text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#000000" >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
                         </Link>
@@ -113,7 +123,7 @@ export default function Header() {
                                 <svg className="size-4 absolute left-2 top-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" >
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
-                                <p className="w-full cursor-pointer px-10 py-1 pl-7 pr-1 text-[18px] font-[500] leading-[18px] text-[#586580] outline-none">Find Someone Loved</p>
+                                <p className="w-full cursor-pointer px-10 py-1 pl-7 pr-1 text-[16px] font-[500] leading-[18px] text-[#586580] outline-none">Find Someone Loved</p>
                             </Link>
 
                             <Link
@@ -142,14 +152,14 @@ export default function Header() {
                                 {isSendingOpen && (
                                     <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                                         <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                        <Link
-                                            href="javascript:void(0)"
-                                            className="block px-4 py-2 leading-5 text-[16px] text-black plus-jakarta-sans-700 !font-bold hover:bg-gray-100"
-                                            role="menuitem"
-                                            style={{ pointerEvents: 'none', cursor: 'default' }}
-                                        >
-                                            Sending & Receiving
-                                        </Link>
+                                            <Link
+                                                href="javascript:void(0)"
+                                                className="block px-4 py-2 leading-5 text-[16px] text-black plus-jakarta-sans-700 !font-bold hover:bg-gray-100"
+                                                role="menuitem"
+                                                style={{ pointerEvents: 'none', cursor: 'default' }}
+                                            >
+                                                Sending & Receiving
+                                            </Link>
 
                                             <Link
                                                 href="/donation-tips"
@@ -182,7 +192,7 @@ export default function Header() {
                             <div ref={resourcesRef} className="relative inline-block text-left">
                                 <div>
                                     <button
-                                       type="button"
+                                        type="button"
                                         className={`flex items-center justify-between text-center text-[16px] plus-jakarta-sans-500 leading-[18px] ${isResourcesOpen ? "text-gray-500" : "text-[#2E266F]"}`}
                                         onClick={() => setIsResourcesOpen(!isResourcesOpen)}
                                     >
@@ -312,8 +322,15 @@ export default function Header() {
 
                         {/* Desktop auth buttons */}
                         <div className="hidden md:flex items-center space-x-4">
-                            {user ? (
-                                <Link href="/dashboard" className="font-semibold leading-[18px]">Dashboard</Link>
+                            {loading ? <Loader2 className="mr-2 size-6 animate-spin" /> :user ? (
+                                <>
+                                    <Link href="/dashboard" className="font-semibold leading-[18px]">Dashboard</Link>
+                                    <button onClick={() => {
+                                        sessionStorage.removeItem("user");
+                                        localStorage.clear();
+                                        window.location.replace("/login");
+                                    }} className="font-semibold leading-[18px]]">Sign out</button>
+                                </>
                             ) : (
                                 <Link href="/login" className="font-semibold text-[#586580] leading-[18px]">Sign in</Link>
                             )}
@@ -344,16 +361,9 @@ export default function Header() {
                                         <>
                                             <Link onClick={closeMobileMenu} href="/dashboard" className="font-semibold w-full text-center border-[3px] text-[#586580] border-[#A5B5D4]  px-[20px] py-[25px] gap-[20px] rounded-[100px] hover:bg-opacity-90">Dashboard</Link>
                                             <button onClick={() => {
-                                                signOut(auth);
                                                 sessionStorage.removeItem("user");
                                                 localStorage.clear();
-                                                localStorage.removeItem("accToken");
-                                                localStorage.removeItem("pageId");
-                                                localStorage.removeItem("pageName");
-                                                localStorage.removeItem("username");
-                                                localStorage.removeItem("userId");
-                                                localStorage.removeItem("email");
-                                                window.location.replace("/");
+                                                window.location.replace("/login");
                                             }} className="font-semibold w-full text-center text-[#586580] text-[16px] leading-[18px] px-[20px] py-[25px] gap-[20px]">Sign out</button>
                                         </>
                                     ) : (
@@ -380,6 +390,7 @@ export default function Header() {
                                     <Link href="/help" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[16px] font-[500] leading-[17px]">Get help</Link>
                                     <Link href="/how-to-guide" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[16px] font-[500] leading-[17px]">How to guide</Link>
                                     <Link href="/blog" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[16px] font-[500] leading-[17px]">Blog</Link>
+
                                 </MobileMenuItem>
                                 <MobileMenuItem title="About Us" isOpen={isAboutOpen} setIsOpen={setIsAboutOpen}>
                                     {/* <Link href="/dashboard" className="block py-2">About Us</Link> */}
@@ -401,7 +412,7 @@ export default function Header() {
 
                                 <div className="hidden h-[62px] flex-shrink-0 items-center gap-x-[32px] md:flex">
                                     {pathname === "dashboard" ? <ProfileDropdown /> : <>
-                                        {user ?
+                                        {loading ? <Loader2 className="mr-2 size-6 animate-spin" /> : user ?
                                             (
                                                 <Link
                                                     href={"/dashboard"}

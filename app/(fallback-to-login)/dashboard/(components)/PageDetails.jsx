@@ -6,11 +6,11 @@ import Popup from "@/components/ui/popup";
 import { toast } from "@/components/ui/use-toast";
 import useApiCaller from "@/hooks/useApiCaller";
 import useClientError from "@/hooks/useClientError";
+import useImageUpload from "@/hooks/useImageUpload";
+import { countWords, getFirstWords } from "@/lib/countWord";
 import addPhoto from '@/public/add-photo.png';
 import threeDot from '@/public/three-dot.png';
 import { Loader2 } from "lucide-react";
-import useImageUpload from "@/hooks/useImageUpload";
-import { countWords, getFirstWords } from "@/lib/countWord";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -25,7 +25,6 @@ const PageDetaisl = ({ item }) => {
     const [isUpdating, setIsUpdating] = useState(false)
     const [showFullStory, setShowFullSotry] = useState(false)
     const [isCopied, setIsCopied] = useState(false);
-
     const apiCaller = useApiCaller()
     const handleClientError = useClientError()
     const [isModalOpen, setIsModalOpen] = useState(false);  // State to control modal visibility
@@ -40,7 +39,7 @@ const PageDetaisl = ({ item }) => {
         setIsCropping
     } = useImageUpload(pageData, setPageData)
 
- 
+
     const shareUrl = `${base_URL}${pageData?.username}`;
 
     const twitterText = `Share Your Love with ${pageData.first_name} ${pageData.last_name}`;
@@ -70,12 +69,12 @@ const PageDetaisl = ({ item }) => {
         window.location.href = mailtoUrl;
     };
 
-  const copyToClipboardDynamic = (text) => {
-    navigator.clipboard.writeText(text).then(() => {
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
-    });
-  };
+    const copyToClipboardDynamic = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+        });
+    };
 
     const createFinancialAccount = async () => {
         try {
@@ -163,90 +162,90 @@ const PageDetaisl = ({ item }) => {
             </Popup>
 
             {isModalOpen && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                            <div className="custom-modal">
-                                <div className="custom-modal-header">
-                                    <button onClick={() => setIsModalOpen(false)} className="close-button">X</button>
-                                    <div className="modal-center-content">
-                                        <Image src="/share-loved.svg" alt="Logo" width={54} height={54} className="modal-icon" />
-                                        <h2 className="modal-title">Share With Friends</h2>
-                                    </div>
-                                </div>
-                       
-
-                                <div className="custom-modal-body">
-                                <button className="flex items-center gap-2" onClick={() => copyToClipboardDynamic(shareUrl)}>
-                                        {isCopied ? (
-                                            <>
-                                                <Image src="/checkmark.svg" alt="Link copied" width={54} height={54} />
-                                                <span>Link copied</span>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Image src="/share-ink.svg" alt="Share link" width={54} height={54} />
-                                                <span>Share link</span>
-                                            </>
-                                        )}
-                                    </button>
-                                    <button
-                                        onClick={() => window.open(
-                                            `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(shareUrl)}`,
-                                            '_blank'
-                                        )}
-                                        className="flex items-center gap-2">
-                                        <Image src="/x.svg" alt="X" width={54} height={54} />
-                                        <span>X</span>
-                                    </button>
-                                    <button className="flex items-center gap-2" onClick={handleEmailShare}>
-                                        <Image src="/email.svg" alt="Email" width={54} height={54} />
-                                        <span>Email</span>
-                                    </button>
-                                    <button
-                                        onClick={() => window.open(
-                                            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
-                                            '_blank'
-                                        )}
-                                        className="flex items-center gap-2">
-                                        <Image src="/share-facebook.svg" alt="Facebook" width={54} height={54} />
-                                        <span>Facebook</span>
-                                    </button>
-                                    <button
-                                      onClick={() => {
-                                        const fallbackUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}&app_id=2480962782120712&redirect_uri=${encodeURIComponent(window.location.href)}`;
-
-                                        const fbMessengerUrl = `fb-messenger://share?link=${encodeURIComponent(shareUrl)}&app_id=3485738945794`;
-
-                                        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                                        const isAndroid = /Android/.test(navigator.userAgent);
-
-                                        if (isIOS || isAndroid) {
-                                            window.location.href = fbMessengerUrl;
-                                            setTimeout(() => {
-                                                window.open(fallbackUrl, '_blank');
-                                            }, 500);
-                                        } else {
-                                            window.open(fallbackUrl, '_blank');
-                                        }
-
-                                    }}
-                                    
-                                        className="flex items-center gap-2">
-                                        <Image src="/messenger.svg" alt="Messenger" width={54} height={54} />
-                                        <span>Messenger</span>
-                                    </button>
-                                    <button
-                                        onClick={() => window.open(
-                                            `https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappText)}`,
-                                            '_blank'
-                                        )}
-                                        className="flex items-center gap-2">
-                                        <Image src="/whatsapp.svg" alt="WhatsApp" width={54} height={54} />
-                                        <span>WhatsApp</span>
-                                    </button>
-                                </div>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="custom-modal">
+                        <div className="custom-modal-header">
+                            <button onClick={() => setIsModalOpen(false)} className="close-button">X</button>
+                            <div className="modal-center-content">
+                                <Image src="/share-loved.svg" alt="Logo" width={54} height={54} className="modal-icon" />
+                                <h2 className="modal-title">Share With Friends</h2>
                             </div>
                         </div>
-                    )}
+
+
+                        <div className="custom-modal-body">
+                            <button className="flex items-center gap-2" onClick={() => copyToClipboardDynamic(shareUrl)}>
+                                {isCopied ? (
+                                    <>
+                                        <Image src="/checkmark.svg" alt="Link copied" width={54} height={54} />
+                                        <span>Link copied</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Image src="/share-ink.svg" alt="Share link" width={54} height={54} />
+                                        <span>Share link</span>
+                                    </>
+                                )}
+                            </button>
+                            <button
+                                onClick={() => window.open(
+                                    `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(shareUrl)}`,
+                                    '_blank'
+                                )}
+                                className="flex items-center gap-2">
+                                <Image src="/x.svg" alt="X" width={54} height={54} />
+                                <span>X</span>
+                            </button>
+                            <button className="flex items-center gap-2" onClick={handleEmailShare}>
+                                <Image src="/email.svg" alt="Email" width={54} height={54} />
+                                <span>Email</span>
+                            </button>
+                            <button
+                                onClick={() => window.open(
+                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+                                    '_blank'
+                                )}
+                                className="flex items-center gap-2">
+                                <Image src="/share-facebook.svg" alt="Facebook" width={54} height={54} />
+                                <span>Facebook</span>
+                            </button>
+                            <button
+                                onClick={() => {
+                                    const fallbackUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}&app_id=2480962782120712&redirect_uri=${encodeURIComponent(window.location.href)}`;
+
+                                    const fbMessengerUrl = `fb-messenger://share?link=${encodeURIComponent(shareUrl)}&app_id=3485738945794`;
+
+                                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                    const isAndroid = /Android/.test(navigator.userAgent);
+
+                                    if (isIOS || isAndroid) {
+                                        window.location.href = fbMessengerUrl;
+                                        setTimeout(() => {
+                                            window.open(fallbackUrl, '_blank');
+                                        }, 500);
+                                    } else {
+                                        window.open(fallbackUrl, '_blank');
+                                    }
+
+                                }}
+
+                                className="flex items-center gap-2">
+                                <Image src="/messenger.svg" alt="Messenger" width={54} height={54} />
+                                <span>Messenger</span>
+                            </button>
+                            <button
+                                onClick={() => window.open(
+                                    `https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappText)}`,
+                                    '_blank'
+                                )}
+                                className="flex items-center gap-2">
+                                <Image src="/whatsapp.svg" alt="WhatsApp" width={54} height={54} />
+                                <span>WhatsApp</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
 
         </div>

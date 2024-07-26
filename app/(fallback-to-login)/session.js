@@ -9,12 +9,9 @@ export default function Session({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user && typeof window !== "undefined") {
+    if (!loading && !user && typeof window !== "undefined") {
       const userSession = sessionStorage.getItem("user");
-      if (!loading && userSession) {
-        router.push("/login");
-      } else {
-      }
+      router.push("/login");
     }
   }, [user, router, loading]);
 

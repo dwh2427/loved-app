@@ -1,6 +1,7 @@
 "use client";
 import Sidebar from "@/components/sidebar/sidebar";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import useApiCaller from "@/hooks/useApiCaller";
 import useAuthState from "@/hooks/useAuthState";
 import useClientError from "@/hooks/useClientError";
@@ -10,8 +11,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
 
+import FallbackToLoginLayout from "../(fallback-to-login)/layout";
 import Session from "./session";
 const base_urls = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -95,7 +96,7 @@ export default function CreateLovedPage() {
     };
 
     return (
-        <>
+        <FallbackToLoginLayout>
             <Session />
             <div className="lg:flex lg:w-screen">
                 <div className="lg:flex lg:flex-1 lg:flex-col">
@@ -257,6 +258,6 @@ export default function CreateLovedPage() {
                 </div>
                 <Sidebar />
             </div>
-        </>
+        </FallbackToLoginLayout>
     );
 }

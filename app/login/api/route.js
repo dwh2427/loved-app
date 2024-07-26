@@ -1,8 +1,8 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { createError, errorResponse } from "@/lib/server-error";
+import { errorResponse } from "@/lib/server-error";
 import User from "@/models/user";
 import connectDB from "@/mongodb.config";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 connectDB();
 
@@ -39,12 +39,16 @@ export async function POST(request) {
 
     // Generate a JWT token
     const jwtSecret = process.env.JWT_SECRET;
-    const token = jwt.sign({ uid: user.uid, email: user.email }, jwtSecret, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { uid: user.uid, _id: user._id, email: user.email },
+      jwtSecret,
+      {
+        expiresIn: "7d",
+      },
+    );
 
     // Return a JSON response with the JWT token
-    return Response.json({ token });
+    return Response.json({ token,user });
   } catch (error) {
     // If an error occurs, return an error response
     return errorResponse(error);

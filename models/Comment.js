@@ -12,6 +12,23 @@ const commentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  likes: [
+    {
+      userId: { type: mongoose.Schema.ObjectId, ref: "User",  },
+    },
+  ],
+
+  replies: [
+    {
+      replied_by: { type: mongoose.Schema.ObjectId, ref: "User" },
+      replyText: { type: String, required: true },
+      createdAt: { type: Date, default: Date.now },
+    },
+  ],
+  tipAmount: {
+    type: Number,
+    default: 0,
+  },
   page_name: {
     type: String,
     default: "",
@@ -19,6 +36,10 @@ const commentSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  comment_by: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
   },
 });
 
