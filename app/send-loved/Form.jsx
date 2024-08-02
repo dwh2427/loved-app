@@ -276,11 +276,12 @@ export default function SendLove() {
 
         setIsPaymentProccess(true);
         const { token, error } = await stripe.createToken(cardNumberElement);
-
+       
         const token2 = await stripe.createToken(cardNumberElement);
+      
 
         const { radarSession } = await stripe.createRadarSession();
-
+     
         if (token) {
           const result = await confirmPaymentIntent(
             radarSession,
@@ -358,6 +359,7 @@ export default function SendLove() {
     connectedAccountId,
   ) => {
     try {
+      console.log(tokenId)
       const response = await apiCaller.post(
         "send-loved/api/confirm-payment-intent",
         {

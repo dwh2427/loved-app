@@ -11,7 +11,7 @@ import ProfileDropdown from '../button/profile-dropdown';
 export default function Header() {
     const { user, loading } = useAuthState();
     const pathname = usePathname().split('/')[1];
-    const expectedPath = ["send-loved", "getting-started"];
+    const expectedPath = ["send-loved", "getting-started", "login"];
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSendingOpen, setIsSendingOpen] = useState(false);
     const [isResourcesOpen, setIsResourcesOpen] = useState(false);

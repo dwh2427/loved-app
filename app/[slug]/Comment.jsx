@@ -164,23 +164,29 @@ const Comment = ({ params }) => {
                                 />
                             </div>
 
-                            <div className="flex w-full flex-col justify-center">
-                                <div className="flex justify-between">
-                                <p className="m-0 p-0 text-[16px] title-holder">
-                                    {capitalize(cm?.username)}
-                                </p>
-                                {cm?.tipAmount !== 0 && <p className="text-sm title-holder">${cm?.tipAmount}</p>}
-                                </div>
-                                <div className="flex justify-between">
-                                    <p className="font-sans text-[12px] text-[#586580] date-section">
-                                        {cm?.comment_by && cm.comment_by?.additional_info.city}
-                                    </p>
-                                    <div>
-                                        <p className="font-sans text-[12px] date-section">
-                                            <FormatedDate dateString={cm?.createdAt} />
+                            <div className="flex w-full flex-col justify-center ">
+                                <div className="h-[32px] ">
+                                    <div className="flex justify-between">
+                                        <p className="title-holder">
+                                            {capitalize(cm?.username)}
                                         </p>
+                                        {cm?.tipAmount !== 0 && <p className="text-sm title-holder">${cm?.tipAmount}</p>}
+                                    </div>
+
+
+                                    <div className="flex justify-between">
+                                        <p className="font-sans text-[12px] text-[#586580] date-section">
+                                            {cm?.comment_by && cm.comment_by?.additional_info.city}
+                                        </p>
+                                        <div>
+                                            <p className="font-sans text-[12px] date-section">
+                                                <FormatedDate dateString={cm?.createdAt} />
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+
+
                                 {cm?.image && (
                                     <div className="mt-2 flex">
                                         <Image
@@ -193,13 +199,27 @@ const Comment = ({ params }) => {
                                     </div>
                                 )}
 
-                                <p
+                                <div
                                     key={index}
-                                    className={`mt-2 text-[12px] font-medium ${!expandedComments[index] ? "line-clamp-2" : ""} cursor-pointer`}
+                                    style={{ fontWeight: 500 }}
+                                    className={`title-holder mt-2 `}
                                     onClick={() => handleToggle(index)}
                                 >
-                                    {cm?.comment}
-                                </p>
+
+                                    <div>
+                                        <p>
+                                            {!expandedComments[index] ? getFirstWords(cm?.comment, 27) : cm?.comment}
+                                            {countWords(cm?.comment) > 27 && (
+                                                <span className="text-[#A5B5D4]">
+                                                    {expandedComments[index] ? "" : <span><span className="text-black">...</span> more</span>}
+                                                </span>
+                                            )}
+                                        </p>
+
+                                    </div>
+                                    {/* <p className="font-sans text-sm text-end text-base font-medium leading-4 text-[#586580]"> <FormatedDate dateString={reply?.createdAt} /></p> */}
+                                </div>
+
 
                                 <div className="flex gap-2 pt-2">
                                     <Image
@@ -227,65 +247,74 @@ const Comment = ({ params }) => {
 
 
                                 {cm?.likes?.length > 0 && (
-                                    <p className="py-2 text-sm leading-4">
+                                    <p className="py-2 text-[12px] leading-4">
                                         Liked by {cm.likes.some(item => item?.userId?._id === user?._id) ? (
                                             <>
-                                                <span className="font-bold">you </span>
+                                                <span className="font-[800]">you </span>
                                                 <span >{cm.likes.length > 1 && cm.likes.length === 2 ? ' and ' : cm.likes.length !== 1 && ','}</span>
                                                 {cm.likes.length > 1 && (
                                                     <>
-                                                        <span className="font-bold">{cm.likes[cm.likes.length - 2]?.userId?.first_name + " " + cm.likes[cm.likes.length - 2]?.userId?.last_name}</span>
+                                                        <span className="font-[800]">{cm.likes[cm.likes.length - 2]?.userId?.first_name + " " + cm.likes[cm.likes.length - 2]?.userId?.last_name}</span>
                                                         {cm.likes.length > 2 && " and "}
                                                     </>
                                                 )}
                                                 {cm.likes.length > 2 && (
                                                     <>
-                                                        <span className="font-bold">others</span>
+                                                        <span className="font-[800]">others</span>
                                                     </>
                                                 )}
                                             </>
                                         ) : (
                                             <>
-                                                <span className="font-bold">{cm.likes[cm.likes.length - 1]?.userId?.first_name + " " + cm.likes[cm.likes.length - 1]?.userId?.last_name}</span>
+                                                <span className="font-[800]">{cm.likes[cm.likes.length - 1]?.userId?.first_name + " " + cm.likes[cm.likes.length - 1]?.userId?.last_name}</span>
                                                 {cm.likes.length > 1 && " and "}
-                                                {cm.likes.length > 1 && <span className="font-bold">others</span>}
+                                                {cm.likes.length > 1 && <span className="font-[800]">others</span>}
                                             </>
                                         )}
                                     </p>
                                 )}
 
-
                                 {user?.email && cm?.showReply && (
-                                    <form onSubmit={(e) => { e.preventDefault(); replyText.length > 0 && handleReplySubmit(cm?._id) }} className="mt-2 relative">
-                                        <button type="submit">
-                                            <svg width="30" height="30" className="right-3 top-1 cursor-pointer bottom-0 absolute" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <form onSubmit={(e) => { e.preventDefault(); replyText.length > 0 && handleReplySubmit(cm?._id) }} className="mb-2 relative">
+                                        <button type="submit" className="absolute right-3 top-1">
+                                            <svg width="30" height="30" className="cursor-pointer" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect width="30" height="30" rx="16" fill="#FF318C" />
                                                 <path d="M15 25C15 25.5523 15.4477 26 16 26C16.5523 26 17 25.5523 17 25L15 25ZM16.7071 6.29289C16.3166 5.90237 15.6834 5.90237 15.2929 6.29289L8.92893 12.6569C8.53841 13.0474 8.53841 13.6805 8.92893 14.0711C9.31946 14.4616 9.95262 14.4616 10.3431 14.0711L16 8.41421L21.6569 14.0711C22.0474 14.4616 22.6805 14.4616 23.0711 14.0711C23.4616 13.6805 23.4616 13.0474 23.0711 12.6569L16.7071 6.29289ZM17 25L17 7L15 7L15 25L17 25Z" fill="white" />
                                             </svg>
                                         </button>
-                                        <input value={replyText} onChange={(e) => handleReplyChange(e)} type="text" placeholder="Add a comment" className="border border-[#A5B5D4] focus:[#A5B5D4] py-2 px-3 text-[12px] w-full rounded-[32px]" />
+                                        <input
+                                            value={replyText}
+                                            onChange={(e) => handleReplyChange(e)}
+                                            type="text"
+                                            placeholder="Add a comment"
+                                            className="border  border-[#A5B5D4] focus:border-[#A5B5D4] py-2 px-3 text-[12px] w-full rounded-[32px] bg-white outline-none transition duration-150 ease-in-out focus:ring-1 focus:ring-[#A5B5D4] text-[#2E266F]"
+                                            style={{ paddingRight: '2.5rem' }}
+                                        />
                                     </form>
                                 )}
+
 
                                 {cm?.replies.length > 0 &&
                                     cm?.replies
                                         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                                         .map((reply, replyIndex) => (
-                                            <div key={replyIndex} className="py-2">
+                                            <div key={replyIndex} className="mb-2 text-[12px]">
                                                 <div>
-                                                    <p className="text-sm leading-4 font-medium">
-                                                        <span className="font-bold capitalize">
-                                                            {reply?.replied_by?.first_name + " " + reply?.replied_by?.last_name}
-                                                        </span>{" "}
+                                                    <p className="capitalize">
+                                                        <span className="font-[800]">{reply?.replied_by?.first_name + " " + reply?.replied_by?.last_name}</span>
+                                                        <span className="text-[#A5B5D4] font-[500]"> <FormatedDate dateString={reply?.createdAt} /></span>
+                                                    </p>{" "}
+                                                    <p className="">
                                                         {expandedReplies[`${index}-${replyIndex}`]
                                                             ? reply?.replyText
                                                             : getFirstWords(reply?.replyText, 27)}
+
+                                                        {countWords(reply?.replyText) > 27 && (
+                                                            <span className="text-[#A5B5D4]" onClick={() => toggleReply(`${index}-${replyIndex}`)}>
+                                                                {expandedReplies[`${index}-${replyIndex}`] ? "" : <span><span className="text-black">...</span> more</span>}
+                                                            </span>
+                                                        )}
                                                     </p>
-                                                    {countWords(reply?.replyText) > 27 && (
-                                                        <button className="text-blue-500 underline" onClick={() => toggleReply(`${index}-${replyIndex}`)}>
-                                                            {expandedReplies[`${index}-${replyIndex}`] ? "See less" : "See more"}
-                                                        </button>
-                                                    )}
                                                 </div>
                                                 {/* <p className="font-sans text-sm text-end text-base font-medium leading-4 text-[#586580]"> <FormatedDate dateString={reply?.createdAt} /></p> */}
                                             </div>

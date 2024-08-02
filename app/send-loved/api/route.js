@@ -41,7 +41,6 @@ export async function POST(req) {
       image: imageUrl,
       page_name,
       tipAmount,
-
     };
 
     if (user?._id) {
@@ -50,6 +49,7 @@ export async function POST(req) {
 
     const newComment = new Comments(commentObj);
     await newComment.save();
+
     if (Number(tipAmount) > 0) {
       // sending email to service provider
       const serviceProviderTemplateModel = {
@@ -63,19 +63,18 @@ export async function POST(req) {
         comment: comment,
       };
 
-      // console.log(
-      //   "Service Provider Template Model:",
-      //   serviceProviderTemplateModel,
-      // );
-
-      const sendPageOwnerEmail = await postmarkClient.sendEmailWithTemplate({
-        From: "admin@loved.com",
-        To: email,
-        TemplateId: 36283661, // Your template ID
-        templateModel: serviceProviderTemplateModel,
-      });
+      // send Email to page owner
+      email &&
+        postmarkClient.sendEmailWithTemplate({
+          From: "admin@loved.com",
+          To: email,
+          TemplateId: 36283661, // Your template ID
+          templateModel: serviceProviderTemplateModel,
+        }).catch((err) => console.log(err))
       // sending email to client
+
       const totalAmount = Number(tipAmount) + Number(application_fee);
+
       const clientTemplateModel = {
         name: username,
         page_name: page_name,
@@ -93,12 +92,14 @@ export async function POST(req) {
       // console.log("Client Template Model:", clientTemplateModel);
 
       clientEmail &&
-        (await postmarkClient.sendEmailWithTemplate({
-          From: "admin@loved.com",
-          To: clientEmail,
-          TemplateId: 36341904,
-          templateModel: clientTemplateModel,
-        }));
+        postmarkClient
+          .sendEmailWithTemplate({
+            From: "admin@loved.com",
+            To: clientEmail,
+            TemplateId: 36341904,
+            templateModel: clientTemplateModel,
+          })
+          .catch((err) => console.log(err));
     }
 
     return Response.json({
@@ -106,7 +107,7 @@ export async function POST(req) {
       message: "Comment created successfully",
     });
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error("Error:", error);
     // If an error occurs, return an error response
     return errorResponse(error);
   }

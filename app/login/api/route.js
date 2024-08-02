@@ -1,54 +1,24 @@
 import { errorResponse } from "@/lib/server-error";
-import User from "@/models/user";
-import connectDB from "@/mongodb.config";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { Twilio } from 'twilio';
+const twilioClient = new Twilio(process.env.NEXT_PUBLIC_TWILIO_ACCOUNT_SID, process.env.NEXT_PUBLIC_TWILIO_AUTH_TOKEN);
 
-connectDB();
 
 export async function POST(request) {
   try {
     // Parse the JSON body of the request
     const body = await request.json();
-
     // Destructure email and password from the request body
-    const { email, password } = body;
+    const { phone } = body;
 
-    // Find user by email
-    const user = await User.findOne({ email });
-    // If user doesn't exist, return a 404 error
-    if (!user) {
-      return Response.json(
-        { status: false, message: "User not found" },
-        {
-          status: 200,
-        },
-      );
-    }
-
-    // Check if password matches
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return Response.json(
-        { status: false, message: "Incorrect password" },
-        {
-          status: 200,
-        },
-      );
-    }
-
-    // Generate a JWT token
-    const jwtSecret = process.env.JWT_SECRET;
-    const token = jwt.sign(
-      { uid: user.uid, _id: user._id, email: user.email },
-      jwtSecret,
-      {
-        expiresIn: "7d",
-      },
-    );
+    const verification = await twilioClient.verify.v2
+    .services("VA648edb96cc292fb93ce5880c20e6de42")
+    .verifications.create({
+      channel: "sms",
+      to: '+'+phone, // The user's phone number
+    });
 
     // Return a JSON response with the JWT token
-    return Response.json({ token,user });
+    return Response.json({status: true, message: 'OTP sent successfully' });
   } catch (error) {
     // If an error occurs, return an error response
     return errorResponse(error);

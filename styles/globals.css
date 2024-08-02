@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 * {
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -376,4 +376,81 @@ body.modal-open {
 .custom-modal-container{
   -webkit-overflow-scrolling: touch;
   overflow:auto;
+}
+
+.title-holder{
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 16px;
+
+ 
+}
+
+.date-section{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #586580;
+}
+
+.comment-section {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  color: #000000;
+
+}
+
+.otp-header-text{
+   color: var(--BLACK, #000);
+    text-align: center;
+    /* Desktop/ML heading Black */
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 60px; /* 150% */
+}
+
+.code-sent-to{
+  color: var(--DARK-GREY, #586580);
+  text-align: center;
+
+  /* Standard Text Regular */
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 133.333% */
+  margin-bottom:20px;
+}
+
+.resend-code{
+  color: var(--MAGENTA, #FF318C);
+  text-align: center;
+  /* Desktop/Extra-Small Bold */
+  font-family: Lato;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom:20px;
+  margin-top:20px;
+}
+
+.login-header{
+  color: var(--BLACK, #000);
+    text-align: center;
+    /* Desktop/ML heading Black */
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 60px; /* 150% */
 }

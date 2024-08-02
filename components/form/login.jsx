@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -7,76 +6,64 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import useAuthState from "@/hooks/useAuthState";
-
-import useClientError from "@/hooks/useClientError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { z } from "zod";
 
+// Import Twilio dependencies
+
+// Initialize Twilio with credentials from environment variables
+
 const formSchema = z.object({
-  emailAddress: z.string().email({
-    message: "Please provide a valid email address",
-  }),
-  password: z.string().min(3, {
-    message: "Please enter your password.",
-  }),
+  phone: z.string().min(1, { message: "Please provide a phone number" }),
 });
 
 export default function LoginForm() {
   const { toast } = useToast();
-  const { user, loading: isAuthLoading, setUser, setLoading: setAuthLoading } = useAuthState()
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const handleClientError = useClientError()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      emailAddress: "",
-      password: "",
+      phone: "",
     },
   });
 
-  const handleSubmit = async () => {
-    try {
+  const handleSubmit = () => {
+    try { 
+      
       setLoading(true);
-      const { emailAddress, password } = form.getValues();
-      const res = await axios.post("/login/api", { email: emailAddress, password })
+      const { phone } = form.getValues();
+      localStorage.setItem('phone', phone);
 
-      if (res?.data?.status === false) {
-        toast({
-          variant: "destructive",
-          title: "Incorrect email address or password. Please try again.",
-        });
-        return;
+      const response =  axios.post('/login/api', { phone });
+  
+      if (response.status === 200) {
+        router.push('/login/verify-otp');
+      } else {
+        throw new Error('Failed to send OTP');
       }
-      setAuthLoading(false)
-      setUser(res?.data?.user)
-      sessionStorage.setItem("user", true);
-      localStorage.setItem('accToken', await res.data.token)
-      window.location.reload('/dashboard')
-      // router.push("/dashboard");
-      form.reset();
+
     } catch (e) {
-      handleClientError(e)
+      console.error('Error sending OTP:', e);
+      toast({
+        variant: "destructive",
+        title: "Error sending OTP",
+        description: "Please try again later.",
+      });
     } finally {
       setLoading(false);
     }
   };
-
-
 
   return (
     <Form {...form}>
@@ -84,83 +71,57 @@ export default function LoginForm() {
         onSubmit={form.handleSubmit(handleSubmit)}
         className="mt-[41.41px] flex flex-col items-center gap-y-[41.41px] md:gap-y-[16px]"
       >
-        <FormField
-          control={form.control}
-          name="emailAddress"
-          render={({ field }) => (
-            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-auto md:w-[385px] md:space-y-[8px]">
-              <FormLabel className="h-[30px] max-w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:w-[75px] md:text-[12px] md:font-bold md:leading-[14.4px]">
-                Email Address
-              </FormLabel>
-              <FormControl>
-                <Input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="@.com"
-                  className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:font-normal md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-[53px] md:placeholder:text-center md:placeholder:text-[18px] md:placeholder:font-normal md:placeholder:leading-[20px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:h-auto md:w-[385px] md:space-y-[8px]">
-              <FormLabel className="h-[30px] w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:w-[75px] md:text-[12px] md:font-bold md:leading-[14.4px]">
-                Password
-              </FormLabel>
-              <FormControl>
-                <Input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px] md:font-normal md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-[53px] md:placeholder:text-center md:placeholder:text-[18px] md:placeholder:font-normal md:placeholder:leading-[20px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Link
-          href="/forgot-password"
-          className="mx-auto h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] font-bold leading-[29.12px] md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]"
-        >
-          Forgot Password?
-        </Link>
-        <p className="w-full max-w-[689.17px] text-[25.88px] leading-[29.12px] md:mx-auto md:h-[28px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
-          By clicking the Sign In button below, you agree to the Loved{" "}
-          <span className="border-b-[0.5px] border-black">
-            Terms of Service
-          </span>
-          and acknowledge the{" "}
-          <span className="border-b-[0.5px] border-black">Privacy Notice</span>.
-        </p>
-        <p className="mx-auto h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:hidden">
-          Don&apos;t have an account?{" "}
-          <Link href={"/getting-started"} className="font-bold">
-            Sign up
-          </Link>
-        </p>
+        <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:flex md:space-y-0">
+          <FormField
+            control={form.control}
+            name={"phone"}
+            render={({ field: { ref, ...field } }) => (
+              <FormItem className="h-173.06px max-w-[395px] space-y-8px md:w-188px md:space-y-8px mx-auto w-full md:h-auto">
+                <FormControl>
+                <PhoneInput
+                    country={'au'}
+                    inputStyle={{
+                      width: "calc(100% - 20px)", // Adjust width considering the button width
+                      height: "50px",
+                      borderRadius: "32px",
+                      paddingLeft: "70px", // Ensure text does not overlap with button
+                    }}
+                    buttonStyle={{
+                      width: "70px", // Set the width for the code holder
+                      borderTopLeftRadius: "32px",
+                      borderBottomLeftRadius: "32px",
+                      position: "absolute", // Position button absolutely to prevent overlap
+                      zIndex: 1, // Ensure button appears above the input
+                    }}
+                    containerStyle={{
+                      position: "relative", // Set container to relative to position button properly
+                    }}
+                    className="phone-input-custom mt-[8px] w-full"
+                    placeholder="Phone Number"
+                    {...field}
+                    inputExtraProps={{
+                      ref,
+                      required: true,
+                      autoFocus: true,
+                    }}
+                  />
+
+                </FormControl>
+                <FormMessage className="whitespace-nowrap" />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <Button
           type="submit"
           disabled={loading}
           variant={"default"}
-          className="mx-auto h-[102.71px] w-full max-w-[625.75px] rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] font-black leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:font-black md:leading-[22px]"
+          className="mx-auto h-[58px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
         >
           {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
-          Sign in
+          Continue
         </Button>
-        <p className="mx-auto hidden h-[30px] w-full max-w-[689.17px] self-start text-[25.88px] leading-[29.12px] md:block md:h-[14px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
-          Don&apos;t have an account?{" "}
-          <Link href={"/getting-started"} className="font-bold">
-            Sign up
-          </Link>
-        </p>
       </form>
     </Form>
   );
