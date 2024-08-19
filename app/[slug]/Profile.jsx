@@ -67,6 +67,21 @@ const UserProfile = function ({ params }) {
     };
   }, [isModalOpen]);
 
+  const isAuthenticated = () => {
+    // Replace this with your actual authentication check logic
+    // For example, check if there's a valid JWT token in localStorage
+    return !!localStorage.getItem('accToken'); // example
+  };
+
+  const handleClick = () => {
+    if (isAuthenticated()) {
+      router.push(`/send-loved/?page_username=${params.slug}`);
+    } else {
+      localStorage.setItem('sendLoveUrl', `/send-loved/?page_username=${params.slug}`)
+      router.push('/login');
+    }
+  };
+
   // Copy text to clipboard and show "copied" feedback
   const copyToClipboardDynamic = (text) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -156,12 +171,12 @@ const UserProfile = function ({ params }) {
                       <p className="absolute left-[29%] top-[30%] text-2xl text-[#A5B5D4]">Your message</p>
                     </div>
                     <div className="mt-auto flex w-full flex-col items-center justify-end space-y-4 pb-6">
-                      <button
-                        onClick={() => router.push(`/send-loved/?page_username=${params.slug}`)}
-                        className="w-[80%] rounded-full bg-[#FF318C] py-3 text-center text-white hover:bg-[#FF318C]"
-                      >
-                        Share love with {capitalize(pageData?.first_name)} {capitalize(pageData?.last_name)}
-                      </button>
+                    <button
+                      onClick={handleClick}
+                      className="w-[80%] rounded-full bg-[#FF318C] py-3 text-center text-white hover:bg-[#FF318C]"
+                    >
+                      Share love with {capitalize(pageData?.first_name)} {capitalize(pageData?.last_name)}
+                    </button>
                       <button
                         onClick={() => setIsModalOpen(true)}
                         className="custom-btn w-[80%] rounded-full bg-[#FFFFFF] py-3 text-center text-white hover:bg-[#FF318C]"

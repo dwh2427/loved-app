@@ -19,75 +19,97 @@ export async function POST(req) {
       currency,
       application_amount_fee,
       connectedAccountId,
+      inputValue
     } = await req.json();
     
+    console.log(inputValue);
+
     const token = cardNumberElement.id;
 
     const amountInCents = Math.round(Number(amount) * 100);
     const applicationAmountFeeInCents = Math.round(Number(application_amount_fee) * 100);
-    
-    if(applicationAmountFeeInCents> 0){
 
-    const customerMain = await stripe.customers.create({
-      email: email,
-      name: name,
-    });
+    // Regular expressions to identify email and phone number
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[+\d][\d\s-]+$/;  // Adjust this pattern according to the phone number formats you expect
 
-    const source2 = await stripe.customers.createSource(customerMain.id, {
-      source: tokenId.token.id,
-    });
-    const Fee = await stripe.charges.create({
-      amount: applicationAmountFeeInCents,
-      customer:customerMain.id,
-      currency: 'usd',
-      source: source2.id,
-      description: comments,
-      radar_options: {
-        session: radarSession.id,
-      },
-      metadata: {
+    const isEmail = emailRegex.test(inputValue);
+    const isPhone = phoneRegex.test(inputValue);
+
+    if (applicationAmountFeeInCents > 0) {
+      const customerMain = await stripe.customers.create({
+        email: email,
         name: name,
-        customer_email: email,
-        comments: comments,
-      },
-    });
+      });
 
-  }
+      const source2 = await stripe.customers.createSource(customerMain.id, {
+        source: tokenId.token.id,
+      });
 
+      const Fee = await stripe.charges.create({
+        amount: applicationAmountFeeInCents,
+        customer: customerMain.id,
+        currency: 'usd',
+        source: source2.id,
+        description: comments,
+        radar_options: {
+          session: radarSession.id,
+        },
+        metadata: {
+          name: name,
+          customer_email: email,
+          comments: comments,
+        },
+      });
+    }
 
-    //const tokenObject =JSON.stringify(cardNumberElement);
     const customer = await stripe.customers.create({
       email: email,
       name: name,
-    }, {
-      stripeAccount: connectedAccountId,
     });
 
     const source = await stripe.customers.createSource(customer.id, {
       source: token,
-    }, {
-      stripeAccount: connectedAccountId,
     });
 
+    // If connectedAccountId is provided, continue with the existing functionality
 
-    const confirmIntent = await stripe.charges.create({
-      amount: amountInCents,
-      currency: currency,
-      customer: customer.id,
-      description: comments,
-      source: source.id,
-      metadata: {
-        name: name,
-        customer_email: email,
-        comments: comments,
-      },
-    },{
+      // If connectedAccountId is missing and inputValue is an email or phone number, process the payment for the owner
+      if (isEmail || isPhone) {
+        const confirmIntent = await stripe.charges.create({
+          amount: amountInCents,
+          currency: currency,
+          customer: customer.id,
+          description: comments,
+          source: source.id,
+          metadata: {
+            name: name,
+            customer_email: email,
+            comments: comments,
+          },
+        });
+
+        return new Response(JSON.stringify(confirmIntent), { status: 200 });
+      }else{
+        const confirmIntent = await stripe.charges.create({
+          amount: amountInCents,
+          currency: currency,
+          customer: customer.id,
+          description: comments,
+          source: source.id,
+          metadata: {
+            name: name,
+            customer_email: email,
+            comments: comments,
+          },
+        }, {
           stripeAccount: connectedAccountId,
-    });
-
-    return new Response(JSON.stringify(confirmIntent), { status: 200 });
+        });
+  
+        return new Response(JSON.stringify(confirmIntent), { status: 200 });
+      }
+    
   } catch (error) {
-    // If an error occurs, return an error response
     return errorResponse(error.message);
   }
 }

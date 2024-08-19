@@ -71,20 +71,7 @@ export async function POST(request) {
     });
 
     page = newPage;
-    await newPage.save();
 
-    // Create account with Stripe
-    if (!newPage && !fetchUser?.additional_info)
-      return createError("invalid request", 400);
-
-    const account = await createStripeAccount({
-      page: newPage,
-      user: fetchUser,
-      ip,
-      user_agent,
-    });
-
-    newPage.stripe_acc_id = account.id;
     await newPage.save();
 
     console.log(newPage);
@@ -97,41 +84,7 @@ export async function POST(request) {
     // Return a JSON response with the newly created user data
     return Response.json(newPage);
   } catch (error) {
-    // If an error occurs, return an error response
-    if (error.raw) {
-      error = error.raw;
-      if (error.param === "currency") {
-        try {
-          const contry = countrys.find(
-            (i) => i.country_code === fetchUser.additional_info.country,
-          );
-
-          page.currency = contry.currency;
-
-          const account = await createStripeAccount({
-            page: page,
-            user: fetchUser,
-            ip,
-            user_agent,
-          });
-          page.stripe_acc_id = account.id;
-
-          const newPage = await page.save();
-          if (pageFor === "yourself") {
-            await User.findOneAndUpdate(
-              { _id: authUser._id },
-              { page: newPage._id },
-            );
-          }
-
-          // Return a JSON response with the newly created user data
-          return Response.json(newPage);
-        } catch (error) {
-          error.raw && (error = error.raw);
-          return errorResponse(error);
-        }
-      }
-    }
+    
     return errorResponse(error);
   }
 }

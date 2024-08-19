@@ -1,5 +1,5 @@
 'use client'
-import Verifycode from "@/components/form/Verifycode";
+import Verifycode from "@/components/form/verifycode";
 import Logo from "@/public/lovedLogo.svg";
 import Image from "next/image";
 import Link from "next/link";

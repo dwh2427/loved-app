@@ -17,7 +17,12 @@ export default function GettingStartedForm() {
     setSelectedMemberType(event.target.value);
   };
   const apiCaller = useApiCaller()
-  const handleClientError = useClientError()
+  const handleClientError = useClientError();
+  const isAuthenticated = () => {
+    // Replace this with your actual authentication check logic
+    // For example, check if there's a valid JWT token in localStorage
+    return !!localStorage.getItem('accToken'); // example
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +30,7 @@ export default function GettingStartedForm() {
     // await new Promise((resolve) => setTimeout(resolve, 1));
     try {
       const accessToken = typeof window !== 'undefined' && window.localStorage.getItem("accToken");
+
       if (accessToken && selectedMemberType === 'yourself') {
         const fetchUser = await apiCaller.get(`/getting-started/api/get_login_user_data`)
         if (fetchUser.data?.page) {
@@ -32,8 +38,15 @@ export default function GettingStartedForm() {
           return toast({ title: 'You can not create multiple page yourself', variant: 'destructive' })
         }
       }
-      localStorage.setItem('pageFor', selectedMemberType)
-      router.push(`/getting-started/${selectedMemberType}`);
+
+      localStorage.setItem('pageFor', selectedMemberType);
+
+      if (isAuthenticated()) {
+        router.push(`/getting-started/${selectedMemberType}`);
+      } else {
+        localStorage.setItem('sendLoveUrl', `/getting-started/${selectedMemberType}`)
+        router.push('/login');
+      }
 
     } catch (error) {
       handleClientError(error)

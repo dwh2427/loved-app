@@ -18,9 +18,9 @@ export async function POST(request) {
     });
 
     // Return a JSON response with the JWT token
-    return Response.json({status: true, message: 'OTP sent successfully' });
+    return Response.json({status: 200, message: 'OTP sent successfully' });
   } catch (error) {
     // If an error occurs, return an error response
-    return errorResponse(error);
+    return Response.json({status: 400, message: 'Please try after some times!' });
   }
 }

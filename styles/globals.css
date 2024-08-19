@@ -445,7 +445,7 @@ body.modal-open {
 }
 
 .login-header{
-  color: var(--BLACK, #000);
+   color: var(--BLACK, #000);
     text-align: center;
     /* Desktop/ML heading Black */
     font-family: Lato;
@@ -453,4 +453,11 @@ body.modal-open {
     font-style: normal;
     font-weight: 900;
     line-height: 60px; /* 150% */
+}
+.login-text{
+    font-family: Plus Jakarta Sans;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
 }

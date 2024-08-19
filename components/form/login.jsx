@@ -38,21 +38,19 @@ export default function LoginForm() {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {  // Declare function as async
     try { 
-      
       setLoading(true);
       const { phone } = form.getValues();
       localStorage.setItem('phone', phone);
-
-      const response =  axios.post('/login/api', { phone });
-  
+      // Wait for the axios post request to resolve
+      const response = await axios.post('/login/api', { phone });
+      // Check the response status
       if (response.status === 200) {
         router.push('/login/verify-otp');
       } else {
         throw new Error('Failed to send OTP');
       }
-
     } catch (e) {
       console.error('Error sending OTP:', e);
       toast({
@@ -63,7 +61,9 @@ export default function LoginForm() {
     } finally {
       setLoading(false);
     }
-  };
+  }
+  
+    
 
   return (
     <Form {...form}>

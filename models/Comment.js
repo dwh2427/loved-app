@@ -41,6 +41,22 @@ const commentSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "User",
   },
+  charge_id: {
+    type: String,
+    default: "",
+  },
+  comment_to: {
+    type: String,
+    default: "",
+  },
+  is_paid: {
+    type: String,
+    default: "0",
+  },
+  uniqueId: {
+    type: String,
+    default: "",
+  },
 });
 
 const Comments =

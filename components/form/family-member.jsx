@@ -75,7 +75,11 @@ export default function FamilyMemberForm() {
         try {
             const { data } = await apiCaller.post('/getting-started/api', { pageData: params })
             localStorage.setItem('pageId', data?._id)
-            router.push(`/add-photo`)
+            localStorage.removeItem("newPageData");
+            localStorage.setItem('pageName', data.username)
+            window.location.replace('/additional-details');
+            
+           // /router.push(`/add-photo`)
         } catch (error) {
             handleClientError(error)
         } finally {

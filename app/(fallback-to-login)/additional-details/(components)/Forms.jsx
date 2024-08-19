@@ -24,7 +24,6 @@ import { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { useForm } from "react-hook-form";
-import { isValidPhoneNumber } from "react-phone-number-input";
 // "With country select" component.
 import countrys from '@/public/countrys.json';
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -33,9 +32,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import "react-calendar/dist/Calendar.css";
 import "react-date-picker/dist/DatePicker.css";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import "react-phone-number-input/style.css";
+
 import { z } from "zod";
 registerLocale("es", es);
 
@@ -44,13 +41,15 @@ const formSchema = z.object({
     city: z.string().min(1, {
         message: "City is required",
     }),
+    emailAddress: z.string().email({
+        message: "Please provide a valid email address",
+    }),
     state: z.string().min(1, {
         message: "State is required",
     }),
     postal_code: z.string().min(4, {
         message: "Postal code is required",
     }),
-    phone: z.string(),
     street_address: z.string().min(1),
 });
 
@@ -65,11 +64,11 @@ export default function AdditionalDetailsForm() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             date_of_birth: new Date(),
+            emailAddress: "",
             city: "",
             street_address: "",
             state: "",
             postal_code: "",
-            phone: "",
         },
     });
 
@@ -92,29 +91,22 @@ export default function AdditionalDetailsForm() {
         }
     };
 
-    const [selectedCountry, setSelectedCountry] = useState(null);
+   // const [selectedCountry, setSelectedCountry] = useState(null);
 
     const handleSubmit = async () => {
-        if (!selectedCountry) return;
-        if (
-            !isValidPhoneNumber(
-                form.getValues().phone,
-                selectedCountry?.iso2.toUpperCase(),
-            )
-        ) {
-            return form.setError("phone", {
-                type: "custom",
-                message: "Invalid phone format",
-            });
-        }
+        // if (!selectedCountry) return;
         setLoading(true);
         const pageId = localStorage.getItem("pageId");
+        const uniqueId = localStorage.getItem("verifyValue") || "";
 
         try {
             if (user) {
                 const formdata = form.getValues();
-                const data = { ...formdata, country, date_of_birth: selectedDates, pageId };
+                const data = { ...formdata, country, uniqueId:uniqueId, date_of_birth: selectedDates, pageId };
                 const res = await apiCaller.post("/api/api/add_additional_details", data);
+
+                // Remove verifyValue from localStorage after successful API call
+                localStorage.removeItem("verifyValue");
                 const defaultCurrency = countrys.find(i => i.country_code === country)
                 localStorage.setItem('defaultCurrency', defaultCurrency?.currency)
                 router.push("/add-photo");
@@ -180,7 +172,7 @@ export default function AdditionalDetailsForm() {
             },
         );
 
-        form.setValue(
+        form.setValue( 
             "street_address",
             selectedLocation?.description.split(",")[0],
         );
@@ -203,23 +195,6 @@ export default function AdditionalDetailsForm() {
             return false;
         }
     };
-
-    const [selectedPhones, setSelectedPhones] = useState("");
-
-    useEffect(() => {
-        const phoneInputContainer = document.querySelector(".react-tel-input");
-        const handleClick = (event) => {
-            if (event.target.getAttribute("role") === "option") {
-                form.setValue("phone", "");
-                setSelectedPhones("");
-            }
-        };
-        phoneInputContainer.addEventListener("click", handleClick);
-        return () => {
-            phoneInputContainer.removeEventListener("click", handleClick);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Form {...form}>
@@ -266,48 +241,29 @@ export default function AdditionalDetailsForm() {
                     </div>
 
                     <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:flex md:space-y-0">
-                        <FormField
+
+                    <FormField
                             control={form.control}
-                            rules={{
-                                validate: (value) => isValidPhoneNumber(value),
-                            }}
-                            name={"phone"}
-                            render={({ field: { ref, ...field } }) => {
-                                return (
-                                    <FormItem className="h-173.06px max-w-689.17px space-y-8px md:w-188px md:space-y-8px mx-auto w-full md:h-auto">
-                                        <FormLabel className="h-30px  max-w-160px text-25.88px leading-29.12px md:h-18px md:w-75px md:text-12px md:leading-14.4px font-semibold text-black md:font-bold">
-                                            Phone
-                                        </FormLabel>
-                                        <FormControl>
-                                            <PhoneInput
-                                                value={selectedPhones}
-                                                country={country.toLowerCase() || 'au'}
-                                                isValid={(value, country) => {
-                                                    if (country?.name !== selectedCountry?.name) {
-                                                        setSelectedPhones(country?.dialCode);
-                                                        form.setValue("phone", `${country.dialCode}`);
-                                                    }
-                                                    setSelectedCountry(country);
-                                                }}
-                                                // focusInputOnCountrySelection={true}
-                                                style={{ borderRadius: "5px" }}
-                                                className="phone-input-custom mt-[8px] w-full  rounded"
-                                                placeholder={"Enter phone"}
-                                                inputStyle={{ width: "100%", height: "40px" }}
-                                                countryCodeEditable={false}
-                                                {...field}
-                                                inputExtraProps={{
-                                                    ref,
-                                                    required: true,
-                                                    autoFocus: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormMessage className="whitespace-nowrap" />
-                                    </FormItem>
-                                );
-                            }}
-                        />
+                            name="emailAddress"
+                            render={({ field }) => (
+                                <FormItem className="h-[173.06px] w-full max-w-[689.17px] space-y-[5.18px] md:mt-[16px] md:h-auto md:w-[385px] md:space-y-[8px]">
+                                <FormLabel className="h-[30px] max-w-[160px] text-[25.88px] font-semibold leading-[29.12px] text-black md:h-[18px] md:w-[75px] md:text-[12px] md:font-bold md:leading-[14.4px]">
+                                    Email Address
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                    // onChange={(e) => validateEmail(e)}
+                                    placeholder="@.com"
+                                    className="h-[75%] max-h-[102.71px] w-full rounded-[16.18px] border-[1.94px] px-[23.3px] py-[32.36px] text-[32.36px] leading-[37.53px] placeholder:text-black md:h-[44px] md:w-[385px] md:rounded-[8px] md:border md:p-3 md:text-[18px]  md:leading-[20px] md:placeholder:h-[20px] md:placeholder:w-full md:placeholder:text-[18px] md:placeholder:leading-[20px]"
+                                    {...field}
+                                    />
+                                </FormControl>
+
+                                <FormMessage className="whitespace-nowrap" />
+                                </FormItem>
+                            )}
+                            />
+
                     </div>
 
                     <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:flex md:space-y-0">

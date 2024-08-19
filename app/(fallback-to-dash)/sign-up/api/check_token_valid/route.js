@@ -7,9 +7,14 @@ export async function POST(request) {
   await connectDB();
   // check user email exits or not
   try {
-    const verifyuser = await verifyIdToken(request);
-  
-    const user = await User.findOne({ email: verifyuser?.email });
+        // Assuming decodeValue contains the phone number
+      const verifyuser = await verifyIdToken(request);
+
+      console.log(verifyuser);
+      console.log(verifyuser?.phone);
+      // Find the user by phone number
+      const user = await User.findOne({ phone: verifyuser?.phone });
+
 
     if (user) {
       return Response.json({ result: true, data: user });

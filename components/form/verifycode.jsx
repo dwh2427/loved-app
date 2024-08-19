@@ -4,12 +4,16 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
 import axios from 'axios';
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const Verifycode = () => {
   const [code, setCode] = useState(new Array(6).fill(""));
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
-
+  const { toast } = useToast();
+  const router = useRouter();
+  
   const [phone, setPhone] = useState("");
   useEffect(() => {
     // Retrieve phone number from local storage
@@ -17,8 +21,11 @@ const Verifycode = () => {
     if (storedPhone) {
       setPhone(storedPhone);
     }
+    // Focus on the first input field when the component mounts
+    if (inputRefs.current[0]) {
+      inputRefs.current[0].focus();
+    }
   }, []);
-
 
   const handleChange = (e, index) => {
     const value = e.target.value;
@@ -44,39 +51,87 @@ const Verifycode = () => {
   };
 
   const handlePaste = (e) => {
-    const paste = e.clipboardData.getData("text");
+    const paste = e.clipboardData.getData("text").trim();
     if (!isNaN(paste) && paste.length === 6) {
       const newCode = paste.split("");
       setCode(newCode);
+  
+      // Focus on the last input field after pasting
       inputRefs.current[newCode.length - 1].focus();
+    }
+  };
+
+  const resendOtp = async () => {
+    try {
+      setLoading(true);
+      // Make the POST request and await the response
+      const response = await axios.post('/login/api', { phone });
+
+      setCode(new Array(6).fill(""));
+      // Check if the status code and response message indicate success
+      if (response.status === 200 ) {
+        toast({
+          variant: "success",
+          title: "Successfully send otp!",
+          description: response.message,
+        });
+
+      } else {
+
+        toast({
+          variant: "destructive",
+          title: "Error!",
+          description: response.message,
+        });
+      }
+      // Focus on the first input field after resending OTP
+      if (inputRefs.current[0]) {
+        inputRefs.current[0].focus();
+      }
+    } catch (e) {
+      // Handle any other errors that occur during the request
+      console.error('Error sending OTP:', e.message);
+      toast({
+        variant: "destructive",
+        title: "Error!",
+        description: e.message,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async () => {
     setLoading(true);
-    // Add your submission logic here
-     console.log("Submitted code:", code.join(""));
-    
-        try {
-          alert(1);
-          const response = await axios.post('/login/verify-otp/api', { code: code.join(""), phone });
-          
-          if (response.status === 200) {
-            sessionStorage.setItem("user", true);
-            localStorage.setItem('accToken', await res.data.token)
-            router.push("/dashboard");
+    try {
+        const response = await axios.post('/login/verify-otp/api', { code: code.join(""), phone });
 
-          } else {
-            console.error("Failed to verify OTP:", response.data);
-            throw new Error('Failed to verify OTP');
-          }
-        } catch (error) {
-          console.error("Error during OTP verification:", error);
-          // You can display an error message to the user here
-        } finally {
-          setLoading(false);
+        if (response.status === 200) {
+            sessionStorage.setItem("user", true);
+            localStorage.setItem('accToken', response.data.token);
+
+            const redirectUrl = localStorage.getItem('sendLoveUrl') || '/';
+            // Remove the URL from localStorage
+            localStorage.removeItem('sendLoveUrl');
+
+            window.location.href = redirectUrl;
+            
+        } else {
+            toast({
+                variant: "destructive",
+                title: "Something wrong!",
+            });
         }
-      };
+    } catch (error) {
+        toast({
+            variant: "destructive",
+            title: "OTP verification failed! Please resend OTP and try again!",
+        });
+    } finally {
+        setLoading(false);
+    }
+  };
+
   const isButtonDisabled = code.some(digit => digit === "");
 
   return (
@@ -85,14 +140,14 @@ const Verifycode = () => {
         Enter verification code
       </h2>
 
-      <small className="code-sent-to">Code sent to (917) 470 2387</small>
+      <small className="code-sent-to">Code sent to +{ phone } </small>
 
       <div onPaste={handlePaste} className="flex gap-2 mt-6">
         {code.map((digit, index) => (
           <input
             key={index}
             ref={(el) => (inputRefs.current[index] = el)}
-            type="text"
+            type="tel" // Change type to "tel"
             maxLength="1"
             value={digit}
             onChange={(e) => handleChange(e, index)}
@@ -101,7 +156,8 @@ const Verifycode = () => {
           />
         ))}
       </div>
-      <a href="#" className="resend-code">Resend code</a>
+
+      <a href="#"  onClick={resendOtp} className="resend-code">Resend code</a>
 
       <Button
         type="submit"
