@@ -20,10 +20,11 @@ export default async function handler(req, res) {
         // Find all comments where the transfer_time matches the current time (within 10 minutes before and 10 minutes after), is_paid is 0, and transfer_type is either 'directly' or 'notifications'
         const comments = await Comments.find({
           transfer_time: {
-            $gte: new Date(now.getTime() - 10 * 60 * 1000), // 10 minutes before now
-            $lt: new Date(now.getTime() + 10 * 60 * 1000),  // 10 minutes after now
+            $gte: new Date(now.getTime() - 59 * 60 * 1000), // 59 minutes before now
+            $lt: new Date(now.getTime() + 1 * 60 * 1000),  // 1 minutes after now
           },
           is_paid: 0,
+          is_notified: 0,
           transfer_type: {
             $in: ['directly', 'notification']
           }
@@ -62,6 +63,7 @@ async function handleTransfer(comment) {
         });
 
         comment.is_paid = 1;
+        comment.is_notified = 1;
         await comment.save();
     } catch (error) {
         console.error("Error in handleTransfer:", error);
@@ -99,6 +101,10 @@ async function handleNotification(comment) {
                 to: comment.notify_to,
             });
         }
+
+        comment.is_notified = 1;
+        await comment.save();
+        
     } catch (error) {
         console.error("Error in handleNotification:", error);
     }
