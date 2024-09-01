@@ -1,0 +1,593 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+* {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.font-plus-jakarta-sans {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.plus-jakarta-sans-300 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.comfortaa-300 {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.reactEasyCrop_Container {
+  width: 450px;
+  height: 300px;
+  position: relative !important;
+  border-radius: 8px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.ReactSelectFlags-module_buttonSelect__CxH4w {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.custom-datepickers input {
+  padding: 7.5px 14px !important;
+  overflow: hidden !important;
+}
+.css-10o2lyd-MuiStack-root {
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.custom-datepickers {
+  width: 100% !important;
+}
+
+.MuiStack-root {
+  overflow: hidden !important;
+}
+
+.plus-jakarta-sans-font-face {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.MuiSlider-rail {
+  background-color: #a5b5d4 !important;
+}
+.MuiSlider-thumb {
+  background-color: #ff4195 !important;
+}
+.MuiSlider-track {
+  background-color: #ff318c !important;
+}
+/* Custom Modal Styles */
+.custom-modal {
+  background-color: white;
+  border-radius: 30px;
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.custom-modal-header {
+  padding: 24px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-modal-header .modal-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.custom-modal-header .modal-icon {
+  margin-bottom: 8px;
+}
+
+.custom-modal-header .modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2E266F;
+  line-height: 21px;
+  font-family: "Comfortaa"
+}
+
+.custom-modal-header .close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: white;
+  font-size: 34px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.custom-modal-body {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.custom-modal-body button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.custom-modal-body button span {
+  color: #2E266F;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: "Plus Jakarta Sans";
+  line-height: 28px;
+}
+
+.custom-btn {
+  border: 3px solid #ff318c;
+  color: #ff318c;
+  font-weight: 500;
+}
+.share-url-hints{
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: "15px";
+  font-family: "Plus Jakarta Sans";
+}
+.custom-btn:hover {
+  border: 3px solid #ffffff;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.message-sent {
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.want-more {
+  font-weight: 700;
+  font-size: 24px;
+  color: #2e266f;
+}
+
+.more-page {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.custom-body .button-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Adjust gap as needed */
+}
+
+.custom-body .left-buttons,
+.custom-body .right-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Adjust gap as needed */
+}
+
+.custom-body button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adjust gap as needed */
+  text-align: left;
+}
+
+.custom-body button span {
+  color: #2e266f;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.message-sent {
+  font-size: 2rem;
+}
+
+.want-more,
+.more-page {
+  font-size: 1.5rem;
+}
+
+.custom-link-text {
+  font-weight: 500 !important;
+  color: #a5b5d4 !important;
+  font-size: 14px !important;
+}
+
+.plus-jakarta-sans-300 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.plus-jakarta-sans-500 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.plus-jakarta-sans-700 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.comfortaa-300 {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@media (max-width: 720px) {
+  .d-rs-full {
+    width: 100% !important;
+  }
+
+  .d-rs-nav-height {
+    height: 80px;
+  }
+
+  .d-rs-block {
+    display: block !important;
+  }
+
+  .d-rs-hidden {
+    display: none !important;
+  }
+
+  .d-rs-none {
+    display: none !important;
+  }
+
+  .d-rs-flex {
+    display: flex !important;
+  }
+
+  .d-rs-justify-center {
+    justify-content: center !important;
+  }
+  .d-rs-flex-row {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .d-rs-flex-between {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .d-rs-col {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .rs-gap-10 {
+    gap: 20px !important;
+  }
+
+  .font-w-300 {
+    font-weight: 300 !important;
+  }
+
+  .custom-modal-body {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+  .custom-modal{
+    height: 100%;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+}
+}
+
+.web-page-heading{
+ font-family: "Comfortaa";
+ color: #2E266F;
+ font-size: 48px;
+ line-height: 50px;
+ font-weight: 700;
+ margin-bottom: 10px; /* This adds the paragraph spacing */
+}
+
+.web-page-date{
+  color: #A5B5D4;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.web-page-paragraph{
+  color: #586580;
+  margin-top: 15px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.custom-fsl-padding {
+  padding: 6px 16px 6px 0px;
+}
+
+.header, .footer {
+  z-index: 99; /* Ensure this is less than the modal's z-index */
+}
+
+/* Additional styles for preventing body scroll */
+body.modal-open {
+  overflow: hidden;
+}
+
+.custom-modal {
+  position: relative;
+  z-index: 10001; /* Ensuring it's above the overlay */
+  max-height: 100vh; /* Adjust as needed */
+  overflow-y: auto;
+}
+
+/* Additional styles for preventing body scroll */
+body.modal-open {
+  overflow: hidden;
+}
+
+.custom-modal-container{
+  -webkit-overflow-scrolling: touch;
+  overflow:auto;
+}
+
+.title-holder{
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 16px;
+
+ 
+}
+
+.date-section{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #586580;
+}
+
+.comment-section {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  color: #000000;
+
+}
+
+.otp-header-text{
+   color: var(--BLACK, #000);
+    text-align: center;
+    /* Desktop/ML heading Black */
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 60px; /* 150% */
+}
+
+.code-sent-to{
+  color: var(--DARK-GREY, #586580);
+  text-align: center;
+
+  /* Standard Text Regular */
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 133.333% */
+  margin-bottom:20px;
+}
+
+.resend-code{
+  color: var(--MAGENTA, #FF318C);
+  text-align: center;
+  /* Desktop/Extra-Small Bold */
+  font-family: Lato;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom:20px;
+  margin-top:20px;
+}
+
+.login-header{
+   color: var(--BLACK, #000);
+    text-align: center;
+    /* Desktop/ML heading Black */
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 60px; /* 150% */
+}
+.login-text{
+    font-family: Plus Jakarta Sans;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+}
+
+.form-group {
+  position: relative;
+}
+
+.error-message {
+  position: absolute;
+  top: 100%; /* Adjust based on your layout */
+  left: 0;
+  color: red;
+  font-size: 12px; /* Adjust size as needed */
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content h2 {
+color:#2E266F;
+font-family: Comfortaa;
+font-size: 36px;
+font-weight: 700;
+line-height: 42px;
+text-align: center;
+margin-bottom: 15px;
+}
+
+.popup-content p {
+  color: #2E266F;
+  margin-bottom: 20px;
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+
+}
+
+.close-popup-button {
+  background-color: #FF318C;
+  color: white;
+  border: none;
+  padding: 10px 40px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
+}
+
+.schedule-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.schedule-popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 500px;
+  min-height: 250px;
+  text-align: center;
+}
+
+.schedule-close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.schedule-heading {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.schedule-date-time-container {
+  margin-bottom: 20px;
+}
+
+.schedule-error-message {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.schedule-close-popup-button {
+  background-color: #FF318C;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+}
+
+.schedule-close-popup-button:hover {
+  background-color: #FF318C;
+}

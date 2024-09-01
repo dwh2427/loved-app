@@ -1,0 +1,338 @@
+[
+  
+  {
+    "name": "Australia",
+    "currency": "AUD",
+    "calling_code": 61,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg",
+    "country_code": "AU"
+  },
+  {
+    "name": "Austria",
+    "currency": "EUR",
+    "calling_code": 43,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg",
+    "country_code": "AT"
+  },
+  
+  {
+    "name": "Belgium",
+    "currency": "EUR",
+    "calling_code": 32,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Belgium.svg",
+    "country_code": "BE"
+  },
+  
+  {
+    "name": "Brazil",
+    "currency": "BRL",
+    "calling_code": 55,
+    "icon": "//upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
+    "country_code": "BR"
+  },
+  
+  {
+    "name": "Bulgaria",
+    "currency": "BGN",
+    "calling_code": 359,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Bulgaria.svg",
+    "country_code": "BG"
+  },
+  {
+    "name": "Canada",
+    "currency": "CAD",
+    "calling_code": 1,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg",
+    "country_code": "CA"
+  },
+  
+  {
+    "name": "Croatia",
+    "currency": "EUR",
+    "calling_code": 385,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Croatia.svg",
+    "country_code": "HR"
+  },
+  {
+    "name": "Cyprus",
+    "currency": "EUR",
+    "calling_code": 357,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Cyprus.svg",
+    "country_code": "CY"
+  },
+  {
+    "name": "Czech Republic",
+    "currency": "CZK",
+    "calling_code": 420,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Czech_Republic.svg",
+    "country_code": "CZ"
+  },
+  {
+    "name": "Denmark",
+    "currency": "DKK",
+    "calling_code": 45,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",
+    "country_code": "DK"
+  },  
+  {
+    "name": "Estonia",
+    "currency": "EUR",
+    "calling_code": 372,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/8/8f/Flag_of_Estonia.svg",
+    "country_code": "EE"
+  },
+  
+  {
+    "name": "Finland",
+    "currency": "EUR",
+    "calling_code": 358,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Finland.svg",
+    "country_code": "FI"
+  },
+  {
+    "name": "France",
+    "currency": "EUR",
+    "calling_code": 33,
+    "icon": "//upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg",
+    "country_code": "FR"
+  },
+  {
+    "name": "Germany",
+    "currency": "EUR",
+    "calling_code": 49,
+    "icon": "//upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg",
+    "country_code": "DE"
+  },
+  {
+    "name": "Gibraltar",
+    "currency": "GIP",
+    "calling_code": 350,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/0/02/Flag_of_Gibraltar.svg",
+    "country_code": "GI"
+  },
+  {
+    "name": "Greece",
+    "currency": "EUR",
+    "calling_code": 30,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg",
+    "country_code": "GR"
+  },
+  {
+    "name": "Hong Kong",
+    "currency": "HKD",
+    "calling_code": 852,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/5/5b/Flag_of_Hong_Kong.svg",
+    "country_code": "HK"
+  },
+  {
+    "name": "Hungary",
+    "currency": "HUF",
+    "calling_code": 36,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/c/c1/Flag_of_Hungary.svg",
+    "country_code": "HU"
+  },
+  {
+    "name": "India",
+    "currency": "INR",
+    "calling_code": 91,
+    "icon": "//upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg",
+    "country_code": "IN"
+  },
+  {
+    "name": "Ireland",
+    "currency": "EUR",
+    "calling_code": 353,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg",
+    "country_code": "IE"
+  },
+  {
+    "name": "Italy",
+    "currency": "EUR",
+    "calling_code": 39,
+    "icon": "//upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg",
+    "country_code": "IT"
+  },
+  {
+    "name": "Japan",
+    "currency": "JPY",
+    "calling_code": 81,
+    "icon": "//upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg",
+    "country_code": "JP"
+  },
+  {
+    "name": "Latvia",
+    "currency": "EUR",
+    "calling_code": 371,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Latvia.svg",
+    "country_code": "LV"
+  },
+  {
+    "name": "Liechtenstein",
+    "currency": "CHF",
+    "calling_code": 423,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/4/47/Flag_of_Liechtenstein.svg",
+    "country_code": "LI"
+  },
+  {
+    "name": "Lithuania",
+    "currency": "EUR",
+    "calling_code": 370,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Lithuania.svg",
+    "country_code": "LT"
+  },
+  {
+    "name": "Luxembourg",
+    "currency": "EUR",
+    "calling_code": 352,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/d/da/Flag_of_Luxembourg.svg",
+    "country_code": "LU"
+  },
+  {
+    "name": "Malaysia",
+    "currency": "MYR",
+    "calling_code": 60,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/6/66/Flag_of_Malaysia.svg",
+    "country_code": "MY"
+  },
+  {
+    "name": "Malta",
+    "currency": "EUR",
+    "calling_code": 356,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Malta.svg",
+    "country_code": "MT"
+  },
+  {
+    "name": "Mexico",
+    "currency": "MXN",
+    "calling_code": 52,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg",
+    "country_code": "MX"
+  },
+  
+  {
+    "name": "Netherlands",
+    "currency": "EUR",
+    "calling_code": 31,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/2/20/Flag_of_the_Netherlands.svg",
+    "country_code": "NL"
+  },
+  {
+    "name": "New Zealand",
+    "currency": "NZD",
+    "calling_code": 64,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg",
+    "country_code": "NZ"
+  },
+  {
+    "name": "Norway",
+    "currency": "NOK",
+    "calling_code": 47,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",
+    "country_code": "NO"
+  },
+  {
+    "name": "Oman",
+    "currency": "OMR",
+    "calling_code": 968,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Oman.svg",
+    "country_code": "OM"
+  },
+  {
+    "name": "Pakistan",
+    "currency": "PKR",
+    "calling_code": 92,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_Pakistan.svg",
+    "country_code": "PK"
+  },
+  {
+    "name": "Poland",
+    "currency": "PLN",
+    "calling_code": 48,
+    "icon": "//upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg",
+    "country_code": "PL"
+  },
+  {
+    "name": "Portugal",
+    "currency": "EUR",
+    "calling_code": 351,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg",
+    "country_code": "PT"
+  },
+  {
+    "name": "Romania",
+    "currency": "RON",
+    "calling_code": 40,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Romania.svg",
+    "country_code": "RO"
+  },
+  {
+    "name": "Singapore",
+    "currency": "SGD",
+    "calling_code": 65,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Singapore.svg",
+    "country_code": "SG"
+  },
+  {
+    "name": "Slovakia",
+    "currency": "EUR",
+    "calling_code": 421,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/e/e6/Flag_of_Slovakia.svg",
+    "country_code": "SK"
+  },
+  {
+    "name": "Slovenia",
+    "currency": "EUR",
+    "calling_code": 386,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f0/Flag_of_Slovenia.svg",
+    "country_code": "SI"
+  },
+  {
+    "name": "Spain",
+    "currency": "EUR",
+    "calling_code": 34,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/8/89/Bandera_de_Espa%C3%B1a.svg",
+    "country_code": "ES"
+  },
+  {
+    "name": "Sweden",
+    "currency": "SEK",
+    "calling_code": 46,
+    "icon": "//upload.wikimedia.org/wikipedia/en/4/4c/Flag_of_Sweden.svg",
+    "country_code": "SE"
+  },
+  {
+    "name": "Switzerland",
+    "currency": "CHF",
+    "calling_code": 41,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg",
+    "country_code": "CH"
+  },
+  {
+    "name": "Thailand",
+    "currency": "THB",
+    "calling_code": 66,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg",
+    "country_code": "TH"
+  },
+  {
+    "name": "United Arab Emirates",
+    "currency": "AED",
+    "calling_code": 971,
+    "icon": "//upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_United_Arab_Emirates.svg",
+    "country_code": "AE"
+  },
+  {
+    "name": "United Kingdom",
+    "currency": "GBP",
+    "calling_code": 44,
+    "icon": "//upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg",
+    "country_code": "GB"
+  },
+  {
+    "name": "United States of America",
+    "currency": "USD",
+    "calling_code": 1,
+    "icon": "//upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg",
+    "country_code": "US"
+  }
+]

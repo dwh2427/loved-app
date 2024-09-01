@@ -1,0 +1,24 @@
+{
+  "commit": "98c37151d2c4ee052c41a274c5f1c3286dce531d",
+  "generated": "Tue, 02 Jul 2024 11:35:24 GMT",
+  "metadata": [
+    {
+      "__outstatic": {
+        "commit": "b3012674996a0b7953e81ab3d9b974a6cbf5e060",
+        "hash": "3955406754",
+        "path": "outstatic/content/posts/test.md"
+      },
+      "author": {
+        "name": "Paolo Lalap",
+        "picture": ""
+      },
+      "collection": "posts",
+      "coverImage": "",
+      "description": "",
+      "publishedAt": "2024-07-02T12:18:55.478Z",
+      "slug": "test",
+      "status": "published",
+      "title": "test"
+    }
+  ]
+}
