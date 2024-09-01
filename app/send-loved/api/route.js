@@ -58,6 +58,7 @@ export async function POST(req) {
   let transfer_time = null;
   let transfer_type = null;
   let notify_to = null;
+  let is_notified = 0;
 
   try {
     if (file && file.size > 0) {
@@ -146,7 +147,8 @@ export async function POST(req) {
       is_paid,
       transfer_time,
       transfer_type,
-      notify_to
+      notify_to,
+      is_notified,
     };
     
     if (user?._id) {
@@ -156,41 +158,97 @@ export async function POST(req) {
     const newComment = new Comments(commentObj);
     await newComment.save();
     
+    if(!scheduled_time && !scheduled_date){
+      if (Number(tipAmount) > 0) {
 
-    if (Number(tipAmount) > 0) {
+        // Sending email to service provider
 
-      // Sending email to service provider
+        // this executes if there is donations
 
-      // this executes if there is donations
+        if (email && stripeAccountId) {
+    
+          notify_to = email;
+          const serviceProviderTemplateModel = {
+            page_owner_name: `${res.first_name} ${res.last_name}`,
+            customer_name: username,
+            transaction_date: newComment.createdAt,
+            tip_amount: tipAmount,
+            logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
+            page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
+            image_link: imageUrl,
+            comment: comment,
+          };
 
-      if (email && stripeAccountId) {
-  
-        notify_to = email;
-        const serviceProviderTemplateModel = {
-          page_owner_name: `${res.first_name} ${res.last_name}`,
-          customer_name: username,
-          transaction_date: newComment.createdAt,
-          tip_amount: tipAmount,
+          await postmarkClient.sendEmailWithTemplate({
+            From: "admin@loved.com",
+            To: email,
+            TemplateId: 36283661, // Your template ID
+            TemplateModel: serviceProviderTemplateModel,
+          }).catch(console.log);
+        } else {
+
+          notify_to = comment_to;
+          if (emailRegex.test(comment_to)) {
+            const customTemplateModel = {
+              page_owner_name: "",
+              customer_name: username,
+              amountDonate: true,
+              transaction_date: newComment.createdAt,
+              tip_amount: Number(tipAmount).toFixed(2),
+              logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
+              page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,
+              image_link: imageUrl,
+              comment: comment,
+            };
+
+            await postmarkClient.sendEmailWithTemplate({
+              From: "admin@loved.com",
+              To: comment_to,
+              TemplateId: 36908249, // Your template ID
+              TemplateModel: customTemplateModel,
+            }).catch(console.log);
+          } else if (phoneRegex.test(comment_to)) {
+          
+            const decodedURL = decodeURIComponent(`${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`);
+            const messageBody = `You have received love from ${username}. ${decodedURL}`;
+            
+            await twilioClient.messages.create({
+              body: messageBody,
+              from: process.env.TWILIO_PHONE_NUMBER, // Replace with your Twilio number
+              to: "+"+comment_to,
+            });
+          }
+        }
+
+        const totalAmount = Number(tipAmount) + Number(application_fee);
+
+        const clientTemplateModel = {
+          name: username,
+          page_name: page_name,
+          date: newComment.createdAt,
+          description: comment,
+          amount: Number(tipAmount).toFixed(2),
           logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
           page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
+          tipAmount: Number(application_fee).toFixed(2),
           image_link: imageUrl,
-          comment: comment,
+          total: totalAmount.toFixed(2),
         };
 
         await postmarkClient.sendEmailWithTemplate({
           From: "admin@loved.com",
-          To: email,
-          TemplateId: 36283661, // Your template ID
-          TemplateModel: serviceProviderTemplateModel,
+          To: clientEmail,
+          TemplateId: 36341904, // Your template ID
+          TemplateModel: clientTemplateModel,
         }).catch(console.log);
-      } else {
+      }else{
 
-        notify_to = comment_to;
+        // this executes if there is no donations! Just comment to a specific user
         if (emailRegex.test(comment_to)) {
           const customTemplateModel = {
             page_owner_name: "",
             customer_name: username,
-            amountDonate: true,
+            amountDonate: false,
             transaction_date: newComment.createdAt,
             tip_amount: Number(tipAmount).toFixed(2),
             logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
@@ -216,65 +274,9 @@ export async function POST(req) {
             to: "+"+comment_to,
           });
         }
+
       }
-
-      const totalAmount = Number(tipAmount) + Number(application_fee);
-
-      const clientTemplateModel = {
-        name: username,
-        page_name: page_name,
-        date: newComment.createdAt,
-        description: comment,
-        amount: Number(tipAmount).toFixed(2),
-        logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
-        page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
-        tipAmount: Number(application_fee).toFixed(2),
-        image_link: imageUrl,
-        total: totalAmount.toFixed(2),
-      };
-
-      await postmarkClient.sendEmailWithTemplate({
-        From: "admin@loved.com",
-        To: clientEmail,
-        TemplateId: 36341904, // Your template ID
-        TemplateModel: clientTemplateModel,
-      }).catch(console.log);
-    }else{
-
-      // this executes if there is no donations! Just comment to a specific user
-      if (emailRegex.test(comment_to)) {
-        const customTemplateModel = {
-          page_owner_name: "",
-          customer_name: username,
-          amountDonate: false,
-          transaction_date: newComment.createdAt,
-          tip_amount: Number(tipAmount).toFixed(2),
-          logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
-          page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,
-          image_link: imageUrl,
-          comment: comment,
-        };
-
-        await postmarkClient.sendEmailWithTemplate({
-          From: "admin@loved.com",
-          To: comment_to,
-          TemplateId: 36908249, // Your template ID
-          TemplateModel: customTemplateModel,
-        }).catch(console.log);
-      } else if (phoneRegex.test(comment_to)) {
-      
-        const decodedURL = decodeURIComponent(`${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`);
-        const messageBody = `You have received love from ${username}. ${decodedURL}`;
-        
-        await twilioClient.messages.create({
-          body: messageBody,
-          from: process.env.TWILIO_PHONE_NUMBER, // Replace with your Twilio number
-          to: "+"+comment_to,
-        });
-      }
-
     }
-
     return Response.json({
       data: newComment,
       message: "Comment created successfully",
