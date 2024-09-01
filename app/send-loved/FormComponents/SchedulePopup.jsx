@@ -38,7 +38,7 @@ export default function SchedulePopup({ message, onClose, setScheduledTime, setS
       // Format the time in the user's local timezone
       const formattedTime = dayjs(selectedTime)
         .tz(dayjs.tz.guess()) // Guess the user's local timezone
-        .format('HH:mm:ss [GMT]Z'); // e.g., "18:00:00 GMT+0200"
+        .format('HH:00:00 [GMT]Z'); // e.g., "18:00:00 GMT+0200"
 
       // Proceed with your scheduling logic
       setScheduledTime(formattedTime);
@@ -83,6 +83,8 @@ export default function SchedulePopup({ message, onClose, setScheduledTime, setS
                 shouldDisableDate={isDateDisabled}
               />
               <TimePicker
+                views={['hours']}
+                format="HH"
                 style={{
                   overflow: "hidden",
                 }}
