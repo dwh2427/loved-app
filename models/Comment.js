@@ -69,6 +69,10 @@ const commentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  is_notified: {
+    type: String,
+    default: "0",
+  },
 });
 
 const Comments =
