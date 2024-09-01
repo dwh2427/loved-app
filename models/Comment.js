@@ -57,6 +57,18 @@ const commentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  transfer_time: {
+    type: String,
+    default: "",
+  },
+  transfer_type: {
+    type: String,
+    default: "",
+  },
+  notify_to: {
+    type: String,
+    default: "",
+  },
 });
 
 const Comments =

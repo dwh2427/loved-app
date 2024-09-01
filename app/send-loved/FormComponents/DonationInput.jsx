@@ -3,12 +3,14 @@ import Image from "next/image";
 import {useState, useEffect } from "react";
 import useApiCaller from "@/hooks/useApiCaller";
 import { Loader2 } from "lucide-react";
+import Popup from './Popup'; // Import the Popup component
+import { useToast } from "@/components/ui/use-toast";
+
 
 export default function DonationInput({
   selectedPage,
   register,
   tipAmount,
-  handleInputChange,
   errorMessage,
   setGetTipAmountPercent,
   getTipAmmountPercent,
@@ -16,10 +18,19 @@ export default function DonationInput({
   setClientSecret, 
   setFormStep, // Ensure this is correctly passed
   setErrorMessage,
-  trigger // Trigger validation manually
+  trigger, // Trigger validation manually
+  setValue,
+  phoneNumber,
+  email,
+  inputValue,
+  loginUserId,
+  setPaymentConfirm
 }) {
   const apiCaller = useApiCaller();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // State to manage the popup visibility
+
+  const { toast } = useToast();
 
   // Calculate the total amount (tipAmount + percentage amount)
   const applicationFeeAmount = (tipAmount * getTipAmmountPercent) / 100;
@@ -32,8 +43,16 @@ export default function DonationInput({
   
   const handleContinueClick =  async () => {
     try {
-      const isValid = await trigger(); // Validate all fields
+
+      const isValid = await trigger(["inputValue", "text"]); // Validate UserInfo step
       if (!isValid) return; // If validation fails, stop execution
+ 
+      // Check if inputValue matches phone or email
+      if (inputValue === email || (selectedPage && selectedPage.uid === loginUserId) || inputValue.includes(phoneNumber)) {
+        setShowPopup(true); // Show popup if it matches email and contains contain phone number
+        return;
+      }
+
       setIsLoading(true);
       if(tipAmount> 0){
         if (tipAmount < 5) {
@@ -46,7 +65,7 @@ export default function DonationInput({
           {
             tipAmount,
             applicationFeeAmount,
-            currency: selectedPage?.currency || "USD", // Include currency if needed
+            currency: selectedPage?.currency || "AUD", // Include currency if needed
           }
         );
   
@@ -54,12 +73,20 @@ export default function DonationInput({
         const clientSecret = response?.data?.clientSecret || response?.clientSecret;
         setIsLoading(false);
         if (!clientSecret) {
-       
-          throw new Error("Client secret not found in the response");
+          setErrorMessage(response?.data?.message);
+          toast({
+            variant: "error",
+            title: response?.data?.message,
+          });
+
+          return;
         }
         
       setClientSecret(clientSecret);
       setFormStep(2);  
+
+      }else{
+        setPaymentConfirm(true);
       }
 
   
@@ -70,6 +97,12 @@ export default function DonationInput({
 
             // Navigate to step 2
   };
+
+  // Function to close the popup
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -94,7 +127,23 @@ export default function DonationInput({
     elements.innerHTML = `$${feeAmount.toFixed(2)} <span style="color:gray">(${getTipAmmountPercent}%)</span>`;
   }, [getTipAmmountPercent, tipAmount]);
 
+    // Manages changes in the donation amount input
+    const handleInputChange = (e) => {
+      const value = e.target.value;
+      if (parseInt(value) <= 5000 && value > 0) {
+        setValue("tipAmount", value, { shouldValidate: true });
+      }
+      if (value === "") {
+        setValue("tipAmount", "", { shouldValidate: true });
+      }
   
+      if (value < 5) {
+        setErrorMessage("The minimum donation amount is 5.");
+      } else {
+        setErrorMessage("");
+      }
+    };
+
 
   return (
     <>
@@ -169,6 +218,14 @@ export default function DonationInput({
            {isLoading && <Loader2 className="mr-2 size-6 animate-spin" />}
              Continue
         </button>
+
+        {showPopup && (
+        <Popup 
+          message="You can’t send to yourself"
+          onClose={handleClosePopup}
+        />
+       )}
+
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { errorResponse } from "@/lib/server-error";
 import User from "@/models/user";
+import CustomerActivity from "@/models/CustomerActivity";  // Import the UserActivity model
 import connectDB from "@/mongodb.config";
 import jwt from "jsonwebtoken";
 import { Twilio } from 'twilio';
@@ -24,16 +25,15 @@ export async function POST(request) {
     if (verificationCheck.status === 'approved') {
       // Check if user already exists
       let user = await User.findOne({ phone });
-      console.log(user);
       if (!user) {
-        console.log(111111111111);
         try {
           user = new User({ 
             uid: uuidv4(), // Generate a unique ID for the user
             phone
           });
-          console.log(222222222);
           await user.save();
+          
+
         } catch (error) {
           console.log(error);
           if (error.code === 11000) {
@@ -45,6 +45,15 @@ export async function POST(request) {
       }
 
       if (user) {
+
+        // Log the sign-up activity
+        const signUpActivity = new CustomerActivity({
+          user: user._id,
+          activityType: 'signIn',
+          ip: request.headers.get('x-forwarded-for') || request.socket.remoteAddress,
+        });
+        await signUpActivity.save();
+        
         const jwtSecret = process.env.JWT_SECRET;
         const token = jwt.sign(
           { uid: user.uid, _id: user._id, phone: user.phone },

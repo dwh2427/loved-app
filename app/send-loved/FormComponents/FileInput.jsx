@@ -1,7 +1,26 @@
 import Image from "next/image";
 import CameraIcon from "@/public/camera-icon.svg";
+import { useState } from "react";
 
-export default function FileInput({ imageName, handleFileChange, previewUrl }) {
+export default function FileInput({setImageFile}) {
+  const [imageName, setImageName] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+    // Handles file selection and preview
+    const handleFileChange = async (event) => {
+      const selectedFile = event.target.files[0];
+      if (selectedFile) {
+        setImageName(selectedFile["name"]);
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64URL = reader.result;
+          setPreviewUrl(base64URL);
+        };
+        reader.readAsDataURL(selectedFile);
+        setImageFile(selectedFile);
+      }
+    };
+  
+    
   return (
     <div className="form-group relative">
       <input onChange={handleFileChange} type="file" id="file" className="hidden" name="image" />

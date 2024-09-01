@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { toast } from "@/components/ui/use-toast";
 import useApiCaller from "@/hooks/useApiCaller";
+import { Loader2 } from "lucide-react";
+
 
 const OtpHeader = dynamic(() => import("@/components/loved-box/otpHeader"), {
   ssr: false,
@@ -18,7 +20,8 @@ export default function LovedGift() {
   const [transactionDate, setTransactionDate] = useState("");
   const [verifyValue, setVerifyValue] = useState(null);
   const apiCaller = useApiCaller();
-
+  const [isLoading, setIsLoading] = useState(false);
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedVerifyValue = localStorage.getItem('verifyValue');
@@ -50,11 +53,13 @@ export default function LovedGift() {
 
   const handleAcceptGift = async () => {
     try {
+      setIsLoading(true);
       const formData = new FormData();
       formData.append("uniqueId", verifyValue);
       const response =  await apiCaller.post(`/login/received-gift/confirm`, formData);
 
       if(response.status === 200){
+        setIsLoading(false);
         toast({
           variant: "success",
           title: response.data.message,
@@ -68,7 +73,7 @@ export default function LovedGift() {
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
-
+      setIsLoading(false);
       toast({
         variant: "error",
         title: errorMessage,
@@ -126,6 +131,7 @@ export default function LovedGift() {
                 border: 'none'
               }}
             >
+              {isLoading && <Loader2 className="mr-2 size-6 animate-spin" />}
               Continue to Accept Loved Gift
             </button>
           </div>

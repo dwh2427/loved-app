@@ -8,7 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const Verifycode = () => {
-  const [code, setCode] = useState(new Array(6).fill(""));
+  const [code, setCode] = useState(new Array(4).fill(""));
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
   const { toast } = useToast();
@@ -52,7 +52,7 @@ const Verifycode = () => {
 
   const handlePaste = (e) => {
     const paste = e.clipboardData.getData("text").trim();
-    if (!isNaN(paste) && paste.length === 6) {
+    if (!isNaN(paste) && paste.length === 4) {
       const newCode = paste.split("");
       setCode(newCode);
   
@@ -67,7 +67,7 @@ const Verifycode = () => {
       // Make the POST request and await the response
       const response = await axios.post('/login/api', { phone });
 
-      setCode(new Array(6).fill(""));
+      setCode(new Array(4).fill(""));
       // Check if the status code and response message indicate success
       if (response.status === 200 ) {
         toast({

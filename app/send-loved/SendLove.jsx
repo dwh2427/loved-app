@@ -2,7 +2,6 @@
 import dynamic from "next/dynamic";
 import LovedAnimate from "@/components/lotties/loved-animate";
 import { useToast } from "@/components/ui/use-toast";
-import useApiCaller from "@/hooks/useApiCaller";
 import useAuthState from "@/hooks/useAuthState";
 import useClientError from "@/hooks/useClientError";
 import axios from "axios";
@@ -13,8 +12,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import { Elements, useElements, useStripe, PaymentElement, CardElement } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 import Image from "next/image";
@@ -27,8 +25,10 @@ import FileInput from "./FormComponents/FileInput";
 import DonationInput from "./FormComponents/DonationInput";
 import PaymentInfo from "./FormComponents/PaymentInfo";
 import UserInfo from "./FormComponents/UserInfo";
+import ShareButton from "./FormComponents/ShareButton";
+import SchedulePopup from './FormComponents/SchedulePopup'; // Import the Popup component
 
-const base_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 
 const LovedBoxHeader = dynamic(() => import("@/components/loved-box/lovedBoxHeader"), {
   ssr: false,
@@ -37,8 +37,9 @@ const LovedBoxHeader = dynamic(() => import("@/components/loved-box/lovedBoxHead
 const formSchema = z.object({
   inputValue: z.string().nonempty("Please enter a valid name"),
   text: z.string().nonempty("Please enter a comment"),
+  username: z.string().nonempty("Username is required").regex(/^[a-zA-Z\s]+$/, "Only letters and spaces are allowed"),
+  email: z.string().nonempty("Email is required").email("Invalid email address"),
 });
-
 
 
 export default function SendLove() {
@@ -49,32 +50,29 @@ export default function SendLove() {
   const [lovedLoading, setLovedLoading] = useState(false);
   const [stopLovedLoading, setStopLovedLoading] = useState(false);
   const [isPaymentProccess, setIsPaymentProccess] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
   const handleClientError = useClientError();
-  const [imageName, setImageName] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [selectedPage, setSelectedPage] = useState(null);
-  const [cardsError, setCardsError] = useState();
+
   const [customPageLink, setCustomPageLink] = useState("dashboard");
   const [pageLoading, setPageLoading] = useState(false);
   const [application_amount_fee, set_application_amount_fee] = useState(0);
   const [showShareIcon, setShowShareIcon] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [countryCode, setCountryCode] = useState("");
-  const [isCopied, setIsCopied] = useState(false);
   const [getTipAmmountPercent, setGetTipAmountPercent] = useState(17);
   const searchParams = useSearchParams();
-  const pageUsername = searchParams.get("page_username");
-  const stripe = useStripe();
-  const elements = useElements();
-  const apiCaller = useApiCaller();
-  const router = useRouter();
   const [clientSecret, setClientSecret] = useState("");
   const [formStep, setFormStep] = useState(1);
   const [paymentConfirm, setPaymentConfirm] = useState(null);
   const [isSubmitPayment, setIsSubmitPayment] = useState(false);
+  const [paymentIntentId, setPaymentIntentId] = useState("");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^\+?[1-9]\d{1,14}$/; // E.164 format (optional "+" followed by 1-15 digits)
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [loginUserId, setLoginUserId] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // State to manage the popup visibility
+  const [scheduledTime, setScheduledTime] = useState(""); // State to manage the popup visibility
+  const [scheduledDate, setScheduledDate] = useState("");// State to manage the popup visibility
 
   const {
     register,
@@ -94,6 +92,33 @@ export default function SendLove() {
   const username = watch("username");
   const email = watch("email");
 
+  useEffect(() => {
+    if (user && !loading) {
+      // Assuming user data contains firstname, lastname, and email
+      const { first_name, last_name, email, phone, uid } = user;
+        
+      // Combine firstname and lastname to create the username or set it as an empty string
+      const combinedUsername = first_name && last_name ? `${first_name.toLowerCase()} ${last_name.toLowerCase()}` : "";
+      setValue("username", combinedUsername);
+
+      // Set email or empty string
+      setValue("email", email || "");
+
+      // Set phone number if available
+
+
+      if(phone){
+        setPhoneNumber(phone);
+      }
+
+      if(uid){
+        setLoginUserId(uid);
+      }
+      
+    }
+  }, [user, loading, setValue]);
+
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -109,53 +134,10 @@ export default function SendLove() {
     appearance: {
       theme: 'flat',
     },
-    allowedPaymentMethods: ['card', 'link'],
+    allowedPaymentMethods: ['card', 'link', "google_pay", 'apple_pay'],
     layout: {
       type: 'tabs',
       defaultCollapsed: false,
-    }
-  };
-
- 
-
-
-  // Handles file selection and preview
-  const handleFileChange = async (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setImageName(selectedFile["name"]);
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64URL = reader.result;
-        setPreviewUrl(base64URL);
-      };
-      reader.readAsDataURL(selectedFile);
-      setImageFile(selectedFile);
-    }
-  };
-
-  // Manages changes in the donation amount input
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    if (parseInt(value) <= 50000 && value > 0) {
-      setValue("tipAmount", value, { shouldValidate: true });
-    }
-    if (value === "") {
-      setValue("tipAmount", "", { shouldValidate: true });
-    }
-
-    if (value < 5) {
-      setErrorMessage("The minimum donation amount is 5.");
-    } else {
-      setErrorMessage("");
-    }
-  };
-
-  // Validates and formats the username input field
-  const handleUsernameInput = (event) => {
-    const regex = /^[a-zA-Z\s-]*$/; // Allow letters, spaces, and hyphens
-    if (!regex.test(event.target.value)) {
-      event.target.value = event.target.value.replace(/[^a-zA-Z\s-]/g, ""); // Remove all characters except letters, spaces, and hyphens
     }
   };
 
@@ -171,33 +153,11 @@ export default function SendLove() {
     getPages();
   }, []);
 
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const response = await axios.get("https://ipinfo.io?token=6d1710dc4afd5f");
-        const country = response.data.country;
-        if (country === "US") {
-          setValue("countryCode", "+1");
-        } else if (country === "AU") {
-          setValue("countryCode", "+61");
-        } else if (country === "BD") {
-          setValue("countryCode", "+880");
-        } else {
-          setValue("countryCode", "+1");
-        }
-      } catch (error) {
-        console.error("Error fetching location:", error);
-      }
-    };
-
-    fetchLocation();
-  }, [setValue]);
-
-
 useEffect(() => {
   const sendLovedMessage = async () => {
     if (paymentConfirm) {
       try {
+
         const formData = new FormData();
         formData.append("image", imageFile || null);
         formData.append("username", username);
@@ -207,6 +167,8 @@ useEffect(() => {
         formData.append("tipAmount", tipAmount);
         formData.append("inputValue", inputValue);
         formData.append("stripe_acc_id", selectedPage?.stripe_acc_id);
+        formData.append("scheduled_time", scheduledTime);
+        formData.append("scheduled_date", scheduledDate);
 
         if (selectedPage) {
           formData.append("page_name", selectedPage.username);
@@ -217,7 +179,7 @@ useEffect(() => {
           formData.append("page_owner_id", "");
         }
 
-        formData.append("charge_id", "test chargeid");
+        formData.append("paymentIntentId", paymentIntentId);
 
         setIsPaymentProccess(true);
         setLovedLoading(true);
@@ -257,10 +219,23 @@ useEffect(() => {
 
   const handleSendLoveClick = async (e) => {
     e.preventDefault();
-    setIsPaymentProccess(true);
+    setIsSubmitPayment(false); // Trigger payment confirmation in PaymentInfo
+    const isValid = await trigger(["username", "email"]); // Validate UserInfo step
+
+    if (!isValid) return; // If validation fails, stop execution
     setIsSubmitPayment(true); // Trigger payment confirmation in PaymentInfo
   };
 
+  const handleScheduleLoveClick = async (e) => {
+    e.preventDefault();
+    const isValid = await trigger(["username", "email"]); // Validate UserInfo step
+    if (!isValid) return; // If validation fails, stop execution
+    setShowPopup(true);
+  };
+    // Function to close the popup
+    const handleClosePopup = () => {
+      setShowPopup(false);
+    };
 
 
   return (
@@ -279,10 +254,13 @@ useEffect(() => {
                   Your message has <br /> been sent
                 </p>
               )}
+              {lovedMsg && (
+                <ShareButton showShareIcon={showShareIcon} selectedPage={selectedPage} inputValue={inputValue} />
+              )}
+
             </div>
           ) : (
             <form method="POST" encType="multipart/form-data">
-        
 
               {formStep === 1 && (
               <div>
@@ -296,18 +274,12 @@ useEffect(() => {
                 setError={setError}
               />
 
-
               <MessageInput text={text} register={register} errors={errors} />
-              <FileInput
-                imageName={imageName}
-                handleFileChange={handleFileChange}
-                previewUrl={previewUrl}
-              />
+              <FileInput setImageFile={setImageFile} />
              <DonationInput
                 selectedPage={selectedPage}
                 register={register}
                 tipAmount={tipAmount}
-                handleInputChange={handleInputChange}
                 errorMessage={errorMessage}
                 setGetTipAmountPercent={setGetTipAmountPercent}
                 getTipAmmountPercent={getTipAmmountPercent}
@@ -316,6 +288,12 @@ useEffect(() => {
                 setFormStep={setFormStep}  // Pass the state here
                 setErrorMessage={setErrorMessage}
                 trigger={trigger} // Pass the trigger function for manual validation
+                setValue={setValue} // Pass the setValue function to update state
+                phoneNumber={phoneNumber}
+                email={email}
+                inputValue={inputValue}
+                loginUserId={loginUserId}
+                setPaymentConfirm={setPaymentConfirm}
             />
       
               </div>
@@ -326,14 +304,20 @@ useEffect(() => {
               <UserInfo
                 username={username}
                 register={register}
-                handleUsernameInput={handleUsernameInput}
                 email={email}
                 errors={errors}
               />
               
-              {Number(tipAmount) > 0 && clientSecret && (
+                {Number(tipAmount) > 0 && clientSecret && (
                   <Elements stripe={stripePromise} options={options}>
-                    <PaymentInfo clientSecret={clientSecret} setIsPaymentProccess={setIsPaymentProccess} isSubmitPayment={isSubmitPayment} setPaymentConfirm={setPaymentConfirm} />
+                    <PaymentInfo 
+                      clientSecret={clientSecret} 
+                      setIsPaymentProccess={setIsPaymentProccess}
+                      isSubmitPayment={isSubmitPayment}
+                      setPaymentConfirm={setPaymentConfirm}
+                      setPaymentIntentId={setPaymentIntentId}
+                      setIsSubmitPayment={setIsSubmitPayment}
+                      />
                   </Elements>
                 )}
 
@@ -347,8 +331,26 @@ useEffect(() => {
                   Send Love
                 </button>
 
+                <button
+                type="button"
+                onClick={handleScheduleLoveClick}
+                className="items-center mt-3 block flex w-full justify-center gap-2 rounded-full bg-[#F1F1F1] py-3 text-center hover:bg-[#FF318C] shadow-lg hover:shadow-xl transition-shadow duration-200"
+              >
+                Schedule Love
+              </button>
+
                 </div>
                )}
+
+            {showPopup && (
+              <SchedulePopup 
+                message="You can’t send to yourself"
+                onClose={handleClosePopup}
+                setScheduledTime={setScheduledTime}
+                setScheduledDate={setScheduledDate}
+                setIsSubmitPayment={setIsSubmitPayment}
+              />
+            )}
 
             </form>
           )}

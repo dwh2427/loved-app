@@ -92,9 +92,10 @@ export async function POST(req) {
     // I want to transfer here please write necessary code. The charge id has id like this "ch_3PnCXMGPOp25gbgG1UUQEVdQ"
       if(chargeId && account){
         const charge = await stripeClient.charges.retrieve(chargeId);
+        const tipAmount = Math.round((comment.tipAmount ) * 100);
 
         const transfer = await stripeClient.transfers.create({
-          amount: charge.amount, // Transfer the full amount of the charge
+          amount: tipAmount, // Transfer the full amount of the charge
           currency: charge.currency, // Use the currency from the charge
           destination: account.id, // Destination is the connected account ID
           source_transaction: chargeId, // The charge ID is used as the source
