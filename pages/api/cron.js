@@ -98,13 +98,13 @@ async function handleNotification(comment) {
             await twilioClient.messages.create({
                 body: messageBody,
                 from: process.env.TWILIO_PHONE_NUMBER,
-                to: comment.notify_to,
+                to: "+"+comment.notify_to,
             });
         }
 
         comment.is_notified = 1;
         await comment.save();
-        
+
     } catch (error) {
         console.error("Error in handleNotification:", error);
     }

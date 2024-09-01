@@ -16,6 +16,21 @@ connectDB();
 
 const twilioClient = new Twilio(process.env.NEXT_PUBLIC_TWILIO_ACCOUNT_SID, process.env.NEXT_PUBLIC_TWILIO_AUTH_TOKEN);
 
+function formatPhoneNumber(phoneNumber) {
+  const phoneString = phoneNumber.toString().replace(/\s+/g, ""); // Remove any spaces
+  if (/^\d+$/.test(phoneString)) { // Check if it's a number
+    if (phoneString.startsWith("04")) {
+      // Australian number (starts with 04)
+      return "61" + phoneString.substring(1); // Replace '0' with '+61'
+    } else {
+      // US number or other case
+      return "1" + phoneString;
+    }
+  }
+  // Return the original input if it's not a valid number
+  return phoneString;
+}
+
 export async function POST(req) {
   const user = await verifyIdToken(req);
   const postmarkClient = new ServerClient(process.env.POSTMARK_API_KEY);
@@ -29,7 +44,7 @@ export async function POST(req) {
   const page_name = form.get("page_name");
   const uid = form.get("page_owner_id");
   const paymentIntentId = form.get("paymentIntentId");
-  const comment_to = form.get("inputValue");
+  const comment_to = formatPhoneNumber(form.get("inputValue"));
   const stripeAccountId = form.get("stripe_acc_id");
   const scheduled_time = form.get("scheduled_time");
   const scheduled_date = form.get("scheduled_date");
@@ -108,7 +123,7 @@ export async function POST(req) {
               is_paid = 1;
             }
         }else if(emailRegex.test(comment_to) || phoneRegex.test(comment_to)) {
-          notify_to = comment_to;
+            notify_to = comment_to;
           // as use phone or email to send new user
           if (scheduled_time && scheduled_date) {
             transfer_type ="notification";
@@ -198,7 +213,7 @@ export async function POST(req) {
           await twilioClient.messages.create({
             body: messageBody,
             from: process.env.TWILIO_PHONE_NUMBER, // Replace with your Twilio number
-            to: comment_to,
+            to: "+"+comment_to,
           });
         }
       }
@@ -254,7 +269,7 @@ export async function POST(req) {
         await twilioClient.messages.create({
           body: messageBody,
           from: process.env.TWILIO_PHONE_NUMBER, // Replace with your Twilio number
-          to: comment_to,
+          to: "+"+comment_to,
         });
       }
 
