@@ -105,7 +105,7 @@ export default async function HomePage() {
                   <p className="text-2xl text-[#A5B5D4] absolute top-[30%] left-[29%]">Your message</p>
                 </div>
                 <div className="flex flex-col justify-end items-center absolute w-full bottom-6">
-                  <Link href="/send-loved" className="w-[80%] text-center items-end justify-end bg-[#FF318C] text-white mt-6 rounded-full py-3 hover:bg-[#FF318C]">Send Love</Link>
+                  <Link href="/create-card" className="w-[80%] text-center items-end justify-end bg-[#FF318C] text-white mt-6 rounded-full py-3 hover:bg-[#FF318C]">Send Love</Link>
                 </div>
               </div>
             </LovedBox>
