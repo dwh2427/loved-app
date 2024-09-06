@@ -228,8 +228,8 @@ export default function AsideContent({customClassName, activeTool }) {
         }
     };
 
-    return     <aside className={`aside-content ${customClassName}`} id="inside-aside">
-            {renderContent()}
-        </aside>;
+    return     <aside className={` ${customClassName}`} id="inside-aside">
+                    {renderContent()}
+                </aside>;
 
 }

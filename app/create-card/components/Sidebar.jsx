@@ -9,13 +9,14 @@ export default function Sidebar({ onTabChange, activeTool }) {
     ];
 
     return (
-        <nav className="sidebar">
+        <nav className="active">
             <ul id="content-nav">
                 {tabs.map((tab) => (
                     <li
                         key={tab.id}
                         onClick={() => onTabChange(tab.id)}
                         className={activeTool === tab.id ? 'active' : ''}
+                        data-nav={tab.id} 
                     >
                         <img src={tab.icon} alt={tab.label} />
                         <p>{tab.label}</p>
