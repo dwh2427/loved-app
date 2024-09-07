@@ -2,6 +2,7 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/landing";
 import { Toaster } from "@/components/ui/toaster";
 import StoryblokProvider from "@/components/storyblok/StoryblokProvider";
+import Script from 'next/script'
 
 import "@/styles/globals.css";
 import { Lato } from "next/font/google";
@@ -31,10 +32,8 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <head>
           <link rel="shortcut icon" href="/favicon.svg" />
-          <script
-          src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"
-          type="text/javascript"
-        ></script>
+
+          <script src="assets/js/fabric.min.js" async />
         </head>
         <body className={`${lato.className}`}>
           <div className="spacer">
