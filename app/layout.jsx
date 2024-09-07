@@ -32,8 +32,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <head>
           <link rel="shortcut icon" href="/favicon.svg" />
-
-          <script src="assets/js/fabric.min.js" async />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js" async />
         </head>
         <body className={`${lato.className}`}>
           <div className="spacer">
