@@ -591,11 +591,22 @@ margin-bottom: 15px;
 .schedule-close-popup-button:hover {
   background-color: #FF318C;
 }
+#customSections {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers content vertically */
+  align-items: center;     /* Centers content horizontally */
+  height: 100vh; /* Make sure the height of the section fills the viewport */
+}
 
+main {
+  flex: 1;
+  display: flex;
+  background: #fff;
+  width: 100%; /* Ensure main takes full width */
+}
 
-/* custom css added */
-
-main nav{
+main > nav {
   padding: 10px;
   background: #fff;
   z-index: 100;
@@ -604,15 +615,9 @@ main nav{
   align-items: center;
 }
 
-main>nav.active {
+main > nav.active {
   display: flex;
 }
-
-main{ flex: 1; display: flex; background: #fff; }
-
-main>nav{  padding: 10px; background: #fff; z-index: 100; flex-direction: column; justify-content: center; align-items: center; }
-
-main>nav.active{ display: flex; }
 main>nav>ul{ padding: 0; min-width: 91px; }
 main>nav>ul li{ text-align: center; font-size: 12px; width: 80px; height: 80px; line-height: 16px; font-weight: 500; border: 1px solid #586580; border-radius: 8px; margin: 10px 0; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: all .3s ease-in; }
 main>nav>ul li.active,

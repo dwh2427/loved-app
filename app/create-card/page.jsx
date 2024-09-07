@@ -22,7 +22,7 @@ export default function Home() {
 
 
   return (
-    <div>
+    <div id='customSections'>
       <div style={{ display: 'none' }}>
           <input id="add-photo-file" type="file" accept="image/*" />
       </div>

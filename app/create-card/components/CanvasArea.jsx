@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import * as fabric from 'fabric';
 import LazyLoad from 'vanilla-lazyload';
+// import * as fabric from 'fabric';
 
 let CC;
 
@@ -80,6 +80,8 @@ class CardsCreator {
 
     let this_ = this;
 
+
+
 		fabric.Object.prototype.toObject = (function (toObject) {
           return function (propertiesToInclude) {
             propertiesToInclude = (propertiesToInclude || []).concat(
@@ -109,9 +111,18 @@ class CardsCreator {
             transparentCorners: false
         });
 
+        fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+          x: 0, 
+          y: 0.5,
+          offsetY: 20,
+          cursorStyle: 'pointer',
+          mouseUpHandler: this.deleteIcon,
+          render: this.renderDeleteIcon,
+          cornerSize: 24
+        });
 
-    // Load the envelope SVG and handle errors
-    this.container = document.getElementById('cards-constructor');
+
+		this.container = document.getElementById('cards-constructor');
 		this.cw = this.container.clientWidth;
         this.ch = this.container.clientHeight;
         this.cwOriginal = this.cw;
@@ -128,23 +139,23 @@ class CardsCreator {
 
         this.fbrc = new fabric.Canvas('canvas', {
         	backgroundColor: '#FFFFFF',
-          width: this.cw,
-          height: this.ch,
-          defaultCursor: 'default',
-          perPixelTargetFind: true,
-          targetFindTolerance: 1,
-          preserveObjectStacking: true,
-          includeDefaultValues: true,
-          controlsAboveOverlay: true,
-          enableRetinaScaling: true,
-          objectCaching: false,
-          dirty: false
-            });
+			width: this.cw,
+			height: this.ch,
+			defaultCursor: 'default',
+			perPixelTargetFind: true,
+			targetFindTolerance: 1,
+			preserveObjectStacking: true,
+			includeDefaultValues: true,
+			controlsAboveOverlay: true,
+			enableRetinaScaling: true,
+			objectCaching: false,
+			dirty: false
+        });
 
-        // this.fbrc.setWidth(this.cw);
-        // this.fbrc.setHeight(this.ch);
+        this.fbrc.setWidth(this.cw);
+        this.fbrc.setHeight(this.ch);
 
-        //this.history = new UndoRedo(this.fbrc);
+       // this.history = new UndoRedo(this.fbrc);
 
         this.patternSourceCanvas = new fabric.StaticCanvas(null, {enableRetinaScaling: true});
 
@@ -153,17 +164,17 @@ class CardsCreator {
         this.textSize = 30;
         this.textAlign = 'center';
 
-        this.fbrc.isDrawingMode = false;
-        this.fbrc.freeDrawingBrush = new fabric.PencilBrush(this.fbrc);
-        this.fbrc.freeDrawingBrush.color = '#000000'
-        this.fbrc.freeDrawingBrush.width = 15;
-        this.fbrc.freeDrawingBrush.shadow = new fabric.Shadow({
-            blur: 0,
-            offsetX: 0,
-            offsetY: 0,
-            affectStroke: true,
-            color: '#4e6c8f',
-        });
+    	this.fbrc.isDrawingMode = false;
+    	this.fbrc.freeDrawingBrush = new fabric.PencilBrush(this.fbrc);
+		this.fbrc.freeDrawingBrush.color = '#000000'
+		this.fbrc.freeDrawingBrush.width = 15;
+		this.fbrc.freeDrawingBrush.shadow = new fabric.Shadow({
+	  		blur: 0,
+	  		offsetX: 0,
+	  		offsetY: 0,
+	  		affectStroke: true,
+	  		color: '#4e6c8f',
+		});
 
 
 		this.shadow = new fabric.Shadow({
@@ -173,6 +184,9 @@ class CardsCreator {
 		    offsetY: 0,
 		    opacity: 1
 		  });
+
+    
+    	this.init();
 
         //this_.bindEvents();
 
@@ -184,72 +198,77 @@ class CardsCreator {
   init() {
     let this_ = this;
 
-    this.lazyLoadInstance = new LazyLoad();
-    //console.log(this_);
-    //this.history.processing(true);
+    	this.lazyLoadInstance = new LazyLoad();
+    	
+    	//this.history.processing(true);
 
-    fabric.loadSVGFromURL('assets/img/envelope.svg?v=2', (objects, options) => {
+    	fabric.loadSVGFromURL('assets/img/envelope.svg?v=2', (objects, options) => {
+        console.log(objects, options); // Debugging
+	    	this_.envelope = fabric.util.groupSVGElements(objects, options);
+	        	this_.envelope.set({
+	        		id: 'envelope',
+	            	left: this_.cw/2 + 200,
+	            	top: this_.ch/2,
+	            	selectable: false,
+	            	shadow: {
+					    color: '#00000040', 
+					    blur: 15,
+					    offsetX: 0,
+					    offsetY: -2,
+					    opacity: 0.1
+					}
+	        	});
+	        	this_.envelope.scaleToWidth(400)
 
-      this_.envelope = fabric.util.groupSVGElements(objects, options);
-          this_.envelope.set({
-            id: 'envelope',
-              left: this_.cw/2 + 200,
-              top: this_.ch/2,
-              selectable: false,
-              shadow: {
-            color: '#00000040', 
-            blur: 15,
-            offsetX: 0,
-            offsetY: -2,
-            opacity: 0.1
-        }
-          });
-          this_.envelope.scaleToWidth(400)
+	        	this_.fbrc.add(this_.envelope);
 
-          this_.fbrc.add(this_.envelope);
+	        	this_.envelope.scale(0.7, 0.7);
 
-          this_.envelope.scale(0.7, 0.7);
+	        	this_.mask = new fabric.Rect({
+	        		id: 'mask',
+		            width: 400,
+		            height: 600,
+		            top: this_.ch/2,
+		            left: this_.cw/2,
+		            rx: 16,
+		            ry: 16,
+		            fill: '#ffffff',
+		            stroke: 'transparent',
+		            strokeWidth: 0,
+		            selectable: false,
+		            absolutePositioned: true,
+		            shadow: this_.shadow
+	        	});
 
-          this_.mask = new fabric.Rect({
-            id: 'mask',
-              width: 400,
-              height: 600,
-              top: this_.ch/2,
-              left: this_.cw/2,
-              rx: 16,
-              ry: 16,
-              fill: '#ffffff',
-              stroke: 'transparent',
-              strokeWidth: 0,
-              selectable: false,
-              absolutePositioned: true,
-              shadow: this_.shadow
-          });
+				this_.fbrc.add(this_.mask);
 
-      this_.fbrc.add(this_.mask);
+				this_.fbrc.freeDrawingBrush.clipPath = this_.mask;
 
-      this_.fbrc.freeDrawingBrush.clipPath = this_.mask;
+				this_.cover = new fabric.Rect({
+				  	id: 'cover',
+				   	width: 400,
+				   	height: 600,
+				   	top: this_.ch/2,
+				   	left: this_.cw/2 - 200,
+				   	rx: 16,
+				   	fill: '#FFFFFF',
+				   	stroke: 'transparent',
+				   	strokeWidth: 0,
+				   	selectable: false,
+				   	shadow: this_.shadow
+				});
 
-      this_.cover = new fabric.Rect({
-          id: 'cover',
-           width: 400,
-           height: 600,
-           top: this_.ch/2,
-           left: this_.cw/2 - 200,
-           rx: 16,
-           fill: '#FFFFFF',
-           stroke: 'transparent',
-           strokeWidth: 0,
-           selectable: false,
-           shadow: this_.shadow
-      });
+				
+        if (this_.fbrc && this_.cover) {
+          this_.fbrc.add(this_.cover);
+          this_.cover.sendToBack();
+          this_.cover.scale(0.7, 0.7);
+          this_.fbrc.renderAll(); 
+      }
 
-      
-      this_.fbrc.add(this_.cover);
-      this_.cover.sendToBack();
-      this_.cover.scale(0.7, 0.7)
-      this_.fbrc.renderAll();      
-    });
+	    		// this_.history.processing(false);
+    			// this_.bindEvents();
+	    });
   }
 
   switchSide(side) {
@@ -268,6 +287,24 @@ class CardsCreator {
 
     this.fbrc.renderAll();
   }
+  deleteIcon(eventData, transform) {
+		const target = transform.target;
+		const canvas = target.canvas;
+		canvas.remove(target);
+		canvas.requestRenderAll();
+		return true;
+	}
+
+	renderDeleteIcon(ctx, left, top, styleOverride, fabricObject) {
+		const size = 30;
+		const icon = new Image();
+		icon.src = 'assets/img/delete.svg';
+		ctx.save();
+		ctx.translate(left, top);
+		ctx.drawImage(icon, -size / 2, -size / 2, size, size);
+		ctx.restore();
+	}
+
 }
 
 export default CanvasArea;
