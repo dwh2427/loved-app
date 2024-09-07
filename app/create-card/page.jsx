@@ -14,14 +14,9 @@ export default function Home() {
   const [activeTool, setActiveTool] = useState(null);
   const [canvas, setCanvas] = useState(null);
   const [customClassName, setCustomClassName] =  useState('');
-  const fileInputRef = useRef(null); // Reference for the hidden file input
-
   const handleTabChange = (tab) => {
         setActiveTool(tab);
         setCustomClassName('active'); // You can add more logic here if needed to change the class dynamically
-        if (tab === 'photo') {
-          fileInputRef.current.click(); // Programmatically trigger file input click
-        }
     };
 
 
@@ -31,7 +26,6 @@ export default function Home() {
         id="add-photo-file"
         type="file"
         accept="image/*"
-        ref={fileInputRef}
         style={{ display: 'none' }} // Keep input hidden
       />
       <main id="cards-constructor">
@@ -41,7 +35,6 @@ export default function Home() {
             <AsideEnvelope customClassName={customClassName} activeTool={activeTool} />
             <CanvasArea
               activeTool={activeTool}
-              fileInputRef={fileInputRef} // Pass the file input ref to CanvasArea
             />
           {canvas && <UndoRedo canvas={canvas} />}
       </main>

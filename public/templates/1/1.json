@@ -1,0 +1,8 @@
+{
+    "background": "#FCFAF4",
+    "layers": [
+        {"type": "image", "src": "templates/1/template-1-1.png", "width": 150, "left": 50, "top": 20},
+        {"type": "text", "text": "You're the best. The\ngreatest. The one-and-\nonly. Celebrating you\ntoday and always.", "color": "#5D90CA", "fontFamily": "Comfortaa", "fontSize": 20, "fontWeight": 400, "left": 50, "top": 50, "align": "center"},
+        {"type": "text", "text": "Love,\nEmily", "color": "#FF5F48", "fontFamily": "Sacramento", "fontSize": 30, "fontWeight": 600, "left": 50, "top": 80, "align": "center"}
+    ]
+}

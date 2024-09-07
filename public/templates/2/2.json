@@ -1,0 +1,8 @@
+{
+    "background": "#FFFFFF",
+    "layers": [
+        {"type": "image", "src": "templates/2/template-2-1.png", "width": 100, "left": 50, "top": 20},
+        {"type": "text", "text": "Here's to another year\nof life, love, and all the\nthings that make you happy.\nHappy birthday!", "color": "#FB8DAE", "fontFamily": "Comfortaa", "fontSize": 20, "fontWeight": 400, "left": 50, "top": 50, "align": "center"},
+        {"type": "text", "text": "Love,\nCatherine", "color": "#0C9D6A", "fontFamily": "Sacramento", "fontSize": 30, "fontWeight": 600, "left": 50, "top": 80, "align": "center"}
+    ]
+}
