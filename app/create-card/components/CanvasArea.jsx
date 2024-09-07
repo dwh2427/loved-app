@@ -4,7 +4,7 @@ import LazyLoad from 'vanilla-lazyload';
 
 let CC;
 
-const CanvasArea = () => {
+const CanvasArea = ({activeTool, fileInputRef }) => {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
 
@@ -26,6 +26,43 @@ const CanvasArea = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fileInput = fileInputRef.current;
+    if (fileInput) {
+      const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (!file || !canvas) return;
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const image = new Image();
+          image.src = event.target.result;
+
+          image.onload = function () {
+            const img = new fabric.Image(image, {
+              left: canvas.width / 2,
+              top: canvas.height / 2,
+            });
+
+            img.scaleToWidth(150);
+            canvas.add(img);
+            canvas.setActiveObject(img);
+            canvas.renderAll();
+          };
+        };
+
+        reader.readAsDataURL(file);
+      };
+
+      fileInput.addEventListener('change', handleFileChange);
+
+      return () => {
+        fileInput.removeEventListener('change', handleFileChange);
+      };
+    }
+  }, [canvas, fileInputRef]);
+
+
   const handleUndo = () => {
     if (CC && CC.history) {
       CC.history.undo();
@@ -43,6 +80,9 @@ const CanvasArea = () => {
       CC.switchSide(side);
     }
   };
+
+  
+
 
   return (
     <section>
@@ -185,12 +225,7 @@ class CardsCreator {
 		    opacity: 1
 		  });
 
-    
-    	this.init();
-
-        //this_.bindEvents();
-
-
+  
     // Call additional methods if needed
     this.init();
 }
@@ -259,17 +294,18 @@ class CardsCreator {
 				});
 
 				
-        if (this_.fbrc && this_.cover) {
-          this_.fbrc.add(this_.cover);
-          this_.cover.sendToBack();
-          this_.cover.scale(0.7, 0.7);
-          this_.fbrc.renderAll(); 
-      }
+          if (this_.fbrc && this_.cover) {
+            this_.fbrc.add(this_.cover);
+            this_.cover.sendToBack();
+            this_.cover.scale(0.7, 0.7);
+            this_.fbrc.renderAll(); 
+        }
 
 	    		// this_.history.processing(false);
-    			// this_.bindEvents();
+    			 this_.bindEvents();
 	    });
   }
+  
 
   switchSide(side) {
     this.fbrc.getObjects().forEach((obj) => {
