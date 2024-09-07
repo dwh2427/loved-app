@@ -590,11 +590,12 @@ class CardsCreator {
       		this_.switchSide(side);	
 		});
 
-		$(document).on('click', '#content-nav li:not(.active)', function(){
-
+		$('#content-nav li:not(.active)').on('click', function(){
 
 			if($(this).attr('data-nav') == 'photo'){
+        $("#inside-aside").removeClass('active');
 				$('#add-photo-file').click();
+        
 			}else{
 				$('#inside-aside').addClass('active');
 				$('#content-nav li, .aside-content').removeClass('active');
@@ -605,6 +606,11 @@ class CardsCreator {
 
 		});
 
+		$('#content-nav li').on('click', function(){
+      if($(this).attr('data-nav') == 'photo'){
+        $("#inside-aside").removeClass('active');
+      }
+    });
 		
 		$(document).on('click', '#current-font', function(){
 			$(this).toggleClass('active');
