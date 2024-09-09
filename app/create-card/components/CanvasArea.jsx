@@ -1,22 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import LazyLoad from 'vanilla-lazyload';
- import $ from 'jquery';  // Import jQuery
-
-// import * as fabric from 'fabric';
-// import * as fabric from 'fabric';
-
+import $ from 'jquery';  // Import jQuery
+import useApiCaller from "@/hooks/useApiCaller";
+import { toast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation"
+import { Loader2 } from "lucide-react";
 let CC;
+
 
 const CanvasArea = ({activeTool }) => {
 
+  const router = useRouter();
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
-  
+  const apiCaller = useApiCaller()
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const initCanvas = () => {
       const canvasElement = canvasRef.current;
       if (!canvasElement) return;
-
       CC = new CardsCreator(canvasElement, activeTool);
       setCanvas(CC.fbrc);
     };
@@ -60,6 +63,37 @@ const CanvasArea = ({activeTool }) => {
   };
 
   
+  const handleSaveCanvas = async () => {
+
+
+    if (canvas) {
+		
+      const dataURL = canvas.toDataURL({
+        format: 'png',
+        multiplier: 2,
+      });
+
+      // Send the canvas image data to the server to save it
+      try {
+		setLoading(true);
+		const  response  = await apiCaller.post('/create-card/api', { imageData: dataURL });
+		if(response.data.result){
+			localStorage.setItem('giftCard', response.data.data.fileUrl);
+			router.push(`/send-loved`); // If authenticated, navigate to the send-loved page
+			setLoading(false);
+		}else{
+			setLoading(false);
+			toast({
+				variant: "error",
+				title: "Something wrong canvas creations failed!",
+			});
+		}
+      } catch (error) {
+		setLoading(false);
+        console.error('Error saving canvas:', error);
+      }
+    }
+  };
 
 
   return (
@@ -88,6 +122,19 @@ const CanvasArea = ({activeTool }) => {
           <img src="/assets/img/icon-redo.svg" alt="Redo" />
         </li>
       </ul>
+
+		<ul id="continue-nav">
+
+		<button
+			type="button"
+			onClick={handleSaveCanvas}
+			className="items center mt-3 block flex w-full justify-center gap-2 rounded-full bg-[#FF318C] py-3 text-center text-white hover:bg-[#FF318C]"
+		>
+			 {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
+			Continue
+		</button>
+
+		</ul>
     </section>
   );
 };

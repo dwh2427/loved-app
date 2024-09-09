@@ -720,3 +720,94 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 #history-nav li.disabled{ opacity: 0.3; }
 #history-nav li.disabled:hover{ background: #F1F1F1; }
 #history-nav li.disabled:hover img{ filter: none; }
+#canvas {
+  position: relative; /* Ensure canvas takes up the necessary space */
+  display: block;
+  width: 100%; /* Adjust as needed */
+  height: auto; /* Adjust as needed */
+  margin-bottom: 200px; /* Add enough margin to avoid overlap with navs */
+}
+
+#side-nav {
+  position: absolute;
+  bottom: 120px;
+  /*Ensureit'sabove#history-navand#continue-nav*/left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  background: #F1F1F1;
+  padding: 3px;
+  border-radius: 100px;
+  z-index: 12;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+}
+
+#side-nav li {
+  padding: 8px 16px;
+  border-radius: 100px;
+  min-width: 96px;
+  text-align: center;
+  color: #2E266F;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+#side-nav li:hover,
+#side-nav li.active {
+  background: #FF318C;
+  color: #fff;
+}
+
+#history-nav {
+  position: absolute;
+  bottom: 70px; /* Ensure it's above #continue-nav */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 11;
+}
+
+#history-nav li {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #F1F1F1;
+  cursor: pointer;
+  margin: 0 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in;
+}
+
+#history-nav li:hover {
+  background: #FF318C;
+}
+
+#continue-nav {
+  position: absolute;
+  bottom: 15px; /* Keep it at the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 10;
+}
+
+#continue-nav button {
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: #FF318C;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#continue-nav button:hover {
+  background-color: #e02976;
+}

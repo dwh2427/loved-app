@@ -58,7 +58,7 @@ export async function POST(request) {
         const token = jwt.sign(
           { uid: user.uid, _id: user._id, phone: user.phone },
           jwtSecret,
-          { expiresIn: "7d" }
+          { expiresIn: "30d" }
         );
 
         return new Response(

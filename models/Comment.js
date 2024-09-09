@@ -12,6 +12,10 @@ const commentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  giftCard: {
+    type: String,
+    default: "",
+  },
   likes: [
     {
       userId: { type: mongoose.Schema.ObjectId, ref: "User",  },

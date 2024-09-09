@@ -3,7 +3,7 @@
 
 import { useState, useRef  } from 'react';
 import CanvasArea from './components/CanvasArea';
-import UndoRedo from './components/UndoRedo';
+
 
 import Sidebar from './components/Sidebar';
 import AsideContent from './components/AsideContent';
@@ -36,7 +36,7 @@ export default function Home() {
             <CanvasArea
               activeTool={activeTool}
             />
-          {canvas && <UndoRedo canvas={canvas} />}
+  
       </main>
     </div>
   );

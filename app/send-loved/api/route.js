@@ -41,6 +41,7 @@ export async function POST(req) {
   let tipAmount = form.get("tipAmount") || 0;
   const application_fee = form.get("application_fee");
   const clientEmail = form.get("email");
+  const giftCard = form.get("giftCard");
   const page_name = form.get("page_name");
   const uid = form.get("page_owner_id");
   const paymentIntentId = form.get("paymentIntentId");
@@ -139,6 +140,7 @@ export async function POST(req) {
       comment,
       comment_by: user._id,
       image: imageUrl,
+      giftCard:giftCard,
       page_name,
       charge_id,
       tipAmount,
@@ -174,6 +176,7 @@ export async function POST(req) {
             transaction_date: newComment.createdAt,
             tip_amount: tipAmount,
             logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
+            giftCard: giftCard,
             page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
             image_link: imageUrl,
             comment: comment,
@@ -195,6 +198,7 @@ export async function POST(req) {
               amountDonate: true,
               transaction_date: newComment.createdAt,
               tip_amount: Number(tipAmount).toFixed(2),
+              giftCard: giftCard,
               logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
               page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,
               image_link: imageUrl,
@@ -229,6 +233,7 @@ export async function POST(req) {
           description: comment,
           amount: Number(tipAmount).toFixed(2),
           logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
+          giftCard: giftCard,
           page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
           tipAmount: Number(application_fee).toFixed(2),
           image_link: imageUrl,
@@ -251,6 +256,7 @@ export async function POST(req) {
             amountDonate: false,
             transaction_date: newComment.createdAt,
             tip_amount: Number(tipAmount).toFixed(2),
+            giftCard: giftCard,
             logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
             page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,
             image_link: imageUrl,
@@ -277,6 +283,8 @@ export async function POST(req) {
 
       }
     }
+
+
     return Response.json({
       data: newComment,
       message: "Comment created successfully",

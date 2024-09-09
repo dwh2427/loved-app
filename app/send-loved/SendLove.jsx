@@ -158,6 +158,8 @@ useEffect(() => {
     if (paymentConfirm) {
       try {
 
+        
+        const giftCard = localStorage.getItem('giftCard')|| null;
         const formData = new FormData();
         formData.append("image", imageFile || null);
         formData.append("username", username);
@@ -169,6 +171,7 @@ useEffect(() => {
         formData.append("stripe_acc_id", selectedPage?.stripe_acc_id);
         formData.append("scheduled_time", scheduledTime);
         formData.append("scheduled_date", scheduledDate);
+        formData.append("giftCard", giftCard);
 
         if (selectedPage) {
           formData.append("page_name", selectedPage.username);
@@ -203,6 +206,7 @@ useEffect(() => {
 
           setStopLovedLoading(true);
           setLovedMsg("Your message has been sent");
+          localStorage.removeItem("giftCard");
         } else {
           setLovedLoading(false);
         }

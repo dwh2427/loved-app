@@ -199,6 +199,20 @@ const Comment = ({ params }) => {
                                     </div>
                                 )}
 
+                                
+                                {cm?.giftCard && (
+                                    <div className="mt-2 flex">
+                                        <Image
+                                            src={cm?.giftCard}
+                                            alt="Picture"
+                                            width={125}
+                                            height={125}
+                                            className="rounded-lg"
+                                        />
+                                    </div>
+                                )}
+
+
                                 <div
                                     key={index}
                                     style={{ fontWeight: 500 }}

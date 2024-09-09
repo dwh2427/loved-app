@@ -43,7 +43,7 @@ export async function POST(request) {
       { uid: user.uid, _id: user._id, email: user.email },
       jwtSecret,
       {
-        expiresIn: "7d",
+        expiresIn: "30d",
       },
     );
 

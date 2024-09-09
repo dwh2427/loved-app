@@ -70,7 +70,7 @@ export async function POST(request) {
     const token = jwt.sign(
       { uid, _id: newUser._id, first_name: fn, last_name: ln, email },
       jwtSecret,
-      { expiresIn: "7d" },
+      { expiresIn: "30d" },
     );
 
     // Create a new Loved instance with the provided pageData

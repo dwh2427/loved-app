@@ -5,7 +5,6 @@ import LovedLogo from "@/public/white-loved-logo.svg";
 import SponsorLogo from "@/public/sponsor-logo.svg";
 import { Heart, MessageCircle, Share } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import LovedBox from "@/components/loved-box/lovedBox";
 
 
@@ -105,7 +104,7 @@ export default async function HomePage() {
                   <p className="text-2xl text-[#A5B5D4] absolute top-[30%] left-[29%]">Your message</p>
                 </div>
                 <div className="flex flex-col justify-end items-center absolute w-full bottom-6">
-                  <Link href="/create-card" className="w-[80%] text-center items-end justify-end bg-[#FF318C] text-white mt-6 rounded-full py-3 hover:bg-[#FF318C]">Send Love</Link>
+                  <button  className="w-[80%] text-center items-end justify-end bg-[#FF318C] text-white mt-6 rounded-full py-3 hover:bg-[#FF318C]">Send Love</button>
                 </div>
               </div>
             </LovedBox>
