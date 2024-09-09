@@ -153,6 +153,7 @@ export async function POST(req) {
       is_notified,
     };
     
+    console.log(commentObj);
     if (user?._id) {
       commentObj = { ...commentObj, comment_by: user._id };
     }
@@ -175,7 +176,7 @@ export async function POST(req) {
             customer_name: username,
             transaction_date: newComment.createdAt,
             tip_amount: tipAmount,
-            logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
+            logo_link: `${process.env.NEXT_BUSENESS_URL}/new-logo.png`,
             giftCard: giftCard,
             page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
             image_link: imageUrl,
@@ -199,7 +200,7 @@ export async function POST(req) {
               transaction_date: newComment.createdAt,
               tip_amount: Number(tipAmount).toFixed(2),
               giftCard: giftCard,
-              logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
+              logo_link: `${process.env.NEXT_BUSENESS_URL}/new-logo.png`,
               page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,
               image_link: imageUrl,
               comment: comment,
@@ -257,7 +258,7 @@ export async function POST(req) {
             transaction_date: newComment.createdAt,
             tip_amount: Number(tipAmount).toFixed(2),
             giftCard: giftCard,
-            logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
+            logo_link: `${process.env.NEXT_BUSENESS_URL}/new-logo.png`,
             page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,
             image_link: imageUrl,
             comment: comment,
