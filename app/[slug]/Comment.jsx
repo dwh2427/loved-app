@@ -205,8 +205,7 @@ const Comment = ({ params }) => {
                                         <Image
                                             src={cm?.giftCard}
                                             alt="Picture"
-                                            width={125}
-                                            height={125}
+                                            height={200}
                                             className="rounded-lg"
                                         />
                                     </div>
