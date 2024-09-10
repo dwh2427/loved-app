@@ -75,9 +75,11 @@ const UserProfile = function ({ params }) {
 
   const handleClick = () => {
     if (isAuthenticated()) {
-      router.push(`/send-loved/?page_username=${params.slug}`);
+      localStorage.setItem('sendSelectedLoveUrl', `/send-loved/?page_username=${params.slug}`)
+      router.push(`/create-card`);
     } else {
-      localStorage.setItem('sendLoveUrl', `/send-loved/?page_username=${params.slug}`)
+      localStorage.setItem('sendLoveUrl', `/create-card`)
+      localStorage.setItem('sendSelectedLoveUrl', `/send-loved/?page_username=${params.slug}`)
       router.push('/login');
     }
   };

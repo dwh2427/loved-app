@@ -37,7 +37,7 @@ export async function POST(req) {
   const form = await req.formData();
   const file = form?.get("image");
   const username = form.get("username");
-  const comment = form.get("comment");
+  const comment = "";
   let tipAmount = form.get("tipAmount") || 0;
   const application_fee = form.get("application_fee");
   const clientEmail = form.get("email");

@@ -76,10 +76,18 @@ const CanvasArea = ({activeTool }) => {
       // Send the canvas image data to the server to save it
       try {
 		setLoading(true);
+		const sendSelectedLoveUrl = localStorage.getItem("sendSelectedLoveUrl");
 		const  response  = await apiCaller.post('/create-card/api', { imageData: dataURL });
 		if(response.data.result){
 			localStorage.setItem('giftCard', response.data.data.fileUrl);
-			router.push(`/send-loved`); // If authenticated, navigate to the send-loved page
+			localStorage.removeItem('sendSelectedLoveUrl')
+			//sendSelectedLoveUrl
+			if(sendSelectedLoveUrl){
+				router.push(sendSelectedLoveUrl); // If authenticated, navigate to the send-loved page
+			}else{
+				router.push(`/send-loved`); // If authenticated, navigate to the send-loved page
+			}
+		
 			setLoading(false);
 		}else{
 			setLoading(false);

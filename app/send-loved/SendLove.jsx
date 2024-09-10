@@ -36,7 +36,6 @@ const LovedBoxHeader = dynamic(() => import("@/components/loved-box/lovedBoxHead
 
 const formSchema = z.object({
   inputValue: z.string().nonempty("Please enter a valid name"),
-  text: z.string().nonempty("Please enter a comment"),
   username: z.string().nonempty("Username is required").regex(/^[a-zA-Z\s]+$/, "Only letters and spaces are allowed"),
   email: z.string().nonempty("Email is required").email("Invalid email address"),
 });
@@ -165,7 +164,6 @@ useEffect(() => {
         formData.append("username", username);
         formData.append("email", email);
         formData.append("application_fee", application_amount_fee);
-        formData.append("comment", text);
         formData.append("tipAmount", tipAmount);
         formData.append("inputValue", inputValue);
         formData.append("stripe_acc_id", selectedPage?.stripe_acc_id);
@@ -278,7 +276,7 @@ useEffect(() => {
                 setError={setError}
               />
 
-              <MessageInput text={text} register={register} errors={errors} />
+              {/* <MessageInput text={text} register={register} errors={errors} /> */}
               <FileInput setImageFile={setImageFile} />
              <DonationInput
                 selectedPage={selectedPage}

@@ -13,12 +13,10 @@ export default function LovedBox({ children }) {
 	const handleClick = (e) => {
 		e.preventDefault(); // Prevent any default behavior (if necessary)
 		if (isAuthenticated()) {
-			//alert(1);
 		  router.push(`/create-card`); // If authenticated, navigate to the send-loved page
 		} else {
-			alert(2);
 		  localStorage.setItem('sendLoveUrl', `/create-card`); // Save URL for redirection after login
-	     // router.push('/login'); // Redirect to login if not authenticated
+	      router.push('/login'); // Redirect to login if not authenticated
 		}
 	  };
 	 

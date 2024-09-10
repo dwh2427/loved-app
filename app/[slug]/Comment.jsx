@@ -205,7 +205,9 @@ const Comment = ({ params }) => {
                                         <Image
                                             src={cm?.giftCard}
                                             alt="Picture"
-                                            height={200}
+                                            layout="responsive"  // Makes the width responsive
+                                            width={16}           // These values are aspect ratio, e.g., 16:9 or 4:3
+                                            height={9}
                                             className="rounded-lg"
                                         />
                                     </div>

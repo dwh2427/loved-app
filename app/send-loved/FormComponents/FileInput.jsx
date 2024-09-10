@@ -22,7 +22,7 @@ export default function FileInput({setImageFile}) {
   
     
   return (
-    <div className="form-group relative">
+    <div className="form-group relative my-5">
       <input onChange={handleFileChange} type="file" id="file" className="hidden" name="image" />
       <label
         htmlFor="file"
