@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { toast } from "@/components/ui/use-toast";
 import useApiCaller from "@/hooks/useApiCaller";
 import { Loader2 } from "lucide-react";
-
+import Image from "next/image";
 
 const OtpHeader = dynamic(() => import("@/components/loved-box/otpHeader"), {
   ssr: false,
@@ -16,6 +16,7 @@ const OtpHeader = dynamic(() => import("@/components/loved-box/otpHeader"), {
 export default function LovedGift() {
   const [pageLink, setPageLink] = useState("");
   const [customerName, setCustomerName] = useState("");
+  const [giftCard, setGiftCard] = useState(null);
   const [tipAmount, setTipAmount] = useState("");
   const [transactionDate, setTransactionDate] = useState("");
   const [verifyValue, setVerifyValue] = useState(null);
@@ -35,10 +36,12 @@ export default function LovedGift() {
         .get(`/login/received-gift/api?unique_id=${verifyValue}`)
         .then((res) => {
           const { comment } = res.data;
-          console.log(comment);
+   
           if (comment) {
             setCustomerName(comment.username);
+            setCustomerName(comment.username);
             setTipAmount(comment.tipAmount);
+            setGiftCard(comment.giftCard);
             setTransactionDate(new Date(comment.createdAt).toLocaleDateString());
             setPageLink(comment.page_name || '/default-link');
           } else {
@@ -111,6 +114,20 @@ export default function LovedGift() {
                 ${tipAmount} Received
               </p>
             )}
+
+            {giftCard && (
+               <div className="mt-2 flex">
+               <Image
+                   src={giftCard}
+                   alt="Picture"
+                   layout="responsive"  // Makes the width responsive
+                   width={16}           // These values are aspect ratio, e.g., 16:9 or 4:3
+                   height={9}
+                   className="rounded-lg"
+               />
+              </div>
+            )}
+
             <p style={{ fontSize: '16px', color: '#FFFFFF', margin: '10px 20px' }}>
               By {customerName} at {transactionDate}
             </p>
