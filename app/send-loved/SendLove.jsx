@@ -160,7 +160,7 @@ useEffect(() => {
         
         const giftCard = localStorage.getItem('giftCard')|| null;
         const formData = new FormData();
-        formData.append("image", imageFile || null);
+        // formData.append("image", imageFile || null);
         formData.append("username", username);
         formData.append("email", email);
         formData.append("application_fee", application_amount_fee);
@@ -277,7 +277,7 @@ useEffect(() => {
               />
 
               {/* <MessageInput text={text} register={register} errors={errors} /> */}
-              <FileInput setImageFile={setImageFile} />
+
              <DonationInput
                 selectedPage={selectedPage}
                 register={register}

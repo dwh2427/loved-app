@@ -1,5 +1,4 @@
 import { errorResponse } from "@/lib/server-error";
-import { uploadImage } from "@/lib/uploadImage";
 import Comments from "@/models/Comment";
 import Loved from "@/models/loved";
 import User from "@/models/user";
@@ -35,7 +34,7 @@ export async function POST(req) {
   const user = await verifyIdToken(req);
   const postmarkClient = new ServerClient(process.env.POSTMARK_API_KEY);
   const form = await req.formData();
-  const file = form?.get("image");
+  const file = null;
   const username = form.get("username");
   const comment = "";
   let tipAmount = form.get("tipAmount") || 0;
@@ -62,9 +61,7 @@ export async function POST(req) {
   let is_notified = 0;
 
   try {
-    if (file && file.size > 0) {
-      imageUrl = await uploadImage(file);
-    }
+
 
     const nameParts = username.split(' ');
     const firstName = nameParts[0];
