@@ -37,7 +37,7 @@
     "dayjs": "^1.11.11",
     "email-validation": "^0.1.2",
     "express": "^4.19.2",
-    "fabric": "^6.0.0",
+    "fabric": "^6.4.2",
     "fabricjs-react": "^2.0.0",
     "firebase": "^10.12.4",
     "firebase-admin": "^12.1.0",

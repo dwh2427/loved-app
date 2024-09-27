@@ -1,0 +1,20 @@
+/* Frame 1000004202 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 64px 220px;
+gap: 64px;
+
+width: 1440px;
+height: 658px;
+
+/* Light Mode/Background/Secondary */
+background: #F8F9FB;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;

@@ -26,7 +26,7 @@ export default function Footer() {
 
   return (
     <>
-      {!["send-loved", "login", "create-card"].includes(pathname) && (
+      {!["send-loved", "send-love", "login", "create-card"].includes(pathname) && (
         <footer className="bottom-0 w-full bg-[#2E266F] px-5">
           <div className="mx-auto mt-4 flex max-w-[1495px] flex-col px-5 py-4 md:mt-9 md:gap-y-8 xl:mt-[50px] xl:gap-y-[41.63px] xl:px-0 xl:py-[50px]">
             <div className="d-rs-hidden flex justify-between">

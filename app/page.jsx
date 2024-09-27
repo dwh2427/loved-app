@@ -1,188 +1,62 @@
-import BannerImg from "@/public/banner-img.png";
-import Picture from "@/public/img-loved-msg.svg";
-import LovedMsgLogo from "@/public/loved-msg-person.svg";
-import LovedLogo from "@/public/white-loved-logo.svg";
-import SponsorLogo from "@/public/sponsor-logo.svg";
-import { Heart, MessageCircle, Share } from "lucide-react";
+"use client";
 import Image from "next/image";
-import LovedBox from "@/components/loved-box/lovedBox";
+import cardOne from '@/public/home/Card_01.png';  // Replace with your actual image path
+import cardTwo from '@/public/home/Card_03.png';  // Replace with your actual image path
+import { useRouter } from 'next/navigation';
 
+export default function HomePage() {
+  const router = useRouter();  // Initialize the useRouter hook
 
-
-export default async function HomePage() {
+  // Function to handle button click and navigate to /send-love
+  const handleGetStarted = () => {
+    router.push('/send-love');  // Navigate to the send-love route
+  };
 
   return (
-    <div className="relative">
-      <main className="max-w-[1495px] xl:px-0 mx-auto">
-        <Image src={BannerImg} alt="Picture" width={1495} height={950} className="!h-[910px]" />
-        <div className="absolute top-52 left-0 w-full">
-          <div className="flex flex-col items-center justify-center text-white">
-            <h3 className="text-center text-5xl">
-              Share Your Love
-            </h3>
-            <p className="mt-4 text-center text-[16px]">Your space to honour, treasure and <br /> celebrate those you love and have loved.</p>
+    <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+      <div className="container mx-auto flex flex-col lg:flex-row items-start justify-between px-6">
+        
+        {/* Left side: Text & Button */}
+        <div className="lg:w-1/2 text-center lg:text-left">
+          <div className="pl-100">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">
+              Send love in <br />seconds
+            </h1>
+            <p className="text-gray-600 text-lg mb-6">
+              The easiest way to spread love with those you love <br /> most with a digital card and gift.
+            </p>
+            <button 
+              onClick={handleGetStarted}  // Call the function on button click
+              className="px-6 py-3 bg-pink-500 text-white rounded-full shadow-md hover:bg-pink-600 focus:outline-none w-[240px] h-[44px] px-[24px] py-[14px]"
+            >
+              Get started
+            </button>
           </div>
+        </div>
 
-         
-          <div className="flex justify-between gap-4 mt-8 px-4">
-            <div className="p-4 w-[270px] h-[500px] rounded-[32px] bg-[#2E266F] items-center justify-center flex flex-col text-white">
-              <div className="avatar-section">
-                <Image src={LovedMsgLogo} alt="Picture" width={51} height={49} />
-              </div>
-
-              <div className="flex flex-col items-center mt-2">
-                <h3 className="text-[12px]"> <span className="text-yellow-400 mr-1">To </span> David</h3>
-                <p className="text-[12px]">We miss you and love you. We miss you and love you. We miss you and love you. We miss you and... more</p>
-                <h3 className="text-[12px] semibold mt-2"><span className="text-yellow-400">From</span> John</h3>
-                <div className="mt-2 flex items-center justify-center">
-                  <Image src={Picture} alt="Picture" width={125} height={125} />
-                </div>
-              </div>
-
-              {/* loved share */}
-              <div className="loved-share mt-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <Heart strokeWidth={2.25} size={16} fill="#FF318C" className="text-[#FF318C]" />
-                    <MessageCircle size={16} strokeWidth={2.25} />
-                    <Share size={16} />
-                  </div>
-                  <p className="text-[12px] text-yellow-500">/dave</p>
-                </div>
-                <p className="mt-2 text-[12px]">
-                  Liked by <strong>annegraham_photo</strong>  and <strong>others</strong>
-                </p>
-                <p className="mt-2 text-[12px]">
-                  <strong> annegraham_photo</strong> that’s so sweet of you John we miss David so much. He’s in our hearts every day. We... more
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 w-[270px] h-[500px] rounded-[32px] bg-[#2E266F] items-center justify-center flex flex-col text-white">
-              <div className="avatar-section">
-                <Image src={LovedMsgLogo} alt="Picture" width={51} height={49} />
-              </div>
-
-              <div className="flex flex-col items-center mt-2">
-                <h3 className="text-[12px]"> <span className="text-yellow-400 mr-1">To </span> David</h3>
-                <p className="text-[12px]">We miss you and love you. We miss you and love you. We miss you and love you. We miss you and... more</p>
-                <h3 className="text-[12px] semibold mt-2"><span className="text-yellow-400">From</span> John</h3>
-                <div className="mt-2 flex items-center justify-center">
-                  <Image src={Picture} alt="Picture" width={125} height={125} />
-                </div>
-              </div>
-
-              {/* loved share */}
-              <div className="loved-share mt-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <Heart strokeWidth={2.25} size={16} fill="#FF318C" className="text-[#FF318C]" />
-                    <MessageCircle size={16} strokeWidth={2.25} />
-                    <Share size={16} />
-                  </div>
-                  <p className="text-[12px] text-yellow-500">/dave</p>
-                </div>
-                <p className="mt-2 text-[12px]">
-                  Liked by <strong>annegraham_photo</strong>  and <strong>others</strong>
-                </p>
-                <p className="mt-2 text-[12px]">
-                  <strong> annegraham_photo</strong> that’s so sweet of you John we miss David so much. He’s in our hearts every day. We... more
-                </p>
-              </div>
-            </div>
-
-            <LovedBox>
-              <div className="bg-[#2E266F] h-[40%] flex flex-col justify-center items-center">
-                <div className="avatar-section">
-                  <Image src={LovedLogo} alt="Picture" width={70} height={65} />
-                </div>
-                <h3 className="font-medium text-4xl mt-2"> <span className="text-white">To:</span> <span className="text-[#A5B5D4]">name</span></h3>
-              </div>
-
-              <div className="flex flex-col min-w-[250px] justify-center h-[60%] bg-[#fff] relative">
-                <div className="flex items-center">
-                  <p className="text-2xl text-[#A5B5D4] absolute top-[30%] left-[29%]">Your message</p>
-                </div>
-                <div className="flex flex-col justify-end items-center absolute w-full bottom-6">
-                  <button  className="w-[80%] text-center items-end justify-end bg-[#FF318C] text-white mt-6 rounded-full py-3 hover:bg-[#FF318C]">Send Love</button>
-                </div>
-              </div>
-            </LovedBox>
-
-
-            <div className="p-4 w-[270px] h-[500px] rounded-[32px] bg-[#2E266F] items-center justify-center flex flex-col text-white">
-              <div className="avatar-section">
-                <Image src={LovedMsgLogo} alt="Picture" width={51} height={49} />
-              </div>
-
-              <div className="flex flex-col items-center mt-2">
-                <h3 className="text-[12px]"> <span className="text-yellow-400 mr-1">To </span> David</h3>
-                <p className="text-[12px]">We miss you and love you. We miss you and love you. We miss you and love you. We miss you and... more</p>
-                <h3 className="text-[12px] semibold mt-2"><span className="text-yellow-400">From</span> John</h3>
-                <div className="mt-2 flex items-center justify-center">
-                  <Image src={Picture} alt="Picture" width={125} height={125} />
-                </div>
-              </div>
-
-              {/* loved share */}
-              <div className="loved-share mt-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <Heart strokeWidth={2.25} size={16} fill="#FF318C" className="text-[#FF318C]" />
-                    <MessageCircle size={16} strokeWidth={2.25} />
-                    <Share size={16} />
-                  </div>
-                  <p className="text-[12px] text-yellow-500">/dave</p>
-                </div>
-                <p className="mt-2 text-[12px]">
-                  Liked by <strong>annegraham_photo</strong>  and <strong>others</strong>
-                </p>
-                <p className="mt-2 text-[12px]">
-                  <strong> annegraham_photo</strong> that’s so sweet of you John we miss David so much. He’s in our hearts every day. We... more
-                </p>
-              </div>
-            </div>
-            <div className="p-4 w-[270px] h-[500px] rounded-[32px] bg-[#2E266F] items-center justify-center flex flex-col text-white">
-              <div className="avatar-section">
-                <Image src={LovedMsgLogo} alt="Picture" width={51} height={49} />
-              </div>
-
-              <div className="flex flex-col items-center mt-2">
-                <h3 className="text-[12px]"> <span className="text-yellow-400 mr-1">To </span> David</h3>
-                <p className="text-[12px]">We miss you and love you. We miss you and love you. We miss you and love you. We miss you and... more</p>
-                <h3 className="text-[12px] semibold mt-2"><span className="text-yellow-400">From</span> John</h3>
-                <div className="mt-2 flex items-center justify-center">
-                  <Image src={Picture} alt="Picture" width={125} height={125} />
-                </div>
-              </div>
-
-              {/* loved share */}
-              <div className="loved-share mt-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <Heart strokeWidth={2.25} size={16} fill="#FF318C" className="text-[#FF318C]" />
-                    <MessageCircle size={16} strokeWidth={2.25} />
-                    <Share size={16} />
-                  </div>
-                  <p className="text-[12px] text-yellow-500">/dave</p>
-                </div>
-                <p className="mt-2 text-[12px]">
-                  Liked by <strong>annegraham_photo</strong>  and <strong>others</strong>
-                </p>
-                <p className="mt-2 text-[12px]">
-                  <strong> annegraham_photo</strong> that’s so sweet of you John we miss David so much. He’s in our hearts every day. We... more
-                </p>
-              </div>
-            </div>
-
+        {/* Right side: Cards */}
+        <div className="lg:w-1/2 mt-12 lg:mt-0 relative flex justify-center">
+          {/* First Card */}
+          <div className="absolute card-1 card-img top-89 left-803 z-20">
+            <Image
+              src={cardOne}
+              alt="Card Image One"
+              width={380}
+              height={480}
+            />
           </div>
-
+          
+          {/* Second Card */}
+          <div className="absolute card-2 card-img op-69 left-843 rotate-6 z-10">
+            <Image
+              src={cardTwo}
+              alt="Card Image Two"
+              width={380}
+              height={480}
+            />
+          </div>
         </div>
-        <div className="sponsor-area mt-8 flex items-center justify-center">
-          <Image src={SponsorLogo} width={700} height={35} alt="sponsor" />
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
-

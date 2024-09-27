@@ -811,3 +811,117 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 #continue-nav button:hover {
   background-color: #e02976;
 }
+
+.card-img img{
+  height: 480px !important; /* or use initial, inherit depending on what you want */
+}
+
+.card-1{
+
+}
+
+.pl-100{
+  padding-left: 200px;
+  padding-top: 100px;
+}
+
+.card-2{
+  rotate: -6.3 deg;
+}
+
+
+.color-button{
+  /* Button Contained */
+
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 24px;
+  gap: 8px;
+
+  width: 122px;
+  height: 52px;
+
+  /* Light Mode/Border/Secondary */
+  border: 1px solid #D8D8DA;
+  border-radius: 128px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+
+}
+
+.upload-button{
+  /* Button Contained */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 14px 24px;
+gap: 12px;
+
+width: 249px;
+height: 52px;
+
+/* Light Mode/Border/Secondary */
+border: 1px solid #D8D8DA;
+border-radius: 128px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 1;
+
+}
+
+
+.top-header{
+  /* Add a cover image */
+
+width: 798px;
+height: 34px;
+
+/* Header/H2 */
+font-family: 'Comfortaa';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 140%;
+/* identical to box height, or 34px */
+display: flex;
+align-items: center;
+text-align: center;
+
+/* Light Mode/Text/Default */
+color: #202020;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+}
+
+
+
+.continue-button {
+  width: 240px;
+  height: 44px;
+  border-radius: 128px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+}
