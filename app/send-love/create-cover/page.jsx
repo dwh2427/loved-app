@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ChromePicker } from 'react-color'; // Use ChromePicker for a minimal design
 import coverImage from '@/public/home/cover-image.svg';
-import defaultImage from '@/public/home/default-select.svg';
+import defaultImage from '@/public/home/download.png';
 import blankImage from '@/public/home/blank-image.svg';
 import backIcon from '@/public/home/back-icon.svg';
 import uploadIcon from '@/public/home/upload-icon.svg';
@@ -22,11 +22,16 @@ export default function SendLoved() {
     const [uploadedImage, setUploadedImage] = useState(null); // Store uploaded image data
     const svgRef = useRef(null); // Create a ref for the SVG
     const fileInputRef = useRef(null);
+    const [patternImage, setPatternImage] = useState(null); // Store pattern image data
+
+    const selectedLabel = localStorage.getItem('selectedLabel');
 
     // Handle color change
     const handleColorChange = (color) => {
         setSelectedColor(color.hex); // Update selected color as hex code
         setUploadedImage(null); // Clear image if color is picked
+        setPatternImage(null); // Clear pattern image when color is picked
+
     };
 
     const handleButtonClick = () => {
@@ -42,18 +47,29 @@ export default function SendLoved() {
             reader.onloadend = () => {
                 setSelectedColor('#E9E9EB');
                 setUploadedImage(reader.result); // Store the image data as a URL
+                setPatternImage(null); // Clear pattern when image is uploaded
+
                
             };
             reader.readAsDataURL(file);
         }
     };
 
+     // Handle setting default or blank image as pattern
+     const handleImageClick = (image) => {
+        setSelectedImage(image);
+        setUploadedImage(null); // Clear uploaded image
+        setPatternImage(image); // Set the clicked image as pattern
+        setSelectedColor('#E9E9EB'); // Reset color to default when an image is selected
+    };
+
+
     // Update the fill of the SVG area when color or image changes
     useEffect(() => {
         if (svgRef.current) {
             const targetPath = svgRef.current.querySelector('g[filter="url(#filter1_i_2206_2378)"] path');
             if (targetPath) {
-                // Clear existing fill (color or image)
+                // Clear existing fill (color, image, or pattern)
                 targetPath.removeAttribute('fill');
 
                 if (uploadedImage) {
@@ -66,13 +82,23 @@ export default function SendLoved() {
                     svgRef.current.querySelectorAll('pattern#imgPattern').forEach(el => el.remove()); // Remove previous patterns
                     svgRef.current.insertAdjacentHTML('beforeend', imgPattern); // Append the new pattern
                     targetPath.setAttribute('fill', 'url(#imgPattern)');
+                } else if (patternImage) {
+                    // Set the selected image (default or blank) as the pattern fill
+                    const imgPattern = `
+                    <pattern id="imgPattern" patternUnits="userSpaceOnUse" width="100%" height="100%">
+                        <image href="${patternImage.src}" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    </pattern>
+                    `;
+                    svgRef.current.querySelectorAll('pattern#imgPattern').forEach(el => el.remove()); // Remove previous patterns
+                    svgRef.current.insertAdjacentHTML('beforeend', imgPattern); // Append the new pattern
+                    targetPath.setAttribute('fill', 'url(#imgPattern)');
                 } else if (selectedColor) {
                     // Set the color as fill
                     targetPath.setAttribute('fill', selectedColor);
                 }
             }
         }
-    }, [selectedColor, uploadedImage]);
+    }, [selectedColor, uploadedImage, patternImage]);
 
 
     return (
@@ -129,7 +155,7 @@ export default function SendLoved() {
                                         width={119}
                                         height={119}
                                         className={`cursor-pointer rounded-lg border ${selectedImage === defaultImage ? "border-black" : "border-gray-200"}`}
-                                        onClick={() => setSelectedImage(defaultImage)}
+                                        onClick={() => handleImageClick(defaultImage)}
                                     />
                                     {[...Array(5)].map((_, index) => (
                                         <Image
@@ -139,7 +165,7 @@ export default function SendLoved() {
                                             width={119}
                                             height={119}
                                             className={`cursor-pointer rounded-lg`}
-                                            onClick={() => setSelectedImage(blankImage)}
+                                            onClick={() => handleImageClick(blankImage)}
                                         />
                                     ))}
                                 </div>
@@ -162,8 +188,16 @@ export default function SendLoved() {
                                             <path d="M186.831 378.51C186.7 378.445 186.551 378.412 186.389 378.412C186.223 378.412 186.06 378.455 185.914 378.538C185.761 378.625 185.641 378.751 185.56 378.916L183.26 383.929L180.932 378.909C180.852 378.752 180.738 378.628 180.59 378.54C180.447 378.456 180.292 378.412 180.134 378.412C179.975 378.412 179.833 378.447 179.719 378.511C179.272 378.734 179.178 379.076 179.178 379.323C179.178 379.457 179.206 379.582 179.26 379.688L182.36 386.226C182.469 386.441 182.589 386.592 182.731 386.688C182.879 386.789 183.062 386.84 183.274 386.84C183.552 386.84 183.931 386.732 184.163 386.222L187.259 379.693C187.325 379.562 187.358 379.433 187.358 379.308C187.358 379.134 187.31 378.975 187.217 378.832C187.123 378.693 186.992 378.584 186.831 378.51Z" fill="black"/>
                                             <path d="M194.016 378.856C193.433 378.504 192.738 378.324 191.947 378.324C191.15 378.324 190.423 378.509 189.788 378.876C189.154 379.242 188.651 379.76 188.296 380.415C187.941 381.066 187.764 381.81 187.764 382.626C187.764 383.445 187.953 384.188 188.329 384.836C188.704 385.486 189.235 386 189.904 386.365C190.569 386.729 191.33 386.913 192.167 386.913C192.639 386.913 193.14 386.824 193.654 386.652C194.168 386.479 194.61 386.248 194.956 385.974C195.171 385.812 195.284 385.594 195.284 385.345C195.284 385.087 195.167 384.858 194.942 384.671C194.791 384.534 194.591 384.463 194.343 384.463C194.106 384.463 193.893 384.536 193.717 384.673C193.536 384.812 193.293 384.933 193.004 385.031C192.715 385.13 192.432 385.179 192.167 385.179C191.476 385.179 190.913 384.992 190.44 384.605C190.041 384.279 189.783 383.875 189.652 383.375H194.915C195.172 383.375 195.39 383.292 195.563 383.127C195.736 382.958 195.824 382.746 195.824 382.494C195.824 381.691 195.67 380.968 195.362 380.343C195.051 379.71 194.597 379.21 194.016 378.856ZM190.373 380.583C190.77 380.234 191.298 380.058 191.947 380.058C192.531 380.058 192.989 380.227 193.345 380.575C193.648 380.87 193.854 381.258 193.959 381.73H189.672C189.802 381.259 190.033 380.883 190.373 380.583Z" fill="black"/>
                                             <path d="M205.155 375.783C204.974 375.602 204.734 375.508 204.447 375.508C204.169 375.508 203.933 375.601 203.748 375.781C203.558 375.963 203.464 376.203 203.464 376.492V379.299C203.193 379.059 202.892 378.857 202.562 378.698C202.045 378.45 201.479 378.324 200.881 378.324C200.137 378.324 199.454 378.513 198.848 378.886C198.242 379.257 197.761 379.778 197.416 380.432C197.073 381.082 196.9 381.815 196.9 382.612C196.9 383.41 197.088 384.145 197.457 384.797C197.828 385.45 198.347 385.972 199.001 386.347C199.651 386.722 200.383 386.913 201.172 386.913C201.962 386.913 202.689 386.722 203.331 386.347C203.974 385.972 204.49 385.45 204.865 384.799C205.239 384.145 205.431 383.41 205.431 382.612V376.492C205.431 376.204 205.338 375.965 205.155 375.783ZM201.172 385.121C200.732 385.121 200.328 385.013 199.973 384.798C199.616 384.582 199.33 384.28 199.123 383.901C198.915 383.519 198.808 383.087 198.808 382.612C198.808 382.138 198.915 381.707 199.122 381.331C199.329 380.956 199.615 380.657 199.973 380.44C200.328 380.225 200.732 380.117 201.172 380.117C201.614 380.117 202.017 380.225 202.371 380.44C202.728 380.656 203.011 380.955 203.214 381.329C203.418 381.706 203.521 382.137 203.521 382.612C203.521 383.087 203.418 383.521 203.214 383.902C203.011 384.281 202.727 384.582 202.371 384.798C202.018 385.013 201.614 385.121 201.172 385.121Z" fill="black"/>
-                                            <path d="M129.816 82V61.04H123.352V58.16H139.352V61.04H132.984V82H129.816ZM142.023 82V57.776H144.999V66.768C146.023 65.232 147.783 64.368 149.863 64.368C153.543 64.368 156.327 67.12 156.327 70.832V82H153.319V71.792C153.319 68.944 151.591 67.248 149.191 67.248C146.791 67.248 144.999 68.976 144.999 71.792V82H142.023ZM165.641 82.384C162.249 82.384 159.881 80.4 159.881 77.488C159.881 74.768 161.609 72.688 165.513 72.048L171.401 71.088V70.288C171.401 68.432 169.865 67.12 167.625 67.12C165.609 67.12 164.041 68.24 163.337 69.872L160.745 68.528C161.705 66.16 164.617 64.368 167.689 64.368C171.625 64.368 174.377 66.8 174.377 70.288V82H171.465V79.76C170.249 81.36 168.169 82.384 165.641 82.384ZM163.017 77.392C163.017 78.8 164.265 79.856 165.993 79.856C169.225 79.856 171.401 77.584 171.401 74.672V73.584L166.185 74.448C163.945 74.832 163.017 75.92 163.017 77.392ZM178.992 82V64.752H181.904V66.864C182.928 65.264 184.688 64.368 186.832 64.368C190.512 64.368 193.296 67.12 193.296 70.832V82H190.288V71.792C190.288 68.944 188.592 67.248 186.16 67.248C183.728 67.248 181.968 68.976 181.968 71.792V82H178.992ZM197.554 82V57.776H200.53V72.848L208.466 64.752H212.274L205.65 71.696L212.722 82H209.202L203.474 73.712L200.53 76.816V82H197.554ZM221.574 82.384C218.118 82.384 215.398 80.56 214.342 77.648L216.71 76.496C217.702 78.576 219.494 79.824 221.574 79.824C223.43 79.824 224.838 78.864 224.838 77.392C224.838 75.888 223.302 75.312 222.246 75.024L219.654 74.288C216.55 73.424 215.174 71.696 215.174 69.456C215.174 66.384 217.766 64.368 221.158 64.368C224.166 64.368 226.79 66 227.814 68.752L225.382 69.872C224.614 68.08 222.95 66.96 221.062 66.96C219.334 66.96 218.214 67.92 218.214 69.264C218.214 70.768 219.558 71.28 220.582 71.568L223.398 72.4C226.182 73.2 227.846 74.992 227.846 77.36C227.846 80.304 225.254 82.384 221.574 82.384Z" fill="black"/>
-
+                                         
+                                                <text
+                                                x="50%"
+                                                y="40" // Adjust this value to move the text vertically
+                                                textAnchor="middle" // Centers the text horizontally
+                                                fontSize="20" // Adjust font size as needed
+                                                fill="black" // Text color
+                                                >
+                                                {selectedLabel}
+                                                </text>
 
                                             </g>
                                                 </g>
@@ -173,15 +207,6 @@ export default function SendLoved() {
                                         </div>
                                     </div>
 
-                        <Image
-                                          
-                                            src={coverImage}
-                                            alt={`Image`}
-                                            width={119}
-                                            height={119}
-                                            className={`cursor-pointer rounded-lg`}
-                                            onClick={() => setSelectedImage(coverImage)}
-                                        />
                          {/* Bottom Section: Back and Continue Buttons */}
                         <div className="flex justify-center items-center gap-6 pt-20">
                             <button className="flex items-center justify-center bg-white border rounded-full px-4 py-2">

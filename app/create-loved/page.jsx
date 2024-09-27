@@ -57,7 +57,7 @@ export default function CreateLovedPage() {
 
     useEffect(() => {
         if (!loading) {
-            const username = localStorage.getItem('username')
+ 
             const pageId = localStorage.getItem('pageId')
             if (!username && !pageId) router.replace('/')
             setPageId(pageId)
