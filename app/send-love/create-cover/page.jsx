@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ChromePicker } from 'react-color'; // Use ChromePicker for a minimal design
@@ -102,7 +102,7 @@ export default function SendLoved() {
 
 
     return (
-        <Suspense>
+   
             <>
                 <CardHeader pageLink="dashboard" />
                 <div className="bg-gray-50 min-h-screen flex flex-col justify-between items-center px-6" style={{ background: "#F8F9FB" }}>
@@ -219,6 +219,6 @@ export default function SendLoved() {
                     </div>
                 </div>
             </>
-        </Suspense>
+      
     );
 }
