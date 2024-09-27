@@ -925,3 +925,18 @@ flex-grow: 0;
   font-size: 16px;
   line-height: 100%;
 }
+
+
+/* .minimal-color-picker input,
+.minimal-color-picker .flexbox-fix,
+.minimal-color-picker label,
+.minimal-color-picker .saturation-white,
+.minimal-color-picker .saturation-black,
+.minimal-color-picker .saturation,
+.minimal-color-picker .chrome-picker > div:nth-child(3) {
+  display: none !important;
+} */
+
+.minimal-color-picker label,  .flexbox-fix:nth-child(2) > div:nth-child(2) {
+  display: none !important;
+}
