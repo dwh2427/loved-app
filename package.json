@@ -45,6 +45,7 @@
     "fs": "^0.0.1-security",
     "heic-convert": "^2.1.0",
     "heic2any": "^0.0.4",
+    "html-to-image": "^1.11.11",
     "ip2country": "^1.0.1",
     "ip3country": "^5.0.0",
     "jquery": "^3.7.1",
