@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      # No need to specify args here unless you have build-time variables
+    ports:
+      - "3000:8080"
+    environment:
+      NODE_ENV: production  # Ensure production mode for Next.js
+      NEXT_MONGODB_URL: ${NEXT_MONGODB_URL}  # Pass environment variable from .env
+    env_file:
+      - .env  # Include the .env file
+    volumes:
+      - .:/app  # Bind mount for development (optional)
