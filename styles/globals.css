@@ -599,6 +599,8 @@ margin-bottom: 15px;
   height: 100vh; /* Make sure the height of the section fills the viewport */
 }
 
+/* start section will removed /////////////////////////////////////////////////////// */
+
 main {
   flex: 1;
   display: flex;
@@ -819,7 +821,7 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 .card-1{
 
 }
-
+/* end section will removed /////////////////////////////////////////////////////// */
 .pl-100{
   padding-left: 200px;
   padding-top: 100px;
@@ -939,4 +941,235 @@ flex-grow: 0;
 
 .minimal-color-picker label,  .flexbox-fix:nth-child(2) > div:nth-child(2) {
   display: none !important;
+}
+
+/* section for design card */
+.layer-1 {
+  width: 340px;
+  height: 420px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.layer-2 {
+  width: 240px;
+  height: 220px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.layer-3 {
+  width: 220px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.blurred-image {
+  position: absolute;
+  width: 220px;
+  height: 200px;
+  object-fit: cover;
+  filter: blur(10px);
+  top: 0;
+  left: 0;
+  display: none; /* Hidden initially */
+}
+
+.visible {
+  display: block; /* Show blurred image when dragging */
+}
+
+.heart-shape {
+  position: absolute;
+  width: 220px;
+  height: 200px;
+  left: 0;
+  top: 0;
+  background-color: #E9E9EB; /* Adds color to the heart frame */
+  box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25); /* Optional shadow for depth */
+  clip-path: path("M61.5134 158.508C80.4511 172.156 96.5958 179.707 97.2468 180C97.895 179.707 114.063 172.156 133.004 158.508C132.634 158.24 132.262 157.969 131.89 157.696C132.265 157.97 132.639 158.241 133.012 158.51C136.636 155.899 140.37 153.046 144.101 149.979C161.349 135.904 178.858 117.286 187.948 94.8277C188.707 92.9652 189.407 91.0541 190.055 89.1012C193.289 79.3506 194.505 70.0216 194.505 61.5076C194.503 27.5309 166.967 0.00129533 132.99 0.00129533C119.653 0.00129533 107.326 4.2502 97.2498 11.4714L97.2481 11.4712C87.1693 4.25074 74.826 0 61.4896 0C27.5366 0 0 27.5296 0 61.5049C0 70.0189 1.21708 79.348 4.44547 89.0985C5.07696 91.0514 5.76824 92.9612 6.55413 94.8251C15.6454 117.283 33.1504 135.901 50.4024 149.976C54.1524 153.043 57.8858 155.898 61.5134 158.508Z");
+  overflow: hidden;
+}
+
+#uploaded-image {
+  width: 220px;
+  height: 200px;
+  object-fit: cover;
+  cursor: move;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+
+.card-title h2 {
+  color: var(--Light-Mode-Text-Default, #202020);
+  text-align: center;
+  font-family: Comfortaa;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 33.6px */
+}
+.card-body {
+  position: relative;
+}
+
+.custom-file-label {
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 14px */
+  display: flex;
+  padding: var(--Spacing-2, 8px) var(--Spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-2, 8px);
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+  background-color: #ffffff !important;
+}
+
+.custom-file-label:hover {
+    background-color: #ddd;
+}
+
+.style-1 {
+  background: url('../public/assets/img/background.png') lightgray 50% / cover no-repeat;
+  display: flex;
+  width: 339px;
+  height: 420px;
+  padding: var(--Spacing-2, 8px);
+  align-items: center;
+  /* gap: var(--Spacing-2, 8px); */
+  flex-shrink: 0;
+}
+
+.style-2 {
+  width: 335px;
+  height: 409px;
+  z-index: 20;
+  background-color: #ffffff;
+}
+.custom-background {
+  width: 307.184px;
+  height: 380.17px;
+  transform: rotate(-6deg);
+  flex-shrink: 0;
+  border-radius: var(--Spacing-4, 16px);
+  background: #FFF;
+  box-shadow: 0px 1.81px 3.621px 0px rgba(0, 0, 0, 0.06), 0px 3.621px 5.431px 0px rgba(0, 0, 0, 0.10);
+  z-index: -20;
+  position: absolute;
+  top: 0;
+  left: -8%;
+}
+
+.btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  align-self: stretch;
+  display: flex;
+  padding: var(--Spacing-2, 8px) var(--Spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-2, 8px);
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+  width: 220px;
+
+}
+.btn-wrapper a {
+  text-decoration: none;
+}
+.btn-ms {
+  color: var(--Light-Mode-Text-Default, #202020);
+  /* Button/Button2-SemiBold */
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 14px */
+}
+.frame-content {
+  padding: 50px;
+}
+
+.padding {
+  padding: 53px 0 53px 0;
+} 
+.styled-textarea {
+  color: var(--Light-Mode-Text-Default, #202020);
+  text-align: center;
+  font-family: "Figma Hand";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.input-box {
+text-align: center;
+position: relative;
+}
+
+/* Image preview styling */
+#imagePreview {
+margin-top: 15px;
+max-width: 100%;
+max-height: 200px;
+border-radius: 50px;
+border: 1px solid #ddd;
+padding: 5px;
+display: none; /* Hidden by default */
+}
+
+.custom-text{
+  color: var(--Light-Mode-Text-Default, #202020);
+  text-align: center;
+  font-family: "Figma Hand";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 25.2px */
+}
+
+.custom-border
+{
+  display: flex;
+  height: 24px;
+  height: 24px;
+  padding: var(--Spacing-1, 4px) var(--Spacing-2, 8px);
+  align-items: center;
+  gap: var(--Spacing-2, 8px);
+  border-radius: var(--Spacing-16, 64px);
+  border: 1px solid var(--Light-Mode-Border-Default, #E9E9EB);
+}
+
+.message-line{
+  display: flex;
+  height: 54px;
+  padding: var(--Spacing-4, 16px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--Spacing-4, 16px);
+  align-self: stretch;
+  border-radius: var(--Spacing-3, 12px);
+  border: 1px solid var(--Light-Mode-Background-Tertiary, #D8D8DA);
+  background: var(--Light-Mode-Background-Default, #FFF);
 }

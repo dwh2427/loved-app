@@ -2,14 +2,17 @@ version: '3'
 services:
   web:
     build:
-      context: .
-      # No need to specify args here unless you have build-time variables
+      context: .  # Build from the current directory
+      dockerfile: Dockerfile
+    image: saidhstu/loved-app:v1  # Set your custom image name for dev
     ports:
-      - "3000:8080"
+      - "3000:3000"  # Map the container port to the local machine's port 3000
     environment:
-      NODE_ENV: production  # Ensure production mode for Next.js
-      NEXT_MONGODB_URL: ${NEXT_MONGODB_URL}  # Pass environment variable from .env
+      NODE_ENV: development  # Switch to development mode for hot reloading
+      NEXT_PUBLIC_MONGODB_URL: ${NEXT_MONGODB_URL}
     env_file:
-      - .env  # Include the .env file
+      - .env
     volumes:
-      - .:/app  # Bind mount for development (optional)
+      - .:/app  # Bind mount for live code updates
+      - /app/node_modules  # Prevent overwriting of node_modules
+    command: npm run dev  # Use Next.js dev mode for hot reloading

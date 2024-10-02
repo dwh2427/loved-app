@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ChromePicker } from 'react-color';
 import cardLogo from '@/public/home/card-logo.svg';
 import defaultImage from '@/public/home/download.png';
-import blankImage from '@/public/home/blank-image.svg';
+import blankImage from '@/public/home/blankImage.png';
 import backIcon from '@/public/home/back-icon.svg';
 import uploadIcon from '@/public/home/upload-icon.svg';
 import { useRouter } from 'next/navigation';
@@ -82,7 +82,7 @@ export default function SendLoved() {
         }
 
         const handleOutsideClick = (event) => {
-            if (!imageRef.current.contains(event.target)) {
+            if (imageRef.current && !imageRef.current.contains(event.target)) {
                 blurredImageRef.current.style.display = 'none';
             }
         };
@@ -95,6 +95,8 @@ export default function SendLoved() {
     }, []);
 
     const handleColorChange = (color) => {
+        imageRef.current.style.display = 'none';
+        blurredImageRef.current.style.display = 'none';
         setSelectedColor(color.hex);
         setImageSrc(null);
         heartShapeColor.current.style.background = color.hex;
@@ -106,8 +108,8 @@ export default function SendLoved() {
 
 
     const handleImageClick = async (imageObj) => {
-
-
+        setSelectedColor("#fff");
+  
         const response = await fetch(imageObj.src);
 
         // Convert the response into a blob
@@ -125,23 +127,35 @@ export default function SendLoved() {
 
     };
 
-    const handleSaveImage = async () => {
+  
 
-        if (svgRef.current) {
-            try {
-                const dataUrl = await toPng(svgRef.current);
-                const response = [];
-                if (response.data.success) {
-                    localStorage.setItem('cardImage', response.data.cardImage);
-                    router.push('/send-love/create-template');
-                } else {
-                    console.error('Failed to save the image');
-                }
-            } catch (error) {
-                console.error('Error converting or saving image', error);
+const handleSaveImage = async () => {
+    const layer1Element = svgRef.current.querySelector('.layer-1');
+    
+    if (layer1Element) {
+        try {
+            // Capture the layer-1 element as an image
+            const dataUrl = await toPng(layer1Element);
+            
+            // Optionally, save it or send to server using axios
+            // Here, we're simply logging or setting it as needed
+            const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
+            
+            if (response.data.success) {
+                localStorage.setItem('cardImage', response.data.cardImage);
+                router.push('/send-love/create-template');
+            } else {
+                console.error('Failed to save the image');
             }
+        } catch (error) {
+            console.error('Error converting or saving image', error);
         }
-    };
+    } else {
+        console.error('No layer-1 element found');
+    }
+};
+
+
 
     return (
         <>
@@ -224,20 +238,21 @@ export default function SendLoved() {
                                                 alt="Uploaded Image"
                                                 ref={imageRef}
                                             />
-                                        </div>
-                                    </div>
-                           
+                                </div>
                                 </div>
                                
-                                <Image
-                                    src={cardLogo}
-                                    alt="Default"
-                                    width={57}
-                                    height={14}
-                                    className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-                                />
                             </div>
+                               
+                            <Image
+                                src={cardLogo}
+                                alt="Default"
+                                width={57}
+                                height={14}
+                                className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+                            />
                         </div>
+                    </div>
+
                     </div>
                         {/* Bottom Section: Back and Continue Buttons */}
                         <div className="flex justify-center items-center gap-6 pt-20">

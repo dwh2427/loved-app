@@ -13,17 +13,8 @@ RUN npm install
 # Copy the rest of the application code to the container
 COPY . .
 
-# Pass build-time environment variables
-# Using NEXT_PUBLIC_MONGODB_URL directly from the .env file through docker-compose
-# No need to use ARG here unless you specifically need it for build-time variables
-# ENV NEXT_PUBLIC_MONGODB_URL=$NEXT_PUBLIC_MONGODB_URL
+# Expose port 3000 (default port for Next.js)
+EXPOSE 3000
 
-# Build the application
-RUN npm run build
-
-# Expose port 3000 (the default Next.js port)
-EXPOSE 8080
-
-# Start the application
-CMD ["npm", "run", "start"]
-
+# Run the development server with hot reloading
+CMD ["npm", "run", "dev"]
