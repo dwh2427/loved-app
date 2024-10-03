@@ -3,8 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import coverImage from '@/public/home/cover-image.svg';
-import defaultImage from '@/public/home/download.png';
 import templateIcon from '@/public/home/templateicon.svg';
 import backIcon from '@/public/home/back-icon.svg';
 import messageIcon from '@/public/home/messageicon.svg';
@@ -12,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
 import axios from "axios";
 import MessageTemplatesModal from "./../components/MessageTemplatesModal";
-
 const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), {
     ssr: false,
 });
@@ -20,11 +17,13 @@ const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), 
 export default function CreateTemplate() {
 
     
-
+    const svgRef = useRef(null);
     const [imagePreview, setImagePreview] = useState(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const [addTocartText, setAddTocartText] = useState("");
+   
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
@@ -47,24 +46,47 @@ export default function CreateTemplate() {
 
     const router = useRouter();
 
-    const handleSaveImage = async () => {
-        if (svgRef.current) {
-            try {
-                const dataUrl = await toPng(svgRef.current);
-                const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
+  
 
+    const handleSaveImage = async () => {
+        const layer1Element = svgRef.current.querySelector('.card-body');
+        
+        if (layer1Element) {
+            // Find the elements to hide
+            const addImageLabel = document.querySelector(".hide-section"); // "Add an image" label
+            const messageTemplatesButton = document.querySelector(".hide-section-1"); // "Message templates" button
+    
+            try {
+                // Hide the elements before capturing the image
+                if (addImageLabel) addImageLabel.style.display = "none";
+                if (messageTemplatesButton) messageTemplatesButton.style.display = "none";
+    
+                // Capture the layer-1 element as an image
+                const dataUrl = await toPng(layer1Element);
+    
+                // Optionally, save it or send to server using axios
+                const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
+    
                 if (response.data.success) {
-                    console.log('Image saved successfully');
-                    localStorage.getItem('cardImage', response.data.cardImage);
-                    router.push('/send-love/create-template');
+                    localStorage.setItem('templateImage', response.data.cardImage);
+                    router.push('/login');
                 } else {
                     console.error('Failed to save the image');
                 }
+    
             } catch (error) {
                 console.error('Error converting or saving image', error);
+            } finally {
+                // Restore the hidden elements
+                if (addImageLabel) addImageLabel.style.display = "";
+                if (messageTemplatesButton) messageTemplatesButton.style.display = "";
             }
+        } else {
+            console.error('No layer-1 element found');
         }
     };
+    
+
 
     return (
         <>
@@ -74,7 +96,7 @@ export default function CreateTemplate() {
                     <h1 className="text-2xl md:text-3xl font-semibold py-12 text-gray-800 text-center">
                         Add a cover image
                     </h1>
-                    <div className="relative flex justify-center w-full mb-6" id="svgImageArea">
+                    <div className="relative flex justify-center w-full mb-6" id="svgImageArea"  ref={svgRef}>
                         <div className="card-body">
                             <div className="style-1">
                                 <div className="style-2">
@@ -88,9 +110,10 @@ export default function CreateTemplate() {
                                                 onChange={handleFileChange}
                                             />
                                             {!imagePreview ? (
+                                                // I want to skip this label and button while save to png 
                                                 <label
                                                     htmlFor="formFileSm"
-                                                    className="cursor-pointer inline-flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-100 transition"
+                                                    className="cursor-pointer hide-section inline-flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-100 transition"
                                                 >
                                                     <Image
                                                         src={messageIcon}
@@ -112,11 +135,14 @@ export default function CreateTemplate() {
                                 <textarea
                                     className="w-full px-4 py-2 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 custom-text"
                                     id="exampleFormControlTextarea1"
-                                    rows="3"
+                                    rows="5"
                                     placeholder="Write a message"
-                                ></textarea>
+                                    value={addTocartText}  // Bind the value to the state
+                                    onChange={(e) => setAddTocartText(e.target.value)}  // Update the state on change
+                                />
                                 </div>
-                            <div className="btn-wrapper absolute bottom-0 left-1/2 -translate-x-1/2 mb-8">
+                                {/* // I want to skip this button while save to png  */}
+                            <div className="btn-wrapper absolute bottom-0 left-1/2 -translate-x-1/2 mb-8 hide-section-1">
                                     <a
                                         href="#"
                                         className="inline-flex items-center gap-2 text-gray-700 px-4 rounded-full hover:bg-gray-100 transition btn-ms"
@@ -153,7 +179,7 @@ export default function CreateTemplate() {
                     </div>
                 </div>
             </div>
-            <MessageTemplatesModal isOpen={isModalOpen} onClose={handleCloseModal} />
+            <MessageTemplatesModal isOpen={isModalOpen} onClose={handleCloseModal} setAddTocartText={setAddTocartText} />
            
         </>
     );

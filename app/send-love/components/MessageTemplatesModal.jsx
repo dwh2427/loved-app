@@ -1,17 +1,28 @@
 import { useState } from 'react';
 
-export default function MessageTemplatesModal({ isOpen, onClose }) {
+export default function MessageTemplatesModal({ isOpen, onClose, setAddTocartText }) {
+    //setAddTocartText("");
     const [activeTab, setActiveTab] = useState('Most Popular');
     const [activeMessageIndex, setActiveMessageIndex] = useState(null);
 
+    const addTocartText = () => {
+        if (activeMessageIndex !== null) {
+            const activeMessage = messages[activeTab][activeMessageIndex];
+            setAddTocartText(activeMessage); // Set the active message to the cart text
+            onClose(); // Close the modal after setting the message
+        } else {
+            alert("Please select a message before adding it to the card.");
+        }
+    };
+
     const messages = {
-        "Most Popular": [
+       "Most Popular": [
             "Thank you friend for always being there for me, I know I can always count on your friendship.",
             "You're an amazing friend, and I feel lucky to have you in my life.",
-             "Thank you for always being there for me.",
-             "I truly appreciate your help and support.",
-             "Wishing you both a lifetime of love and happiness.",
-             "I love you more than words can say.",
+            "Thank you for always being there for me.",
+            "I truly appreciate your help and support.",
+            "Wishing you both a lifetime of love and happiness.",
+            "I love you more than words can say.",
         ],
         Thanks: [
             "Thank you for always being there for me.",
@@ -64,7 +75,7 @@ export default function MessageTemplatesModal({ isOpen, onClose }) {
                 </div>
 
                 {/* Message List */}
-                <div className="space-y-4 mb-6   p-10">
+                <div className="space-y-4 mb-6 p-10">
                     {messages[activeTab].map((message, index) => (
                         <div
                             key={index}
@@ -80,7 +91,7 @@ export default function MessageTemplatesModal({ isOpen, onClose }) {
 
                 {/* Buttons */}
                 <div className="flex justify-center space-x-4 mb-10">
-                    <button className="bg-pink-500 text-white px-6 py-2 rounded-full">Add to card</button>
+                    <button className="bg-pink-500 text-white px-6 py-2 rounded-full" onClick={addTocartText}>Add to card</button>
                     <button className="text-gray-600 px-6 py-2 rounded-full" onClick={onClose}>Cancel</button>
                 </div>
             </div>
