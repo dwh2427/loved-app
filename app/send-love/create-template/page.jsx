@@ -45,7 +45,9 @@ export default function CreateTemplate() {
     };
 
     const router = useRouter();
-
+    const isAuthenticated = () => {
+		return !!localStorage.getItem('accToken'); // example
+	  };
   
 
     const handleSaveImage = async () => {
@@ -69,7 +71,13 @@ export default function CreateTemplate() {
     
                 if (response.data.success) {
                     localStorage.setItem('templateImage', response.data.cardImage);
-                    router.push('/login');
+                    if (isAuthenticated()) {
+                        router.push(`/add-gift`); // If authenticated, navigate to the send-loved page
+                      } else {
+                        localStorage.setItem('sendLoveUrl', `/add-gift`); // Save URL for redirection after login
+                        router.push('/login'); // Redirect to login if not authenticated
+                      }
+
                 } else {
                     console.error('Failed to save the image');
                 }
