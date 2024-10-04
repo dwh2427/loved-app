@@ -70,11 +70,11 @@ export default function CreateTemplate() {
                 const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
     
                 if (response.data.success) {
-                    localStorage.setItem('templateImage', response.data.cardImage);
+                    localStorage.setItem('templateImage', "tmp/"+response.data.imageName);
                     if (isAuthenticated()) {
-                        router.push(`/add-gift`); // If authenticated, navigate to the send-loved page
+                        router.push(`/send-love/add-gift`); // If authenticated, navigate to the send-loved page
                       } else {
-                        localStorage.setItem('sendLoveUrl', `/add-gift`); // Save URL for redirection after login
+                        localStorage.setItem('sendLoveUrl', `/send-love/add-gift`); // Save URL for redirection after login
                         router.push('/login'); // Redirect to login if not authenticated
                       }
 

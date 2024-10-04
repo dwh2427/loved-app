@@ -142,7 +142,7 @@ const handleSaveImage = async () => {
             const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
             
             if (response.data.success) {
-                localStorage.setItem('cardImage', response.data.cardImage);
+                localStorage.setItem('cardImage', "tmp/"+response.data.imageName);
                 router.push('/send-love/create-template');
             } else {
                 console.error('Failed to save the image');
