@@ -4,13 +4,21 @@ import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useSearchParams } from 'next/navigation'
-
+import SearchInput from "./../components/SearchInput";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import axios from "axios";
 
 const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), {
     ssr: false,
 });
-const myState = history.state;//store the state variable outside the component
 
+const formSchema = z.object({
+    inputValue: z.string().nonempty("Please enter a valid name"),
+    username: z.string().nonempty("Username is required").regex(/^[a-zA-Z\s]+$/, "Only letters and spaces are allowed"),
+    email: z.string().nonempty("Email is required").email("Invalid email address"),
+  });
 
 export default function CreateTemplate() {
 
@@ -18,12 +26,39 @@ export default function CreateTemplate() {
     const subTotal = searchParams.get('amount');
     const label = searchParams.get('label');
     const selectedImage = searchParams.get('selectedImage');
+    const [pages, setPages] = useState([]);
+    const [selectedPage, setSelectedPage] = useState(null);
 
-    const [routeState, setRouteState] = useState({});
-    useEffect(() => {
-        console.log(myState.amount);
-        setRouteState(myState);
+    const {
+        register,
+        setValue,
+        getValues,
+        watch,
+        setError,
+        trigger,
+        formState: { errors },
+      } = useForm({
+        resolver: zodResolver(formSchema),
+      });
+    
+      const inputValue = watch("inputValue");
+
+      useEffect(() => {
+        alert(1);
+        const getPages = async () => {
+          try {
+            alert(2);
+            const response = await axios.get("/send-love/api");
+           
+            console.log(response);
+            setPages(response.data);
+          } catch (error) {
+            // console.log(error)
+          }
+        };
+        getPages();
       }, []);
+
 
     const svgRef = useRef(null);
     const [cardImage, setCardImage] = useState('')
@@ -46,14 +81,16 @@ export default function CreateTemplate() {
                     <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">
                         Recipient
                     </label>
-                    <div className="relative mt-1">
-                        <input
-                        type="search"
-                        name="query"
-                        placeholder="Name, mobile or email"
-                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                        />
-                    </div>
+    
+                    <SearchInput
+                        inputValue={inputValue}
+                        setValue={setValue} // Pass the setValue function to update state
+                        watch={watch} // Pass the watch function if used in the component
+                        pages={pages} // Pass the list of pages for filtering suggestions
+                        setSelectedPage={setSelectedPage} // Pass the function to update the selected page
+                        errors={errors} // Pass any form validation errors
+                        setError={setError}
+                    />
                     </div>
                     
                     <hr className="my-6 border-gray-200" />
@@ -84,7 +121,7 @@ export default function CreateTemplate() {
 
                     <button
                     type="submit"
-                    className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
+                    className="cursor-pointer flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
                     >
                     <i className="fas fa-plus mr-2"></i>Add Payment Method
                     </button>
@@ -96,7 +133,7 @@ export default function CreateTemplate() {
                 <div className="relative flex items-center justify-center h-96 bg-pink-100 rounded-lg">
                     <div className="absolute w-44 h-60 bg-white transform rotate-6 shadow-md rounded-lg"></div>
                     <div className="absolute w-52 h-72 bg-white shadow-lg rounded-lg z-10"></div>
-                    <img src="/home/checkout/icon/pencilIcon.svg" alt="icon" className="absolute top-4 right-4 w-8 h-8" />
+                    <img src="/home/checkout/icon/pencilIcon.svg" alt="icon" className="absolute top-4 right-4 w-8 h-8 cursor-pointer" />
                     <Image
                         src={cardImage}
                         alt="Default"
@@ -115,8 +152,8 @@ export default function CreateTemplate() {
                     <h5 className="text-xl font-bold">${subTotal}</h5>
                     </div>
                     <div className="ml-auto flex space-x-3">
-                    <img src="/home/checkout/icon/edit.svg" alt="edit icon" className="w-6 h-6" />
-                    <img src="/home/checkout/icon/delete.svg" alt="delete icon" className="w-6 h-6" />
+                    <img src="/home/checkout/icon/edit.svg" alt="edit icon" className="w-6 h-6 cursor-pointer" />
+                    <img src="/home/checkout/icon/delete.svg" alt="delete icon" className="w-6 h-6 cursor-pointer" />
                     </div>
                 </div>
 
