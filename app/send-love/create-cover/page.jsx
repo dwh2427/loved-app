@@ -167,7 +167,31 @@ const handleSaveImage = async () => {
                     </h1>
 
                     <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-start justify-center" style={{ maxWidth: '800px' }}>
-                        <div className="w-full lg:w-auto">
+                        <div className="w-full lg:w-auto order-2 lg:order-1">
+
+                            <h2 className="text-lg font-medium mb-4 text-left">Select an image</h2>
+
+                            <div className="grid grid-cols-3 gap-4 mb-6">
+                                <Image
+                                    src={defaultImage}
+                                    alt="Default"
+                                    width={119}
+                                    height={119}
+                                    className={`cursor-pointer rounded-lg border ${selectedImage === defaultImage ? "border-black" : "border-gray-200"}`}
+                                    onClick={() => handleImageClick(defaultImage)}
+                                />
+                                {[...Array(5)].map((_, index) => (
+                                    <Image
+                                        key={index}
+                                        src={blankImage}
+                                        alt={`Image ${index + 1}`}
+                                        width={119}
+                                        height={119}
+                                        className="cursor-pointer rounded-lg"
+                                        onClick={() => handleImageClick(blankImage)}
+                                    />
+                                ))}
+                            </div>
                             <div className="flex gap-4 justify-center lg:justify-start pb-10">
                                 <button className="color-button" onClick={() => setShowColorPicker(!showColorPicker)}>
                                     Colour
@@ -193,33 +217,9 @@ const handleSaveImage = async () => {
                                     />
                                 </div>
                             )}
-
-                            <h2 className="text-lg font-medium mb-4 text-left">Select an image</h2>
-
-                            <div className="grid grid-cols-3 gap-4 mb-6">
-                                <Image
-                                    src={defaultImage}
-                                    alt="Default"
-                                    width={119}
-                                    height={119}
-                                    className={`cursor-pointer rounded-lg border ${selectedImage === defaultImage ? "border-black" : "border-gray-200"}`}
-                                    onClick={() => handleImageClick(defaultImage)}
-                                />
-                                {[...Array(5)].map((_, index) => (
-                                    <Image
-                                        key={index}
-                                        src={blankImage}
-                                        alt={`Image ${index + 1}`}
-                                        width={119}
-                                        height={119}
-                                        className="cursor-pointer rounded-lg"
-                                        onClick={() => handleImageClick(blankImage)}
-                                    />
-                                ))}
-                            </div>
                         </div>
 
-                        <div className="relative flex justify-center w-full lg:w-auto" id="svgImageArea" ref={svgRef}>
+                        <div className="relative flex justify-center w-full order-1 lg:order-2 lg:w-auto" id="svgImageArea" ref={svgRef}>
                             <div className="layer-1">
                                 <h1 className="text-center mt-10 text-[32px]">{selectedLabel}</h1>
                                 <div className="layer-2">
@@ -255,7 +255,7 @@ const handleSaveImage = async () => {
 
                     </div>
                         {/* Bottom Section: Back and Continue Buttons */}
-                        <div className="flex justify-center items-center gap-6 pt-20">
+                        <div className="flex justify-center items-center gap-6 pb-20 lg:pb-0 lg:pt-20">
                             <button className="flex items-center justify-center bg-white border rounded-full px-4 py-2">
                                 <Image src={backIcon} alt="Back" width={24} height={24} />
                             </button>
