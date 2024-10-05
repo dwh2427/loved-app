@@ -45,7 +45,9 @@ export default function CreateTemplate() {
     };
 
     const router = useRouter();
-
+    const isAuthenticated = () => {
+		return !!localStorage.getItem('accToken'); // example
+	  };
   
 
     const handleSaveImage = async () => {
@@ -68,8 +70,14 @@ export default function CreateTemplate() {
                 const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
     
                 if (response.data.success) {
-                    localStorage.setItem('templateImage', response.data.cardImage);
-                    router.push('/login');
+                    localStorage.setItem('templateImage', "tmp/"+response.data.imageName);
+                    if (isAuthenticated()) {
+                        router.push(`/send-love/add-gift`); // If authenticated, navigate to the send-loved page
+                      } else {
+                        localStorage.setItem('sendLoveUrl', `/send-love/add-gift`); // Save URL for redirection after login
+                        router.push('/login'); // Redirect to login if not authenticated
+                      }
+
                 } else {
                     console.error('Failed to save the image');
                 }
