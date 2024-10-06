@@ -135,12 +135,12 @@ const Verifycode = () => {
   const isButtonDisabled = code.some(digit => digit === "");
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4">
-      <h2 className="text-center otp-header-text mt-9">
-        Enter verification code
+    <div className="flex flex-col items-center justify-center px-4 optnHeight">
+      <h2 className="text-center otp-header-text mt-9 flex flex-col">
+        Verify your number
       </h2>
 
-      <small className="code-sent-to">Code sent to +{ phone } </small>
+      <small className="text-start code-sent-to">Code sent to +{ phone } </small>
 
       <div onPaste={handlePaste} className="flex gap-2 mt-6">
         {code.map((digit, index) => (
@@ -152,23 +152,23 @@ const Verifycode = () => {
             value={digit}
             onChange={(e) => handleChange(e, index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
-            className="w-[52px] h-[50px] text-center text-2xl rounded-[32px] border border-[#2E266F] focus:outline-none"
+            className="w-[52px] h-[50px] text-center text-2xl rounded-[32px] border border-[#2E266F] focus:outline-none otpBtn"
           />
         ))}
       </div>
 
-      <a href="#"  onClick={resendOtp} className="resend-code">Resend code</a>
 
       <Button
         type="submit"
         onClick={handleSubmit}
         disabled={isButtonDisabled || loading}
         variant={"default"}
-        className="mx-auto h-[58px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
+        className="mx-auto h-[58px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[62px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px] mt-8"
       >
         {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
-        Continue
+        Sign In
       </Button>
+      <a href="#"  onClick={resendOtp} className="resend-code">Resend code</a>
     </div>
   );
 };

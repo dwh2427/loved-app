@@ -102,7 +102,7 @@ export default function CreateTemplate() {
             <div className="min-h-screen flex flex-col justify-center items-center px-6 bg-custom-background">
                 <div className="container max-w-xl">
                     <h1 className="text-2xl md:text-3xl font-semibold py-12 text-gray-800 text-center">
-                        Add a cover image
+                        Write your message
                     </h1>
                     <div className="relative flex justify-center w-full mb-6" id="svgImageArea"  ref={svgRef}>
                         <div className="card-body">

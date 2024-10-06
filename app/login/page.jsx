@@ -40,31 +40,52 @@ export default function LoginPage() {
   return (
     <FallbackToDashboard>
       <OtpHeader pageLink={pageLink} />
-      <div className="flex w-full flex-col lg:flex-row">
-        <div className="flex flex-1 flex-col items-center lg:items-start">
-          <div className="w-full px-4 lg:mx-auto lg:w-[530px] lg:space-y-[16px] lg:rounded-[16px] lg:px-0">
-            <div className="flex flex-col items-center justify-center text-center lg:h-[70px] lg:w-[402px] lg:space-y-[10px]">
-              <h2 className="mt-9 mx-auto text-4xl max-h-[65px] max-w-[289px] whitespace-nowrap text-[32px] font-black leading-[40px] tracking-[0.01em] text-black lg:h-[40px] lg:w-[263px] lg:text-[40px] lg:leading-[40px] login-header">
-                {defaultText}
-              </h2>
-            </div>
-            <p className="w-full text-[25.88px] leading-[29.12px] md:mx-auto md:h-[28px] md:text-[12px] md:leading-[14.4px] login-text">
-              {paragraphText}
-            </p>
-            <LoginForm />
-            <p className="w-full max-w-[689.17px] text-[25.88px] leading-[29.12px] md:mx-auto md:h-[28px] md:w-[386px] md:text-[12px] md:leading-[14.4px]">
-              By clicking the Sign In button below, you agree to the Loved{" "}
-              <span className="border-b-[0.5px] border-black cursor-pointer">
-                Terms of Service
-              </span>{" "}
-              and acknowledge the{" "}
-              <span className="border-b-[0.5px] border-black cursor-pointer">
-                Privacy Notice
-              </span>
-            </p>
-          </div>
+
+
+
+    <div className="flex w-full min-h-screen">
+       {/* Left Side - Sign In Form */}
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
+        {/* Logo */}
+        <div className="mb-8 mr-[21rem] md:mr-[22.5rem]">
+          <img src="assets/img/loveText.png" alt="Loved logo" className="h-5 lg:h-[20px] object-cover"/>
+        </div>
+
+        {/* Sign In Form Container */}
+        <div className="bg-white rounded-lg w-full max-w-md">
+          {/* Sign In Header */}
+          <h2 className="text-2xl font-bold text-gray-800 mb-4" style={{ fontSize: '28px' }}>Sign In</h2>
+          <p className="text-gray-600 mb-8">Share a message with a loved one</p>
+
+          {/* Phone Number Input */}
+
+          <LoginForm />
+
+          {/* Terms and Privacy Notice */}
+          <p className="text-center text-gray-500 text-xs mt-4">
+            By clicking the Sign In button below, you agree to the Loved{" "}
+            <a href="#" className="underline">
+              Terms of Service
+            </a>{" "}
+            and acknowledge the{" "}
+            <a href="#" className="underline">
+              Privacy Notice
+            </a>.
+          </p>
         </div>
       </div>
+
+
+      {/* Right Side - Cover Image */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start img-none">
+        <img
+          src="assets/img/covers/signCoverImg.png"
+          alt="Cover Image"
+          className="w-[350px] h-[350px] lg:w-[466px] lg:h-[598px] object-cover rounded-lg"
+        />
+      </div>
+    </div>
+
     </FallbackToDashboard>
   );
 }

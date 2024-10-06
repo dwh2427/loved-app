@@ -1173,3 +1173,42 @@ display: none; /* Hidden by default */
   border: 1px solid var(--Light-Mode-Background-Tertiary, #D8D8DA);
   background: var(--Light-Mode-Background-Default, #FFF);
 }
+
+.signBtn {
+  margin-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  padding: 10px var(--Spacing-5, 20px);
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  color: var(--Light-Mode-Background-Default, #FFF);
+
+  /* Button/Button2-SemiBold */
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 14px */
+}
+
+@media (max-width: 1024px) {
+  .img-none {
+    display: none;
+  }
+}
+.otpBtn {
+  border-radius: var(--Spacing-8, 32px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+  background: var(--Light-Mode-Background-Default, #FFF);
+  display: flex;
+  width: 80px;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-3, 12px);
+}
+.optnHeight {
+  height: 40rem;
+}

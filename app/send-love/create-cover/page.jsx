@@ -168,6 +168,21 @@ const handleSaveImage = async () => {
 
                     <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-start justify-center" style={{ maxWidth: '800px' }}>
                         <div className="w-full lg:w-auto order-2 lg:order-1">
+                            <div className="flex gap-4 justify-center lg:justify-start pb-10">
+                                <button className="color-button" onClick={() => setShowColorPicker(!showColorPicker)}>
+                                    Colour
+                                </button>
+                                <button className="upload-button" onClick={handleButtonClick}>
+                                    Upload image/video <Image src={uploadIcon} alt="Upload" />
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        onChange={loadImage}
+                                        style={{ display: 'none' }}
+                                    />
+                                </button>
+                            </div>
 
                             <h2 className="text-lg font-medium mb-4 text-left">Select an image</h2>
 
@@ -192,21 +207,7 @@ const handleSaveImage = async () => {
                                     />
                                 ))}
                             </div>
-                            <div className="flex gap-4 justify-center lg:justify-start pb-10">
-                                <button className="color-button" onClick={() => setShowColorPicker(!showColorPicker)}>
-                                    Colour
-                                </button>
-                                <button className="upload-button" onClick={handleButtonClick}>
-                                    Upload image/video <Image src={uploadIcon} alt="Upload" />
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        ref={fileInputRef}
-                                        onChange={loadImage}
-                                        style={{ display: 'none' }}
-                                    />
-                                </button>
-                            </div>
+                            
 
                             {showColorPicker && (
                                 <div className="color-picker-popup absolute bg-white p-4 shadow-lg rounded-lg">
