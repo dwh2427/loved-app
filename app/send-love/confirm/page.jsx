@@ -78,6 +78,7 @@ export default function CreateTemplate() {
     // Add function to handle delete (set amount to 0 and show Add Gift button)
     const handleDelete = () => {
         setSubTotal(0); // Set the subtotal to zero
+        setOrderTotal(0);
         setIsGiftDeleted(true); // Show "Add Gift" button
     };
 
