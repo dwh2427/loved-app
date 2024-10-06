@@ -136,14 +136,21 @@ const handleSaveImage = async () => {
         try {
             // Capture the layer-1 element as an image
             const dataUrl = await toPng(layer1Element);
-            
+            const redirectUrl = localStorage.getItem('redirectUrl');
             // Optionally, save it or send to server using axios
             // Here, we're simply logging or setting it as needed
             const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
             
             if (response.data.success) {
-                localStorage.setItem('cardImage', "tmp/"+response.data.imageName);
-                router.push('/send-love/create-template');
+                localStorage.setItem('redirectUrl', null);
+                localStorage.setItem('cardImage', "/tmp/"+response.data.imageName);
+         
+                if(redirectUrl){
+                    router.push(redirectUrl);
+                }else{
+                    router.push('/send-love/create-template');
+                }
+                
             } else {
                 console.error('Failed to save the image');
             }
