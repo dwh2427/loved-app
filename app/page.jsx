@@ -13,12 +13,12 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex items-center justify-center">
-      <div className="container mx-auto flex flex-col lg:flex-row items-start justify-between px-6">
+    <div className="bg-gray-50 min-h-screen lg:flex items-center justify-center">
+      <div className="container mx-auto lg:flex flex-col lg:flex-row items-start justify-between px-6">
         
         {/* Left side: Text & Button */}
-        <div className="lg:w-1/2 text-center lg:text-left">
-          <div className="pl-100">
+        <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1">
+          <div className="lg:pl-[200px] lg:pt-[100px] pl-0 pt-[40px]">
             <h1 className="text-4xl font-bold text-gray-800 mb-4">
               Send love in <br />seconds
             </h1>
@@ -35,7 +35,7 @@ export default function HomePage() {
         </div>
 
         {/* Right side: Cards */}
-        <div className="lg:w-1/2 mt-12 lg:mt-0 relative flex justify-center">
+        <div className="lg:w-1/2 mt-12 lg:mt-0 relative flex justify-center order-1 lg:order-2">
           {/* First Card */}
           <div className="absolute card-1 card-img top-89 left-803 z-20">
             <Image

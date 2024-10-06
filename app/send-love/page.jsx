@@ -84,45 +84,67 @@ export default function SendLoved() {
                             </div>
                         </div>
 
-                        {/* Radio Options */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        {/* Dropdown for small devices */}                     
+                        <div className="block lg:hidden mb-8">
+                        <select
+                            value={selectedOccasion}
+                            onChange={(e) => handleOccasionChange(e.target.value)}
+                            className="w-full max-w-xs py-2 pr-16 pl-4 border border-gray-300 rounded-full bg-white text-gray-600 appearance-none" // Reduced pr to 4
+                            style={{
+                            backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" strokeLinecap=\"round\" strokeLinejoin=\"round\"><polyline points=\"4 6 8 10 12 6\"/></svg>')", // Smaller SVG
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'right 8px center' // Adjust position for smaller icon
+                            }}
+                        >
+                            <option value="">Select Occasion</option> {/* Empty option for reset */}
                             {occasions.map((occasion) => (
-                                <label
-                                    key={occasion}
-                                    className={`relative flex items-center justify-between py-2 px-6 border rounded-full cursor-pointer ${
-                                        selectedOccasion === occasion
-                                        ? "border-pink-500 text-pink-500 bg-[#FFFFFF]"
-                                        : "border-gray-300"
-                                    }`}
-                                    style={{
-                                        width: "183.5px",
-                                        height: "52px",
-                                        borderRadius: "128px",
-                                    }}
-                                >
-                                    <input
-                                        type="radio"
-                                        name="occasion"
-                                        value={occasion}
-                                        checked={selectedOccasion === occasion}
-                                        onChange={() => handleOccasionChange(occasion)}
-                                        className="absolute opacity-0 cursor-pointer"
-                                    />
-                                    <span>{occasion}</span>
-                                    {selectedOccasion === occasion && (
-                                        <Image src={tickMark} alt="tick mark" width={21} height={20} />
-                                    )}
-                                </label>
+                            <option key={occasion} value={occasion}>
+                                {occasion}
+                            </option>
                             ))}
+                        </select>
+                        </div>
+
+                        {/* Radio Options for large devices */}
+                        <div className="hidden lg:grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        {occasions.map((occasion) => (
+                            <label
+                            key={occasion}
+                            className={`relative flex items-center justify-between py-2 px-6 border rounded-full cursor-pointer ${
+                                selectedOccasion === occasion
+                                ? "border-pink-500 text-pink-500 bg-[#FFFFFF]"
+                                : "border-gray-300"
+                            }`}
+                            style={{
+                                width: "183.5px",
+                                height: "52px",
+                                borderRadius: "128px",
+                            }}
+                            >
+                            <input
+                                type="radio"
+                                name="occasion"
+                                value={occasion}
+                                checked={selectedOccasion === occasion}
+                                onChange={() => handleOccasionChange(occasion)}
+                                className="absolute opacity-0 cursor-pointer"
+                            />
+                            <span>{occasion}</span>
+                            {selectedOccasion === occasion && (
+                                <Image src={tickMark} alt="tick mark" width={21} height={20} />
+                            )}
+                            </label>
+                        ))}
                         </div>
 
                         {/* Continue Button */}
                         <button
-                            className="flex continue-button justify-center items-center bg-pink-500 text-white rounded-full py-3 px-6 text-base font-semibold"
-                            onClick={handleCreateCover}  // Call the function on button click
+                        className="flex continue-button justify-center items-center bg-pink-500 text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-pink-600 transition duration-200"
+                        onClick={handleCreateCover}  // Call the function on button click
                         >
-                            Continue
+                        Continue
                         </button>
+
 
                     </div>
                 </div>
