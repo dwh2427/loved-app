@@ -43,7 +43,7 @@ export default function LoginPage() {
 
 
 
-      <div className="flex w-full min-h-screen bg-gray-800 bg-opacity-40 p-8 mx-auto pt-[200px]">
+      <div className="flex w-full min-h-screen bg-gray-800 bg-opacity-40 p-8 mx-auto md:pt-[200px]">
       <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white">
         {/* Left Side - Sign In Form*/}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8">

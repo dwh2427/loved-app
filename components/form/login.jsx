@@ -81,7 +81,8 @@ export default function LoginForm() {
                 <PhoneInput
                     country={'au'}
                     inputStyle={{
-                      width: "calc(100% - 20px)", // Adjust width considering the button width
+                      // width: "calc(100% - 20px)",
+                      width:"100%",
                       height: "50px",
                       borderRadius: "32px",
                       paddingLeft: "70px", // Ensure text does not overlap with button
@@ -117,7 +118,7 @@ export default function LoginForm() {
           type="submit"
           disabled={loading}
           variant={"default"}
-          className="signBtn mx-auto h-[52px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[52px] md:w-[430px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
+          className="signBtn mx-auto h-[52px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[52px] md:w-[450px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
         >
           {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
           Sign In
