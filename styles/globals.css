@@ -1222,8 +1222,14 @@ display: none; /* Hidden by default */
   }
 }
 .paddingLove {
-  padding: 100px 60px;
+  padding: 40px 31px;
 }
+@media (min-width: 1024px) {
+  .paddingLove {
+    padding: 100px 60px;
+  }
+} 
+
 .gap-30 {
   gap: 12rem;
 }
@@ -1274,3 +1280,6 @@ display: none; /* Hidden by default */
   line-height: 140%; /* 19.6px */
   text-decoration-line: underline;
 }
+/* .paddingLove {
+  padding: 40px 31px;
+} */
