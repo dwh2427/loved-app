@@ -13,6 +13,7 @@ import { Elements} from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY); // Replace with your Stripe public key
 import PaymentMethodModal from "../components/PaymentMethodModal";
+import useAuthState from "@/hooks/useAuthState";
 
 
 const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), {
@@ -29,6 +30,11 @@ export default function CreateTemplate() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
+    const { user, loading } = useAuthState();
+
+    const [phoneNumber, setPhoneNumber] = useState(null);
+    const [loginUserId, setLoginUserId] = useState(null);
+    const [fromName, setFromName] = useState(null);
 
     const label = searchParams.get('label');
     const selectedImage = searchParams.get('selectedImage');
@@ -81,6 +87,27 @@ export default function CreateTemplate() {
         setOrderTotal(0);
         setIsGiftDeleted(true); // Show "Add Gift" button
     };
+
+
+    useEffect(() => {
+        if (user && !loading) {
+          // Assuming user data contains firstname, lastname, and email
+          const { first_name, last_name, email, phone, uid } = user;
+            
+          // Combine firstname and lastname to create the username or set it as an empty string
+          const combinedUsername = first_name && last_name ? `${first_name.toLowerCase()} ${last_name.toLowerCase()}` : "";
+          setFromName(combinedUsername);
+    
+          if(phone){
+            setPhoneNumber(phone);
+          }
+    
+          if(uid){
+            setLoginUserId(uid);
+          }
+          
+        }
+      }, [user, loading]);
 
     const {
         register,
@@ -142,31 +169,45 @@ export default function CreateTemplate() {
                     </div>
                     
                     <hr className="my-6 border-gray-200" />
+                    
+                    {fromName ? (
+                        <div className="mb-4">
+                       <label htmlFor="from" className="block text-sm font-medium text-gray-700">
+                            From
+                        </label>
 
-                    <div className="mb-4">
-                    <label htmlFor="from" className="block text-sm font-medium text-gray-700">
-                        From
-                    </label>
-                    <input
-                        type="text"
-                        id="from"
-                        placeholder="Your name"
-                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                    />
-                    </div>
+                         <div className="inline-flex items-center justify-center px-3 py-1 text-black border border-gray-300 rounded-full">
+                         {fromName}
+                         </div>
+                        </div>
+                   
+                    ) : (
+                        <div className="mb-4">
+                        <div className="test">
+                             <label htmlFor="from" className="block text-sm font-medium text-gray-700">
+                            From
+                        </label>
+                        <input
+                            type="text"
+                            id="from"
+                            placeholder="Your name"
+                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                        />
+                        </div>
 
-                    <div className="mb-6">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Your email"
-                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                    />
-                    </div>
-
+                        <div className="mb-6">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Your email"
+                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                        />
+                        </div>
+                     </div>
+                     )}
                     <button
                     type="button"
                     className="cursor-pointer flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"

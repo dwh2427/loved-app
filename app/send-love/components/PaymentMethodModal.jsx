@@ -22,7 +22,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    width: '400px',
+    width: '420px',
     borderRadius: '12px',
     padding: '20px',
   },
@@ -33,8 +33,11 @@ export default function PaymentMethodModal({ isOpen, onRequestClose }) {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [paymentRequest, setPaymentRequest] = useState(null);
+  const [canUsePaymentRequest, setCanUsePaymentRequest] = useState(false);
+  const [cardholderName, setCardholderName] = useState('');
+  const [zip, setZip] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
-  // Initialize PaymentRequestButton for Apple Pay/Google Pay
   useEffect(() => {
     if (stripe) {
       const pr = stripe.paymentRequest({
@@ -46,11 +49,13 @@ export default function PaymentMethodModal({ isOpen, onRequestClose }) {
         },
         requestPayerName: true,
         requestPayerEmail: true,
+        requestPayerPhone: true,
       });
 
       pr.canMakePayment().then((result) => {
         if (result) {
           setPaymentRequest(pr);
+          setCanUsePaymentRequest(true);
         }
       });
     }
@@ -75,17 +80,64 @@ export default function PaymentMethodModal({ isOpen, onRequestClose }) {
         exp_year: cardExpiryElement,
         cvc: cardCvcElement,
       },
+      billing_details: {
+        name: cardholderName,
+        address: {
+          postal_code: zip,
+        },
+      },
     });
 
     if (error) {
       console.error('[error]', error);
       setLoading(false);
     } else {
-      console.log('[PaymentMethod]', paymentMethod);
-      // Send paymentMethod.id to your server to attach it to a customer
+      // Create a customer and attach the payment method
+      const customerResponse = await fetch('/api/create-customer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ paymentMethodId: paymentMethod.id }),
+      });
+
+      if (customerResponse.ok) {
+        console.log('[Customer Created]', await customerResponse.json());
+      }
+
       setLoading(false);
       onRequestClose(); // Close modal on success
     }
+  };
+
+  const handlePaymentRequest = async () => {
+    if (!paymentRequest) return;
+
+    paymentRequest.on('paymentmethod', async (event) => {
+      const { paymentMethod } = event;
+      try {
+        const customerResponse = await fetch('/api/create-customer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ paymentMethodId: paymentMethod.id }),
+        });
+
+        if (customerResponse.ok) {
+          event.complete('success');
+          console.log('[Customer Created]', await customerResponse.json());
+        } else {
+          event.complete('fail');
+          console.error('Customer creation failed');
+        }
+      } catch (error) {
+        event.complete('fail');
+        console.error('Payment failed', error);
+      }
+    });
+
+    paymentRequest.show();
   };
 
   return (
@@ -98,15 +150,20 @@ export default function PaymentMethodModal({ isOpen, onRequestClose }) {
       <div className="p-4">
         <h2 className="text-lg font-semibold mb-4">Add Payment Method</h2>
 
-        {/* Apple Pay / Google Pay Button */}
-        {paymentRequest && (
+        {/* Custom Apple Pay / Google Pay Buttons */}
+        {canUsePaymentRequest && (
           <div className="mb-4">
-            <PaymentRequestButtonElement options={{ paymentRequest }} />
+            <button
+              onClick={handlePaymentRequest}
+              className="w-full py-2 px-4 text-white bg-black rounded-lg font-semibold"
+            >
+              Pay with Apple Pay / Google Pay
+            </button>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Card Number Element */}
+          {/* Card Number */}
           <div className="border p-3 rounded-lg">
             <label>Card Number</label>
             <CardNumberElement
@@ -127,49 +184,62 @@ export default function PaymentMethodModal({ isOpen, onRequestClose }) {
             />
           </div>
 
-          {/* Expiration Date Element */}
-          <div className="border p-3 rounded-lg">
-            <label>Expiration Date</label>
-            <CardExpiryElement
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': {
-                      color: '#aab7c4',
+          {/* Expiration Date and CVC inline */}
+          <div className="flex space-x-2">
+            <div className="flex-1 border p-3 rounded-lg">
+              <label>Expiration Date</label>
+              <CardExpiryElement
+                options={{
+                  style: {
+                    base: {
+                      fontSize: '16px',
+                      color: '#424770',
+                      '::placeholder': {
+                        color: '#aab7c4',
+                      },
+                    },
+                    invalid: {
+                      color: '#9e2146',
                     },
                   },
-                  invalid: {
-                    color: '#9e2146',
-                  },
-                },
-              }}
-            />
+                }}
+              />
+            </div>
 
-          </div>
-
-          {/* CVC Element */}
-          <div className="border p-3 rounded-lg">
-            <label>CVC</label>
-
-            <CardCvcElement
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': {
-                      color: '#aab7c4',
+            <div className="flex-1 border p-3 rounded-lg">
+              <label>CVC</label>
+              <CardCvcElement
+                options={{
+                  style: {
+                    base: {
+                      fontSize: '16px',
+                      color: '#424770',
+                      '::placeholder': {
+                        color: '#aab7c4',
+                      },
+                    },
+                    invalid: {
+                      color: '#9e2146',
                     },
                   },
-                  invalid: {
-                    color: '#9e2146',
-                  },
-                },
-              }}
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Cardholder Name */}
+          <div className="border p-3 rounded-lg">
+            <label>Cardholder Name</label>
+            <input
+              type="text"
+              value={cardholderName}
+              onChange={(e) => setCardholderName(e.target.value)}
+              className="w-full p-2 border rounded"
+              placeholder="Full name on card"
             />
           </div>
+
+         
 
           <button
             type="submit"
