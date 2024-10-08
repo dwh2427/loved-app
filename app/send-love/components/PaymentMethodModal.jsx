@@ -1,257 +1,98 @@
+// pages/payment.js
 import { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import {
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
-  useStripe,
-  useElements,
-  PaymentRequestButtonElement,
-} from '@stripe/react-stripe-js';
 import Modal from 'react-modal';
 
-// Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
-
-// Custom styles for the modal
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '420px',
-    borderRadius: '12px',
-    padding: '20px',
-  },
-};
-
 export default function PaymentMethodModal({ isOpen, onRequestClose }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [loading, setLoading] = useState(false);
-  const [paymentRequest, setPaymentRequest] = useState(null);
-  const [canUsePaymentRequest, setCanUsePaymentRequest] = useState(false);
-  const [cardholderName, setCardholderName] = useState('');
-  const [zip, setZip] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [stripe, setStripe] = useState(null);
+  const [elements, setElements] = useState(null);
 
   useEffect(() => {
-    if (stripe) {
-      const pr = stripe.paymentRequest({
-        country: 'US',
-        currency: 'usd',
-        total: {
-          label: 'Total',
-          amount: 5000, // Example amount in cents ($50.00)
-        },
-        requestPayerName: true,
-        requestPayerEmail: true,
-        requestPayerPhone: true,
-      });
+    const initializeStripe = async () => {
+      // Fetch publishable key from your API
+      const stripeInstance = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+      setStripe(stripeInstance);
+    };
 
-      pr.canMakePayment().then((result) => {
-        if (result) {
-          setPaymentRequest(pr);
-          setCanUsePaymentRequest(true);
-        }
-      });
-    }
-  }, [stripe]);
+    initializeStripe();
+  }, []);
+
+  useEffect(() => {
+    const fetchPaymentIntent = async () => {
+      if (!isOpen || !stripe) return; // Only fetch when the modal is open and Stripe is initialized
+
+      // Fetch client secret from your API
+      const { clientSecret, error: backendError } = await fetch('/send-love/confirm/api').then((res) => res.json());
+
+      if (backendError) {
+        setMessages((prevMessages) => [...prevMessages, backendError.message]);
+        return;
+      }
+      setMessages((prevMessages) => [...prevMessages, 'Client secret returned.']);
+
+      // Create Stripe elements
+      const elementsInstance = stripe.elements({ clientSecret });
+      setElements(elementsInstance);
+
+      // Mount the elements
+      const paymentElement = elementsInstance.create('payment');
+      paymentElement.mount('#payment-element');
+    };
+
+    fetchPaymentIntent();
+  }, [isOpen, stripe]); // Re-run effect when modal is open or Stripe is initialized
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!stripe || !elements) return; // Ensure Stripe is loaded
+    if (isLoading) return;
 
-    setLoading(true);
+    setIsLoading(true);
 
-    const cardNumberElement = elements.getElement(CardNumberElement);
-    const cardExpiryElement = elements.getElement(CardExpiryElement);
-    const cardCvcElement = elements.getElement(CardCvcElement);
-
-    // Create payment method with individual elements
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: {
-        number: cardNumberElement,
-        exp_month: cardExpiryElement,
-        exp_year: cardExpiryElement,
-        cvc: cardCvcElement,
-      },
-      billing_details: {
-        name: cardholderName,
-        address: {
-          postal_code: zip,
-        },
-      },
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/return`
+      }
     });
 
     if (error) {
-      console.error('[error]', error);
-      setLoading(false);
-    } else {
-      // Create a customer and attach the payment method
-      const customerResponse = await fetch('/api/create-customer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ paymentMethodId: paymentMethod.id }),
-      });
-
-      if (customerResponse.ok) {
-        console.log('[Customer Created]', await customerResponse.json());
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        setMessages((prevMessages) => [...prevMessages, error.message]);
+      } else {
+        setMessages((prevMessages) => [...prevMessages, 'An unexpected error occurred.']);
       }
-
-      setLoading(false);
-      onRequestClose(); // Close modal on success
     }
-  };
 
-  const handlePaymentRequest = async () => {
-    if (!paymentRequest) return;
-
-    paymentRequest.on('paymentmethod', async (event) => {
-      const { paymentMethod } = event;
-      try {
-        const customerResponse = await fetch('/api/create-customer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ paymentMethodId: paymentMethod.id }),
-        });
-
-        if (customerResponse.ok) {
-          event.complete('success');
-          console.log('[Customer Created]', await customerResponse.json());
-        } else {
-          event.complete('fail');
-          console.error('Customer creation failed');
-        }
-      } catch (error) {
-        event.complete('fail');
-        console.error('Payment failed', error);
-      }
-    });
-
-    paymentRequest.show();
+    setIsLoading(false);
   };
 
   return (
     <Modal
-      isOpen={isOpen}
+    isOpen={isOpen}
       onRequestClose={onRequestClose}
-      style={customStyles}
       contentLabel="Add Payment Method"
+      className="payment-modal"
+      overlayClassName="payment-modal-overlay"
     >
-      <div className="p-4">
-        <h2 className="text-lg font-semibold mb-4">Add Payment Method</h2>
+      {/* Close Button */}
+      <button className="close-button" onClick={onRequestClose}>
+        &times;
+      </button>
 
-        {/* Custom Apple Pay / Google Pay Buttons */}
-        {canUsePaymentRequest && (
-          <div className="mb-4">
-            <button
-              onClick={handlePaymentRequest}
-              className="w-full py-2 px-4 text-white bg-black rounded-lg font-semibold"
-            >
-              Pay with Apple Pay / Google Pay
-            </button>
-          </div>
-        )}
+      <h1>Add Payment Method</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Card Number */}
-          <div className="border p-3 rounded-lg">
-            <label>Card Number</label>
-            <CardNumberElement
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': {
-                      color: '#aab7c4',
-                    },
-                  },
-                  invalid: {
-                    color: '#9e2146',
-                  },
-                },
-              }}
-            />
-          </div>
+      <form id="payment-form" onSubmit={handleSubmit}>
+        {/* Card Payment Element */}
+        <div id="payment-element" />
+        {/* Submit Button */}
+        <button id="submit" className="submit-button" disabled={isLoading}>
+          {isLoading ? 'Processing...' : 'Submit'}
+        </button>
 
-          {/* Expiration Date and CVC inline */}
-          <div className="flex space-x-2">
-            <div className="flex-1 border p-3 rounded-lg">
-              <label>Expiration Date</label>
-              <CardExpiryElement
-                options={{
-                  style: {
-                    base: {
-                      fontSize: '16px',
-                      color: '#424770',
-                      '::placeholder': {
-                        color: '#aab7c4',
-                      },
-                    },
-                    invalid: {
-                      color: '#9e2146',
-                    },
-                  },
-                }}
-              />
-            </div>
+      </form>
 
-            <div className="flex-1 border p-3 rounded-lg">
-              <label>CVC</label>
-              <CardCvcElement
-                options={{
-                  style: {
-                    base: {
-                      fontSize: '16px',
-                      color: '#424770',
-                      '::placeholder': {
-                        color: '#aab7c4',
-                      },
-                    },
-                    invalid: {
-                      color: '#9e2146',
-                    },
-                  },
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Cardholder Name */}
-          <div className="border p-3 rounded-lg">
-            <label>Cardholder Name</label>
-            <input
-              type="text"
-              value={cardholderName}
-              onChange={(e) => setCardholderName(e.target.value)}
-              className="w-full p-2 border rounded"
-              placeholder="Full name on card"
-            />
-          </div>
-
-         
-
-          <button
-            type="submit"
-            className={`w-full py-2 px-4 text-white bg-pink-400 rounded-lg font-semibold transition-colors ${
-              loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-pink-500'
-            }`}
-            disabled={loading}
-          >
-            {loading ? 'Processing...' : 'Submit'}
-          </button>
-        </form>
-      </div>
     </Modal>
   );
 }
