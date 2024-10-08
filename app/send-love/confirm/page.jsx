@@ -202,18 +202,21 @@ export default function CreateTemplate() {
                         </div>
 
                         {/* Add Payment Method Button */}
-                        
-                        <button
-                        type="button"
-                        className="mb-250 hidden md:flex cursor-pointer items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-                        onClick={() => setIsModalOpen(true)}
-                        >
-                        <span className="mr-2">+</span>Add Payment Method
-                        </button>
-                        <div className="md:hidden flex items-center justify-between p-4 bg-gray-100 rounded-lg">
-                            <span className="text-gray-600">Paying with Mastercard 1257</span>
+                        { pymentMethodId? (
+                        <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
+                            <span className="text-gray-600">Paying with Mastercard {last4}</span>
                             <button className="text-pink-500 font-medium hover:underline">Change</button>
                         </div>
+                        ): (
+                            <button
+                            type="button"
+                            className="mb-250 hidden md:flex cursor-pointer items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
+                            onClick={() => setIsModalOpen(true)}
+                            >
+                            <span className="mr-2">+</span>Add Payment Method
+                            </button>
+                        )}
+
 
                     </form>
 
