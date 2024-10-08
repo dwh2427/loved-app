@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true, // Ensure phone number is unique
     },
+    paymentMethodId: {
+      type: String,
+    },
+    last4: {
+      type: String,
+    },
     page: { type: mongoose.Schema.ObjectId, ref: "Loved" },
     additional_info: {
       stripe_acc_id: { type: String },

@@ -45,6 +45,9 @@ export default function CreateTemplate() {
 
     const [pages, setPages] = useState([]);
     const [selectedPage, setSelectedPage] = useState(null);
+    const [pymentMethodId, setPaymentMethodId] = useState("");
+    const [last4, setLast4] = useState("");
+
 
     // Ensure `subTotal` is a number
     const [subTotal, setSubTotal] = useState(getTotal);
@@ -208,13 +211,18 @@ export default function CreateTemplate() {
                         </div>
                      </div>
                      )}
-                    <button
-                    type="button"
-                    className="cursor-pointer flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 mb-250"
-                    onClick={() => setIsModalOpen(true)}
-                   >
-                    <span className="mr-2">+</span>Add Payment Method
-                    </button>
+                     { pymentMethodId? (
+                        <p>Paying with card {last4} <a>Change</a></p>
+                     ) : (
+                        <button
+                        type="button"
+                        className="cursor-pointer flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 mb-250"
+                        onClick={() => setIsModalOpen(true)}
+                       >
+                        <span className="mr-2">+</span>Add Payment Method
+                        </button>
+                     )}
+              
                 </form>
                 <hr className="mt-200 my-6 border-gray-200" />
                 <div className="flex justify-start space-x-4 mt-4">
@@ -324,6 +332,8 @@ export default function CreateTemplate() {
                 <PaymentMethodModal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}
+                setPaymentMethodId={setPaymentMethodId}
+                 setLast4={setLast4}
                 />
             </Elements>
 

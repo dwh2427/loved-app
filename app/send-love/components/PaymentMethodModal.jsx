@@ -2,12 +2,14 @@
 import { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import Modal from 'react-modal';
+import useApiCaller from '@/hooks/useApiCaller';
 
-export default function PaymentMethodModal({ isOpen, onRequestClose }) {
+export default function PaymentMethodModal({ isOpen, onRequestClose, setPaymentMethodId, setLast4 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [stripe, setStripe] = useState(null);
   const [elements, setElements] = useState(null);
+  const apiCaller = useApiCaller()
 
   useEffect(() => {
     const initializeStripe = async () => {
@@ -47,30 +49,47 @@ export default function PaymentMethodModal({ isOpen, onRequestClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLoading) return;
-
+  
     setIsLoading(true);
-
-    const { error } = await stripe.confirmPayment({
+  
+    // Confirm the payment without redirecting
+    const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/return`
-      }
+        // No need for return_url, using redirect: 'if_required' instead
+      },
+      redirect: 'if_required',
     });
-
+  
     if (error) {
       if (error.type === 'card_error' || error.type === 'validation_error') {
         setMessages((prevMessages) => [...prevMessages, error.message]);
       } else {
         setMessages((prevMessages) => [...prevMessages, 'An unexpected error occurred.']);
       }
-    }
+    } else {
+      // If payment is confirmed, retrieve payment method details
+      const paymentMethodId = paymentIntent.payment_method;
+  
+  
+      // Here, you can make an API call to your server to store the payment method ID for future use
 
+      const data = {  paymentMethodId} ;
+  
+      const res = await apiCaller.post("/send-love/confirm/api", data);
+      const { last4, brand } = res.data;
+      setPaymentMethodId(paymentMethodId);
+      setLast4(last4);
+      setMessages((prevMessages) => [...prevMessages, 'Payment method saved successfully!']);
+    }
+  
     setIsLoading(false);
   };
+  
 
   return (
     <Modal
-    isOpen={isOpen}
+      isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Add Payment Method"
       className="payment-modal"
