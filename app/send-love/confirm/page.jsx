@@ -15,7 +15,6 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY); // 
 import PaymentMethodModal from "../components/PaymentMethodModal";
 import useAuthState from "@/hooks/useAuthState";
 
-
 const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), {
     ssr: false,
 });
@@ -48,6 +47,13 @@ export default function CreateTemplate() {
     const [pymentMethodId, setPaymentMethodId] = useState("");
     const [last4, setLast4] = useState("");
 
+    useEffect(() => {
+        console.log(user);
+        setPaymentMethodId(user?.pymentMethodId);
+        setLast4(user?.last4);
+      }, [user])
+
+      
 
     // Ensure `subTotal` is a number
     const [subTotal, setSubTotal] = useState(getTotal);
@@ -203,11 +209,7 @@ export default function CreateTemplate() {
 
                         {/* Add Payment Method Button */}
                         { pymentMethodId? (
-                        <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
-                            <span className="text-gray-600">Paying with Mastercard {last4}</span>
-                            <button className="text-pink-500 font-medium hover:underline">Change</button>
-                        </div>
-                        ): (
+                                               
                             <button
                             type="button"
                             className="mb-250 hidden md:flex cursor-pointer items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
@@ -215,8 +217,14 @@ export default function CreateTemplate() {
                             >
                             <span className="mr-2">+</span>Add Payment Method
                             </button>
-                        )}
+                        ): (
+                            <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
+                            <span className="text-gray-600">Paying with Mastercard {last4}</span>
+                            <button type="button" className="text-pink-500 font-medium hover:underline"  onClick={() => setIsModalOpen(true)}>Change</button>
+                        </div>
 
+
+                        )}
 
                     </form>
 

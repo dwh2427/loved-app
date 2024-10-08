@@ -46,6 +46,7 @@ export async function POST(req) {
         {
             paymentMethodId: paymentMethodId, // Update the email field at the root level
             last4: last4,
+            brand: brand
         },
         { new: true }
       );

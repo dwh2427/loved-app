@@ -80,6 +80,8 @@ export default function PaymentMethodModal({ isOpen, onRequestClose, setPaymentM
       const { last4, brand } = res.data;
       setPaymentMethodId(paymentMethodId);
       setLast4(last4);
+      onRequestClose();
+      // I want to close the popup here if there is res
       setMessages((prevMessages) => [...prevMessages, 'Payment method saved successfully!']);
     }
   
