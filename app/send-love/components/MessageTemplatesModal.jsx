@@ -58,7 +58,7 @@ export default function MessageTemplatesModal({ isOpen, onClose, setAddTocartTex
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 custom-popup">
-            <div className="bg-white rounded-lg p-4w-full min-w-[800px] mx-auto">
+            <div className="bg-[#F8F9FB] rounded-lg p-4w-full min-w-[800px] mx-auto">
                 <h2 className="text-center text-xl font-semibold mb-4 mt-10">Let us help with the message</h2>
                 
                 {/* Tabs */}
@@ -80,8 +80,8 @@ export default function MessageTemplatesModal({ isOpen, onClose, setAddTocartTex
                         <div
                             key={index}
                             className={`p-4 rounded-lg cursor-pointer transition-colors ${
-                                activeMessageIndex === index ? 'bg-pink-500 text-white' : 'bg-gray-100'
-                            } hover:bg-pink-500 hover:text-white`}
+                                activeMessageIndex === index ? 'border border-[#FF318C] text-[#202020] bg-[#FFF]' : 'bg-[#FFF] border border-[#D8D8DA]'
+                            }`}
                             onClick={() => setActiveMessageIndex(index)}
                         >
                             {message}
@@ -90,9 +90,10 @@ export default function MessageTemplatesModal({ isOpen, onClose, setAddTocartTex
                 </div>
 
                 {/* Buttons */}
-                <div className="flex justify-center space-x-4 mb-10">
-                    <button className="bg-pink-500 text-white px-6 py-2 rounded-full" onClick={addTocartText}>Add to card</button>
-                    <button className="text-gray-600 px-6 py-2 rounded-full" onClick={onClose}>Cancel</button>
+          
+                <div className="flex flex-col items-center justify-end mb-10 h-full">
+                    <button className="bg-pink-500 text-white px-6 py-2 rounded-full w-full max-w-xs mb-2" onClick={addTocartText}>Add to Cart</button>
+                    <button className="text-gray-600 px-6 py-2 rounded-full w-full max-w-xs" onClick={onClose}>Cancel</button>
                 </div>
             </div>
         </div>

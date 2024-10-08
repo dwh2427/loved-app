@@ -57,7 +57,7 @@ export default function SendLoved() {
     return (
         <>
             <CardHeader pageLink="dashboard" />
-            <div className="container mx-auto mt-5">
+            <div className="container mx-auto mt-5 px-4">
                 <div className="flex justify-center">
                     <div className="text-center max-w-lg mx-auto">
                         <h2 className="text-2xl font-bold font-comfortaa text-gray-900">Want to add a Gift?</h2>
@@ -66,7 +66,7 @@ export default function SendLoved() {
                 </div>
 
                 <div className="py-4">
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <div className="relative">
                             <input
                                 type="search"
@@ -79,7 +79,23 @@ export default function SendLoved() {
                                 }}
                             />
                         </div>
+                    </div> */}
+                    <div className="mb-3">
+                        <div className="relative">
+                            {/* Search Icon */}
+                            <span className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><circle cx={11} cy={11} r={8} /><line x1={21} y1={21} x2="16.65" y2="16.65" /></svg>
+                            </span>
+
+                            {/* Search Input */}
+                            <input
+                            type="search"
+                            placeholder="Search"
+                            className="w-full p-3 pl-12 text-lg border border-gray-300 rounded-[32px] bg-white focus:outline-none focus:ring-2 focus:gray-300"
+                            />
+                        </div>
                     </div>
+
 
                     <div className="grid gap-6 mt-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                         {Array.from({ length: 12 }, (_, index) => (
@@ -108,48 +124,53 @@ export default function SendLoved() {
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-sm mx-auto">
-                        {/* Close button */}
-                        <button onClick={closeModal} className="absolute top-3 right-3 text-gray-500">
-                            &times;
-                        </button>
-                        {/* Selected image */}
-                        <Image src={selectedImage} width="200" height="120" alt="Selected Gift Card" />
-                        
-                        {/* Value selection */}
-                        <h3 className="text-center text-lg mt-4">Add Card Value</h3>
-                        <div className="flex justify-between items-center mt-4">
-                            <button className="text-2xl" onClick={decreaseAmount}>-</button>
-                            <span className="text-xl font-bold">
-                                $<input 
-                                    type="number" 
-                                    className="items-center text-center" 
-                                    value={giftAmount} 
-                                    onChange={(e) => setGiftAmount(Number(e.target.value))} // Handle input change
-                                />
-                            </span>
-                            <button className="text-2xl" onClick={increaseAmount}>+</button>
-                        </div>
+                <div className="fixed inset-0 flex items-center justify-center bg-[#202020] bg-opacity-40 z-50">
 
-                        {/* Error Message */}
-                        {errorMessage && (
-                            <p className="text-red-500 text-center mt-2">{errorMessage}</p>
-                        )}
+                <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-sm mx-auto">
+                  {/* Close button */}
+                  <button onClick={closeModal} className="absolute top-3 right-3 text-gray-500">
+                    &times;
+                  </button>
+              
+                  {/* Selected image with background */}
+                  <div className="flex justify-center mb-6 bg-gray-100 p-4 rounded-lg">
+                    <Image src={selectedImage} width={200} height={120} alt="Selected Gift Card" className="w-40 h-auto rotate-6" />
+                  </div>
+              
+                  {/* Add Card Value Text */}
+                  <h3 className="text-center text-lg font-semibold mb-4">Add Card Value</h3>
+              
+                  {/* Value Controls */}
+                  <div className="flex items-center justify-center mb-4">
+                    <button className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-2xl text-gray-600" onClick={decreaseAmount}>-</button>
+                    <span className="mx-6 text-3xl font-bold text-gray-800 border border-gray-300 rounded-lg px-8">
+                        ${giftAmount}
+                    </span>
 
-                        <div className="flex justify-around mt-4">
-                            <button className="border border-gray-300 px-4 py-2 rounded-lg" onClick={() => setGiftAmount(20)}>$20</button>
-                            <button className="border border-gray-300 px-4 py-2 rounded-lg" onClick={() => setGiftAmount(75)}>$75</button>
-                            <button className="border border-gray-300 px-4 py-2 rounded-lg"  onClick={() => setGiftAmount(200)}>$200</button>
-                        </div>
 
-                        {/* Confirm and Cancel buttons */}
-                        <div className="flex justify-center mt-6">
-                            <button className="bg-pink-500 text-white px-6 py-2 rounded-lg mr-4" onClick={handleGift}>Confirm</button>
-                            <button className="text-gray-500" onClick={closeModal}>Cancel</button>
-                        </div>
-                    </div>
+                    <button className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-2xl text-gray-600" onClick={increaseAmount}>+</button>
+                  </div>
+              
+                  {/* Error Message */}
+                  {errorMessage && (
+                    <p className="text-red-500 text-center mt-2">{errorMessage}</p>
+                  )}
+              
+                  {/* Value Options */}
+                  <div className="grid grid-cols-3 gap-4 mb-6">
+                    <button className="w-full py-2 bg-gray-100 text-gray-800 font-medium rounded-lg" onClick={() => setGiftAmount(20)}>$20</button>
+                    <button className="w-full py-2 bg-gray-100 text-gray-800 font-medium rounded-lg" onClick={() => setGiftAmount(75)}>$75</button>
+                    <button className="w-full py-2 bg-gray-100 text-gray-800 font-medium rounded-lg" onClick={() => setGiftAmount(200)}>$200</button>
+                  </div>
+              
+                  {/* Full-width Confirm and Cancel Buttons */}
+                  <div className="flex flex-col items-center mt-6 space-y-2">
+                    <button className="w-full bg-pink-500 text-white px-6 py-2 rounded-[50px]" onClick={handleGift}>Confirm</button>
+                    <button className="text-gray-500" onClick={closeModal}>Cancel</button>
+                  </div>
                 </div>
+              </div>
+              
             )}
         </>
     );
