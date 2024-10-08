@@ -1212,3 +1212,65 @@ display: none; /* Hidden by default */
 .optnHeight {
   height: 40rem;
 }
+
+.pt-200 {
+  padding-top:200px ;
+}
+@media (max-width: 1024px) {
+  .pt-200 {
+    padding-top:35px;
+  }
+}
+.paddingLove {
+  padding: 100px 60px;
+}
+.gap-30 {
+  gap: 12rem;
+}
+.mb-250 {
+  margin-bottom: 250px;
+}
+.Loveabsolute {
+  position: absolute;
+  left: 18%;
+  bottom: 9%;
+  transform: rotate(-6deg);
+
+}
+.resendBtn {
+  color: var(--Light-Mode-Text-Primary, var(--MAGENTA, #FF318C));
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  text-decoration-line: underline;
+}
+.verifyText {
+    color: var(--Light-Mode-Text-Default, #202020);
+  font-family: Comfortaa;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  margin-bottom: 14px;
+}
+.code-sent-to {
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 22.4px */
+}
+.changText {
+  color: var(--Light-Mode-Text-Primary, var(--MAGENTA, #FF318C));
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  text-decoration-line: underline;
+}

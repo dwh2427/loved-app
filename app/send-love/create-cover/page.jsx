@@ -8,6 +8,7 @@ import cardLogo from '@/public/home/card-logo.svg';
 import defaultImage from '@/public/home/download.png';
 import blankImage from '@/public/home/blankImage.png';
 import backIcon from '@/public/home/back-icon.svg';
+import arrowLeft from '@/public/home/arrow-left.svg';
 import uploadIcon from '@/public/home/upload-icon.svg';
 import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
@@ -264,10 +265,10 @@ const handleSaveImage = async () => {
                     </div>
                         {/* Bottom Section: Back and Continue Buttons */}
                         <div className="flex justify-center items-center gap-6 pb-20 lg:pb-0 lg:pt-20">
-                            <button className="flex items-center justify-center bg-white border rounded-full px-4 py-2">
-                                <Image src={backIcon} alt="Back" width={24} height={24} />
+                            <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2">
+                                <Image src={arrowLeft} alt="Back" width={24} height={24} />
                             </button>
-                            <button onClick={handleSaveImage} className="bg-pink-500 continue-button text-white rounded-full py-3 px-8 text-base font-semibold hover:bg-pink-600 transition-colors">
+                            <button onClick={handleSaveImage} className="bg-pink-500 continue-button text-white rounded-full py-2 px-8 text-base font-semibold hover:bg-pink-600 transition-colors">
                                 Continue
                             </button>
 

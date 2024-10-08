@@ -43,46 +43,56 @@ export default function LoginPage() {
 
 
 
-    <div className="flex w-full min-h-screen">
-       {/* Left Side - Sign In Form */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
-        {/* Logo */}
-        <div className="mb-8 mr-[21rem] md:mr-[22.5rem]">
-          <img src="assets/img/loveText.png" alt="Loved logo" className="h-5 lg:h-[20px] object-cover"/>
+      <div className="flex w-full min-h-screen bg-gray-800 bg-opacity-40 p-8 mx-auto pt-[200px]">
+      <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white">
+        {/* Left Side - Sign In Form*/}
+        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8">
+          <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center lg:hidden">
+            <Link href="/" className="relative h-[182.62px] w-full max-w-[189.98px]">
+              <Image
+                src={Logo}
+                alt="Image"
+                className="object-cover"
+                width={165}
+                height={40}
+                sizes="100vw"
+              />
+            </Link>
+          </div>
+
+          {/* Sign In Form Container */}
+          <div className="bg-white rounded-lg w-full max-w-md">
+            {/* Sign In Header*/}
+            <h2 className="text-2xl font-bold text-gray-800 mb-4" style={{ fontSize: '28px' }}>Sign In</h2>
+            <p className="text-gray-600 mb-8">Share a message with a loved one</p>
+
+            {/* Phone Number Input*/}
+
+            <LoginForm />
+
+            {/*  Terms and Privacy Notice */}
+            <p className="text-center text-gray-500 text-xs mt-4">
+              By clicking the Sign In button below, you agree to the Loved{" "}
+              <a href="#" className="underline">
+                Terms of Service
+              </a>{" "}
+              and acknowledge the{" "}
+              <a href="#" className="underline">
+                Privacy Notice
+              </a>.
+            </p>
+          </div>
         </div>
 
-        {/* Sign In Form Container */}
-        <div className="bg-white rounded-lg w-full max-w-md">
-          {/* Sign In Header */}
-          <h2 className="text-2xl font-bold text-gray-800 mb-4" style={{ fontSize: '28px' }}>Sign In</h2>
-          <p className="text-gray-600 mb-8">Share a message with a loved one</p>
 
-          {/* Phone Number Input */}
-
-          <LoginForm />
-
-          {/* Terms and Privacy Notice */}
-          <p className="text-center text-gray-500 text-xs mt-4">
-            By clicking the Sign In button below, you agree to the Loved{" "}
-            <a href="#" className="underline">
-              Terms of Service
-            </a>{" "}
-            and acknowledge the{" "}
-            <a href="#" className="underline">
-              Privacy Notice
-            </a>.
-          </p>
+        {/* Right Side - Cover Image */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center img-none">
+          <img
+            src="assets/img/covers/signCoverImg.png"
+            alt="Cover Image"
+            className="w-[350px] h-[350px] lg:w-[466px] lg:h-[598px] object-cover rounded-lg"
+          />
         </div>
-      </div>
-
-
-      {/* Right Side - Cover Image */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start img-none">
-        <img
-          src="assets/img/covers/signCoverImg.png"
-          alt="Cover Image"
-          className="w-[350px] h-[350px] lg:w-[466px] lg:h-[598px] object-cover rounded-lg"
-        />
       </div>
     </div>
 

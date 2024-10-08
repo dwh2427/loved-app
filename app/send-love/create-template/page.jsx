@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import templateIcon from '@/public/home/templateicon.svg';
 import backIcon from '@/public/home/back-icon.svg';
+import arrowLeft from '@/public/home/arrow-left.svg';
 import messageIcon from '@/public/home/messageicon.svg';
 import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
@@ -178,10 +179,10 @@ export default function CreateTemplate() {
           
                     {/* Bottom Section: Back and Continue Buttons */}
                     <div className="flex justify-center items-center gap-6 pt-10">
-                        <button className="flex items-center justify-center bg-white border rounded-full px-4 py-2">
-                            <Image src={backIcon} alt="Back" width={24} height={24} />
+                        <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2">
+                            <Image src={arrowLeft} alt="Back" />
                         </button>
-                        <button onClick={handleSaveImage} className="bg-pink-500 text-white rounded-full py-3 px-8 text-base font-semibold hover:bg-pink-600 transition-colors">
+                        <button onClick={handleSaveImage} className="bg-pink-500 text-white rounded-full py-2 px-16 text-base font-semibold hover:bg-pink-600 transition-colors">
                             Continue
                         </button>
                     </div>

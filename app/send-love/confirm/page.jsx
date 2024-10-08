@@ -147,13 +147,13 @@ export default function CreateTemplate() {
         <>
             <CardHeader pageLink="dashboard" />
             <div className="container mx-auto mt-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-30">
                 {/* Left Column */}
-                <div className="space-y-6">
+                <div className="space-y-6 p-8">
                 <h2 className="text-3xl font-bold">Confirm and Send Your Message</h2>
                 <form>
-                    <div className="mb-4">
-                    <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">
+                    <div className="mb-8">
+                    <label htmlFor="recipient" className="block text-sm font-medium text-gray-700 py-4">
                         Recipient
                     </label>
     
@@ -210,14 +210,14 @@ export default function CreateTemplate() {
                      )}
                     <button
                     type="button"
-                    className="cursor-pointer flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
+                    className="cursor-pointer flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 mb-250"
                     onClick={() => setIsModalOpen(true)}
                    >
-                    <i className="fas fa-plus mr-2"></i>Add Payment Method
+                    <span className="mr-2">+</span>Add Payment Method
                     </button>
                 </form>
-
-                <div className="flex justify-end space-x-4 mt-4">
+                <hr className="mt-200 my-6 border-gray-200" />
+                <div className="flex justify-start space-x-4 mt-4">
                     <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full text-gray-500 font-medium transition-colors hover:bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3.75v-1.5M15.75 3.75v-1.5M3.75 8.25h16.5M3.75 7.5h16.5v13.5h-16.5V7.5zm3 3V6m9 4.5V6" />
@@ -233,10 +233,10 @@ export default function CreateTemplate() {
                 </div>
 
                 {/* Right Column */}
-                <div className="bg-gray-100 p-6 rounded-lg">
-                <div className="relative flex items-center justify-center h-96 bg-pink-100 rounded-lg">
-                    <div className="absolute w-44 h-60 bg-white transform rotate-6 shadow-md rounded-lg"></div>
-                    <div className="absolute w-52 h-72 bg-white shadow-lg rounded-lg z-10"></div>
+                <div className="bg-gray-100 p-6 rounded-lg paddingLove">
+                    <div className="relative flex items-center justify-center h-96 bg-pink-100 rounded-lg">
+                    {/* <div className="absolute w-44 h-60 bg-white transform rotate-6 shadow-md rounded-lg"></div> */}
+                    <div className="Loveabsolute w-52 h-72 bg-white shadow-lg rounded-lg z-10 "></div>
                     <img src="/home/checkout/icon/pencilIcon.svg" alt="icon"  onClick={handleEdit} className="absolute top-4 right-4 w-8 h-8 cursor-pointer" />
 
                     
@@ -247,46 +247,30 @@ export default function CreateTemplate() {
                         height={298}
                         className="absolute z-20"
                     />
-                    <img src="/home/checkout/thumb/love.svg" alt="img" className="absolute z-20" />
+                    {/* <img src="/home/checkout/thumb/love.svg" alt="img" className="absolute z-20" /> */}
                 </div>
-{/* 
                 <div className="flex items-center mt-6">
-                    <img src={selectedImage} alt="thumb" className="w-16 h-16 rounded-full" />
-                    <div className="ml-4">
-                    <h5 className="text-lg font-semibold">{label}</h5>
-                    <h6 className="text-gray-500">Can spend at any</h6>
-                    <h5 className="text-xl font-bold">${subTotal}</h5>
-                    </div>
-                    <div className="ml-auto flex space-x-3">
-                    <img src="/home/checkout/icon/edit.svg" onClick={ handleBack } alt="edit icon" className="w-6 h-6 cursor-pointer" />
-                    <img src="/home/checkout/icon/delete.svg" alt="delete icon" className="w-6 h-6 cursor-pointer delete-icon" />
-                    </div>
-                </div> */}
-
-
-                <div className="flex items-center mt-6">
-                            {!isGiftDeleted ? (
-                                <>
-                                    <img src={selectedImage} alt="thumb" className="w-16 h-16 rounded-full" />
-                                    <div className="ml-4">
-                                        <h5 className="text-lg font-semibold">{label}</h5>
-                                        <h5 className="text-xl font-bold">${subTotal}</h5>
-                                    </div>
-                                    <div className="ml-auto flex space-x-3">
-                                        <img src="/home/checkout/icon/edit.svg" onClick={handleBack} alt="edit icon" className="w-6 h-6 cursor-pointer" />
-                                        <img src="/home/checkout/icon/delete.svg" onClick={handleDelete} alt="delete icon" className="w-6 h-6 cursor-pointer delete-icon" />
-                                    </div>
-                                </>
-                            ) : (
-                                <button 
-                                    onClick={() => router.push("/send-love/add-gift")} 
-                                    className="px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500"
-                                >
-                                    Add Gift
-                                </button>
-                            )}
-                        </div>
-
+                    {!isGiftDeleted ? (
+                        <>
+                            <img src={selectedImage} alt="thumb" className="w-16 h-16" />
+                            <div className="ml-4">
+                                <h5 className="text-lg font-semibold">{label}</h5>
+                                <h5 className="text-xl font-bold">${subTotal}</h5>
+                            </div>
+                            <div className="ml-auto flex space-x-3">
+                                <img src="/home/checkout/icon/edit.svg" onClick={handleBack} alt="edit icon" className="w-6 h-6 cursor-pointer" />
+                                <img src="/home/checkout/icon/delete.svg" onClick={handleDelete} alt="delete icon" className="w-6 h-6 cursor-pointer delete-icon" />
+                            </div>
+                        </>
+                    ) : (
+                        <button 
+                            onClick={() => router.push("/send-love/add-gift")} 
+                            className="px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500"
+                        >
+                            Add Gift
+                        </button>
+                    )}
+                </div>
 
                 <div className="mt-6">
                     <div className="flex justify-between">
