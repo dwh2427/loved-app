@@ -13,6 +13,7 @@ import { Elements} from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY); // Replace with your Stripe public key
 import PaymentMethodModal from "../components/PaymentMethodModal";
+import useAuthState from "@/hooks/useAuthState";
 
 
 const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), {
@@ -29,6 +30,11 @@ export default function CreateTemplate() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
+    const { user, loading } = useAuthState();
+
+    const [phoneNumber, setPhoneNumber] = useState(null);
+    const [loginUserId, setLoginUserId] = useState(null);
+    const [fromName, setFromName] = useState(null);
 
     const label = searchParams.get('label');
     const selectedImage = searchParams.get('selectedImage');
@@ -81,6 +87,27 @@ export default function CreateTemplate() {
         setOrderTotal(0);
         setIsGiftDeleted(true); // Show "Add Gift" button
     };
+
+
+    useEffect(() => {
+        if (user && !loading) {
+          // Assuming user data contains firstname, lastname, and email
+          const { first_name, last_name, email, phone, uid } = user;
+            
+          // Combine firstname and lastname to create the username or set it as an empty string
+          const combinedUsername = first_name && last_name ? `${first_name.toLowerCase()} ${last_name.toLowerCase()}` : "";
+          setFromName(combinedUsername);
+    
+          if(phone){
+            setPhoneNumber(phone);
+          }
+    
+          if(uid){
+            setLoginUserId(uid);
+          }
+          
+        }
+      }, [user, loading]);
 
     const {
         register,
@@ -160,6 +187,7 @@ export default function CreateTemplate() {
                         {/* Email Input */}
                         <div className="mb-8">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 pb-4">
+
                             Email
                         </label>
                         <input
@@ -202,6 +230,7 @@ export default function CreateTemplate() {
                             strokeLinejoin="round"
                             d="M8.25 3.75v-1.5M15.75 3.75v-1.5M3.75 8.25h16.5M3.75 7.5h16.5v13.5h-16.5V7.5zm3 3V6m9 4.5V6"
                             />
+
                         </svg>
                         Schedule for later
                         </button>

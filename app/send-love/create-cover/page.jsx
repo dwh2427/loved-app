@@ -143,7 +143,7 @@ const handleSaveImage = async () => {
             const response = await axios.post('/send-love/create-cover/api', { imageData: dataUrl });
             
             if (response.data.success) {
-                localStorage.setItem('redirectUrl', null);
+                localStorage.setItem('redirectUrl', "");
                 localStorage.setItem('cardImage', "/tmp/"+response.data.imageName);
          
                 if(redirectUrl){
