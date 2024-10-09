@@ -90,7 +90,12 @@ export default function SchedulePopup({showPopup, onClose, setScheduledTime, set
                 className="absolute z-20"
                 />
             </div>
-            
+            <div className="text-center my-6">
+              <h2 className="dateTime">
+                Pick a Date and Time
+              </h2>
+            </div>
+        </div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker", "TimePicker"]}>
               <DatePicker
@@ -118,9 +123,10 @@ export default function SchedulePopup({showPopup, onClose, setScheduledTime, set
               />
             </DemoContainer>
           </LocalizationProvider>
-        </div>
+
+
         {error && <p className="schedule-error-message">{error}</p>}
-        <button onClick={handleScheduleClick} className="schedule-close-popup-button">
+        <button onClick={handleScheduleClick} className="schedule-close-popup-button w-full fixed-scheudul">
           Schedule
         </button>
 

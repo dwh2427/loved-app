@@ -13,7 +13,7 @@ export default function UserInfo({ username, register, email, errors }) {
   return (
     <div className="customSection">
     {username ? (
-      <div className="inline-flex items-center justify-center px-3 mb-4 py-1 text-black border border-gray-300 rounded-full commonPinkBg">
+      <div className="inline-flex items-center justify-center px-3 mb-4 py-1 text-black border border-gray-300 rounded-full bg-pink-400">
         {username}
       </div>
     ) : (
