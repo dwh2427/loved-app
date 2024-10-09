@@ -105,92 +105,13 @@ export default function PaymentMethodModal({ isOpen, onRequestClose, setPaymentM
         <h2 className="text-xl font-semibold text-center">Add Payment Method</h2>
   
         <form id="payment-form" onSubmit={handleSubmit}>
-          {/* Card Information Section */}
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">Card information</label>
-            <div className="mt-2 flex space-x-2 relative">
-              <input
-                type="text"
-                placeholder="1234 1234 1234 1234"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-              />
-              <div className="flex items-center space-x-1 absolute right-2 bottom-2">
-                <img src="../../assets/img/paymentCard/visa.svg" alt="Visa" className="h-6 w-6" />
-                <img src="../../assets/img/paymentCard/mastercard.svg" alt="Mastercard" className="h-6 w-6" />
-                <img src="../../assets/img/paymentCard/amex.svg" alt="aemx" className="h-6 w-6" />
-                <img src="../../assets/img/paymentCard/jcb.svg" alt="jcb" className="h-6 w-6" />
-              </div>
-            </div>
-          </div>
-  
-          <div className="mt-2 flex space-x-2 relative">
-            <input
-              type="text"
-              placeholder="MM / YY"
-              className="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-            />
-            <input
-              type="text"
-              placeholder="CVC"
-              className="w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-            />
-              <div className="flex items-center space-x-1 absolute right-2 bottom-3">
-                <img src="../../assets/img/paymentCard/CVC.svg" alt="cvc" className="h-6 w-6" />
-              </div>
-          </div>
-  
-          {/* Cardholder Name Section */}
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">Cardholder name</label>
-            <input
-              type="text"
-              placeholder="Full name on card"
-              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-            />
-          </div>
-  
-          {/* Country or Region Section */}
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">Country or region</label>
-            <select
-              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-            >
-              <option>United States</option>
-              {/* Add more options here */}
-            </select>
-            <input
-              type="text"
-              placeholder="ZIP"
-              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-            />
-          </div>
-  
-          {/* Save Information Section */}
-          <div className="mt-4 p-4 bg-gray-100 rounded-md border border-gray-200">
-            <div className="flex justify-between">
-              <span className="text-sm font-medium text-gray-700">Securely save my information for 1-click checkout</span>
-              <label className="text-sm text-gray-500">Optional</label>
-            </div>
-            <div className="mt-2 flex items-center space-x-2">
-              <img src="/path/to/flag-icon.png" alt="Flag" className="h-5 w-5" />
-              <input
-                type="text"
-                placeholder="(201) 555-0123"
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-              />
-            </div>
-          </div>
-  
-          {/* Submit Button */}
-          <div className="mt-6">
-            <button
-              id="submit"
-              className="w-full px-4 py-3 bg-pink-600 text-white font-semibold rounded-md hover:bg-pink-500 focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Processing...' : 'Submit'}
-            </button>
-          </div>
+        {/* Card Payment Element */}
+        <div id="payment-element" />
+        {/* Submit Button */}
+        <button id="submit" className="submit-button" disabled={isLoading}>
+          {isLoading ? 'Processing...' : 'Submit'}
+        </button>
+
         </form>
       </div>
     </Modal>
