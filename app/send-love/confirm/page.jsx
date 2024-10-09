@@ -13,6 +13,10 @@ import { Elements} from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY); // Replace with your Stripe public key
 import PaymentMethodModal from "../components/PaymentMethodModal";
+import ScheduledPopup from "../components/ScheduledPopup";
+import UserInfo from "../components/UserInfo";
+
+
 import useAuthState from "@/hooks/useAuthState";
 
 const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), {
@@ -31,6 +35,18 @@ export default function CreateTemplate() {
     const pathname = usePathname();
     const { user, loading } = useAuthState();
 
+    const {
+        register,
+        setValue,
+        getValues,
+        watch,
+        setError,
+        trigger,
+        formState: { errors },
+    } = useForm({
+        resolver: zodResolver(formSchema),
+    });
+
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [loginUserId, setLoginUserId] = useState(null);
     const [fromName, setFromName] = useState(null);
@@ -46,6 +62,9 @@ export default function CreateTemplate() {
     const [selectedPage, setSelectedPage] = useState(null);
     const [pymentMethodId, setPaymentMethodId] = useState("");
     const [last4, setLast4] = useState("");
+    const [showPopup, setShowPopup] = useState(false); // State to manage the popup visibility
+    const [scheduledTime, setScheduledTime] = useState(""); // State to manage the popup visibility
+    const [scheduledDate, setScheduledDate] = useState("");// State to manage the popup visibility
 
     useEffect(() => {
         console.log(user);
@@ -98,37 +117,37 @@ export default function CreateTemplate() {
     };
 
 
+    const username = watch("username");
+    const email = watch("email");
+  
     useEffect(() => {
-        if (user && !loading) {
-          // Assuming user data contains firstname, lastname, and email
-          const { first_name, last_name, email, phone, uid } = user;
-            
-          // Combine firstname and lastname to create the username or set it as an empty string
-          const combinedUsername = first_name && last_name ? `${first_name.toLowerCase()} ${last_name.toLowerCase()}` : "";
-          setFromName(combinedUsername);
-    
-          if(phone){
-            setPhoneNumber(phone);
-          }
-    
-          if(uid){
-            setLoginUserId(uid);
-          }
+      if (user && !loading) {
+        // Assuming user data contains firstname, lastname, and email
+        const { first_name, last_name, email, phone, uid } = user;
           
+        // Combine firstname and lastname to create the username or set it as an empty string
+        const combinedUsername = first_name && last_name ? `${first_name.toLowerCase()} ${last_name.toLowerCase()}` : "";
+        setValue("username", combinedUsername);
+  
+        // Set email or empty string
+        setValue("email", email || "");
+  
+        // Set phone number if available
+  
+  
+        if(phone){
+          setPhoneNumber(phone);
         }
-      }, [user, loading]);
+  
+        if(uid){
+          setLoginUserId(uid);
+        }
+        
+      }
+    }, [user, loading, setValue]);
 
-    const {
-        register,
-        setValue,
-        getValues,
-        watch,
-        setError,
-        trigger,
-        formState: { errors },
-    } = useForm({
-        resolver: zodResolver(formSchema),
-    });
+
+
 
     const inputValue = watch("inputValue");
 
@@ -151,6 +170,28 @@ export default function CreateTemplate() {
         setCardImage(image);
     }, []);
 
+
+    const handleSendLoveClick = async (e) => {
+        e.preventDefault();
+        setIsSubmitPayment(false); // Trigger payment confirmation in PaymentInfo
+        const isValid = await trigger(["username", "email", "inputValue"]); // Validate UserInfo step
+    
+        if (!isValid) return; // If validation fails, stop execution
+        setIsSubmitPayment(true); // Trigger payment confirmation in PaymentInfo
+      };
+    
+      const handleScheduleLoveClick = async (e) => {
+        e.preventDefault();
+        const isValid = await trigger(["username", "email", "inputValue"]); // Validate UserInfo step
+        console.log(isValid);
+        if (!isValid) return; // If validation fails, stop execution
+        setShowPopup(true);
+      };
+
+        // Function to close the popup
+     const handleClosePopup = () => {
+        setShowPopup(false);
+      };
 
     return (
         <>
@@ -181,31 +222,12 @@ export default function CreateTemplate() {
                         <hr className="my-6 border-gray-200" />
 
                         {/* From Input */}
-                        <div className="mb-8">
-                        <label htmlFor="from" className="block text-sm font-medium text-gray-700 pb-4">
-                            From
-                        </label>
-                        <input
-                            type="text"
-                            id="from"
-                            placeholder="Your name"
-                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                        <UserInfo
+                            username={username}
+                            register={register}
+                            email={email}
+                            errors={errors}
                         />
-                        </div>
-
-                        {/* Email Input */}
-                        <div className="mb-8">
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 pb-4">
-
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="Your email"
-                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                        />
-                        </div>
 
                         {/* Add Payment Method Button */}
                         { pymentMethodId? (
@@ -231,7 +253,7 @@ export default function CreateTemplate() {
                     {/* Schedule and Send Now Buttons */}
                     <hr className="hidden md:block my-6 border-gray-200" />
                     <div className="hidden md:flex justify-start space-x-4 mt-4">
-                        <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full text-gray-500 font-medium transition-colors hover:bg-gray-100">
+                        <button onClick={handleScheduleLoveClick} className="flex items-center px-4 py-2 border border-gray-300 rounded-full text-gray-500 font-medium transition-colors hover:bg-gray-100">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -250,7 +272,7 @@ export default function CreateTemplate() {
                         Schedule for later
                         </button>
 
-                        <button className="px-6 py-2 bg-pink-400 rounded-full text-white font-semibold transition-colors hover:bg-pink-500">
+                        <button onClick={handleSendLoveClick} className="px-6 py-2 bg-pink-400 rounded-full text-white font-semibold transition-colors hover:bg-pink-500">
                         Send Now
                         </button>
                     </div>
@@ -393,29 +415,26 @@ export default function CreateTemplate() {
             {/* Schedule and Send Now Buttons at the Bottom */}
             <hr className="md:hidden my-6 border-gray-200" />
             <div className="md:hidden flex flex-col mt-4 w-full p-4">
-                <button className="flex justify-center items-center w-full px-4 py-2 border border-gray-300 rounded-full text-gray-500 font-medium transition-colors hover:bg-gray-100 mb-2">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-5 h-5 mr-2"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M8.25 3.75v-1.5M15.75 3.75v-1.5M3.75 8.25h16.5M3.75 7.5h16.5v13.5h-16.5V7.5zm3 3V6m9 4.5V6"
-                        />
-                    </svg>
+                <button onClick={handleScheduleLoveClick} className="flex justify-center items-center w-full px-4 py-2 border border-gray-300 rounded-full text-gray-500 font-medium transition-colors hover:bg-gray-100 mb-2" type="button" >
                     Schedule for later
                 </button>
 
-                <button className="w-full px-6 py-2 bg-pink-400 rounded-full text-white font-semibold transition-colors hover:bg-pink-500">
+                <button onClick={handleSendLoveClick} className="w-full px-6 py-2 bg-pink-400 rounded-full text-white font-semibold transition-colors hover:bg-pink-500" type="button">
                     Send Now
                 </button>
             </div>
 
+
+            {showPopup && (
+              <ScheduledPopup 
+                 showPopup={showPopup}
+                onClose={handleClosePopup}
+                setScheduledTime={setScheduledTime}
+                setScheduledDate={setScheduledDate}
+                cardImage={cardImage}
+             
+              />
+            )}
 
 
            
