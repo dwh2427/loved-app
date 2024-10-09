@@ -124,7 +124,7 @@ export default function SchedulePopup({showPopup, onClose, setScheduledTime, set
           Schedule
         </button>
 
-        <button onClick={onClose} className="schedule-close-popup-button">
+        <button onClick={onClose} className="text-pink-500 font-medium hover:underline">
           Cancel
         </button>
 

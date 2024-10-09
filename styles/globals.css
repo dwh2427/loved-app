@@ -1349,3 +1349,6 @@ display: none; /* Hidden by default */
 #payment-element{
   min-height: 360px;
 }
+.commonPinkBg {
+  background: rgb(252, 231, 243 / var(--tw-bg-opacity)) !important;
+}
