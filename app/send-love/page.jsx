@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import cardOne from '@/public/home/occasion-card1.svg';  // Replace with your actual image path
@@ -42,7 +42,6 @@ export default function SendLoved() {
     };
 
     return (
-        <Suspense>
             <>
                 <CardHeader pageLink="dashboard" />
                 <div className="bg-gray-50 min-h-screen flex items-center justify-center px-6"  style={{
@@ -149,6 +148,5 @@ export default function SendLoved() {
                     </div>
                 </div>
             </>
-        </Suspense>
     );
 }
