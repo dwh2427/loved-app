@@ -13,7 +13,7 @@ export default function PopupMessage() {
             <FaHeart className="text-pink-500" size={50} />
             </div>
             <div className="text-gray-500 italic">
-            “A grateful perspective brings happiness and abundance into a person's life.”
+            “A grateful perspective brings happiness and abundance into a person life.”
             </div>
             <div className="text-gray-500 mt-2">— Unknown</div>
         </div>

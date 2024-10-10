@@ -1,5 +1,5 @@
 'use client'
-
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation"; // For getting URL params in Next.js
 import Image from "next/image";
@@ -19,7 +19,8 @@ export default function SendLoved() {
     const type = searchParams.get('type');
 
     return (
-        <>
+
+            <Suspense>
             <div className="bg-gray-50 min-h-screen flex flex-col justify-between items-center px-6" style={{ background: "#F8F9FB" }}>
                 <div style={{ maxWidth: '800px' }}>
                     <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-start justify-center" style={{ maxWidth: '800px' }}>
@@ -32,6 +33,7 @@ export default function SendLoved() {
                     </div>
                 </div>
             </div>
-        </>
+            </Suspense>
+     
     );
 }

@@ -1,4 +1,5 @@
 'use client'
+import { Suspense } from "react";
 
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
@@ -263,7 +264,7 @@ export default function CreateTemplate() {
   };
 
     return (
-        <>
+        <Suspense>
             <CardHeader pageLink="dashboard" />
             
             <div className="container mx-auto mt-10">
@@ -521,6 +522,6 @@ export default function CreateTemplate() {
                 />
             </Elements>
 
-        </>
+        </Suspense>
     );
 }
