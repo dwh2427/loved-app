@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image'; // Assuming you're using Next.js
+import { useRouter } from 'next/navigation'
 
 export default function SuccessScheduledPopup({ cardImage }) {
   const [error, setError] = useState('');
-
+  const router = useRouter();
+  
   const handleScheduleClick = (e) => {
     router.push('/send-love');
 };
