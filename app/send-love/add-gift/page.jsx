@@ -141,15 +141,32 @@ export default function SendLoved() {
                   <h3 className="text-center text-lg font-semibold mb-4">Add Card Value</h3>
               
                   {/* Value Controls */}
-                  <div className="flex items-center justify-center mb-4">
-                    <button className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-2xl text-gray-600" onClick={decreaseAmount}>-</button>
-                    <span className="mx-6 text-3xl font-bold text-gray-800 border border-gray-300 rounded-lg px-8">
-                        ${giftAmount}
-                    </span>
+                    <div className="flex items-center justify-center mb-4">
+                        <button
+                            className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-2xl text-gray-600 hover:bg-gray-300"
+                            onClick={decreaseAmount}
+                        >
+                            -
+                        </button>
 
+                        <input
+                            type="text"
+                            value={`$${giftAmount}`}
+                            onChange={(e) => {
+                            const value = e.target.value.replace(/[^0-9]/g, ''); // remove non-numeric characters
+                            setGiftAmount(value);
+                            }}
+                            className="mx-6 w-24 text-3xl font-bold text-gray-800 border border-gray-200 rounded-lg text-center p-2 focus:border-gray-400 focus:outline-none"
+                        />
 
-                    <button className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-2xl text-gray-600" onClick={increaseAmount}>+</button>
-                  </div>
+                        <button
+                            className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-2xl text-gray-600 hover:bg-gray-300"
+                            onClick={increaseAmount}
+                        >
+                            +
+                        </button>
+                    </div>
+
               
                   {/* Error Message */}
                   {errorMessage && (
