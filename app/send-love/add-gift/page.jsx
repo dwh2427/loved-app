@@ -156,7 +156,7 @@ export default function SendLoved() {
                             const value = e.target.value.replace(/[^0-9]/g, ''); // remove non-numeric characters
                             setGiftAmount(value);
                             }}
-                            className="mx-6 w-24 text-3xl font-bold text-gray-800 border border-gray-300 rounded-lg text-center p-2"
+                            className="mx-6 w-24 text-3xl font-bold text-gray-800 border border-gray-200 rounded-lg text-center p-2 focus:border-gray-400 focus:outline-none"
                         />
 
                         <button
