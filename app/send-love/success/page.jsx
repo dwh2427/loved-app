@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation"; // For getting URL params in 
 import Image from "next/image";
 import SuccessScheduledPopup from "../components/SuccessScheduledPopup";
 import SuccessPopup from "../components/SuccessPopup"; // Assuming you have this component
+import { SessionProvider } from "next-auth/react";
 
 export default function SendLoved() {
     const [cardImage, setCardImage] = useState('');
@@ -19,7 +20,7 @@ export default function SendLoved() {
     const type = searchParams.get('type');
 
     return (
-
+        <SessionProvider>
             <Suspense>
             <div className="bg-gray-50 min-h-screen flex flex-col justify-between items-center px-6" style={{ background: "#F8F9FB" }}>
                 <div style={{ maxWidth: '800px' }}>
@@ -34,6 +35,6 @@ export default function SendLoved() {
                 </div>
             </div>
             </Suspense>
-     
+            </SessionProvider>
     );
 }
