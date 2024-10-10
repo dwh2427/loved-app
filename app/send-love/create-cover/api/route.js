@@ -17,10 +17,11 @@ export async function POST(req) {
     // Decode the base64 image
     const base64Data = imageData.replace(/^data:image\/png;base64,/, '');
 
-    // Define the path where you want to save the image
-    const filePath = path.join(process.cwd(), 'public', 'tmp', cardImage);
+    // Define the path where you want to save the image in the temporary directory
+    const tmpDir = process.env.TMPDIR || '/tmp'; // Fallback to '/tmp' if TMPDIR is not set
+    const filePath = path.join(tmpDir, cardImage);
 
-    // Save the image to the file system
+    // Save the image to the file system in the temporary directory
     fs.writeFileSync(filePath, base64Data, 'base64');
 
     // Return the unique image name in the response
