@@ -3,6 +3,7 @@ import Header from "@/components/header/landing";
 import { Toaster } from "@/components/ui/toaster";
 import StoryblokProvider from "@/components/storyblok/StoryblokProvider";
 import Script from 'next/script'
+import { Suspense } from "react";
 
 import "@/styles/globals.css";
 import { Lato } from "next/font/google";
@@ -39,7 +40,10 @@ export default function RootLayout({ children }) {
             <div className="sticky stickydiv top-0 bg-white z-[9999]">
               <Header />
             </div>
+            <Suspense>
             {children}
+            </Suspense>
+           
             <Toaster />
             <Footer />
           </div>
