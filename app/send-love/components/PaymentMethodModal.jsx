@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import Modal from 'react-modal';
 import useApiCaller from '@/hooks/useApiCaller';
 
-export default function PaymentMethodModal({ isOpen, onRequestClose, setPaymentMethodId, setLast4 }) {
+export default function PaymentMethodModal({ isOpen, onRequestClose, setPaymentMethodId, setLast4, username, email, setCustomerId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [stripe, setStripe] = useState(null);
@@ -74,12 +74,13 @@ export default function PaymentMethodModal({ isOpen, onRequestClose, setPaymentM
   
       // Here, you can make an API call to your server to store the payment method ID for future use
 
-      const data = {  paymentMethodId} ;
+      const data = {  paymentMethodId, username, email } ;
   
       const res = await apiCaller.post("/send-love/confirm/api", data);
-      const { last4, brand } = res.data;
-      setPaymentMethodId(paymentMethodId);
+      const { last4, brand, customerId } = res.data;
+      setPaymentMethodId(customerId);
       setLast4(last4);
+      setCustomerId();
       onRequestClose();
       // I want to close the popup here if there is res
       setMessages((prevMessages) => [...prevMessages, 'Payment method saved successfully!']);

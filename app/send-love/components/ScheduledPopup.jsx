@@ -19,7 +19,7 @@ dayjs.extend(timezone);
 
 registerLocale("es", es);
 
-export default function SchedulePopup({showPopup, onClose, setScheduledTime, setScheduledDate, cardImage }) {
+export default function SchedulePopup({showPopup, onClose, setScheduledTime, setScheduledDate,setIsSubmitPayment, cardImage }) {
   const [selectedDates, setSelectedDates] = useState(dayjs().startOf('day'));
   const [selectedTime, setSelectedTime] = useState(dayjs());
   const [error, setError] = useState('');
@@ -66,17 +66,8 @@ export default function SchedulePopup({showPopup, onClose, setScheduledTime, set
 
  
   return (
-    // <Modal
-    //   isOpen={showPopup}
-    //   onRequestClose={onClose}
-    //   className="payment-modal"
-    //   overlayClassName="payment-modal-overlay"
-    // >
    <div className="schedule-popup-overlay">
       <div className="schedule-popup-content">
-
-
-
 
         <div className="schedule-date-time-container">
         <div className="hidden md:flex relative  items-center justify-center h-96 bg-pink-100 rounded-lg">
@@ -137,6 +128,5 @@ export default function SchedulePopup({showPopup, onClose, setScheduledTime, set
       </div>
     </div>
 
-    // </Modal>
   );
 }

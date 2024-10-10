@@ -23,34 +23,51 @@ export async function POST(req) {
    let fetchUser = null;
    let page_id = null;
  
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
    try {
      // Verify user token
      const user = await verifyIdToken(req);
- 
+  
      // Parse request payload
      const payload = await req.json();
-
-
+     let customerId = user?.customerId;
  
      // Destructure payload
-     const {paymentMethodId } = payload;
-
+     const {paymentMethodId, username, email } = payload;
+;
+     if(!emailRegex.test(email))
+      {
+        return errorResponse("PLease field out email first");
+      } 
 
      const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
      const last4 = paymentMethod.card.last4;
      const brand = paymentMethod.card.brand;
+     if(!customerId){
+        const customer = await stripe.customers.create({
+          payment_method: paymentMethodId, // Attach the payment method to the customer
+          email: email, // Optionally save the email for the customer
+          invoice_settings: {
+            default_payment_method: paymentMethodId, // Set this payment method as default for future charges
+          },
+        });
+        customerId = customer.id;
+     }
 
     // Find logged in user
     const authUser = await User.findOneAndUpdate(
         { _id: user?._id },
         {
+            email:email,
+            customerId: customerId, // Update the email field at the root level
             paymentMethodId: paymentMethodId, // Update the email field at the root level
             last4: last4,
             brand: brand
         },
         { new: true }
       );
-      return Response.json({ last4, brand }, { status: 200 });
+      return Response.json({customerId, last4, brand }, { status: 200 });
   } catch (error) {  error.raw && (error = error.raw);
     return errorResponse(error);
   }

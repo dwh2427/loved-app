@@ -37,8 +37,8 @@ export async function POST(req) {
   const file = null;
   const username = form.get("username");
   const comment = "";
-  let tipAmount = form.get("tipAmount") || 0;
-  const application_fee = form.get("application_fee");
+  let application_fee = form.get("tipAmount") || 0;
+  let subTotal = form.get("subTotal") || 0;
   const clientEmail = form.get("email");
   const giftCard = form.get("giftCard");
   const page_name = form.get("page_name");
@@ -48,6 +48,9 @@ export async function POST(req) {
   const stripeAccountId = form.get("stripe_acc_id");
   const scheduled_time = form.get("scheduled_time");
   const scheduled_date = form.get("scheduled_date");
+  const paymentMethodId = form.get("paymentMethodId");
+  const customerId = form.get("customerId");
+  
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^\+?[1-9]\d{1,14}$/; // E.164 format (optional "+" followed by 1-15 digits)
   const uniqueId = uuidv4();
@@ -59,6 +62,8 @@ export async function POST(req) {
   let transfer_type = null;
   let notify_to = null;
   let is_notified = 0;
+
+
 
   try {
 
@@ -76,13 +81,23 @@ export async function POST(req) {
       await userToUpdate.save();
     }
 
+    const paymentIntent = await stripeClient.paymentIntents.create({
+      amount: subTotal*100, // Amount to charge (e.g., 5000 for $50)
+      currency: 'usd', // Replace with your preferred currency
+      customer: customerId,
+      payment_method: paymentMethodId, // The payment method id (e.g., 'pm_xxx')
+      off_session: true, // Indicate that the payment is happening off-session
+      confirm: true, // Automatically confirm the payment without requiring user action
+       return_url:  `${process.env.NEXT_BUSENESS_URL}/success`,
+    });
+    
     // Get user email by page owner id
     const res = await User.findOne({ uid });
     const email = res?.email;
-    tipAmount = isNaN(Number(tipAmount)) ? 0 : Number(tipAmount);
+    subTotal = isNaN(Number(subTotal)) ? 0 : Number(subTotal);
 
 
-    if(paymentIntentId){
+    if(paymentIntent.id){
           // Log the sign-up activity
 
           const signUpActivity = new CustomerActivity({
@@ -91,8 +106,6 @@ export async function POST(req) {
             ip: req.headers.get('x-forwarded-for') || req.socket.remoteAddress,
           });
           await signUpActivity.save();
-
-          const paymentIntent = await stripeClient.paymentIntents.retrieve(paymentIntentId);
 
           // Retrieve the chargeId from the paymentIntent
            charge_id = paymentIntent.latest_charge;
@@ -109,10 +122,10 @@ export async function POST(req) {
               transfer_type = "directly";
               notify_to = email;
             }else{
-              const tipAmountCents = Math.round((tipAmount ) * 100); // Convert to the smallest currency unit
+              const subTotalCents = Math.round((subTotal ) * 100); // Convert to the smallest currency unit
       
               const transfer = await stripeClient.transfers.create({
-                amount: tipAmountCents, // Transfer the full amount of the charge
+                amount: subTotalCents, // Transfer the full amount of the charge
                 currency: paymentIntent.currency, // Use the currency from the charge
                 destination: stripeAccountId, // Destination is the connected account ID
                 source_transaction: charge_id, // The charge ID is used as the source
@@ -140,7 +153,7 @@ export async function POST(req) {
       giftCard:giftCard,
       page_name,
       charge_id,
-      tipAmount,
+      subTotal,
       comment_to,
       uniqueId,
       is_paid,
@@ -150,7 +163,6 @@ export async function POST(req) {
       is_notified,
     };
     
-    console.log(commentObj);
     if (user?._id) {
       commentObj = { ...commentObj, comment_by: user._id };
     }
@@ -159,7 +171,7 @@ export async function POST(req) {
     await newComment.save();
     
     if(!scheduled_time && !scheduled_date){
-      if (Number(tipAmount) > 0) {
+      if (Number(subTotal) > 0) {
 
         // Sending email to service provider
 
@@ -172,7 +184,7 @@ export async function POST(req) {
             page_owner_name: `${res.first_name} ${res.last_name}`,
             customer_name: username,
             transaction_date: newComment.createdAt,
-            tip_amount: tipAmount,
+            tip_amount: subTotal,
             logo_link: `${process.env.NEXT_BUSENESS_URL}/new-logo.png`,
             giftCard: giftCard,
             page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
@@ -195,7 +207,7 @@ export async function POST(req) {
               customer_name: username,
               amountDonate: true,
               transaction_date: newComment.createdAt,
-              tip_amount: Number(tipAmount).toFixed(2),
+              tip_amount: Number(subTotal).toFixed(2),
               giftCard: giftCard,
               logo_link: `${process.env.NEXT_BUSENESS_URL}/new-logo.png`,
               page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,
@@ -222,14 +234,14 @@ export async function POST(req) {
           }
         }
 
-        const totalAmount = Number(tipAmount) + Number(application_fee);
+        const totalAmount = Number(subTotal) + Number(application_fee);
 
         const clientTemplateModel = {
           name: username,
           page_name: page_name,
           date: newComment.createdAt,
           description: comment,
-          amount: Number(tipAmount).toFixed(2),
+          amount: Number(subTotal).toFixed(2),
           logo_link: `${process.env.NEXT_BUSENESS_URL}new-logo.png`,
           giftCard: giftCard,
           page_link: `${process.env.NEXT_BUSENESS_URL}${page_name}`,
@@ -253,7 +265,7 @@ export async function POST(req) {
             customer_name: username,
             amountDonate: false,
             transaction_date: newComment.createdAt,
-            tip_amount: Number(tipAmount).toFixed(2),
+            tip_amount: Number(subTotal).toFixed(2),
             giftCard: giftCard,
             logo_link: `${process.env.NEXT_BUSENESS_URL}/new-logo.png`,
             page_link: `${process.env.NEXT_BUSENESS_URL}/login?verify=${uniqueId}`,

@@ -34,6 +34,9 @@ const userSchema = new mongoose.Schema(
     brand: {
       type: String,
     },
+    customerId: {
+      type: String,
+    },
     page: { type: mongoose.Schema.ObjectId, ref: "Loved" },
     additional_info: {
       stripe_acc_id: { type: String },

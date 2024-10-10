@@ -15,7 +15,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY); // 
 import PaymentMethodModal from "../components/PaymentMethodModal";
 import ScheduledPopup from "../components/ScheduledPopup";
 import UserInfo from "../components/UserInfo";
-
+import ConfirmPopup from "../components/ConfirmPopup";
 
 import useAuthState from "@/hooks/useAuthState";
 
@@ -60,16 +60,23 @@ export default function CreateTemplate() {
 
     const [pages, setPages] = useState([]);
     const [selectedPage, setSelectedPage] = useState(null);
-    const [pymentMethodId, setPaymentMethodId] = useState("");
+    const [paymentMethodId, setPaymentMethodId] = useState("");
     const [last4, setLast4] = useState("");
     const [showPopup, setShowPopup] = useState(false); // State to manage the popup visibility
     const [scheduledTime, setScheduledTime] = useState(""); // State to manage the popup visibility
     const [scheduledDate, setScheduledDate] = useState("");// State to manage the popup visibility
+    const [isSubmitPayment, setIsSubmitPayment] = useState(false);
+    const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+    const [customerId, setCustomerId] = useState("");
+    const [eventType, setEventType] = useState("");
+    
+    
 
     useEffect(() => {
         console.log(user);
-        setPaymentMethodId(user?.pymentMethodId);
+        setPaymentMethodId(user?.paymentMethodId);
         setLast4(user?.last4);
+        setCustomerId(user?.customerId);
       }, [user])
 
       
@@ -123,7 +130,7 @@ export default function CreateTemplate() {
     useEffect(() => {
       if (user && !loading) {
         // Assuming user data contains firstname, lastname, and email
-        const { first_name, last_name, email, phone, uid } = user;
+        const { first_name, last_name, email, phone, uid, customerId } = user;
           
         // Combine firstname and lastname to create the username or set it as an empty string
         const combinedUsername = first_name && last_name ? `${first_name.toLowerCase()} ${last_name.toLowerCase()}` : "";
@@ -131,7 +138,7 @@ export default function CreateTemplate() {
   
         // Set email or empty string
         setValue("email", email || "");
-  
+        setCustomerId(customerId);
         // Set phone number if available
   
   
@@ -173,6 +180,7 @@ export default function CreateTemplate() {
 
     const handleSendLoveClick = async (e) => {
         e.preventDefault();
+        setEventType("send now");
         setIsSubmitPayment(false); // Trigger payment confirmation in PaymentInfo
         const isValid = await trigger(["username", "email", "inputValue"]); // Validate UserInfo step
     
@@ -182,8 +190,8 @@ export default function CreateTemplate() {
     
       const handleScheduleLoveClick = async (e) => {
         e.preventDefault();
+        setEventType("scheduled");
         const isValid = await trigger(["username", "email", "inputValue"]); // Validate UserInfo step
-        console.log(isValid);
         if (!isValid) return; // If validation fails, stop execution
         setShowPopup(true);
       };
@@ -192,6 +200,67 @@ export default function CreateTemplate() {
      const handleClosePopup = () => {
         setShowPopup(false);
       };
+
+
+
+  useEffect(() => {
+    if (isSubmitPayment) {
+      handlePaymentConfirmation(); // Trigger payment confirmation when isSubmitPayment is true
+    }
+  }, [isSubmitPayment]);
+
+  const handlePaymentConfirmation = async () => {
+         setShowPopup(false);
+        setShowConfirmPopup(true);
+      
+      if (!paymentMethodId) {
+        setIsSubmitPayment(false); // Notify parent of successful payment
+        return;
+      }
+
+      const formData = new FormData();
+      // formData.append("image", imageFile || null);
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("tipAmount", tipAmount);
+      formData.append("inputValue", inputValue);
+      formData.append("stripe_acc_id", selectedPage?.stripe_acc_id);
+      formData.append("scheduled_time", scheduledTime);
+      formData.append("scheduled_date", scheduledDate);
+      formData.append("giftCard", selectedImage);
+      formData.append("subTotal", subTotal);
+      
+
+      if (selectedPage) {
+        formData.append("page_name", selectedPage.username);
+        formData.append("page_owner_id", selectedPage.uid);
+      } else {
+        formData.append("page_name", "");
+        formData.append("page_owner_id", "");
+      }
+
+      formData.append("paymentMethodId", paymentMethodId);
+      formData.append("customerId", customerId);
+      
+
+      const accessToken = localStorage.getItem("accToken");
+      const response = await axios.post("/send-love/api", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${accessToken}`,
+        },
+      });
+
+      const responseData = response.data;
+      if (responseData) {
+        setShowConfirmPopup(false);
+        router.push("/send-love/success?type="+eventType);
+        localStorage.removeItem("giftCard");
+      } else {
+        setShowConfirmPopup(false);
+      }
+
+  };
 
     return (
         <>
@@ -230,8 +299,13 @@ export default function CreateTemplate() {
                         />
 
                         {/* Add Payment Method Button */}
-                        { pymentMethodId? (
-                                               
+                        { paymentMethodId? (
+                            <div className="md:mb-[250px] flex items-center justify-between p-4 bg-gray-100 rounded-lg">
+                                <span className="text-gray-600">Paying with Mastercard {last4}</span>
+                                <button type="button" className="text-pink-500 font-medium hover:underline"  onClick={() => setIsModalOpen(true)}>Change</button>
+                            </div>
+
+                        ): (
                             <button
                             type="button"
                             className="md:mb-[250px] flex cursor-pointer items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
@@ -239,13 +313,6 @@ export default function CreateTemplate() {
                             >
                             <span className="mr-2">+</span>Add Payment Method
                             </button>
-                        ): (
-                            <div className="md:mb-[250px] flex items-center justify-between p-4 bg-gray-100 rounded-lg">
-                            <span className="text-gray-600">Paying with Mastercard {last4}</span>
-                            <button type="button" className="text-pink-500 font-medium hover:underline"  onClick={() => setIsModalOpen(true)}>Change</button>
-                        </div>
-
-
                         )}
 
                     </form>
@@ -427,23 +494,30 @@ export default function CreateTemplate() {
 
             {showPopup && (
               <ScheduledPopup 
-                 showPopup={showPopup}
+                showPopup={showPopup}
                 onClose={handleClosePopup}
                 setScheduledTime={setScheduledTime}
                 setScheduledDate={setScheduledDate}
+                setIsSubmitPayment={setIsSubmitPayment}
                 cardImage={cardImage}
              
               />
             )}
 
-
+           {showConfirmPopup && (
+              <ConfirmPopup />
+            )}
+           
            
             <Elements stripe={stripePromise}>
                 <PaymentMethodModal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}
                 setPaymentMethodId={setPaymentMethodId}
-                 setLast4={setLast4}
+                setLast4={setLast4}
+                username={username}
+                email={email}
+                setCustomerId={setCustomerId}
                 />
             </Elements>
 
