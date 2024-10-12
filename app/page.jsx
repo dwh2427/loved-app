@@ -13,21 +13,21 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen lg:flex items-center justify-center">
+    <div className="bg-[#F8F9FB] min-h-screen lg:flex items-center justify-center">
       <div className="container mx-auto lg:flex flex-col lg:flex-row items-start justify-between px-6">
         
         {/* Left side: Text & Button */}
         <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1">
           <div className="lg:pl-[200px] lg:pt-[100px] pl-0 pt-[40px]">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              Send love in <br />seconds
+            <h1 className="send-love mb-4">
+              Send love in seconds
             </h1>
-            <p className="text-gray-600 text-lg mb-6">
+            <p className="paragraph-text mb-6">
               The easiest way to spread love with those you love <br /> most with a digital card and gift.
             </p>
             <button 
               onClick={handleGetStarted}  // Call the function on button click
-              className="px-6 py-3 bg-pink-500 text-white rounded-full shadow-md hover:bg-pink-600 focus:outline-none w-[240px] h-[44px] px-[24px] py-[14px]"
+              className="getStartBtn"
             >
               Get started
             </button>

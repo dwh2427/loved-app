@@ -100,7 +100,7 @@ export default function Header() {
         <>
             {!expectedPath.includes(pathname) && (
                 <header className="flex items-center h-[64px] d-rs-nav-height w-full px-[24px] py-[26px]" id='header'>
-                    <div className="max-w-[1495px] mx-auto flex h-[111px] p-[9px] items-center justify-between w-full">
+                    <div className="max-w-[1495px] mx-auto flex h-[64px] p-[9px] items-center justify-between w-full">
 
                         <Link href="/find-loved" className="flex gap-1 sm:hidden">
                             <svg className="size-[24px] text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#000000" >
