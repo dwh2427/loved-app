@@ -829,6 +829,8 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 
 .card-2{
   rotate: -6.3 deg;
+  position: absolute;
+  top: 0;
 }
 
 
@@ -1397,6 +1399,7 @@ background: var(--MAGENTA, #FF318C);
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
+  text-align: center;
 }
 
 .paragraph-text {
@@ -1406,6 +1409,7 @@ background: var(--MAGENTA, #FF318C);
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+  text-align: center;
 }
 
 .getStartBtn {
@@ -1416,7 +1420,7 @@ background: var(--MAGENTA, #FF318C);
   font-weight: 600;
   line-height: 100%; /* 16px */
   display: flex;
-  width: 240px;
+  width: 100%;
   padding: 14px var(--Spacing-6, 24px);
   justify-content: center;
   align-items: center;
@@ -1431,9 +1435,16 @@ background: var(--MAGENTA, #FF318C);
     font-style: normal;
     font-weight: 700;
     line-height: 120%;
+    text-align: start;
     width: 400px;
   }
   .paragraph-text {
   font-size: 20px;
+  width: 400px;
+  text-align: start;
+
+  }
+  .getStartBtn {
+    width: 240px;
   }
 } 

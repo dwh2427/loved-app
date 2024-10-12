@@ -13,20 +13,20 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-[#F8F9FB] min-h-screen lg:flex items-center justify-center">
-      <div className="container mx-auto lg:flex flex-col lg:flex-row items-start justify-between px-6">
+    <div className="bg-[#F8F9FB] min-h-screen flex items-center mx-auto">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
         
         {/* Left side: Text & Button */}
-        <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1">
-          <div className="lg:pl-[200px] lg:pt-[100px] pl-0 pt-[40px]">
+        <div className="flex flex-col items-center justify-center order-2 md:order-1">
+          <div className="mx-auto flex flex-col">
             <h1 className="send-love mb-4">
               Send love in seconds
             </h1>
             <p className="paragraph-text mb-6">
-              The easiest way to spread love with those you love <br /> most with a digital card and gift.
+              The easiest way to spread love with those you love most with a digital card and gift.
             </p>
             <button 
-              onClick={handleGetStarted}  // Call the function on button click
+              onClick={handleGetStarted} // Call the function on button click
               className="getStartBtn"
             >
               Get started
@@ -35,28 +35,32 @@ export default function HomePage() {
         </div>
 
         {/* Right side: Cards */}
-        <div className="lg:w-1/2 mt-12 lg:mt-0 relative flex justify-center order-1 lg:order-2">
-          {/* First Card */}
-          <div className="absolute card-1 card-img top-89 left-803 z-20">
-            <Image
-              src={cardOne}
-              alt="Card Image One"
-              width={380}
-              height={480}
-            />
-          </div>
-          
-          {/* Second Card */}
-          <div className="absolute card-2 card-img op-69 left-843 rotate-6 z-10">
-            <Image
-              src={cardTwo}
-              alt="Card Image Two"
-              width={380}
-              height={480}
-            />
+        <div className="flex justify-center items-center order-1 md:order-2">
+          {/* Wrap cards in a div to control layout */}
+          <div className="relative flex flex-col items-center">
+            {/* First Card */}
+            <div className="card-1 card-img mb-4 z-20"> {/* Use mb-4 to space cards */}
+              <Image
+                src={cardOne}
+                alt="Card Image One"
+                width={380}
+                height={480}
+              />
+            </div>
+            
+            {/* Second Card */}
+            <div className="card-2 card-img op-69 rotate-6 z-10">
+              <Image
+                src={cardTwo}
+                alt="Card Image Two"
+                width={380}
+                height={480}
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 }
