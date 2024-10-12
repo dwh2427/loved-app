@@ -44,7 +44,7 @@ export default function SendLoved() {
     return (
             <>
                 <CardHeader pageLink="dashboard" />
-                <div className="bg-gray-50 min-h-screen flex items-center justify-center px-6"  style={{
+                <div className="bg-gray-50 min-h-screen flex items-start md:items-center justify-center p-6"  style={{
                                     background: "#F8F9FB",
                                 }}>
                     <div className="container mx-auto flex flex-col items-center text-center">
