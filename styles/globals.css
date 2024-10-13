@@ -829,6 +829,8 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 
 .card-2{
   rotate: -6.3 deg;
+  position: absolute;
+  top: 0;
 }
 
 
@@ -1362,3 +1364,87 @@ display: none; /* Hidden by default */
   margin-top: 20px;
   margin-bottom: 20px;
 }
+.customLoginAndout {
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 14px */
+  display: flex;
+  padding: 10px var(--Spacing-5, 20px);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+}
+.customGetStart {
+  color: var(--Light-Mode-Background-Default, #FFF);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  display: flex;
+  padding: 10px var(--Spacing-5, 20px);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--Spacing-32, 128px);
+background: var(--MAGENTA, #FF318C);
+}
+.send-love {
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: Comfortaa;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  text-align: center;
+}
+
+.paragraph-text {
+    color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+  text-align: center;
+}
+
+.getStartBtn {
+  color: var(--Light-Mode-Background-Default, #FFF);
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */
+  display: flex;
+  width: 100%;
+  padding: 14px var(--Spacing-6, 24px);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--Spacing-32, 128px);
+  background: var(--MAGENTA, #FF318C);
+}
+@media (min-width: 1024px) {
+  .send-love {
+    color: var(--Light-Mode-Text-Default, #202020);
+    font-family: Comfortaa;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+    text-align: start;
+    width: 400px;
+  }
+  .paragraph-text {
+  font-size: 20px;
+  width: 400px;
+  text-align: start;
+
+  }
+  .getStartBtn {
+    width: 240px;
+  }
+} 
