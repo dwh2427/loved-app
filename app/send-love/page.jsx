@@ -25,16 +25,16 @@ export default function SendLoved() {
         router.push('/send-love/create-cover');  // Navigate to the send-love route
     };
 
-    const [selectedOccasion, setSelectedOccasion] = useState("Blank");
+    const [selectedOccasion, setSelectedOccasion] = useState("Simple");
     const occasions = [
-        "Blank", "Custom", "Celebration", "Thanks",
-        "Just Because", "Memorial", "I miss you"
+        "Custom", "Celebration", "Thanks", "Just Because", 
+        "Memorial","Thanks", "I miss you", "Simple"
     ];
 
     const handleOccasionChange = (occasion) => {
         setSelectedOccasion(occasion);
-        // If "Blank" is selected, setSelectedLabel to null, otherwise store the selected occasion
-        if (occasion === "Blank") {
+        // If "Simple" is selected, setSelectedLabel to null, otherwise store the selected occasion
+        if (occasion === "Simple") {
             setSelectedLabel('');
         } else {
             setSelectedLabel(occasion);
@@ -44,15 +44,15 @@ export default function SendLoved() {
     return (
             <>
                 <CardHeader pageLink="dashboard" />
-                <div className="bg-gray-50 min-h-screen flex items-start md:items-center justify-center p-6"  style={{
-                                    background: "#F8F9FB",
-                                }}>
+                <div className="bg-[#F8F9FB] min-h-screen flex items-start md:items-center justify-center p-6">
                     <div className="container mx-auto flex flex-col items-center text-center">
                         
                         {/* Top: Heading */}
-                        <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-8">
+                        
+                        <h1 className="text-center text-[24px] md:text-[24px] font-bold text-[#202020] font-comfortaa leading-[1.4] mb-8">
                             What’s the occasion?
                         </h1>
+
                         
                         {/* Middle: Cards */}
                         <div className="relative mb-8">
