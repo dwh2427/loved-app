@@ -298,7 +298,7 @@ const handleSaveImage = async () => {
                             <button className="leftArrowBtn">
                                 <Image src={arrowLeft} alt="Back" width={20} height={20} />
                             </button>
-                            <button onClick={handleSaveImage} className="continue-button">
+                        <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
                                 Continue
                             </button>
 

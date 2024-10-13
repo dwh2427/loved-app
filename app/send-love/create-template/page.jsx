@@ -128,7 +128,7 @@ export default function CreateTemplate() {
             <CardHeader pageLink="dashboard" />
             <div className="min-h-screen flex flex-col justify-center items-center px-6 bg-custom-background">
                 <div className="container max-w-xl">
-                    <h1 className="text-2xl md:text-3xl font-semibold py-12 text-gray-800 text-center">
+                    <h1 className="writeMessage py-12">
                         Write your message
                     </h1>
                     <div className="relative flex justify-center w-full mb-6" id="svgImageArea"  ref={svgRef}>
@@ -148,7 +148,7 @@ export default function CreateTemplate() {
                                                 // I want to skip this label and button while save to png 
                                                 <label
                                                     htmlFor="formFileSm"
-                                                    className="cursor-pointer hide-section inline-flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-100 transition"
+                                                    className="cursor-pointer hide-section inline-flex items-center gap-2 border text-[14px] border-gray-300 text-[#202020] px-4 py-2 rounded-full hover:bg-gray-100 transition"
                                                 >
                                                     <Image
                                                         src={messageIcon}
@@ -188,7 +188,7 @@ export default function CreateTemplate() {
                                             alt="Default"
                                             width={16}
                                             height={17}
-                                            className="me-2"
+                                            className="me-2 text-[#202020]"
                                         />
                                         Message templates
                                     </a>
@@ -205,10 +205,11 @@ export default function CreateTemplate() {
           
                     {/* Bottom Section: Back and Continue Buttons */}
                     <div className="flex justify-center items-center gap-6 pt-10">
-                        <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2">
+                        <button className="leftArrowBtn">
                             <Image src={arrowLeft} alt="Back" />
                         </button>
-                        <button onClick={handleSaveImage} className="bg-pink-500 text-white rounded-full py-2 px-16 text-base font-semibold hover:bg-pink-600 transition-colors">
+                        {/* <button onClick={handleSaveImage} className="bg-pink-500 text-white rounded-full py-2 px-16 text-base font-semibold hover:bg-pink-600 transition-colors"> */}
+                        <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
                             Continue
                         </button>
                     </div>
