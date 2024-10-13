@@ -138,7 +138,7 @@ export default function SendLoved() {
 
                         {/* Continue Button */}
                         <button
-                        className="flex continue-button justify-center items-center bg-pink-500 text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-pink-600 transition duration-200"
+                        className="flex continue-button justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200"
                         onClick={handleCreateCover}  // Call the function on button click
                         >
                         Continue
