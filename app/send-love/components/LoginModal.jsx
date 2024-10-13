@@ -91,9 +91,9 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
 
 
     <div className="fixed inset-0 bg-dark bg-opacity-40 flex items-center justify-center z-50 custom-popup custom-overlay">
-      <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white">
+      <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white sm:my-8">
         {/* Left Side - Sign In Form*/}
-        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8">
+        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8 my-6">
           <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center lg:hidden">
             <Link href="/" className="relative h-[182.62px] w-full max-w-[189.98px]">
               <Image
@@ -121,7 +121,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                     className="mt-[41.41px] flex flex-col items-center gap-y-[17.41px] md:gap-y-[41px]"
                 >
                   <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:space-y-0">
-                    <label htmlFor="phone" className="phone-input-label font-plus-jakarta-sans">Enter your phone number</label>
+                    <label htmlFor="phone" className="phone-input-label  common-font font-plus-jakarta-sans">Enter your phone number</label>
                     <FormField
                         control={form.control}
                         name={"phone"}
@@ -153,7 +153,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                                 containerStyle={{
                                   position: "relative", // Set container to relative to position button properly
                                 }}
-                                className="phone-input-custom mt-[8px] w-full phone-input-text"
+                                className="phone-input-custom mt-[8px] w-full phone-input-text common-font"
                                 placeholder="Phone Number"
                                 {...field}
                                 inputExtraProps={{
@@ -183,7 +183,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                 </Form>
 
             {/*  Terms and Privacy Notice */}
-            <p className="text-center text-gray-500 text-xs mt-4">
+            <p className="text-center text-gray-500 text-xs mt-4 terms-and-services-text">
               By clicking the Sign In button below, you agree to the Loved{" "}
               <a href="#" className="underline">
                 Terms of Service
@@ -202,7 +202,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
           <img
             src="/assets/img/covers/signCoverImg.png"
             alt="Cover Image"
-            className="w-[350px] h-[350px] lg:w-[466px] lg:h-[598px] object-cover rounded-lg"
+            className="w-[350px] h-[350px] lg:w-[512px] lg:h-[598px] object-cover rounded-lg login-popup-padding"
           />
         </div>
       </div>
