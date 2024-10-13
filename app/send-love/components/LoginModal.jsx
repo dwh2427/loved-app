@@ -133,7 +133,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                                 inputStyle={{
                                   width:"100%",
                                   height: "48px",
-                                  paddingLeft: "80px", // Ensure text does not overlap with button
+                                  paddingLeft: "74px", // Ensure text does not overlap with button
                                   borderRadius: "var(--Spacing-3, 12px)",
                                   border: "1px solid var(--Light-Mode-Border-Secondary, #D8D8DA)",
                                   background: "var(--Light-Mode-Background-Default, #FFF)"
