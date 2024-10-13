@@ -921,15 +921,30 @@ flex-grow: 0;
 
 
 .continue-button {
+  display: flex;
   width: 240px;
-  height: 44px;
-  border-radius: 128px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 600;
+  padding: 14px var(--Spacing-6, 24px);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--Spacing-32, 128px);
+  background: var(--Light-Mode-Background-Primary-Disable, #FF9FD0);
+  color: var(--Light-Mode-Background-Default, #FFF);
+  font-family: "Plus Jakarta Sans";
   font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
   line-height: 100%;
 }
-
+.leftArrowBtn {
+  display: flex;
+  height: 44px;
+  padding: 14px var(--Spacing-6, 24px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-3, 12px);
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+}
 
 /* .minimal-color-picker input,
 .minimal-color-picker .flexbox-fix,

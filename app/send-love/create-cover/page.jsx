@@ -294,10 +294,11 @@ const handleSaveImage = async () => {
                     </div>
                         {/* Bottom Section: Back and Continue Buttons */}
                         <div className="flex justify-center items-center gap-6 pb-20 lg:pb-0 lg:pt-20">
-                            <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2">
-                                <Image src={arrowLeft} alt="Back" width={24} height={24} />
+                            {/* <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2"> */}
+                            <button className="leftArrowBtn">
+                                <Image src={arrowLeft} alt="Back" width={20} height={20} />
                             </button>
-                            <button onClick={handleSaveImage} className="bg-pink-500 continue-button text-white rounded-full py-2 px-8 text-base font-semibold hover:bg-pink-600 transition-colors">
+                            <button onClick={handleSaveImage} className="continue-button">
                                 Continue
                             </button>
 
