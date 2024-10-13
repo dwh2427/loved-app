@@ -102,11 +102,11 @@ export default function Header() {
                 <header className="flex items-center h-[64px] d-rs-nav-height w-full px-[24px] py-[26px]" id='header'>
                     <div className="max-w-[1495px] mx-auto flex h-[64px] p-[9px] items-center justify-between w-full">
 
-                        <Link href="/find-loved" className="flex gap-1 sm:hidden">
+                        {/* <Link href="/find-loved" className="flex gap-1 sm:hidden">
                             <svg className="size-[24px] text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#000000" >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
-                        </Link>
+                        </Link> */}
 
                         <Link href="/" className="flex sm:gap-[90px]">
                             <Image src={loveLogo} alt="loved" width={101} height={23} />
@@ -119,21 +119,39 @@ export default function Header() {
 
                         {/* Desktop menu */}
                         <nav className="hidden md:flex items-center space-x-6">
-                            <Link href="/find-loved" className="search-loved relative cursor-pointer ">
+                            {/* <Link href="/find-loved" className="search-loved relative cursor-pointer ">
                                 <svg className="size-4 absolute left-2 top-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" >
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
                                 <p className="w-full cursor-pointer px-10 py-1 pl-7 pr-1 text-[14px] font-[500] leading-[18px] text-[#586580] outline-none">Find Someone Loved</p>
-                            </Link>
+                            </Link> */}
 
                             <Link
-                                href={"/loved-pages"}
+                                href={"#"}
                                 className="text-center text-[14px] plus-jakarta-sans-500 leading-[18px] text-[#2E266F]"
                             >
-                                Loved Pages
+                                Menu Item
+                            </Link>
+                            <Link
+                                href={"#"}
+                                className="text-center text-[14px] plus-jakarta-sans-500 leading-[18px] text-[#2E266F]"
+                            >
+                                Menu Item
+                            </Link>
+                            <Link
+                                href={"#"}
+                                className="text-center text-[14px] plus-jakarta-sans-500 leading-[18px] text-[#2E266F]"
+                            >
+                                Menu Item
+                            </Link>
+                            <Link
+                                href={"#"}
+                                className="text-center text-[14px] plus-jakarta-sans-500 leading-[18px] text-[#2E266F]"
+                            >
+                                Menu Item
                             </Link>
 
-                            <div ref={sendingRef} className="relative inline-block text-left">
+                            {/* <div ref={sendingRef} className="relative inline-block text-left">
                                 <div>
                                     <button
                                         type="button"
@@ -187,9 +205,9 @@ export default function Header() {
                                         </div>
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
 
-                            <div ref={resourcesRef} className="relative inline-block text-left">
+                            {/* <div ref={resourcesRef} className="relative inline-block text-left">
                                 <div>
                                     <button
                                         type="button"
@@ -259,9 +277,9 @@ export default function Header() {
                                         </div>
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
 
-                            <div ref={aboutRef} className="relative inline-block text-left">
+                            {/* <div ref={aboutRef} className="relative inline-block text-left">
                                 <div>
                                     <button
                                         type="button"
@@ -315,7 +333,7 @@ export default function Header() {
                                         </div>
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
                         </nav>
                         {/* vertical line */}
                         {/* <div className="w-px h-8 bg-gray-400 d-rs-hidden"></div> */}
@@ -369,19 +387,22 @@ export default function Header() {
 
                                 </div>
 
-                                <Link onClick={closeMobileMenu} href="/find-loved" className="flex items-center gap-[5px] custom-fsl-padding">
+                                {/* <Link onClick={closeMobileMenu} href="/find-loved" className="flex items-center gap-[5px] custom-fsl-padding">
                                     <Search size={20} />
                                     <span>Find Someone Loved</span>
-                                </Link>
-                                <Link href="/loved-pages" onClick={closeMobileMenu} className="py-2 text-[14px] leading-[17px] plus-jakarta-sans-700 !font-bold text-[#2E266F]">Loved Pages</Link>
-                                <MobileMenuItem title="Sending & Receiving" isOpen={isSendingOpen} setIsOpen={setIsSendingOpen}>
-                                    {/* <Link href="/dashboard" className="block py-2 text-[14px] leading-4 plus-jakarta-sans-700">Sending & Receiving</Link> */}
+                                </Link> */}
+                                <Link href="/loved-pages" onClick={closeMobileMenu} className="py-2 text-[14px] leading-[17px] plus-jakarta-sans-700 !font-bold text-[#2E266F]">Menu item</Link>
+                                <Link href="/loved-pages" onClick={closeMobileMenu} className="py-2 text-[14px] leading-[17px] plus-jakarta-sans-700 !font-bold text-[#2E266F]">Menu item</Link>
+                                <Link href="/loved-pages" onClick={closeMobileMenu} className="py-2 text-[14px] leading-[17px] plus-jakarta-sans-700 !font-bold text-[#2E266F]">Menu item</Link>
+                                <Link href="/loved-pages" onClick={closeMobileMenu} className="py-2 text-[14px] leading-[17px] plus-jakarta-sans-700 !font-bold text-[#2E266F]">Menu item</Link>
+                                {/* <MobileMenuItem title="Sending & Receiving" isOpen={isSendingOpen} setIsOpen={setIsSendingOpen}>
+                                    <Link href="/dashboard" className="block py-2 text-[14px] leading-4 plus-jakarta-sans-700">Sending & Receiving</Link>
                                     <Link href="/donation-tips" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">Donation / Tips</Link>
                                     <Link href="/loved-notes" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">Loved Notes</Link>
                                     <Link href="/flowers" onClick={closeMobileMenu} className="block text-[#2E266F] py-2 text-[14px] font-[500] leading-[17px]">Flowers</Link>
                                 </MobileMenuItem>
                                 <MobileMenuItem title="Resources" isOpen={isResourcesOpen} setIsOpen={setIsResourcesOpen}>
-                                    {/* <Link href="/dashboard" className="block py-2">Resources</Link> */}
+                                    <Link href="/dashboard" className="block py-2">Resources</Link>
                                     <Link href="/frequently-asked-questions" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">FAQs</Link>
                                     <Link href="/pricing" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">Pricing</Link>
                                     <Link href="/help" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">Get help</Link>
@@ -390,11 +411,11 @@ export default function Header() {
 
                                 </MobileMenuItem>
                                 <MobileMenuItem title="About Us" isOpen={isAboutOpen} setIsOpen={setIsAboutOpen}>
-                                    {/* <Link href="/dashboard" className="block py-2">About Us</Link> */}
+                                    <Link href="/dashboard" className="block py-2">About Us</Link>
                                     <Link href="/who-we-are" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">Who we are</Link>
                                     <Link href="/hiring" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">Hiring</Link>
                                     <Link href="/press-page" onClick={closeMobileMenu} className="block py-2 text-[#2E266F] text-[14px] font-[500] leading-[17px]">Press Page</Link>
-                                </MobileMenuItem>
+                                </MobileMenuItem> */}
                                 {/* {user ? (
                                     <Link href="/dashboard" className="font-semibold py-2">Dashboard</Link>
                                 ) : (
