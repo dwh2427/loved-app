@@ -1466,6 +1466,7 @@ background: var(--MAGENTA, #FF318C);
     width: 240px;
   }
 } 
+
 .writeMessage {
   color: var(--Light-Mode-Text-Default, #202020);
   text-align: center;
@@ -1474,4 +1475,37 @@ background: var(--MAGENTA, #FF318C);
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
+}
+.custom-overlay {
+  background: var(--Light-Mode-Text-Default, #202020);
+}
+.common-font {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+}
+.phone-input-label {
+  color: var(--Light-Mode-Text-Default, #202020);
+}
+.phone-input-text {
+  color: var(--Light-Mode-Text-Secondary, #89898A);
+  text-align: center;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+.terms-and-services-text {
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 16.8px */
+}
+.login-popup-padding {
+  /* padding: "var(--Spacing-6, 24px)"; */
+  display: flex;
+padding: var(--Spacing-6, 24px);
+align-items: flex-start;
+gap: 10px;
+flex: 1 0 0;
+align-self: stretch;
 }
