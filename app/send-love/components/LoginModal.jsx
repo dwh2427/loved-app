@@ -110,7 +110,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
           {/* Sign In Form Container */}
           <div className="bg-white rounded-lg w-full max-w-md">
             {/* Sign In Header*/}
-            <h2 className="text-2xl font-bold text-gray-800 mb-4" style={{ fontSize: '28px' }}>Sign In</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 font-comfortaa" style={{ fontSize: '28px' }}>Sign In</h2>
             <p className="text-gray-600 mb-8">Share a message with a loved one</p>
 
             {/* Phone Number Input*/}
