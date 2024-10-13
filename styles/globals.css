@@ -1448,3 +1448,26 @@ background: var(--MAGENTA, #FF318C);
     width: 240px;
   }
 } 
+
+
+
+.custom-overlay {
+  background: var(--Light-Mode-Text-Default, #202020);
+}
+.phone-input-label {
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+}
+
+.phone-input-text {
+  color: var(--Light-Mode-Text-Secondary, #89898A);
+  text-align: center;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+}
