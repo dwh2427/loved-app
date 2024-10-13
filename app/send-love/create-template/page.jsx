@@ -11,6 +11,9 @@ import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
 import axios from "axios";
 import MessageTemplatesModal from "./../components/MessageTemplatesModal";
+import LoginModal from "./../components/LoginModal";
+import OtpModal from "./../components/OtpModal";
+
 const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), {
     ssr: false,
 });
@@ -22,8 +25,31 @@ export default function CreateTemplate() {
     const [imagePreview, setImagePreview] = useState(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+    const [otpModalOpen, setOtpModalOpen] = useState(false);
+    const [closeLogin, setOnCloseLogin] = useState(false);
+    const [closeOtp, setOnCloseOtp] = useState(false);
+    
+    
+    
     const [addTocartText, setAddTocartText] = useState("");
+
+    useEffect(() => {
+        if (closeLogin) {
+            setLoginModalOpen(false); // Trigger payment confirmation when isSubmitPayment is true
+            setOtpModalOpen(true); // Trig
+        }
+
+      }, [closeLogin]);
+
+      
+      useEffect(() => {
+        if(closeOtp){
+            setOtpModalOpen(false); // Trig
+        }
+      }, [closeOtp]);
+
+      
    
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -73,10 +99,10 @@ export default function CreateTemplate() {
                 if (response.data.success) {
                     localStorage.setItem('templateImage', "tmp/"+response.data.imageName);
                     if (isAuthenticated()) {
-                        router.push(`/send-love/add-gift`); // If authenticated, navigate to the send-loved page
+                      router.push(`/send-love/add-gift`); // If authenticated, navigate to the send-loved page
                       } else {
                         localStorage.setItem('sendLoveUrl', `/send-love/add-gift`); // Save URL for redirection after login
-                        router.push('/login'); // Redirect to login if not authenticated
+                        setLoginModalOpen(true);
                       }
 
                 } else {
@@ -189,7 +215,16 @@ export default function CreateTemplate() {
                 </div>
             </div>
             <MessageTemplatesModal isOpen={isModalOpen} onClose={handleCloseModal} setAddTocartText={setAddTocartText} />
-           
+
+            { loginModalOpen && (
+               <LoginModal isOpen={loginModalOpen} setOnCloseLogin={setOnCloseLogin} />
+            )}
+
+            { otpModalOpen && (
+                <OtpModal isOpen={otpModalOpen} setOnCloseOtp={setOnCloseOtp} />
+            )}
+        
+            
         </>
     );
 }

@@ -20,7 +20,7 @@ const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), 
 });
 
 export default function SendLoved() {
-    const [selectedImage, setSelectedImage] = useState(blankImage);
+    const [selectedImage, setSelectedImage] = useState(defaultImage);
     const [showColorPicker, setShowColorPicker] = useState(false);
     const [uploadedImage, setUploadedImage] = useState(null);
     const svgRef = useRef(null);
@@ -42,12 +42,41 @@ export default function SendLoved() {
         imageRef.current.style.display = 'block';
         blurredImageRef.current.style.display = 'none';
     };
+    useEffect(() => {
+        const convertBlankImageToBlob = async () => {
+            try {
+                // Fetch the blank image
+                const response = await fetch(defaultImage.src);
+                
+                // Convert the response to a blob
+                const blob = await response.blob();
+
+                // Create an object URL from the blob
+                const objectURL = URL.createObjectURL(blob);
+
+                // Set the converted object URL to the selected image state
+                setSelectedImage(objectURL);
+                
+                // Set the image and blurred image sources
+                imageRef.current.src = objectURL;
+                blurredImageRef.current.src = objectURL;
+            } catch (error) {
+                console.error("Error converting blank image to blob:", error);
+            }
+        };
+
+        // Call the function when the component loads
+        convertBlankImageToBlob();
+    }, []);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const label = localStorage.getItem('selectedLabel');
             setSelectedLabel(label);
         }
+
+        setSelectedImage(defaultImage);
+
 
         if (imageRef.current) {
             // Initialize interact.js for dragging functionality
@@ -243,7 +272,7 @@ const handleSaveImage = async () => {
                                         <div className="heart-shape"  ref={heartShapeColor} >
                                             <img
                                                 id="uploaded-image"
-                                                src={imageSrc}
+                                                src={blankImage}
                                                 alt="Uploaded Image"
                                                 ref={imageRef}
                                             />

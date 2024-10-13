@@ -1,0 +1,205 @@
+'use client'
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import Sidebar from "@/components/sidebar/sidebar";
+import Logo from "@/public/lovedLogo.svg";
+import Image from "next/image";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import PhoneInput from "react-phone-input-2";
+import { zodResolver } from "@hookform/resolvers/zod";
+import "react-phone-input-2/lib/style.css";
+import { z } from "zod";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+
+const formSchema = z.object({
+    phone: z.string().min(1, { message: "Please provide a phone number" }),
+  });
+
+export default function LoginModal({ isOpen, setOnCloseLogin }) {
+
+  const [pageLink, setPageLink] = useState("");
+  const [defaultText, setDefaultText] = useState("Sign in / Sign up");
+  const [paragraphText, setParagraphText] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const currentUrl = window.location.href;
+    // Parse the URL
+    const parsedUrl = new URL(currentUrl);
+
+    // Get the search parameters
+    const params = new URLSearchParams(parsedUrl.search);
+
+    if (params.has('verify')) {
+      const verifyValue = params.get('verify');
+      localStorage.setItem('verifyValue', verifyValue);
+      localStorage.setItem('sendLoveUrl', `/login/received-gift`);
+      setDefaultText("Accept your Loved gift");
+      setParagraphText("We’ll use your phone number to confirm your identity to claim your gift.");
+    }
+  }, []);
+
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      phone: "",
+    },
+  });
+
+  const handleSubmit = async () => {  // Declare function as async
+    try { 
+      setLoading(true);
+      const { phone } = form.getValues();
+      localStorage.setItem('phone', phone);
+      // Wait for the axios post request to resolve
+      const response = await axios.post('/login/api', { phone });
+      // Check the response status
+      if (response.status === 200) {
+        setOnCloseLogin(true);
+       // router.push('/login/verify-otp');
+      }
+    } catch (e) {
+      console.error('Error sending OTP:', e);
+      toast({
+        variant: "destructive",
+        title: "Error sending OTP",
+        description: "Please try again later.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+    
+
+  return (
+
+
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 custom-popup">
+      <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white">
+        {/* Left Side - Sign In Form*/}
+        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8">
+          <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center lg:hidden">
+            <Link href="/" className="relative h-[182.62px] w-full max-w-[189.98px]">
+              <Image
+                src={Logo}
+                alt="Image"
+                className="object-cover"
+                width={165}
+                height={40}
+                sizes="100vw"
+              />
+            </Link>
+          </div>
+
+          {/* Sign In Form Container */}
+          <div className="bg-white rounded-lg w-full max-w-md">
+            {/* Sign In Header*/}
+            <h2 className="text-2xl font-bold text-gray-800 mb-4" style={{ fontSize: '28px' }}>Sign In</h2>
+            <p className="text-gray-600 mb-8">Share a message with a loved one</p>
+
+            {/* Phone Number Input*/}
+
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(handleSubmit)}
+                    className="mt-[41.41px] flex flex-col items-center gap-y-[17.41px] md:gap-y-[41px]"
+                >
+                    <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:flex md:space-y-0">
+                    <FormField
+                        control={form.control}
+                        name={"phone"}
+                        render={({ field: { ref, ...field } }) => (
+                        <FormItem className="h-173.06px max-w-[450px] space-y-8px md:w-188px md:space-y-8px mx-auto w-full md:h-auto">
+                            <FormControl>
+                            <PhoneInput
+                                country={'au'}
+                                inputStyle={{
+                                // width: "calc(100% - 20px)",
+                                width:"100%",
+                                height: "50px",
+                                borderRadius: "32px",
+                                paddingLeft: "70px", // Ensure text does not overlap with button
+                                }}
+                                buttonStyle={{
+                                width: "70px", // Set the width for the code holder
+                                borderTopLeftRadius: "32px",
+                                borderBottomLeftRadius: "32px",
+                                position: "absolute", // Position button absolutely to prevent overlap
+                                zIndex: 1, // Ensure button appears above the input
+                                }}
+                                containerStyle={{
+                                position: "relative", // Set container to relative to position button properly
+                                }}
+                                className="phone-input-custom mt-[8px] w-full"
+                                placeholder="Phone Number"
+                                {...field}
+                                inputExtraProps={{
+                                ref,
+                                required: true,
+                                autoFocus: true,
+                                }}
+                            />
+
+                            </FormControl>
+                            <FormMessage className="whitespace-nowrap" />
+                        </FormItem>
+                        )}
+                    />
+                    </div>
+
+                    <Button
+                    type="submit"
+                    disabled={loading}
+                    variant={"default"}
+                    className="signBtn mx-auto h-[52px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[52px] md:w-[450px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
+                    >
+                    {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
+                    Sign In
+                    </Button>
+                </form>
+                </Form>
+
+            {/*  Terms and Privacy Notice */}
+            <p className="text-center text-gray-500 text-xs mt-4">
+              By clicking the Sign In button below, you agree to the Loved{" "}
+              <a href="#" className="underline">
+                Terms of Service
+              </a>{" "}
+              and acknowledge the{" "}
+              <a href="#" className="underline">
+                Privacy Notice
+              </a>.
+            </p>
+          </div>
+        </div>
+
+
+        {/* Right Side - Cover Image */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center img-none">
+          <img
+            src="/assets/img/covers/signCoverImg.png"
+            alt="Cover Image"
+            className="w-[350px] h-[350px] lg:w-[466px] lg:h-[598px] object-cover rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
+
+  );
+}
