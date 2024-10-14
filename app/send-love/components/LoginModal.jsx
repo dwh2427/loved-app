@@ -86,7 +86,6 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
     }
   }
 
-  // const PhoneNumberInput = () => {
     const [phone, setPhone] = useState('');
     // Function to handle phone number change and apply formatting
     const handlePhoneChange = (value) => {
@@ -101,7 +100,6 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
   
       setPhone(formattedValue);
     }
-  // };
   
     
 
@@ -112,12 +110,12 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
       <div className="flex lg:w-[64rem] lg:h-[40.4rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white form-div">
         {/* Left Side - Sign In Form*/}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center form-inner-div">
-          <div className="mx-auto flex md:h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center logo-div">
+          <div className="mx-auto flex md:h-[122px] w-full max-w-[766.82px] flex-col items-center justify-center logo-div">
             <Link href="/" className="relative  max-[600px]:h-[182.62px] w-full max-[600px]:max-w-[189.98px]">
               <Image
                 src={Logo}
                 alt="Image"
-                className="object-cover max-[600px]:w-[50%] md:h-[100%] md:w-[25%] lg:h-[95%] lg:w-[35%] lg:pl-8 logo-img"
+                className="object-cover max-[600px]:w-[50%] md:h-[100%] md:w-[25%] lg:h-[95%] lg:w-[26%] logo-img"
                 width={165}
                 height={40}
                 sizes="100vw"
@@ -138,7 +136,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                     onSubmit={form.handleSubmit(handleSubmit)}
                     className="mt-[41.41px] flex flex-col items-center gap-y-[17.41px] md:gap-y-[41px]"
                 >
-                  <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:space-y-0 pb-4">
+                  <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:space-y-0 sign-in-btn-pt">
                     <label htmlFor="phone" className="phone-input-label  common-font font-plus-jakarta-sans">Enter your phone number</label>
                     <FormField
                         control={form.control}
@@ -193,7 +191,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                     type="submit"
                     disabled={loading}
                     variant={"default"}
-                    className="font-comfortaa signBtn mx-auto h-[52px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF318C] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[52px] md:w-[450px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
+                    className="font-comfortaa signBtn mx-auto h-[52px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF318C] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[52px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
                     >
                     {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
                     Sign In
