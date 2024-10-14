@@ -44,8 +44,8 @@ export default function SendLoved() {
     return (
             <>
                 <CardHeader pageLink="dashboard" />
-                <div className="bg-[#FFF] min-h-screen flex items-start md:items-center justify-center p-[12px]">
-                    <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+                <div className="bg-[#FFF] min-h-screen flex items-start  justify-center p-[12px]">
+                    <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
                         
                         {/* Top: Heading */}
                         

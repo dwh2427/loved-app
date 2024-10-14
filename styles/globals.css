@@ -1593,3 +1593,14 @@ background: var(--MAGENTA, #FF318C);
     line-height: 140%; /* 22.4px */
   }
 }
+
+@media (min-width: 1024px) {
+  .fix-space  {
+    padding: 95px 289px 171px 289px;
+  }
+} 
+.img-frame {
+  border-radius: var(--Spacing-4, 16px);
+  background: #FFF;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 6px 0px rgba(0, 0, 0, 0.10);
+}

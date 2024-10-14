@@ -197,9 +197,9 @@ const handleSaveImage = async () => {
     return (
         <>
             <CardHeader pageLink="dashboard" />
-            <div className="bg-gray-50 min-h-screen flex flex-col justify-between items-center px-6" style={{ background: "#F8F9FB" }}>
-                <div style={{ maxWidth: '800px' }}>
-                    <h1 className="text-2xl md:text-3xl font-semibold pt-20 pb-20 text-gray-800 text-center">
+            <div className="bg-[#FFF] min-h-screen flex flex-col justify-between items-center p-[12px]">
+                <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+                    <h1 className="text-2xl md:text-3xl font-semibold pt-[48px] md:pt-[0px] pb-[48px] text-gray-800 text-center">
                         Add a cover image
                     </h1>
 
@@ -258,7 +258,7 @@ const handleSaveImage = async () => {
                         </div>
 
                         <div className="relative flex justify-center w-full order-1 lg:order-2 lg:w-auto" id="svgImageArea" ref={svgRef}>
-                            <div className="layer-1">
+                            <div className="layer-1 img-frame">
                                 <h1 className="text-center mt-10 text-[32px]">{selectedLabel}</h1>
                                 <div className="layer-2">
                                     <div className="layer-3">
