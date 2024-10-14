@@ -840,13 +840,6 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
   background-color: #e02976;
 }
 
-.card-img img{
-  height: 480px !important; /* or use initial, inherit depending on what you want */
-}
-
-.card-1{
-
-}
 /* end section will removed /////////////////////////////////////////////////////// */
 .pl-100{
   padding-left: 200px;
@@ -1036,10 +1029,10 @@ flex-grow: 0;
   height: 200px;
   left: 0;
   top: 0;
-  background-color: #E9E9EB; /* Adds color to the heart frame */
-  box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25); /* Optional shadow for depth */
   clip-path: path("M61.5134 158.508C80.4511 172.156 96.5958 179.707 97.2468 180C97.895 179.707 114.063 172.156 133.004 158.508C132.634 158.24 132.262 157.969 131.89 157.696C132.265 157.97 132.639 158.241 133.012 158.51C136.636 155.899 140.37 153.046 144.101 149.979C161.349 135.904 178.858 117.286 187.948 94.8277C188.707 92.9652 189.407 91.0541 190.055 89.1012C193.289 79.3506 194.505 70.0216 194.505 61.5076C194.503 27.5309 166.967 0.00129533 132.99 0.00129533C119.653 0.00129533 107.326 4.2502 97.2498 11.4714L97.2481 11.4712C87.1693 4.25074 74.826 0 61.4896 0C27.5366 0 0 27.5296 0 61.5049C0 70.0189 1.21708 79.348 4.44547 89.0985C5.07696 91.0514 5.76824 92.9612 6.55413 94.8251C15.6454 117.283 33.1504 135.901 50.4024 149.976C54.1524 153.043 57.8858 155.898 61.5134 158.508Z");
   overflow: hidden;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="195" height="180" viewBox="0 0 195 180" fill="none"><g filter="url(%23filter0_i_3056_1988)"><path d="M61.5134 158.508C80.4511 172.156 96.5958 179.707 97.2468 180C97.895 179.707 114.063 172.156 133.004 158.508C132.634 158.24 132.262 157.969 131.89 157.696C132.265 157.97 132.639 158.241 133.012 158.51C136.636 155.899 140.37 153.046 144.101 149.979C161.349 135.904 178.858 117.286 187.948 94.8277C188.707 92.9652 189.407 91.0541 190.055 89.1012C193.289 79.3506 194.505 70.0216 194.505 61.5076C194.503 27.5309 166.967 0.00129533 132.99 0.00129533C119.653 0.00129533 107.326 4.2502 97.2498 11.4714C97.2481 11.4712 97.2481 11.4712 97.2498 11.4714L97.2481 11.4712C97.2498 11.4714 97.2498 11.4714 97.2481 11.4712C87.1693 4.25074 74.826 0 61.4896 0C27.5366 0 0 27.5296 0 61.5049C0 70.0189 1.21708 79.348 4.44547 89.0985C5.07696 91.0514 5.76824 92.9612 6.55413 94.8251C15.6454 117.283 33.1504 135.901 50.4024 149.976C54.1524 153.043 57.8858 155.898 61.5134 158.508Z" fill="%23E9E9EB"/></g><defs><filter id="filter0_i_3056_1988" x="0" y="0" width="194.504" height="182" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/><feOffset dy="2"/><feGaussianBlur stdDeviation="1"/><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/><feBlend mode="normal" in2="shape" result="effect1_innerShadow_3056_1988"/></filter></defs></svg>');
+  background-repeat: no-repeat;
 }
 
 #uploaded-image {
