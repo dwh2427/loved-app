@@ -1527,11 +1527,12 @@ background: var(--MAGENTA, #FF318C);
 }
 .login-popup-padding {
   display: flex;
-  padding: var(--Spacing-6, 24px);
-  align-items: flex-start;
+  margin: var(--Spacing-6, 24px);
+  align-items: flex-end;
   gap: 10px;
   flex: 1 0 0;
   align-self: stretch;
+  background-repeat: no-repeat;
 }
 
 .react-tel-input .selected-flag .arrow {
@@ -1544,4 +1545,14 @@ background: var(--MAGENTA, #FF318C);
   border-top: none !important;
   top: 0 !important;
 
+}
+.text-on-image {
+  display: inline-flex;
+  padding: var(--Spacing-1, 4px) var(--Spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-2, 8px);
+  border-radius: var(--Spacing-96, 384px);
+  border: 2px solid rgba(189, 183, 255, 0.20);
+  background: rgba(255, 255, 255, 0.90);
 }

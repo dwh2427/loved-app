@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import Sidebar from "@/components/sidebar/sidebar";
 import Logo from "@/public/lovedLogo.svg";
+import Heart from "@/public/assets/img/heart.svg";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -108,7 +109,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
 
 
     <div className="fixed inset-0 bg-dark bg-opacity-40 flex items-center justify-center z-50 custom-popup custom-overlay">
-      <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white sm:my-8">
+      <div className="flex lg:w-[64rem] lg:h-[40rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white sm:my-8">
         {/* Left Side - Sign In Form*/}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8 my-6">
           <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center">
@@ -216,12 +217,22 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
 
 
         {/* Right Side - Cover Image */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center img-none">
-          <img
-            src="/assets/img/covers/signCoverImg.png"
-            alt="Cover Image"
-            className="w-[350px] h-[350px] lg:w-[512px] lg:h-[598px] object-cover rounded-lg login-popup-padding"
-          />
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center img w-[350px] h-[350px] lg:w-[512px] lg:h-[598px] bg-center rounded-lg login-popup-padding relative"
+         style={{
+             backgroundImage: 'url(/assets/img/covers/signCoverImg.png)',
+         }}
+        >
+
+          <div className="text-on-image bg-white absolute lg:mr-5">
+            <Image
+                  src={Heart}
+                  alt="Heart"
+                  width={20}
+                  height={20}
+                />
+            <span className="">You just received love!</span>
+          </div>
+
         </div>
       </div>
     </div>
