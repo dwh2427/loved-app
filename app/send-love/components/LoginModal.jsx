@@ -142,7 +142,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                                   position: "absolute", // Position button absolutely to prevent overlap
                                   zIndex: 1, // Ensure button appears above the input
                                   display: "flex",
-                                  padding: "0px 10px 0px 8px",
+                                  padding: "0px 16px 0px 8px",
                                   alignItems: "center",
                                   gap: "var(--Spacing-1, 4px)",
                                   alignSelf: "stretch",
