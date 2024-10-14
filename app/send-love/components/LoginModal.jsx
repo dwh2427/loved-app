@@ -111,8 +111,8 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
       <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white sm:my-8">
         {/* Left Side - Sign In Form*/}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8 my-6">
-          <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center lg:hidden">
-            <Link href="/" className="relative h-[182.62px] w-full max-w-[189.98px]">
+          <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center">
+            <Link href="/" className="relative  max-[600px]:h-[182.62px] w-full max-[600px]:max-w-[189.98px]">
               <Image
                 src={Logo}
                 alt="Image"
