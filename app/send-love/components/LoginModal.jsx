@@ -84,6 +84,23 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
       setLoading(false);
     }
   }
+
+  // const PhoneNumberInput = () => {
+    const [phone, setPhone] = useState('');
+    // Function to handle phone number change and apply formatting
+    const handlePhoneChange = (value) => {
+      // Remove non-digit characters for processing
+      const cleanedValue = value.replace(/\D/g, '');
+  
+      // Format as (123) 456-7890
+      const formattedValue = cleanedValue.replace(
+          /(\d{3})(\d{3})(\d{4})/,
+          '($1) $2-$3'
+      );
+  
+      setPhone(formattedValue);
+    }
+  // };
   
     
 
@@ -130,6 +147,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                             <FormControl>
                             <PhoneInput
                                 country={'au'}
+                                onChange={handlePhoneChange}
                                 inputStyle={{
                                   width:"100%",
                                   height: "48px",
@@ -174,7 +192,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                     type="submit"
                     disabled={loading}
                     variant={"default"}
-                    className="font-plus-jakarta-sans signBtn mx-auto h-[52px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[52px] md:w-[450px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
+                    className="font-comfortaa signBtn mx-auto h-[52px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[32.36px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[52px] md:w-[450px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[18px] md:leading-[22px]"
                     >
                     {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
                     Sign In

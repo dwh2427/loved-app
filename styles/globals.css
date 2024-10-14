@@ -1230,7 +1230,7 @@ display: none; /* Hidden by default */
   color: var(--Light-Mode-Background-Default, #FFF);
 
   /* Button/Button2-SemiBold */
-  font-family: "Plus Jakarta Sans";
+  /* font-family: "Plus Jakarta Sans"; */
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
