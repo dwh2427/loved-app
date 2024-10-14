@@ -44,12 +44,12 @@ export default function SendLoved() {
     return (
             <>
                 <CardHeader pageLink="dashboard" />
-                <div className="bg-[#F8F9FB] min-h-screen flex items-start md:items-center justify-center p-6">
-                    <div className="container mx-auto flex flex-col items-center text-center">
+                <div className="bg-[#FFF] min-h-screen flex items-start md:items-center justify-center p-[12px]">
+                    <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
                         
                         {/* Top: Heading */}
                         
-                        <h1 className="text-center text-[24px] md:text-[24px] font-bold text-[#202020] font-comfortaa leading-[1.4] mb-8">
+                        <h1 className="text-center text-[24px] md:text-[24px] font-bold text-[#202020] font-comfortaa leading-[1.4] mt-[48px] mb-[48px]">
                             What’s the occasion?
                         </h1>
 
@@ -88,14 +88,14 @@ export default function SendLoved() {
                         <select
                             value={selectedOccasion}
                             onChange={(e) => handleOccasionChange(e.target.value)}
-                            className="w-full max-w-xs py-2 pr-16 pl-4 border border-gray-300 rounded-full bg-white text-gray-600 appearance-none" // Reduced pr to 4
+                            className="w-full max-w-xs py-2 pr-16 pl-4 border border-gray-300 rounded-full bg-white text-gray-600 appearance-none" 
                             style={{
                             backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" strokeLinecap=\"round\" strokeLinejoin=\"round\"><polyline points=\"4 6 8 10 12 6\"/></svg>')", // Smaller SVG
                             backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 8px center' // Adjust position for smaller icon
+                            backgroundPosition: 'right 8px center' 
                             }}
                         >
-                            <option value="">Select Occasion</option> {/* Empty option for reset */}
+                            <option value="">Select Occasion</option> 
                             {occasions.map((occasion) => (
                             <option key={occasion} value={occasion}>
                                 {occasion}
