@@ -13,11 +13,11 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-[#F8F9FB] min-h-screen flex items-center mx-auto">
+    <div className="bg-[#F8F9FB] min-h-screen flex items-start md:items-center mx-auto">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
         
         {/* Left side: Text & Button */}
-        <div className="flex flex-col items-center justify-center order-2 md:order-1">
+        <div className="flex flex-col items-start md:items-center justify-center order-2 md:order-1">
           <div className="mx-auto flex flex-col">
             <h1 className="send-love mb-4">
               Send love in seconds
@@ -39,22 +39,18 @@ export default function HomePage() {
           {/* Wrap cards in a div to control layout */}
           <div className="relative flex flex-col items-center">
             {/* First Card */}
-            <div className="card-1 card-img mb-4 z-20"> {/* Use mb-4 to space cards */}
+            <div className="card-1 card-img z-20 w-[175px] h-[222px sm:w-[380px] sm:h-[480px]"> {/* Use mb-4 to space cards */}
               <Image
                 src={cardOne}
                 alt="Card Image One"
-                width={380}
-                height={480}
               />
             </div>
             
             {/* Second Card */}
-            <div className="card-2 card-img op-69 rotate-6 z-10">
+            <div className="card-2 card-img op-69 rotate-6 z-10 w-[175px] h-[222px] sm:w-[380px] sm:h-[480px]">
               <Image
                 src={cardTwo}
                 alt="Card Image Two"
-                width={380}
-                height={480}
               />
             </div>
           </div>

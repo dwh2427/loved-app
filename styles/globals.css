@@ -840,13 +840,6 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
   background-color: #e02976;
 }
 
-.card-img img{
-  height: 480px !important; /* or use initial, inherit depending on what you want */
-}
-
-.card-1{
-
-}
 /* end section will removed /////////////////////////////////////////////////////// */
 .pl-100{
   padding-left: 200px;
