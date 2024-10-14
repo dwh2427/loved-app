@@ -109,7 +109,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
 
 
     <div className="fixed inset-0 bg-dark bg-opacity-40 flex items-center justify-center z-50 custom-popup custom-overlay">
-      <div className="flex lg:w-[64rem] lg:h-[40rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white sm:my-8">
+      <div className="flex lg:w-[64rem] lg:h-[40.4rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white sm:my-8">
         {/* Left Side - Sign In Form*/}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-8 my-6">
           <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center">
