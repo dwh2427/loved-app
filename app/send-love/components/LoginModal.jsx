@@ -86,7 +86,6 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
     }
   }
 
-  // const PhoneNumberInput = () => {
     const [phone, setPhone] = useState('');
     // Function to handle phone number change and apply formatting
     const handlePhoneChange = (value) => {
@@ -101,7 +100,6 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
   
       setPhone(formattedValue);
     }
-  // };
   
     
 
@@ -138,7 +136,7 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                     onSubmit={form.handleSubmit(handleSubmit)}
                     className="mt-[41.41px] flex flex-col items-center gap-y-[17.41px] md:gap-y-[41px]"
                 >
-                  <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:space-y-0 pb-4">
+                  <div className="space-y-41.41px md:mt-16px md:max-w-385px mx-auto w-full md:space-y-0 sign-in-btn-pt">
                     <label htmlFor="phone" className="phone-input-label  common-font font-plus-jakarta-sans">Enter your phone number</label>
                     <FormField
                         control={form.control}
