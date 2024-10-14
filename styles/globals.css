@@ -1562,7 +1562,6 @@ background: var(--MAGENTA, #FF318C);
     justify-content: center;
     align-items: center;
     gap: var(--Spacing-12, 48px);
-    border-radius: 18px;
     margin: 15px;
   }
   .form-inner-div {
@@ -1597,6 +1596,13 @@ background: var(--MAGENTA, #FF318C);
   }
 }
 
-/* @media (min-width: 1364px) {
-  
-} */
+@media (min-width: 1364px) {
+  .form-inner-div {
+    padding: 0px var(--Spacing-12, 48px);
+    margin-top: -40px;
+  }
+}
+
+.form-div {
+  border-radius: 18px !important;
+}
