@@ -7,6 +7,8 @@
 /* Import external fonts first */
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&display=swap");
 
 /* Then add Tailwind's base, components, and utilities */
 @tailwind base;
@@ -1182,7 +1184,8 @@ display: none; /* Hidden by default */
 .custom-text{
   color: var(--Light-Mode-Text-Default, #202020);
   text-align: center;
-  font-family: "Figma Hand";
+  font-family: "Kalam", cursive;
+  /* font-family: "Edu AU VIC WA NT Guides", cursive; */
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -1488,8 +1491,15 @@ background: var(--MAGENTA, #FF318C);
   }
 } 
 
-
-
+.writeMessage {
+  color: var(--Light-Mode-Text-Default, #202020);
+  text-align: center;
+  font-family: Comfortaa;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+}
 .custom-overlay {
   background: var(--Light-Mode-Text-Default, #89898A);
 }

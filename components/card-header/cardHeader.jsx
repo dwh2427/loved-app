@@ -11,7 +11,7 @@ export default function CardHeader({ pageLink }) {
 
     return (
         <>
-            <header className="flex h-24 items-center xl:h-[64px] w-full px-10">
+            <header className="flex items-center h-[64px] w-full px-6">
                 <div className="max-w-[1495px] mx-auto flex h-[74px] items-center justify-between w-full">
                     
                     {/* Left Side - Back Icon */}
