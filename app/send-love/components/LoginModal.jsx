@@ -217,11 +217,8 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
 
 
         {/* Right Side - Cover Image */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center img w-[350px] h-[350px] lg:w-[512px] lg:h-[598px] bg-center rounded-lg login-popup-padding relative"
-         style={{
-             backgroundImage: 'url(/assets/img/covers/signCoverImg.png)',
-         }}
-        >
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center img w-[350px] h-[350px] lg:w-[512px] lg:h-[598px] bg-cover bg-center rounded-lg login-popup-padding relative" style={{ backgroundImage: 'linear-gradient(180deg, rgba(189, 183, 255, 0.00) 50%, #978EFA 100%), url(/assets/img/covers/signCoverImg.png)', }} >
+          {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#978EFA]"></div> */}
 
           <div className="text-on-image bg-white absolute lg:mr-5">
             <Image
@@ -232,6 +229,12 @@ export default function LoginModal({ isOpen, setOnCloseLogin }) {
                 />
             <span className="">You just received love!</span>
           </div>
+
+          {/* <div  style={{
+             background: 'linear-gradient(180deg, rgba(189, 183, 255, 0.00) 0%, #978EFA 100%)'
+         }}>
+
+          </div> */}
 
         </div>
       </div>
