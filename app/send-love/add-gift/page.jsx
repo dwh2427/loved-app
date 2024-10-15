@@ -80,7 +80,7 @@ export default function SendLoved() {
                             />
                         </div>
                     </div> */}
-                    <div className="mb-3">
+                    <div className="mb-5">
                         <div className="relative">
                             {/* Search Icon */}
                             <span className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -97,7 +97,7 @@ export default function SendLoved() {
                     </div>
 
 
-                    <div className="grid gap-6 mt-4 grid-cols-3 lg:grid-cols-4">
+                    <div className="grid gap-4 mt-4 grid-cols-3 lg:grid-cols-4">
                         {Array.from({ length: 12 }, (_, index) => (
                             <Image
                                 key={index}
@@ -115,7 +115,7 @@ export default function SendLoved() {
                     <div className="flex justify-center mt-10">
                         <button
                             onClick={handleGift}
-                            className="px-16 py-3 text-gray-900 font-bold border border-gray-300 rounded-full"
+                            className="px-16 py-3 text-[16px] text-[#202020] font-bold border border-gray-300 rounded-full"
                         >
                             Skip
                         </button>
