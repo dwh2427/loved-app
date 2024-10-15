@@ -140,11 +140,21 @@ const Verifycode = () => {
         Verify your number
       </h2>
 
-      <small className="text-start code-sent-to inline-flex items-center space-x-1">
+      <small className="text-start code-sent-to inline-flex items-center space-x-1 show-min-1025">
         <span>Code sent to +{phone}</span><small className="changText cursor-pointer"><a href="#">Change number?</a></small>
       </small>
 
-      <div onPaste={handlePaste} className="flex gap-2 mt-4">
+      <small className="text-start code-sent-to space-x-1 show-max-1024">
+        <span>Code sent to +{phone}</span>
+        <p>
+          <small className="changText cursor-pointer">
+            <a href="#">Change number?</a>
+          </small>
+        </p>
+
+      </small>
+
+      <div onPaste={handlePaste} className="flex gap-2 mt-4 otp-inputs">
         {code.map((digit, index) => (
           <input
             key={index}
@@ -165,7 +175,7 @@ const Verifycode = () => {
         onClick={handleSubmit}
         disabled={isButtonDisabled || loading}
         variant={"default"}
-        className="mx-auto h-[40px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] hover:bg-[#FF318C] focus:bg-[#FF318C] px-[51.77px] py-[32.36px] text-center text-[14px] leading-[37.53px] text-[#FEFFF8] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[40px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[14px] md:leading-[22px] mt-8"
+        className="otp-sign-in mx-auto h-[40px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] hover:bg-[#FF318C] focus:bg-[#FF318C] px-[51.77px] py-[32.36px] text-center text-[14px] leading-[37.53px] text-[#FEFFF8] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[40px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[14px] md:leading-[22px] mt-8"
       >
         {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
         Sign In

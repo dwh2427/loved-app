@@ -446,7 +446,7 @@ body.modal-open {
 
 .code-sent-to{
   color: var(--DARK-GREY, #586580);
-  text-align: center;
+  /* text-align: center; */
 
   /* Standard Text Regular */
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -1296,7 +1296,7 @@ display: none; /* Hidden by default */
 }
 .changText {
   color: var(--Light-Mode-Text-Primary, var(--MAGENTA, #FF318C));
-  text-align: center;
+  /* text-align: center; */
   font-family: Roboto;
   font-size: 14px;
   font-style: normal;
@@ -1596,24 +1596,84 @@ background: var(--MAGENTA, #FF318C);
 
 .verify-code-section {
   display: flex;
-  padding: 0px var(--Spacing-12, 48px);
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 160px;
 } 
 
-.otp-logo-div {
-  padding: 0px var(--Spacing-12, 48px);
-}
 
 @media (max-width: 1363px) {
   .otp-logo-div {
     height: 122px;
+    margin-bottom: 0px;
+    padding: 16px var(--Spacing-12, 16px);
+  }
+  .verify-otp-div {
+    margin-bottom: 32px;
+  }
+  .otpBtn {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    justify-content: center;
+    align-items: center;
+    gap: var(--Spacing-3, 12px);
+    border-radius: var(--Spacing-3, 12px);
+    border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+    background: var(--Light-Mode-Background-Default, #FFF);
+  }
+  .resendBtn {
+    margin-top: 16px;
+  }
+  .otp-sign-in {
+    display: flex;
+    height: 40px;
+    padding: 10px var(--Spacing-5, 20px);
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+  }
+  .otp-right-side {
+    display: none;
+  }
+
+  .left-side-content {
+    margin: 15px;
+    padding: 0px 2px 30px 2px;
+  } 
+}
+
+@media (max-width: 1024px) {
+  .verify-code-section {
+    width: 320px; 
   }
 }
+@media (max-width: 1024px) {
+  .show-min-1025 {
+    display: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  /* .verify-code-section {
+    width: 436px;
+  } */
+  .show-max-1024 {
+    display: none;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1363px) {
+  .otp-inputs {
+    gap: 2rem;
+  }
+}
+
 @media (min-width: 1364px) {
-  .otp-logo-div {
+
+ .otp-logo-div {
+    padding: var(--Spacing-8, 32px) 0px;
     margin-top: 140px;
     margin-bottom: 40px;
     display: flex;
@@ -1624,6 +1684,10 @@ background: var(--MAGENTA, #FF318C);
   .resendBtn {
     margin-top: 24px;
   }
+  .verify-code-section, .otp-logo-div {
+    padding: 0px var(--Spacing-12, 48px);
+  }
+
 }
 
 @media (min-width: 1024px) {
