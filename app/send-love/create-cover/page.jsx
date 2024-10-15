@@ -199,17 +199,17 @@ const handleSaveImage = async () => {
             <CardHeader pageLink="dashboard" />
             <div className="bg-[#FFF] min-h-screen flex flex-col justify-between items-center p-[12px]">
                 <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
-                    <h1 className="text-2xl md:text-3xl font-semibold pt-[48px] md:pt-[0px] pb-[48px] text-gray-800 text-center">
+                    <h1 className="text-[24px] font-bold text-[#202020] font-comfortaa leading-[1.4] pt-[48px] md:pt-[0px] pb-[48px] text-center">
                         Add a cover image
                     </h1>
 
                     <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-start justify-center" style={{ maxWidth: '800px' }}>
                         <div className="w-full lg:w-auto order-2 lg:order-1">
                             <div className="flex gap-4 justify-center lg:justify-start pb-10">
-                                <button className="color-button" onClick={() => setShowColorPicker(!showColorPicker)}>
+                                <button className="text-[16px] font-medium font-plus-jakarta-sans text-[#202020] color-button" onClick={() => setShowColorPicker(!showColorPicker)}>
                                     Colour
                                 </button>
-                                <button className="upload-button" onClick={handleButtonClick}>
+                                <button className="upload-button text-[16px] font-medium font-plus-jakarta-sans text-[#202020]" onClick={handleButtonClick}>
                                     Upload image/video <Image src={uploadIcon} alt="Upload" />
                                     <input
                                         type="file"
@@ -221,7 +221,7 @@ const handleSaveImage = async () => {
                                 </button>
                             </div>
 
-                            <h2 className="text-lg font-medium mb-4 text-left">Select an image</h2>
+                            <h2 className="text-[16px] font-medium mb-4 text-left font-plus-jakarta-sans text-[#202020]">Select an image</h2>
 
                             <div className="grid grid-cols-3 gap-4 mb-6">
                                 <Image
@@ -258,9 +258,9 @@ const handleSaveImage = async () => {
                         </div>
 
                         <div className="relative flex justify-center w-full order-1 lg:order-2 lg:w-auto" id="svgImageArea" ref={svgRef}>
-                            <div className="layer-1 img-frame">
+                            <div className="layer-1 img-frame w-[194px] h-[240px] md:w-[340px] md:h-[420px]">
                                 <h1 className="text-center mt-10 text-[32px]">{selectedLabel}</h1>
-                                <div className="layer-2">
+                                {/* <div className="layer-2"> */}
                                     <div className="layer-3">
                                         <img
                                             id="blurred-image"
@@ -276,8 +276,8 @@ const handleSaveImage = async () => {
                                                 alt="Uploaded Image"
                                                 ref={imageRef}
                                             />
-                                </div>
-                                </div>
+                                    </div>
+                                {/* </div> */}
                                
                             </div>
                                
