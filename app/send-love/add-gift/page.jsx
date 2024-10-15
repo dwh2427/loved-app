@@ -60,8 +60,8 @@ export default function SendLoved() {
             <div className="container mx-auto mt-5 px-4">
                 <div className="flex justify-center">
                     <div className="text-center max-w-lg mx-auto">
-                        <h2 className="text-2xl font-bold font-comfortaa text-gray-900">Want to add a Gift?</h2>
-                        <p className="mt-2 text-gray-800 font-plus">Share a message with a loved one</p>
+                        <h2 className="text-[28px] text-[#202020] font-bold font-comfortaa leading-[1.4] pt-[30px]">Want to add a Gift?</h2>
+                        <p className="mt-2 text-[16px] text-[#202020] font-plus-jakarta-sans">Share a message with a loved one</p>
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@ export default function SendLoved() {
                     </div>
 
 
-                    <div className="grid gap-6 mt-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                    <div className="grid gap-6 mt-4 grid-cols-3 lg:grid-cols-4">
                         {Array.from({ length: 12 }, (_, index) => (
                             <Image
                                 key={index}
