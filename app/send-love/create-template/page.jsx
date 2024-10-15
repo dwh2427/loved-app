@@ -126,9 +126,9 @@ export default function CreateTemplate() {
     return (
         <>
             <CardHeader pageLink="dashboard" />
-            <div className="min-h-screen flex flex-col justify-center items-center px-6 bg-custom-background">
-                <div className="container max-w-xl">
-                    <h1 className="writeMessage py-12">
+            <div className=" bg-[#FFF] min-h-screen flex flex-col  p-[12px]">
+                <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+                    <h1 className="writeMessage pt-[48px] md:pt-[0px] pb-[48px] ">
                         Write your message
                     </h1>
                     <div className="relative flex justify-center w-full mb-6" id="svgImageArea"  ref={svgRef}>

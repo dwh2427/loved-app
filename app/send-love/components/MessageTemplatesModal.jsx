@@ -58,11 +58,23 @@ export default function MessageTemplatesModal({ isOpen, onClose, setAddTocartTex
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 custom-popup">
-            <div className="bg-[#F8F9FB] rounded-lg p-4w-full min-w-[800px] mx-auto">
+            <div className="bg-[#F8F9FB] rounded-lg p-4w-full min-w-[445px] mx-auto">
                 <h2 className="text-center text-xl font-semibold mb-4 mt-10">Let us help with the message</h2>
                 
                 {/* Tabs */}
-                <div className="flex justify-center space-x-1 mb-2">
+                {/* <div className="flex justify-center space-x-1 mb-2">
+                    {Object.keys(messages).map((tab) => (
+                        <button
+                            key={tab}
+                            className={`px-4 py-2 custom-border rounded-full ${activeTab === tab ? 'bg-pink-500 text-white' : 'text-gray-600'}`}
+                            onClick={() => setActiveTab(tab)}
+                        >
+                            {tab}
+                        </button>
+                    ))}
+                </div> */}
+                {/* Tabs */}
+                <div className="grid grid-cols-3 gap-2 sm:flex sm:justify-center sm:space-x-1 p-4">
                     {Object.keys(messages).map((tab) => (
                         <button
                             key={tab}
@@ -74,8 +86,9 @@ export default function MessageTemplatesModal({ isOpen, onClose, setAddTocartTex
                     ))}
                 </div>
 
+
                 {/* Message List */}
-                <div className="space-y-4 mb-6 p-10">
+                <div className="space-y-4 mb-6 p-6">
                     {messages[activeTab].map((message, index) => (
                         <div
                             key={index}

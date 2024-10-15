@@ -1033,6 +1033,10 @@ flex-grow: 0;
     clip-path: path("M41.0089 105.672C53.6341 114.771 64.3972 119.804 64.8312 120C65.2633 119.804 76.0422 114.771 88.6693 105.672C88.4224 105.493 88.175 105.313 87.9269 105.131C88.177 105.313 88.4263 105.494 88.6749 105.673C91.0905 103.932 93.5803 102.031 96.0673 99.9859C107.566 90.6025 119.239 78.1906 125.299 63.2185C125.805 61.9768 126.271 60.7027 126.703 59.4008C128.859 52.9004 129.67 46.6811 129.67 41.0051C129.669 18.354 111.311 0.000863553 88.6601 0.000863553C79.7686 0.000863553 71.5503 2.83347 64.8332 7.64758L64.8321 7.64744C58.1129 2.83383 49.884 0 40.9931 0C18.3577 0 0 18.3531 0 41.0033C0 46.6792 0.811384 52.8987 2.96365 59.399C3.38464 60.7009 3.8455 61.9741 4.36942 63.2167C10.4302 78.1889 22.1003 90.6008 33.6016 99.9841C36.1016 102.029 38.5905 103.932 41.0089 105.672Z");
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="130" height="120" viewBox="0 0 130 120" fill="none"><g filter="url(%23filter0_i_2572_4846)"><path d="M41.0089 105.672C53.6341 114.771 64.3972 119.804 64.8312 120C65.2633 119.804 76.0422 114.771 88.6693 105.672C88.4224 105.493 88.175 105.313 87.9269 105.131C88.177 105.313 88.4263 105.494 88.6749 105.673C91.0905 103.932 93.5803 102.031 96.0673 99.9859C107.566 90.6025 119.239 78.1906 125.299 63.2185C125.805 61.9768 126.271 60.7027 126.703 59.4008C128.859 52.9004 129.67 46.6811 129.67 41.0051C129.669 18.354 111.311 0.000863553 88.6601 0.000863553C79.7686 0.000863553 71.5503 2.83347 64.8332 7.64758L64.8321 7.64744C58.1129 2.83383 49.884 0 40.9931 0C18.3577 0 0 18.3531 0 41.0033C0 46.6792 0.811384 52.8987 2.96365 59.399C3.38464 60.7009 3.8455 61.9741 4.36942 63.2167C10.4302 78.1889 22.1003 90.6008 33.6016 99.9841C36.1016 102.029 38.5905 103.932 41.0089 105.672Z" fill="%23E9E9EB"/></g><defs><filter id="filter0_i_2572_4846" x="0" y="0" width="129.67" height="122" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/><feOffset dy="2"/><feGaussianBlur stdDeviation="1"/><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/><feBlend mode="normal" in2="shape" result="effect1_innerShadow_2572_4846"/></filter></defs></svg>');
   }
+  .blurred-image {
+    width: 194px;
+    height: 180px;
+  }
 }
 
 
@@ -1191,11 +1195,13 @@ display: none; /* Hidden by default */
   display: flex;
   height: 24px;
   height: 24px;
-  padding: var(--Spacing-1, 4px) var(--Spacing-2, 8px);
+  padding: 4px;
+  /* padding: var(--Spacing-1, 4px) var(--Spacing-2, 8px); */
   align-items: center;
   gap: var(--Spacing-2, 8px);
   border-radius: var(--Spacing-16, 64px);
   border: 1px solid var(--Light-Mode-Border-Default, #E9E9EB);
+  font-size: 14px;
 }
 
 .message-line{
@@ -1649,4 +1655,17 @@ background: var(--MAGENTA, #FF318C);
   border-radius: var(--Spacing-4, 16px);
   background: #FFF;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 6px 0px rgba(0, 0, 0, 0.10);
+}
+.color-picker-popup {
+  position: absolute;
+  top: 23%;
+  left: 23%;
+}
+
+@media (min-width: 1024px) {
+  .color-picker-popup {
+    position: absolute;
+    top: 45%;
+    left: 30%;
+  }
 }
