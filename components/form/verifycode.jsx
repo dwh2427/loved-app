@@ -135,8 +135,8 @@ const Verifycode = () => {
   const isButtonDisabled = code.some(digit => digit === "");
 
   return (
-    <div className="flex flex-col items-center justify-center px-4  optnHeight">
-      <h2 className="text-center otp-header-text mt-9 flex flex-col verifyText">
+    <div className="flex flex-col justify-center px-4">
+      <h2 className="text-start otp-header-text flex flex-col items-start verify-text">
         Verify your number
       </h2>
 
@@ -144,7 +144,7 @@ const Verifycode = () => {
         <span>Code sent to +{phone}</span><small className="changText cursor-pointer"><a href="#">Change number?</a></small>
       </small>
 
-      <div onPaste={handlePaste} className="flex gap-2 mt-6">
+      <div onPaste={handlePaste} className="flex gap-2 mt-4">
         {code.map((digit, index) => (
           <input
             key={index}
@@ -165,12 +165,12 @@ const Verifycode = () => {
         onClick={handleSubmit}
         disabled={isButtonDisabled || loading}
         variant={"default"}
-        className="mx-auto h-[40px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] px-[51.77px] py-[32.36px] text-center text-[14px] leading-[37.53px] text-[#FEFFF8] hover:bg-[#FF007A] focus:bg-[#FF007A] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[40px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[14px] md:leading-[22px] mt-8"
+        className="mx-auto h-[40px] w-full max-w-[625.75px] text-base font-semibold rounded-[64.71px] bg-[#FF007A] hover:bg-[#FF318C] focus:bg-[#FF318C] px-[51.77px] py-[32.36px] text-center text-[14px] leading-[37.53px] text-[#FEFFF8] focus-visible:ring-0 focus-visible:ring-[#FF007A] focus-visible:ring-offset-0 dark:bg-violet-600 dark:text-gray-50 md:h-[40px] md:w-[384px] md:rounded-[100px] md:px-[25px] md:py-[20px] md:text-center md:text-[14px] md:leading-[22px] mt-8"
       >
         {loading && <Loader2 className="mr-2 size-6 animate-spin" />}
         Sign In
       </Button>
-      <a href="#"  onClick={resendOtp} className="resend-code resendBtn">Resend code</a>
+      <a href="#"  onClick={resendOtp} className="resendBtn">Resend code</a>
     </div>
   );
 };

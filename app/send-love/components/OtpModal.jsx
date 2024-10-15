@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import Heart from "@/public/assets/img/heart.svg";
 
 
 export default function VerifyOtp({ isOpen, setOnCloseOtp }) {
@@ -16,16 +17,16 @@ export default function VerifyOtp({ isOpen, setOnCloseOtp }) {
 
 
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 custom-popup">
-        <div className="flex lg:w-[64rem] lg:h-[39rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white">
+        <div className="flex lg:w-[64rem] lg:h-[40.4rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-white">
           {/* Left Side - Form Content */}
-          <div className="flex-1 flex flex-col items-center lg:items-start">
+          <div className="flex-1 flex flex-col items-start lg:items-start       ">
             {/* Logo for mobile only */}
-            <div className="mx-auto flex h-[183.13px] w-full max-w-[766.82px] flex-col items-center justify-center lg:hidden">
-              <Link href="/" className="relative h-[0px] w-full max-w-[189.98px]">
+            <div className=" flex flex-col w-full max-w-[766.82px] items-center justify-center otp-logo-div">
+              <Link href="/" className="relative max-[600px]:h-[182.62px] w-full max-[600px]:max-w-[189.98px]">
                 <Image
                   src={Logo}
                   alt="Image"
-                  className="object-cover"
+                  className="object-cover max-[600px]:w-[50%] md:h-[100%] md:w-[25%] lg:h-[95%] lg:w-[26%] logo-img"
                   width={165}
                   height={40}
                   sizes="100vw"
@@ -34,19 +35,23 @@ export default function VerifyOtp({ isOpen, setOnCloseOtp }) {
             </div>
 
             {/* Form and Verify Code Section */}
-            <div className="w-full lg:mx-auto lg:w-[530px] lg:space-y-[16px] lg:rounded-[16px] lg:px-0">
+            <div className="w-full lg:w-[530px]  lg:rounded-[16px] verify-code-section">
               <Verifycode />
             </div>
           </div>
 
           {/* Right Side - Cover Image */}
-          <div className="hidden lg:flex lg:w-1/2 items-center justify-center">
-            <img
-              src="../assets/img/covers/signCoverImg.png"
-              alt="Cover Image"
-              className="w-[350px] h-[350px] lg:w-[466px] lg:h-[598px] object-cover rounded-lg"
-            />
+          <div className="w-full lg:w-1/2 flex flex-col justify-center items-center img w-[350px] h-[350px] lg:w-[512px] lg:h-[598px] bg-cover bg-center rounded-lg login-popup-padding relative" style={{ backgroundImage: 'linear-gradient(180deg, rgba(189, 183, 255, 0.00) 50%, #978EFA 100%), url(/assets/img/covers/signCoverImg.png)', }} >
+          <div className="text-on-image bg-white absolute lg:mr-5">
+            <Image
+                  src={Heart}
+                  alt="Heart"
+                  width={20}
+                  height={20}
+                />
+            <span className="">You just received love!</span>
           </div>
+      </div>
         </div>
       </div>
 

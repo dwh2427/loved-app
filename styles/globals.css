@@ -449,25 +449,12 @@ body.modal-open {
   text-align: center;
 
   /* Standard Text Regular */
-  font-family: "Plus Jakarta Sans";
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: 16px; /* 133.333% */
   margin-bottom:20px;
-}
-
-.resend-code{
-  color: var(--MAGENTA, #FF318C);
-  text-align: center;
-  /* Desktop/Extra-Small Bold */
-  font-family: Lato;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-bottom:20px;
-  margin-top:20px;
 }
 
 .login-header{
@@ -1261,7 +1248,7 @@ display: none; /* Hidden by default */
   gap: var(--Spacing-3, 12px);
 }
 .optnHeight {
-  height: 40rem;
+  /* height: 20rem; */
 }
 
 .pt-200 {
@@ -1294,24 +1281,24 @@ display: none; /* Hidden by default */
   transform: rotate(-6deg);
 
 }
-.resendBtn {
+.resendBtn  {
   color: var(--Light-Mode-Text-Primary, var(--MAGENTA, #FF318C));
   text-align: center;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 19.6px */
   text-decoration-line: underline;
 }
-.verifyText {
+.verify-text {
     color: var(--Light-Mode-Text-Default, #202020);
-  font-family: Comfortaa;
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140%;
-  margin-bottom: 14px;
+    font-family: Comfortaa, sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    margin-bottom: 12px;
 }
 .code-sent-to {
   color: var(--Light-Mode-Text-Default, #202020);
@@ -1619,6 +1606,38 @@ background: var(--MAGENTA, #FF318C);
 
 .form-div {
   border-radius: 18px !important;
+}
+
+.verify-code-section {
+  display: flex;
+  padding: 0px var(--Spacing-12, 48px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 160px;
+} 
+
+.otp-logo-div {
+  padding: 0px var(--Spacing-12, 48px);
+}
+
+@media (max-width: 1363px) {
+  .otp-logo-div {
+    height: 122px;
+  }
+}
+@media (min-width: 1364px) {
+  .otp-logo-div {
+    margin-top: 140px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .resendBtn {
+    margin-top: 24px;
+  }
 }
 
 @media (min-width: 1024px) {
