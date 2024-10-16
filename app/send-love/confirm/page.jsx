@@ -321,7 +321,7 @@ export default function CreateTemplate() {
                     {/* Schedule and Send Now Buttons */}
                     <hr className="hidden md:block my-6 border-gray-200" />
                     <div className="hidden md:flex justify-start space-x-4 mt-4">
-                        <button onClick={handleScheduleLoveClick} className="flex items-center px-4 py-2 border border-gray-300 rounded-full text-gray-500 font-medium transition-colors hover:bg-gray-100">
+                        <button onClick={handleScheduleLoveClick} className="schedule-later-btn common-btn-text transition-colors hover:bg-gray-100">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -340,7 +340,7 @@ export default function CreateTemplate() {
                         Schedule for later
                         </button>
 
-                        <button onClick={handleSendLoveClick} className="px-6 py-2 bg-pink-400 rounded-full text-white font-semibold transition-colors hover:bg-pink-500">
+                        <button onClick={handleSendLoveClick} className="send-now-btn common-btn-text transition-colors hover:bg-pink-500">
                         Send Now
                         </button>
                     </div>
@@ -367,7 +367,7 @@ export default function CreateTemplate() {
                             className="absolute z-20"
                             />
                         </div>
-                        <div className="flex items-center mt-6">
+                        <div className="flex items-center mt-6 voucher-info">
                             {!isGiftDeleted ? (
                             <>
                                 <img src={selectedImage} alt="thumb" className="w-16 h-16 gift-voucher-image" />
