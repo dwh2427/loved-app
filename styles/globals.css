@@ -1781,6 +1781,43 @@ background: var(--MAGENTA, #FF318C);
   font-weight: 600;
   line-height: 100%; /* 16px */;
 }
+.voucher-info {
+  display: flex;
+  padding: var(--Spacing-5, 20px) var(--Spacing-4, 16px);
+  align-items: flex-start;
+  gap: var(--Spacing-4, 16px);
+  align-self: stretch;
+  border-radius: var(--Spacing-3, 12px);
+  background: var(--Light-Mode-Background-Default, #FFF);
+}
+.common-btn-text {
+  display: flex;
+  height: 48px;
+  /* Button/Button1-SemiBold */
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */
+  justify-content: center;
+  align-items: center;
+  padding: var(--Spacing-3, 12px) var(--Spacing-5, 20px);
+  border-radius: var(--Spacing-32, 128px);
+
+}
+.schedule-later-btn {
+  height: 48px;
+  gap: var(--Spacing-3, 12px);
+  border: 1px solid var(--Light-Mode-Background-Tertiary, #D8D8DA);
+  color: var(--Light-Mode-Text-Secondary, #89898A);
+}
+.send-now-btn {
+  width: 208px;
+  align-self: stretch;
+  border: 1px solid var(--Light-Mode-Background-Primary-Disable, #FF9FD0);
+  background: var(--Light-Mode-Background-Primary-Disable, #FF9FD0);
+  color: var(--Light-Mode-Background-Default, #FFF);
+}
 /* ========================================================================================================================================================= */
 @media (max-width: 1023px) {
   .confirm-header {
