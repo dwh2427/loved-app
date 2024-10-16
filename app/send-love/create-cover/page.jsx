@@ -33,6 +33,7 @@ export default function SendLoved() {
     const heartShapeColor = useRef(null);
     
     const blurredImageRef = useRef(null);
+    const selectedImageRef = useRef(null); // Create a ref to keep track of the selected image
 
     const loadImage = (event) => {
         const fileUrl = URL.createObjectURL(event.target.files[0]);
@@ -137,7 +138,8 @@ export default function SendLoved() {
     };
 
 
-    const handleImageClick = async (imageObj) => {
+
+    const handleImageClick = async (imageObj, imageElement) => {
         setSelectedColor("#fff");
   
         const response = await fetch(imageObj.src);
@@ -154,6 +156,18 @@ export default function SendLoved() {
 
         imageRef.current.style.display = 'block';
         blurredImageRef.current.style.display = 'none';
+
+       
+        // Set the border color of the clicked image
+        imageElement.style.borderColor = "red";
+
+        // Reset the border color of the previously selected image, if any
+        if (selectedImageRef.current && selectedImageRef.current !== imageElement) {
+            selectedImageRef.current.style.borderColor = "transparent"; // Or any default color
+        }
+
+        // Update the reference to the currently selected image
+        selectedImageRef.current = imageElement;
 
     };
 
@@ -230,7 +244,7 @@ const handleSaveImage = async () => {
                                     width={119}
                                     height={119}
                                     className={`cursor-pointer rounded-lg border ${selectedImage === defaultImage ? "border-black" : "border-gray-200"}`}
-                                    onClick={() => handleImageClick(defaultImage)}
+                                    onClick={(event) => handleImageClick(defaultImage, event.target)}
                                 />
                                 {[...Array(5)].map((_, index) => (
                                     <Image
@@ -239,8 +253,8 @@ const handleSaveImage = async () => {
                                         alt={`Image ${index + 1}`}
                                         width={119}
                                         height={119}
-                                        className="cursor-pointer rounded-lg"
-                                        onClick={() => handleImageClick(blankImage)}
+                                        className={`cursor-pointer rounded-lg border ${selectedImage === defaultImage ? "border-black" : "border-gray-200"}`}
+                                        onClick={(event) => handleImageClick(blankImage, event.target)}
                                     />
                                 ))}
                             </div>
