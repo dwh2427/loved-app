@@ -332,7 +332,9 @@ const handleSaveImage = async () => {
                         </div>
                     </div>
 
+
                     </div>
+                    <div className="border-top flex md:hidden"></div>
                         {/* Bottom Section: Back and Continue Buttons */}
                         <div className="flex justify-center items-center gap-6 pb-20 lg:pb-0 lg:pt-20">
                             {/* <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2"> */}
