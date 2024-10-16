@@ -1263,11 +1263,11 @@ display: none; /* Hidden by default */
   }
 }
 .paddingLove {
-  padding: 40px 31px;
+  padding: 24px 16px;
 }
 @media (min-width: 1024px) {
   .paddingLove {
-    padding: 100px 60px;
+    padding: 64px;
   }
 } 
 
@@ -1823,7 +1823,6 @@ background: var(--MAGENTA, #FF318C);
   color: var(--Light-Mode-Text-Secondary, #89898A);
 }
 .send-now-btn {
-  width: 208px;
   align-self: stretch;
   border: 1px solid var(--Light-Mode-Background-Primary-Disable, #FF9FD0);
   background: var(--Light-Mode-Background-Primary-Disable, #FF9FD0);
@@ -1834,6 +1833,12 @@ background: var(--MAGENTA, #FF318C);
   .confirm-header {
     font-size: 28px;
   }
+  .between-border {
+    margin: 20px 0px 20px;
+  }
+  .message-form {
+    padding: 32px 16px;
+  }
 }
 @media (min-width: 1024px) {
   .confirm-header {
@@ -1841,6 +1846,12 @@ background: var(--MAGENTA, #FF318C);
   }
   .between-border {
     margin: 32px 0px 32px;
+  }
+  .message-form {
+    padding: 64px 23px;
+  }
+  .send-now-btn {
+    width: 208px;
   }
 }
 
