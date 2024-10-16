@@ -267,10 +267,10 @@ export default function CreateTemplate() {
         <Suspense>
             <CardHeader pageLink="dashboard" />
             
-            <div className="container mx-auto mt-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 md:gap-[150px]">
+            <div className="container mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 md:gap-[100px] xl:gap-[140px] 2xl:gap-[150px]">
                     {/* Left Column */}
-                    <div className="space-y-6 p-8">
+                    <div className="space-y-6 message-form">
                     <h2 className="confirm-header">Confirm and Send Your Message</h2>
                     <form>
                         {/* Recipient Input */}
@@ -486,11 +486,11 @@ export default function CreateTemplate() {
             {/* Schedule and Send Now Buttons at the Bottom */}
             <hr className="md:hidden my-6 border-gray-200" />
             <div className="md:hidden flex flex-col mt-4 w-full p-4">
-                <button onClick={handleScheduleLoveClick} className="flex justify-center items-center w-full px-4 py-2 border border-gray-300 rounded-full text-gray-500 font-medium transition-colors hover:bg-gray-100 mb-2" type="button" >
+                <button onClick={handleScheduleLoveClick} className="schedule-later-btn common-btn-text transition-colors hover:bg-gray-100 mb-2" type="button" >
                     Schedule for later
                 </button>
 
-                <button onClick={handleSendLoveClick} className="w-full px-6 py-2 bg-pink-400 rounded-full text-white font-semibold transition-colors hover:bg-pink-500" type="button">
+                <button onClick={handleSendLoveClick} className="send-now-btn common-btn-text transition-colors hover:bg-pink-500" type="button">
                     Send Now
                 </button>
             </div>
