@@ -126,27 +126,27 @@ export default function SendLoved() {
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-[#202020] bg-opacity-40 z-50">
 
-                <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-sm mx-auto">
+                <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto">
                   {/* Close button */}
-                  <button onClick={closeModal} className="absolute top-3 right-3 text-gray-500">
+                  {/* <button onClick={closeModal} className="absolute top-3 right-3 text-gray-500">
                     &times;
-                  </button>
+                  </button> */}
               
                   {/* Selected image with background */}
-                  <div className="flex justify-center mb-6 bg-gray-100 p-4 rounded-lg">
-                    <Image src={selectedImage} width={200} height={120} alt="Selected Gift Card" className="w-40 h-auto rotate-6" />
+                  <div className="flex justify-center mb-6 popupCard-bg">
+                    <Image src={selectedImage} width={200} height={120} alt="Selected Gift Card" className="popup-card" />
                   </div>
               
                   {/* Add Card Value Text */}
-                  <h3 className="text-center text-lg font-semibold mb-4">Add Card Value</h3>
+                  <h3 className="text-center font-semibold pb-6 text-[#202020] text-[18px] leading-[25.2px] font-plus-jakarta-sans">Add Card Value</h3>
               
                   {/* Value Controls */}
-                    <div className="flex items-center justify-center mb-4">
+                    <div className="flex items-center justify-center mb-4 gap-[16px]">
                         <button
-                            className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-2xl text-gray-600 hover:bg-gray-300"
+                            className="plusMinusBtn"
                             onClick={decreaseAmount}
                         >
-                            -
+                            <img src="/assets/img/minus.svg" alt="icon" />
                         </button>
 
                         <input
@@ -156,14 +156,15 @@ export default function SendLoved() {
                             const value = e.target.value.replace(/[^0-9]/g, ''); // remove non-numeric characters
                             setGiftAmount(value);
                             }}
-                            className="mx-6 w-24 text-3xl font-bold text-gray-800 border border-gray-200 rounded-lg text-center p-2 focus:border-gray-400 focus:outline-none"
+                            className="counter-box"
                         />
 
                         <button
-                            className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-2xl text-gray-600 hover:bg-gray-300"
+                            className="plusMinusBtn"
                             onClick={increaseAmount}
                         >
-                            +
+                            <img src="/assets/img/plus.svg" alt="icon" />
+                            
                         </button>
                     </div>
 
@@ -175,15 +176,15 @@ export default function SendLoved() {
               
                   {/* Value Options */}
                   <div className="grid grid-cols-3 gap-4 mb-6">
-                    <button className="w-full py-2 bg-gray-100 text-gray-800 font-medium rounded-lg" onClick={() => setGiftAmount(20)}>$20</button>
-                    <button className="w-full py-2 bg-gray-100 text-gray-800 font-medium rounded-lg" onClick={() => setGiftAmount(75)}>$75</button>
-                    <button className="w-full py-2 bg-gray-100 text-gray-800 font-medium rounded-lg" onClick={() => setGiftAmount(200)}>$200</button>
+                    <button className="w-full exampleBox" onClick={() => setGiftAmount(20)}>$20</button>
+                    <button className="w-full exampleBox" onClick={() => setGiftAmount(75)}>$75</button>
+                    <button className="w-full exampleBox" onClick={() => setGiftAmount(200)}>$200</button>
                   </div>
               
                   {/* Full-width Confirm and Cancel Buttons */}
                   <div className="flex flex-col items-center mt-6 space-y-2">
-                    <button className="w-full bg-pink-500 text-white px-6 py-2 rounded-[50px]" onClick={handleGift}>Confirm</button>
-                    <button className="text-gray-500" onClick={closeModal}>Cancel</button>
+                    <button className="confirmBtn hover:bg-[#FF318C]" onClick={handleGift}>Confirm</button>
+                    <button className="cancelBtn" onClick={closeModal}>Cancel</button>
                   </div>
                 </div>
               </div>
