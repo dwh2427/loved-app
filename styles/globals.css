@@ -1711,11 +1711,87 @@ background: var(--MAGENTA, #FF318C);
   top: 23%;
   left: 23%;
 }
-
 @media (min-width: 1024px) {
   .color-picker-popup {
     position: absolute;
     top: 45%;
     left: 30%;
+  }
+}
+.search-bar, .user-name-input, .email-input {
+  display: flex;
+  height: 48px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--Spacing-1, 4px);
+  align-self: stretch;
+}
+.search-bar {
+  gap: var(--Spacing-1, 4px);
+}
+.user-name-input, .email-input {
+  gap: var(--Spacing-2, 8px);
+} 
+.confirm-header {
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: Comfortaa, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 39.2px */
+}
+
+.pencil-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.edit-btn-holder {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-1, 4px);
+  flex-shrink: 0;
+  border-radius: var(--Spacing-2, 8px);
+  background: var(--Light-Mode-Background-Default, #FFF);
+}
+.gift-voucher-image {
+  width: 94.556px;
+  align-self: stretch;
+  border-radius: 6px;
+}
+.add-payment-btn {
+  display: flex;
+  height: 48px;
+  padding: var(--Spacing-3, 12px) var(--Spacing-5, 20px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-3, 12px);
+  align-self: stretch;
+  border-radius: var(--Spacing-32, 128px);
+  background: var(--MAGENTA, #FF318C);
+  color: var(--Light-Mode-Background-Default, #FFF);
+
+  /* Button/Button1-SemiBold */
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */;
+}
+/* ========================================================================================================================================================= */
+@media (max-width: 1023px) {
+  .confirm-header {
+    font-size: 28px;
+  }
+}
+@media (min-width: 1024px) {
+  .confirm-header {
+    font-size: 28px;
+  }
+  .between-border {
+    margin: 32px 0px 32px;
   }
 }

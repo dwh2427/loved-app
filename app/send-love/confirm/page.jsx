@@ -271,7 +271,7 @@ export default function CreateTemplate() {
                 <div className="grid grid-cols-1 md:grid-cols-2 md:gap-[150px]">
                     {/* Left Column */}
                     <div className="space-y-6 p-8">
-                    <h2 className="text-3xl font-bold">Confirm and Send Your Message</h2>
+                    <h2 className="confirm-header">Confirm and Send Your Message</h2>
                     <form>
                         {/* Recipient Input */}
                         <div className="mb-8">
@@ -289,7 +289,7 @@ export default function CreateTemplate() {
                         />
                         </div>
 
-                        <hr className="my-6 border-gray-200" />
+                        <hr className="my-6 border-[#E9E9EB] between-border" />
 
                         {/* From Input */}
                         <UserInfo
@@ -309,7 +309,7 @@ export default function CreateTemplate() {
                         ): (
                             <button
                             type="button"
-                            className="md:mb-[250px] flex cursor-pointer items-center justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
+                            className="add-payment-btn md:mb-[250px] flex cursor-pointer items-center justify-center rounded-full shadow-sm hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
                             onClick={() => setIsModalOpen(true)}
                             >
                             <span className="mr-2">+</span>Add Payment Method
@@ -350,12 +350,15 @@ export default function CreateTemplate() {
                     <div className="bg-gray-100 p-6 rounded-lg paddingLove">
                         <div className="hidden md:flex relative  items-center justify-center h-96 bg-pink-100 rounded-lg">
                             <div className="Loveabsolute w-52 h-72 bg-white shadow-lg rounded-lg z-10"></div>
-                            <img
-                            src="/home/checkout/icon/pencilIcon.svg"
-                            alt="icon"
-                            onClick={handleEdit}
-                            className="absolute top-4 right-4 w-8 h-8 cursor-pointer"
-                            />
+                            <div className="edit-btn-holder">
+
+                                <img
+                                src="/home/checkout/icon/pencilIcon.svg"
+                                alt="icon"
+                                onClick={handleEdit}
+                                className="absolute top-4 right-4 w-8 h-8 cursor-pointer pencil-icon"
+                                />
+                            </div>
                             <Image
                             src={cardImage}
                             alt="Default"
@@ -367,7 +370,7 @@ export default function CreateTemplate() {
                         <div className="flex items-center mt-6">
                             {!isGiftDeleted ? (
                             <>
-                                <img src={selectedImage} alt="thumb" className="w-16 h-16" />
+                                <img src={selectedImage} alt="thumb" className="w-16 h-16 gift-voucher-image" />
                                 <div className="ml-4">
                                 <h5 className="text-lg font-semibold">{label}</h5>
                                 <h5 className="text-xl font-bold">${subTotal}</h5>
@@ -452,7 +455,7 @@ export default function CreateTemplate() {
                             )}
                             </div>
 
-                            <hr className="my-4 border-gray-200" />
+                            <hr className="my-4 border-[#E9E9EB]" />
 
                             <div className="flex justify-between">
                             <span className="text-sm font-medium text-gray-700">Order total</span>
