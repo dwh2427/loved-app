@@ -10,6 +10,8 @@ import blankImage from '@/public/home/blankImage.png';
 import backIcon from '@/public/home/back-icon.svg';
 import arrowLeft from '@/public/home/arrow-left.svg';
 import uploadIcon from '@/public/home/upload-icon.svg';
+import imageIcon from '@/public/home/img-icon.svg';
+import videoIcon from '@/public/home/video-icon.svg';
 import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
 import axios from "axios";
@@ -223,8 +225,19 @@ const handleSaveImage = async () => {
                                 <button className="text-[16px] font-medium font-plus-jakarta-sans text-[#202020] color-button" onClick={() => setShowColorPicker(!showColorPicker)}>
                                     Colour
                                 </button>
+                                <button className="image-button text-[16px] font-medium font-plus-jakarta-sans text-[#202020]" onClick={handleButtonClick}>
+                                    <Image src={imageIcon} className="mr-1" alt="icon"  /><span className="pr-4">Image</span>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        onChange={loadImage}
+                                        style={{ display: 'none' }}
+                                    />
+                                </button>
+
                                 <button className="upload-button text-[16px] font-medium font-plus-jakarta-sans text-[#202020]" onClick={handleButtonClick}>
-                                    Upload image/video <Image src={uploadIcon} alt="Upload" />
+                                    <Image src={videoIcon} className="mr-1" alt="Upload" /><span className="pr-4">Video</span>
                                     <input
                                         type="file"
                                         accept="image/*"
