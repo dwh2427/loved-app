@@ -1999,3 +1999,39 @@ background: var(--MAGENTA, #FF318C);
   line-height: 140%; /* 19.6px */
   text-decoration-line: underline;
 }
+.occasionBtn {
+  display: flex;
+  height: 38px;
+  padding: 10px var(--Spacing-5, 20px);
+  align-items: center;
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 14px */
+}
+
+@media (min-width: 1385px) {
+  .occasionBtn {
+    display: flex;
+    width: 190.5px;
+    height: 52px;
+    padding: 14px var(--Spacing-6, 24px);
+    align-items: center;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 16px var(--Spacing-4, 16px);
+    flex: 1 0 0;
+    flex-wrap: wrap;
+    color: var(--Light-Mode-Text-Default, #202020);
+    font-family: "Plus Jakarta Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 16px */
+  }
+}

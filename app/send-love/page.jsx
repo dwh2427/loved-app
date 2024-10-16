@@ -28,7 +28,7 @@ export default function SendLoved() {
     const [selectedOccasion, setSelectedOccasion] = useState("Simple");
     const occasions = [
         "Custom", "Celebration", "Thanks", "Just Because", 
-        "Memorial","Thanks", "I miss you", "Simple"
+        "Memorial","Thank", "I miss you", "Simple"
     ];
 
     const handleOccasionChange = (occasion) => {
@@ -84,7 +84,7 @@ export default function SendLoved() {
                         </div>
 
                         {/* Dropdown for small devices */}                     
-                        <div className="block lg:hidden mb-8">
+                        {/* <div className="block lg:hidden mb-8">
                         <select
                             value={selectedOccasion}
                             onChange={(e) => handleOccasionChange(e.target.value)}
@@ -102,38 +102,38 @@ export default function SendLoved() {
                             </option>
                             ))}
                         </select>
-                        </div>
+                        </div> */}
 
                         {/* Radio Options for large devices */}
-                        <div className="hidden lg:grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                        {occasions.map((occasion) => (
-                            <label
-                            key={occasion}
-                            className={`relative flex items-center justify-between py-2 px-6 border rounded-full cursor-pointer ${
-                                selectedOccasion === occasion
-                                ? "border-pink-500 text-pink-500 bg-[#FFFFFF]"
-                                : "border-gray-300"
-                            }`}
-                            style={{
-                                width: "183.5px",
-                                height: "52px",
-                                borderRadius: "128px",
-                            }}
-                            >
-                            <input
-                                type="radio"
-                                name="occasion"
-                                value={occasion}
-                                checked={selectedOccasion === occasion}
-                                onChange={() => handleOccasionChange(occasion)}
-                                className="absolute opacity-0 cursor-pointer"
-                            />
-                            <span>{occasion}</span>
-                            {selectedOccasion === occasion && (
-                                <Image src={tickMark} alt="tick mark" width={21} height={20} />
-                            )}
-                            </label>
-                        ))}
+                        <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 gap-4 mb-8">
+                            {occasions.map((occasion) => (
+                                <label
+                                key={occasion}
+                                className={`occasionBtn relative flex items-center justify-between py-2 px-6 border rounded-full cursor-pointer ${
+                                    selectedOccasion === occasion
+                                    ? "border-pink-500 text-pink-500 bg-[#FFFFFF]"
+                                    : "border-gray-300"
+                                }`}
+                                // style={{
+                                //     width: "183.5px",
+                                //     height: "52px",
+                                //     borderRadius: "128px",
+                                // }}
+                                >
+                                <input
+                                    type="radio"
+                                    name="occasion"
+                                    value={occasion}
+                                    checked={selectedOccasion === occasion}
+                                    onChange={() => handleOccasionChange(occasion)}
+                                    className="absolute opacity-0 cursor-pointer"
+                                />
+                                <span>{occasion}</span>
+                                {selectedOccasion === occasion && (
+                                    <Image src={tickMark} alt="tick mark" width={21} height={20} />
+                                )}
+                                </label>
+                            ))}
                         </div>
 
                         {/* Continue Button */}
