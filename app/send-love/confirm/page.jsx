@@ -298,6 +298,12 @@ export default function CreateTemplate() {
                             email={email}
                             errors={errors}
                         />
+                         <button
+                            type="button"
+                            className="add-btn-with-plus flex cursor-pointer items-center justify-center border py-2 px-5 mb-5 rounded-full shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-100"
+                            >
+                            <span className="mr-2">+</span>Add
+                            </button>
 
                         {/* Add Payment Method Button */}
                         { paymentMethodId? (

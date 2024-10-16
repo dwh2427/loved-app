@@ -1828,6 +1828,9 @@ background: var(--MAGENTA, #FF318C);
   background: var(--Light-Mode-Background-Primary-Disable, #FF9FD0);
   color: var(--Light-Mode-Background-Default, #FFF);
 }
+.add-btn-with-plus {
+  margin-top: -14px;
+}
 /* ========================================================================================================================================================= */
 @media (max-width: 1023px) {
   .confirm-header {
@@ -1838,6 +1841,9 @@ background: var(--MAGENTA, #FF318C);
   }
   .message-form {
     padding: 32px 16px;
+  }
+  .add-btn-with-plus {
+    margin-bottom: 30px;
   }
 }
 @media (min-width: 1024px) {
@@ -1852,6 +1858,9 @@ background: var(--MAGENTA, #FF318C);
   }
   .send-now-btn {
     width: 208px;
+  }
+  .add-btn-with-plus {
+    margin-bottom: 40px;
   }
 }
 
