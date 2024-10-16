@@ -10,6 +10,8 @@ import blankImage from '@/public/home/blankImage.png';
 import backIcon from '@/public/home/back-icon.svg';
 import arrowLeft from '@/public/home/arrow-left.svg';
 import uploadIcon from '@/public/home/upload-icon.svg';
+import imageIcon from '@/public/home/img-icon.svg';
+import videoIcon from '@/public/home/video-icon.svg';
 import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
 import axios from "axios";
@@ -219,19 +221,44 @@ const handleSaveImage = async () => {
 
                     <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-start justify-center" style={{ maxWidth: '800px' }}>
                         <div className="w-full lg:w-auto order-2 lg:order-1">
-                            <div className="flex gap-4 justify-center lg:justify-start pb-10">
-                                <button className="text-[16px] font-medium font-plus-jakarta-sans text-[#202020] color-button" onClick={() => setShowColorPicker(!showColorPicker)}>
-                                    Colour
-                                </button>
-                                <button className="upload-button text-[16px] font-medium font-plus-jakarta-sans text-[#202020]" onClick={handleButtonClick}>
-                                    Upload image/video <Image src={uploadIcon} alt="Upload" />
-                                    <input
+                            {/* For small screens, Image and Video buttons are side by side, Color button is below them */}
+                            <div className="flex flex-col lg:flex-row gap-4 justify-center lg:justify-start pb-10">
+                                
+                                <div className="flex gap-4 justify-center">
+                                    {/* Color button */}
+                                    <button className="hidden md:flex text-[16px] font-medium font-plus-jakarta-sans text-[#202020] color-button w-full mt-4 lg:mt-0 lg:w-auto" onClick={() => setShowColorPicker(!showColorPicker)}>
+                                        Colour
+                                    </button>
+                                    {/* Image button */}
+                                    <button className="image-button text-[16px] font-medium font-plus-jakarta-sans text-[#202020] w-full lg:w-auto" onClick={handleButtonClick}>
+                                        <Image src={imageIcon} className="mr-1" alt="icon"  />
+                                        <span className="pr-4">Image</span>
+                                        <input
                                         type="file"
                                         accept="image/*"
                                         ref={fileInputRef}
                                         onChange={loadImage}
                                         style={{ display: 'none' }}
-                                    />
+                                        />
+                                    </button>
+
+                                    {/* Video button */}
+                                    <button className="upload-button text-[16px] font-medium font-plus-jakarta-sans text-[#202020] w-full lg:w-auto" onClick={handleButtonClick}>
+                                        <Image src={videoIcon} className="mr-1" alt="Upload" />
+                                        <span className="pr-4">Video</span>
+                                        <input
+                                        type="file"
+                                        accept="video/*"
+                                        ref={fileInputRef}
+                                        onChange={loadImage}
+                                        style={{ display: 'none' }}
+                                        />
+                                    </button>
+                                </div>
+
+                                {/* Color button at the bottom for small devices */}
+                                <button className="colorBtn-width mx-auto justify-center flex md:hidden text-[16px] font-medium font-plus-jakarta-sans text-[#202020] color-button  mt-4" onClick={() => setShowColorPicker(!showColorPicker)}>
+                                    Colour
                                 </button>
                             </div>
 

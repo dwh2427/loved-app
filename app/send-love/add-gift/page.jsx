@@ -57,7 +57,7 @@ export default function SendLoved() {
     return (
         <>
             <CardHeader pageLink="dashboard" />
-            <div className="container mx-auto mt-5 px-4">
+            <div className="container mx-auto mt-5 px-4 min-h-screen">
                 <div className="flex justify-center">
                     <div className="text-center max-w-lg mx-auto">
                         <h2 className="text-[28px] text-[#202020] font-bold font-comfortaa leading-[1.4] pt-[30px]">Want to add a Gift?</h2>

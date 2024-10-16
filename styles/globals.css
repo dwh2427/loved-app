@@ -827,12 +827,8 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 
 
 .color-button{
-  /* Button Contained */
 
   box-sizing: border-box;
-
-  /* Auto layout */
-  display: flex;
   flex-direction: row;
   align-items: center;
   padding: 14px 24px;
@@ -853,30 +849,45 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 
 }
 
+.colorBtn-width {
+  width: 100%;
+}
+
+.image-button{
+  display: flex;
+  height: 52px;
+  padding: 14px var(--Spacing-6, 24px);
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */
+
+
+}
+
+
 .upload-button{
-  /* Button Contained */
-
-box-sizing: border-box;
-
-/* Auto layout */
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-padding: 14px 24px;
-gap: 12px;
-
-width: 249px;
-height: 52px;
-
-/* Light Mode/Border/Secondary */
-border: 1px solid #D8D8DA;
-border-radius: 128px;
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 1;
+  display: flex;
+  height: 52px;
+  padding: 14px var(--Spacing-6, 24px);
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  color: var(--Light-Mode-Text-Default, #202020);
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */
 
 }
 
