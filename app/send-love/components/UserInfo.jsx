@@ -35,7 +35,7 @@ export default function UserInfo({ username, register, email, errors }) {
                             type="text"
                             id="from"
                             placeholder="Your name"
-                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                            className="block w-full pl-3 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm user-name-input"
                         />
                           {errors.username && <p className="mt-1 text-xs text-red-500 ml-[10px]">{errors.username.message}</p>} 
                         </div>
@@ -60,7 +60,7 @@ export default function UserInfo({ username, register, email, errors }) {
                             type="email"
                             id="email"
                             placeholder="Your email"
-                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                            className="email-input block w-full pl-3 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
                         />
                            {errors.email && <p className="mt-1 text-xs text-red-500 ml-[10px]">{errors.email.message}</p>}
                            </div>

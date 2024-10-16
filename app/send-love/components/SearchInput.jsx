@@ -1,6 +1,6 @@
 import Image from "next/image";
 import CloseTextIcon from "@/public/close-text.svg";
-import SearchBar from "@/public/search-bar.svg";
+import SearchIcon from "@/public/search-icon.svg";
 import { useEffect, useState } from "react";
 import PlusIcon from "@/public/plus-rounded.svg";
 
@@ -133,13 +133,13 @@ export default function SearchInput({
   };
 
   return (
-    <div className="form-group relative">
+    <div className="form-group">
       <input
         value={inputValue || ""}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
         autoComplete="new-password"
-        className={`block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm ${
+        className={`search-bar block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm ${
           filteredSuggestions.length > 0
             ? "rounded-t-[25px] rounded-tl-[25px] rounded-tr-[25px]"
             : "rounded-full"
@@ -148,11 +148,11 @@ export default function SearchInput({
         placeholder="Name, mobile phone or email"
       />
       <Image
-        src={SearchBar}
+        src={SearchIcon}
         alt="Search Bar"
-        width={17}
-        height={17}
-        className="absolute left-3 top-4"
+        width={20}
+        height={20}
+        className="absolute left-3 top-1/2 transform -translate-y-1/2 search-icon"
       />
       {inputValue && (
         <Image
@@ -161,7 +161,7 @@ export default function SearchInput({
           alt="close"
           width={17}
           height={17}
-          className="absolute right-3 top-4 cursor-pointer"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
         />
       )}
       {filteredSuggestions.length > 0 && (
