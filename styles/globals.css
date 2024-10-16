@@ -827,12 +827,8 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 
 
 .color-button{
-  /* Button Contained */
 
   box-sizing: border-box;
-
-  /* Auto layout */
-  display: flex;
   flex-direction: row;
   align-items: center;
   padding: 14px 24px;
@@ -852,6 +848,11 @@ main>section{ position: fixed; z-index: 10; top: 0; left: 0; width: 100%; height
 
 
 }
+
+.colorBtn-width {
+  width: 100%;
+}
+
 .image-button{
   display: flex;
   height: 52px;
