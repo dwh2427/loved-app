@@ -148,7 +148,7 @@ export default function CreateTemplate() {
                                                 // I want to skip this label and button while save to png 
                                                 <label
                                                     htmlFor="formFileSm"
-                                                    className="cursor-pointer hide-section inline-flex items-center gap-2 border text-[14px] border-gray-300 text-[#202020] px-4 py-2 rounded-full hover:bg-gray-100 transition"
+                                                    className="cursor-pointer hide-section inline-flex font-semibold items-center gap-2 border text-[14px] border-[#D8D8DA] text-[#202020] px-4 py-2 rounded-full hover:bg-gray-100 transition"
                                                 >
                                                     <Image
                                                         src={messageIcon}
@@ -180,7 +180,7 @@ export default function CreateTemplate() {
                             <div className="btn-wrapper absolute bottom-0 left-1/2 -translate-x-1/2 mb-8 hide-section-1">
                                     <a
                                         href="#"
-                                        className="inline-flex items-center gap-2 text-gray-700 px-4 rounded-full hover:bg-gray-100 transition btn-ms"
+                                        className="messageTemplate"
                                         onClick={handleOpenModal}
                                     >
                                         <Image

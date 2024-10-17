@@ -1132,7 +1132,7 @@ flex-grow: 0;
   left: -8%;
 }
 
-.btn-wrapper {
+/* .btn-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1151,7 +1151,24 @@ flex-grow: 0;
 }
 .btn-wrapper a {
   text-decoration: none;
+} */
+.messageTemplate {
+  display: flex;
+  padding: var(--Spacing-2, 8px) var(--Spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-2, 8px);
+  border-radius: var(--Spacing-32, 128px);
+  border: 1px solid var(--Light-Mode-Border-Secondary, #D8D8DA);
+  color: var(--Light-Mode-Text-Default, #202020);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 14px */
+
 }
+
 .btn-ms {
   color: var(--Light-Mode-Text-Default, #202020);
   /* Button/Button2-SemiBold */
