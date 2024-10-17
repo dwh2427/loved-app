@@ -124,7 +124,7 @@ export default function SendLoved() {
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-[#202020] bg-opacity-40 z-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-[#202020] bg-opacity-40 z-50 add-gift-bg">
 
                 <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto">
                   {/* Close button */}

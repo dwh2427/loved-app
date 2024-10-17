@@ -2113,3 +2113,6 @@ background: var(--MAGENTA, #FF318C);
   border-top: 1px solid var(--Light-Mode-Background-Tertiary, #D8D8DA);
   background: var(--Light-Mode-Background-Secondary, #F8F9FB);
 }
+.add-gift-bg {
+  background: #89898A;
+}
