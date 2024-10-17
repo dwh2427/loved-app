@@ -105,7 +105,7 @@ export default function SendLoved() {
                         </div> */}
 
                         {/* Radio Options for large devices */}
-                        <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 gap-4 mb-8">
+                        <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 mb-8 occasion-pill">
                             {occasions.map((occasion) => (
                                 <label
                                 key={occasion}
@@ -136,10 +136,9 @@ export default function SendLoved() {
                             ))}
                         </div>
 
-                        <div className="border-top flex md:hidden"></div>
                         {/* Continue Button */}
                         <button
-                        className="flex continue-button mb-4 justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200"
+                        className="occasion-continue-button mb-4 justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200 hidden lg:flex"
                         onClick={handleCreateCover}  // Call the function on button click
                         >
                         Continue
@@ -147,6 +146,13 @@ export default function SendLoved() {
 
 
                     </div>
+                </div>
+
+                {/* Bottom Section: Back and Continue Buttons to md */}
+                <div className="flex lg:hidden justify-center items-center gap-6 lg:pb-0 lg:pt-20 bottom-0 bottom-buttons">
+                    <button className="flex occasion-continue-button mb-4 justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200" onClick={handleCreateCover} >
+                        Continue
+                    </button>
                 </div>
             </>
     );

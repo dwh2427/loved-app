@@ -940,9 +940,11 @@ flex-grow: 0;
 }
 
 
-
 .continue-button {
   display: flex;
+}
+
+.continue-button, .occasion-continue-button {
   width: 240px;
   padding: 14px var(--Spacing-6, 24px);
   justify-content: center;
@@ -955,6 +957,7 @@ flex-grow: 0;
   font-style: normal;
   font-weight: 600;
   line-height: 100%;
+  z-index: 999;
 }
 .leftArrowBtn {
   display: flex;
@@ -1619,6 +1622,13 @@ background: var(--MAGENTA, #FF318C);
     padding: var(--Spacing-4, 16px) var(--Spacing-6, 24px);
     border-top: 1px solid var(--Light-Mode-Background-Tertiary, #D8D8DA);
     background: var(--Light-Mode-Background-Secondary, #F8F9FB);
+  }
+
+}
+
+@media (min-width:426px) and (max-width: 1363px) {
+  .occasion-pill {
+    padding: 0px 10px;
   }
 }
 
