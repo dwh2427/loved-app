@@ -213,8 +213,8 @@ const handleSaveImage = async () => {
     return (
         <>
             <CardHeader pageLink="dashboard" />
-            <div className="bg-[#FFF] min-h-screen flex flex-col justify-between items-center p-[12px]">
-                <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+            <div className="bg-[#FFF] min-h-screen flex flex-col justify-between items-center p-[12px] px-0">
+                <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space pb-[48px]" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
                     <h1 className="text-[24px] font-bold text-[#202020] font-comfortaa leading-[1.4] pt-[48px] md:pt-[0px] pb-[48px] text-center">
                         Add a cover image
                     </h1>
@@ -334,20 +334,18 @@ const handleSaveImage = async () => {
 
 
                     </div>
-                    <div className="border-top flex md:hidden"></div>
-                        {/* Bottom Section: Back and Continue Buttons */}
-                        <div className="flex justify-center items-center gap-6 pb-20 lg:pb-0 lg:pt-20">
-                            {/* <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2"> */}
-                            <button className="leftArrowBtn">
-                                <Image src={arrowLeft} alt="Back" width={20} height={20} />
-                            </button>
-                        <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
-                                Continue
-                            </button>
-
-
-                   </div>
                 </div>
+            </div>
+
+             {/* Bottom Section: Back and Continue Buttons */}
+             <div className="flex justify-center items-center gap-6 lg:pb-0 lg:pt-20 sticky bottom-0 bottom-buttons md:hidden">
+                {/* <button className="flex items-center justify-center bg-white border rounded-full px-6 py-2"> */}
+                <button className="leftArrowBtn">
+                    <Image src={arrowLeft} alt="Back" width={20} height={20} />
+                </button>
+                <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
+                    Continue
+                </button>
             </div>
         </>
     );
