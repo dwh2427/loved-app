@@ -1580,8 +1580,6 @@ background: var(--MAGENTA, #FF318C);
   .text-on-image {
     display: none;
   }
-}
-@media (max-width: 1363px) {
   .form-div {
     padding: var(--Spacing-4, 16px) var(--Spacing-6, 24px);
     flex-direction: column;
@@ -1620,6 +1618,13 @@ background: var(--MAGENTA, #FF318C);
   .sign-in-btn-pt {
     padding-bottom: 16px;
   }
+  .bottom-buttons {
+    bottom: 0px;
+    position: sticky;
+    padding: var(--Spacing-4, 16px) var(--Spacing-6, 24px);
+    border-top: 1px solid var(--Light-Mode-Background-Tertiary, #D8D8DA);
+    background: var(--Light-Mode-Background-Secondary, #F8F9FB);
+  }
 }
 
 @media (min-width: 1364px) {
@@ -1627,6 +1632,7 @@ background: var(--MAGENTA, #FF318C);
     padding: 0px var(--Spacing-12, 48px);
     margin-top: -40px;
   }
+  
 }
 
 .form-div {
@@ -2115,9 +2121,4 @@ background: var(--MAGENTA, #FF318C);
 }
 .add-gift-bg {
   background: #89898A;
-}
-.bottom-buttons {
-  padding: var(--Spacing-4, 16px) var(--Spacing-6, 24px);
-  border-top: 1px solid var(--Light-Mode-Background-Tertiary, #D8D8DA);
-  background: var(--Light-Mode-Background-Secondary, #F8F9FB);
 }
