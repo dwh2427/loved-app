@@ -127,7 +127,7 @@ export default function CreateTemplate() {
         <>
             <CardHeader pageLink="dashboard" />
             <div className=" bg-[#FFF] min-h-screen flex flex-col  p-[12px]">
-                <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+                <div className="bg-[#F8F9FB] min-h-[80vh] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
                     <h1 className="writeMessage pt-[48px] md:pt-[0px] pb-[48px] ">
                         Write your message
                     </h1>
@@ -168,7 +168,7 @@ export default function CreateTemplate() {
 
                                 <div className="mt-10">
                                 <textarea
-                                    className="w-full px-4 py-2 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 custom-text"
+                                    className="w-full px-4 py-2 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200 custom-text"
                                     id="exampleFormControlTextarea1"
                                     rows="5"
                                     placeholder="Write a message"
@@ -177,10 +177,10 @@ export default function CreateTemplate() {
                                 />
                                 </div>
                                 {/* // I want to skip this button while save to png  */}
-                            <div className="btn-wrapper absolute bottom-0 left-1/2 -translate-x-1/2 mb-8 hide-section-1">
+                            <div className="btn-wrapper absolute bottom-0 mb-8 hide-section-1" style={{ left: '22%' }}>
                                     <a
                                         href="#"
-                                        className="messageTemplate"
+                                        className="messageTemplate hover:bg-gray-100"
                                         onClick={handleOpenModal}
                                     >
                                         <Image

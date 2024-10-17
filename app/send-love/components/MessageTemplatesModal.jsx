@@ -105,7 +105,7 @@ export default function MessageTemplatesModal({ isOpen, onClose, setAddTocartTex
                 {/* Buttons */}
           
                 <div className="flex flex-col items-center justify-end mb-10 h-full">
-                    <button className="bg-pink-500 text-white px-6 py-2 rounded-full w-full max-w-xs mb-2" onClick={addTocartText}>Add to card</button>
+                    <button className="bg-pink-500 text-white px-6 py-2 rounded-full w-full max-w-xs mb-2" onClick={addTocartText}>Add to Card</button>
                     <button className="text-gray-600 px-6 py-2 rounded-full w-full max-w-xs" onClick={onClose}>Cancel</button>
                 </div>
             </div>
