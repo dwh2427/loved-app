@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Edu AU VIC WA NT Guides';
+  src: url('/fonts/EduAUVICWANTGuides-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('/fonts/FiraSans-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  src: url('/fonts/Kalam-Regular.ttf') format('truetype');
+}
+
+
 * {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-optical-sizing: auto;
