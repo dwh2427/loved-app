@@ -957,7 +957,6 @@ flex-grow: 0;
   font-style: normal;
   font-weight: 600;
   line-height: 100%;
-  z-index: 999;
 }
 .leftArrowBtn {
   display: flex;
