@@ -7,10 +7,6 @@
   src: url('/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Edu AU VIC WA NT Guides';
-  src: url('/fonts/EduAUVICWANTGuides-VariableFont_wght.ttf') format('truetype');
-}
-@font-face {
   font-family: 'Fira Sans';
   src: url('/fonts/FiraSans-Italic.ttf') format('truetype');
 }
@@ -1202,7 +1198,6 @@ display: none; /* Hidden by default */
   color: var(--Light-Mode-Text-Default, #202020);
   text-align: center;
   font-family: "Kalam", cursive;
-  /* font-family: "Edu AU VIC WA NT Guides", cursive; */
   font-size: 18px;
   font-style: normal;
   font-weight: 400;

@@ -203,18 +203,30 @@ export default function CreateTemplate() {
                     </div>
 
           
-                    {/* Bottom Section: Back and Continue Buttons */}
-                    <div className="flex justify-center items-center gap-6 pt-10">
+                    {/* Bottom Section: Back and Continue Buttons from lg */}
+                    <div className="hidden lg:flex justify-center items-center gap-6 pt-10">
                         <button className="leftArrowBtn">
-                            <Image src={arrowLeft} alt="Back" />
+                            <Image src={arrowLeft} alt="Back" width={20} height={20} />
                         </button>
-                        {/* <button onClick={handleSaveImage} className="bg-pink-500 text-white rounded-full py-2 px-16 text-base font-semibold hover:bg-pink-600 transition-colors"> */}
                         <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
                             Continue
                         </button>
-                    </div>
+                   </div>
+
                 </div>
             </div>
+
+            {/* Bottom Section: Back and Continue Buttons to md */}
+            <div className="flex lg:hidden justify-center items-center gap-6 mt-[8px] bottom-0 bottom-buttons">
+                <button className="leftArrowBtn">
+                    <Image src={arrowLeft} alt="Back" width={20} height={20} />
+                </button>
+                <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
+                    Continue
+                </button>
+            </div>
+
+
             <MessageTemplatesModal isOpen={isModalOpen} onClose={handleCloseModal} setAddTocartText={setAddTocartText} />
 
             { loginModalOpen && (

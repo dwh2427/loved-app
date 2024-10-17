@@ -347,8 +347,8 @@ const handleSaveImage = async () => {
             </div>
 
 
-             {/* Bottom Section: Back and Continue Buttons for to md */}
-             <div className="flex lg:hidden justify-center items-center gap-6 lg:pb-0 lg:pt-20 bottom-0 bottom-buttons">
+            {/* Bottom Section: Back and Continue Buttons to md */}
+            <div className="flex lg:hidden justify-center items-center gap-6 lg:pb-0 lg:pt-20 bottom-0 bottom-buttons">
                 <button className="leftArrowBtn">
                     <Image src={arrowLeft} alt="Back" width={20} height={20} />
                 </button>
