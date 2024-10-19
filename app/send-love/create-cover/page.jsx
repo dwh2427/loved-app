@@ -22,6 +22,8 @@ const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), 
 });
 
 export default function SendLoved() {
+    const [isEnabledContinue, setIsEnabledContinue] = useState(false);
+    const [showBlurImage, setShowBlurImage] = useState(true);
     const [selectedImage, setSelectedImage] = useState(defaultImage);
     const [showColorPicker, setShowColorPicker] = useState(false);
     const [uploadedImage, setUploadedImage] = useState(null);
@@ -38,13 +40,16 @@ export default function SendLoved() {
     const selectedImageRef = useRef(null); // Create a ref to keep track of the selected image
 
     const loadImage = (event) => {
+        setShowBlurImage(true);
         const fileUrl = URL.createObjectURL(event.target.files[0]);
         imageRef.current.src = fileUrl;
         blurredImageRef.current.src = fileUrl;
 
         imageRef.current.style.display = 'block';
         blurredImageRef.current.style.display = 'none';
+        setIsEnabledContinue(true);
     };
+
     useEffect(() => {
         const convertBlankImageToBlob = async () => {
             try {
@@ -116,7 +121,11 @@ export default function SendLoved() {
 
         const handleOutsideClick = (event) => {
             if (imageRef.current && !imageRef.current.contains(event.target)) {
-                blurredImageRef.current.style.display = 'none';
+                if (blurredImageRef.current) {  // Check if blurredImageRef is not null
+                    blurredImageRef.current.style.display = 'none';
+                } else {
+                    console.warn('blurredImageRef is null or undefined');
+                }
             }
         };
 
@@ -128,11 +137,16 @@ export default function SendLoved() {
     }, []);
 
     const handleColorChange = (color) => {
+        setShowBlurImage(false);
         imageRef.current.style.display = 'none';
-        blurredImageRef.current.style.display = 'none';
+        if (blurredImageRef.current) {
+            blurredImageRef.current.style.display = 'none';
+        }
+
         setSelectedColor(color.hex);
         setImageSrc(null);
         heartShapeColor.current.style.background = color.hex;
+        setIsEnabledContinue(true);
     };
 
     const handleButtonClick = () => {
@@ -170,6 +184,7 @@ export default function SendLoved() {
 
         // Update the reference to the currently selected image
         selectedImageRef.current = imageElement;
+        setIsEnabledContinue(true);
 
     };
 
@@ -201,7 +216,9 @@ const handleSaveImage = async () => {
                 console.error('Failed to save the image');
             }
         } catch (error) {
-            console.error('Error converting or saving image', error);
+            console.error('Error converting or saving image. Possible issues: ', error.message, error);
+
+           // console.error('Error converting or saving image', error);
         }
     } else {
         console.error('No layer-1 element found');
@@ -248,7 +265,6 @@ const handleSaveImage = async () => {
                                         <span className="pr-4">Video</span>
                                         <input
                                         type="file"
-                                        accept="video/*"
                                         ref={fileInputRef}
                                         onChange={loadImage}
                                         style={{ display: 'none' }}
@@ -303,6 +319,7 @@ const handleSaveImage = async () => {
                                 <h1 className="text-center mt-10 text-[32px]">{selectedLabel}</h1>
                                 {/* <div className="layer-2"> */}
                                     <div className="layer-3">
+                                    {showBlurImage && (
                                         <img
                                             id="blurred-image"
                                             className="blurred-image"
@@ -310,6 +327,7 @@ const handleSaveImage = async () => {
                                             alt="Blurred Image"
                                             ref={blurredImageRef}
                                         />
+                                    )}
                                         <div className="heart-shape"  ref={heartShapeColor} >
                                             <img
                                                 id="uploaded-image"
@@ -335,10 +353,10 @@ const handleSaveImage = async () => {
 
                     {/* Bottom Section: Back and Continue Buttons from lg */}
                     <div className="hidden lg:flex justify-center items-center gap-6 pb-20 lg:pb-0 lg:pt-20 ">
-                        <button className="leftArrowBtn">
+                        <button className="leftArrowBtn"  onClick={() => router.back()}>
                             <Image src={arrowLeft} alt="Back" width={20} height={20} />
                         </button>
-                        <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
+                        <button onClick={handleSaveImage} className={`continue-button hover:bg-[#FF318C] ${isEnabledContinue ? 'continue-active' : ''}`} >
                             Continue
                         </button>
                    </div>
@@ -349,10 +367,10 @@ const handleSaveImage = async () => {
 
             {/* Bottom Section: Back and Continue Buttons to md */}
             <div className="flex lg:hidden justify-center items-center gap-6 lg:pb-0 lg:pt-20 bottom-0 bottom-buttons z-50">
-                <button className="leftArrowBtn">
+                <button className="leftArrowBtn"  onClick={() => router.back()}>
                     <Image src={arrowLeft} alt="Back" width={20} height={20} />
                 </button>
-                <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
+                <button onClick={handleSaveImage}  className={`continue-button hover:bg-[#FF318C] ${isEnabledContinue ? 'continue-active' : ''}`} >
                     Continue
                 </button>
             </div>

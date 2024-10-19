@@ -2143,3 +2143,7 @@ background: var(--MAGENTA, #FF318C);
 .add-gift-bg {
   background: #89898A;
 }
+
+.continue-active{
+  background-color: #FF318C;
+}

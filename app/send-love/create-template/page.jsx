@@ -205,7 +205,7 @@ export default function CreateTemplate() {
           
                     {/* Bottom Section: Back and Continue Buttons from lg */}
                     <div className="hidden lg:flex justify-center items-center gap-6 pt-10">
-                        <button className="leftArrowBtn">
+                        <button className="leftArrowBtn" onClick={() => router.back()}>
                             <Image src={arrowLeft} alt="Back" width={20} height={20} />
                         </button>
                         <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
@@ -218,7 +218,7 @@ export default function CreateTemplate() {
 
             {/* Bottom Section: Back and Continue Buttons to md */}
             <div className="flex lg:hidden justify-center items-center gap-6 mt-[8px] bottom-0 bottom-buttons z-50">
-                <button className="leftArrowBtn">
+                <button className="leftArrowBtn"  onClick={() => router.back()}>
                     <Image src={arrowLeft} alt="Back" width={20} height={20} />
                 </button>
                 <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
