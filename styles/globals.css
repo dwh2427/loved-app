@@ -2147,3 +2147,28 @@ background: var(--MAGENTA, #FF318C);
 .continue-active{
   background-color: #FF318C;
 }
+.top-image {
+  /* width: 360px;
+  height: 455px; */
+  flex-shrink: 0;
+  border-radius: var(--Spacing-5, 20px);
+}
+.bottom-image {
+  max-width: unset !important;
+  /* width: 400px;
+  height: 490px; */
+  transform: rotate(1deg);
+  flex-shrink: 0;
+  border-radius: var(--Spacing-5, 20px);
+  margin-top: -7px;
+  margin-right: -7px;
+
+}
+
+@media (min-width: 640px) {
+  .bottom-image {
+    margin-top: -12px;
+    margin-right: -10px;
+  }
+}
+

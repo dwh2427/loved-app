@@ -39,19 +39,13 @@ export default function HomePage() {
           {/* Wrap cards in a div to control layout */}
           <div className="relative flex flex-col items-center">
             {/* First Card */}
-            <div className="card-1 card-img z-20 w-[175px] h-[222px sm:w-[380px] sm:h-[480px]"> {/* Use mb-4 to space cards */}
-              <Image
-                src={cardOne}
-                alt="Card Image One"
-              />
+            <div className="card-1 z-20">
+              <Image src={cardOne} className="top-image w-[160px] h-[204px] sm:w-[360px] sm:h-[455px]" alt="image"/>
             </div>
             
             {/* Second Card */}
-            <div className="card-2 card-img op-69 rotate-6 z-10 w-[175px] h-[222px] sm:w-[380px] sm:h-[480px]">
-              <Image
-                src={cardTwo}
-                alt="Card Image Two"
-              />
+            <div className="card-2 z-10">
+              <Image src={cardTwo} className="bottom-image w-[175px] h-[222px] sm:w-[400px] sm:h-[490px]" alt="image"/>
             </div>
           </div>
         </div>
