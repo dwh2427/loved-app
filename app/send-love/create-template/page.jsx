@@ -135,7 +135,7 @@ export default function CreateTemplate() {
         <>
             <CardHeader pageLink="dashboard" />
             <div className=" bg-[#FFF] min-h-screen flex flex-col  p-[12px]">
-                <div className="bg-[#F8F9FB] min-h-[80vh] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+                <div className="bg-[#F8F9FB] min-h-[80vh] flex flex-col text-center fix-space">
                     <h1 className="writeMessage pt-[48px] md:pt-[0px] pb-[48px] ">
                         Write your message
                     </h1>
