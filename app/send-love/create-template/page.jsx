@@ -59,11 +59,12 @@ export default function CreateTemplate() {
         setIsModalOpen(false);
     };
 
-    // useEffect(() => {
-    //     setOtpModalOpen(false); // Trig
-    //     setLoginModalOpen(true); 
- 
-    // }, [changeNumber]);
+    useEffect(() => {
+        if(changeNumber){
+        setOtpModalOpen(false); // Trig
+        setLoginModalOpen(true); 
+        }
+    }, [changeNumber]);
 
 
     // Handle file input and display the image
