@@ -20,7 +20,7 @@ const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), 
 
 export default function CreateTemplate() {
 
-    
+    const [isEnabledContinue, setIsEnabledContinue] = useState(false);
     const svgRef = useRef(null);
     const [imagePreview, setImagePreview] = useState(null);
 
@@ -76,6 +76,7 @@ export default function CreateTemplate() {
           setImagePreview(event.target.result);
         };
         reader.readAsDataURL(file);
+        setIsEnabledContinue(true);
       }
     };
 
@@ -181,7 +182,11 @@ export default function CreateTemplate() {
                                     rows="5"
                                     placeholder="Write a message"
                                     value={addTocartText}  // Bind the value to the state
-                                    onChange={(e) => setAddTocartText(e.target.value)}  // Update the state on change
+                                    // onChange={(e) => setAddTocartText(e.target.value)}  // Update the state on change
+                                    onChange={(e) => {
+                                        setAddTocartText(e.target.value);
+                                        setIsEnabledContinue(true);
+                                    }}
                                 />
                                 </div>
                                 {/* // I want to skip this button while save to png  */}
@@ -216,7 +221,7 @@ export default function CreateTemplate() {
                         <button className="leftArrowBtn" onClick={() => router.back()}>
                             <Image src={arrowLeft} alt="Back" width={20} height={20} />
                         </button>
-                        <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
+                        <button onClick={handleSaveImage} className={`continue-button hover:bg-[#FF318C] ${isEnabledContinue ? 'continue-active' : ''}`}>
                             Continue
                         </button>
                    </div>
@@ -229,7 +234,7 @@ export default function CreateTemplate() {
                 <button className="leftArrowBtn"  onClick={() => router.back()}>
                     <Image src={arrowLeft} alt="Back" width={20} height={20} />
                 </button>
-                <button onClick={handleSaveImage} className="continue-button hover:bg-[#FF318C]">
+                <button onClick={handleSaveImage} className={`continue-button hover:bg-[#FF318C] ${isEnabledContinue ? 'continue-active' : ''}`}>
                     Continue
                 </button>
             </div>
