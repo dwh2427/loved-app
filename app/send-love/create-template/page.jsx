@@ -29,9 +29,9 @@ export default function CreateTemplate() {
     const [otpModalOpen, setOtpModalOpen] = useState(false);
     const [closeLogin, setOnCloseLogin] = useState(false);
     const [closeOtp, setOnCloseOtp] = useState(false);
+    const [changeNumber, setChangeNumber] = useState(false);
     
-    
-    
+
     const [addTocartText, setAddTocartText] = useState("");
 
     useEffect(() => {
@@ -58,6 +58,14 @@ export default function CreateTemplate() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+    useEffect(() => {
+        if(changeNumber){
+        setOtpModalOpen(false); // Trig
+        setLoginModalOpen(true); 
+        }
+    }, [changeNumber]);
+
 
     // Handle file input and display the image
     const handleFileChange = (e) => {
@@ -127,7 +135,7 @@ export default function CreateTemplate() {
         <>
             <CardHeader pageLink="dashboard" />
             <div className=" bg-[#FFF] min-h-screen flex flex-col  p-[12px]">
-                <div className="bg-[#F8F9FB] min-h-[80vh] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+                <div className="bg-[#F8F9FB] min-h-[80vh] flex flex-col text-center fix-space">
                     <h1 className="writeMessage pt-[48px] md:pt-[0px] pb-[48px] ">
                         Write your message
                     </h1>
@@ -234,7 +242,7 @@ export default function CreateTemplate() {
             )}
 
             { otpModalOpen && (
-                <OtpModal isOpen={otpModalOpen} setOnCloseOtp={setOnCloseOtp} />
+                <OtpModal isOpen={otpModalOpen} setOnCloseOtp={setOnCloseOtp} setChangeNumber={setChangeNumber} />
             )}
         
             

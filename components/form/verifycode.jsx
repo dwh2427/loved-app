@@ -141,7 +141,7 @@ const Verifycode = () => {
       </h2>
 
       <small className="text-start code-sent-to inline-flex items-center space-x-1 show-min-1025">
-        <span>Code sent to +{phone}</span><small className="changText cursor-pointer"><a href="#">Change number?</a></small>
+        <span>Code sent to +{phone}</span><small className="changText cursor-pointer"><button>Change number?</button></small>
       </small>
 
       <small className="text-start code-sent-to space-x-1 show-max-1024">

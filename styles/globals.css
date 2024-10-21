@@ -1737,7 +1737,9 @@ background: var(--MAGENTA, #FF318C);
 }
 
 @media (min-width: 1364px) {
-
+  .p-24-for-xl {
+    padding: 24px;
+  }
  .otp-logo-div {
     padding: var(--Spacing-8, 32px) 0px;
     margin-top: 140px;
@@ -2110,10 +2112,20 @@ background: var(--MAGENTA, #FF318C);
   line-height: 100%; /* 14px */
 }
 
+
+@media (max-width: 425px) {
+  .occasionBtn {
+    font-size: 12px !important;
+  }
+  .occasion-inner-div {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
 @media (min-width: 1385px) {
   .occasionBtn {
     display: flex;
-    width: 190.5px;
+    /* width: 190.5px; */
     height: 52px;
     padding: 14px var(--Spacing-6, 24px);
     align-items: center;

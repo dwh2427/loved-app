@@ -2,33 +2,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import loveLogoMain from '@/public/card-logo.svg';
-import backIcon from '@/public/back-icon.svg';
 import saveIcon from '@/public/save-icon.svg';
-import { useRouter } from 'next/navigation';
 
 export default function CardHeader({ pageLink }) {
-    const router = useRouter();
 
     return (
         <>
             <header className="flex items-center h-[64px] w-full px-6">
                 <div className="max-w-[1495px] mx-auto flex h-[74px] items-center justify-between w-full">
-                    
-                    {/* Left Side - Back Icon */}
                     <div className="flex items-center">
-                        <Image
-                            width={59}
-                            height={16}
-                            src={backIcon}
-                            alt="back"
-                            className="cursor-pointer"
-                            onClick={() => router.back()}  // Optional: Navigate back on click
-                        />
-                    </div>
-                    
-                    {/* Center - Logo */}
-                    <div className="flex-1 flex justify-center">
-                        <Link href="/" className="flex gap-1">
+                       <Link href="/" className="flex gap-1">
                             <Image
                                 width={101}
                                 height={24}
@@ -36,6 +19,11 @@ export default function CardHeader({ pageLink }) {
                                 alt="loved"
                             />
                         </Link>
+                    </div>
+                    
+                    {/* Center - Logo */}
+                    <div className="flex-1 flex justify-center">
+              
                     </div>
 
                     {/* Right Side - Save Icon */}

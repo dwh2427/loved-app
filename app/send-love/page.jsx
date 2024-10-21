@@ -44,8 +44,8 @@ export default function SendLoved() {
     return (
             <>
                 <CardHeader pageLink="dashboard" />
-                <div className="bg-[#FFF] min-h-screen flex items-start  justify-center p-[12px]">
-                    <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+                <div className="bg-[#FFF] min-h-screen flex p-[12px] p-24-for-xl">
+                    <div className="bg-[#F8F9FB] flex flex-col items-center text-center w-full occasion-inner-div">
                         
                         {/* Top: Heading */}
                         
@@ -109,7 +109,7 @@ export default function SendLoved() {
                             {occasions.map((occasion) => (
                                 <label
                                 key={occasion}
-                                className={`occasionBtn relative flex items-center justify-between py-2 px-6 border rounded-full cursor-pointer ${
+                                className={`occasionBtn relative flex items-center justify-between lg:py-2 lg:px-6 border rounded-full cursor-pointer ${
                                     selectedOccasion === occasion
                                     ? "border-pink-500 text-pink-500 bg-[#FFFFFF]"
                                     : "border-gray-300"

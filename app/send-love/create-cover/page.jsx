@@ -230,13 +230,13 @@ const handleSaveImage = async () => {
     return (
         <>
             <CardHeader pageLink="dashboard" />
-            <div className="bg-[#FFF] min-h-screen flex flex-col justify-between items-center p-[12px] px-0">
-                <div className="bg-[#F8F9FB] container mx-auto flex flex-col items-center text-center fix-space pb-[48px]" style={{ borderRadius: 'var(--Spacing-5, 20px)' }}>
+            <div className="bg-[#FFF] min-h-screen flex flex-col justify-between p-[12px] p-24-for-xl">
+                <div className="bg-[#F8F9FB] flex flex-col items-center text-center fix-space pb-[48px] occasion-inner-div" >
                     <h1 className="text-[24px] font-bold text-[#202020] font-comfortaa leading-[1.4] pt-[48px] md:pt-[0px] pb-[48px] text-center">
                         Add a cover image
                     </h1>
 
-                    <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-start justify-center" style={{ maxWidth: '800px' }}>
+                    <div className="grid lg:grid-cols-2 gap-12 items-start justify-center" style={{ maxWidth: '800px' }}>
                         <div className="w-full lg:w-auto order-2 lg:order-1">
                             {/* For small screens, Image and Video buttons are side by side, Color button is below them */}
                             <div className="flex flex-col lg:flex-row gap-4 justify-center lg:justify-start pb-10">
