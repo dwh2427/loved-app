@@ -10,8 +10,6 @@ export default function CardHeader({ pageLink }) {
         <>
             <header className="flex items-center h-[64px] w-full px-6">
                 <div className="max-w-[1495px] mx-auto flex h-[74px] items-center justify-between w-full">
-                    
-                    {/* Left Side - Back Icon */}
                     <div className="flex items-center">
                        <Link href="/" className="flex gap-1">
                             <Image
