@@ -15,6 +15,7 @@ const CardHeader = dynamic(() => import("@/components/card-header/cardHeader"), 
 export default function SendLoved() {
     const router = useRouter();  // Initialize the useRouter hook
     const [selectedLabel, setSelectedLabel] = useState(''); // Store uploaded image data 
+    const [isEnabledContinue, setIsEnabledContinue] = useState(false);
       
     // Function to handle button click and navigate to /send-love
     const handleCreateCover = () => {
@@ -36,8 +37,10 @@ export default function SendLoved() {
         // If "Simple" is selected, setSelectedLabel to null, otherwise store the selected occasion
         if (occasion === "Simple") {
             setSelectedLabel('');
+            setIsEnabledContinue(true);
         } else {
             setSelectedLabel(occasion);
+            setIsEnabledContinue(true);
         }
     };
 
@@ -138,7 +141,7 @@ export default function SendLoved() {
 
                         {/* Continue Button */}
                         <button
-                        className="occasion-continue-button mb-4 justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200 hidden lg:flex"
+                        className={`occasion-continue-button mb-4 justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200 hidden lg:flex ${isEnabledContinue ? 'continue-active' : ''}`}
                         onClick={handleCreateCover}  // Call the function on button click
                         >
                         Continue
@@ -150,7 +153,7 @@ export default function SendLoved() {
 
                 {/* Bottom Section: Back and Continue Buttons to md */}
                 <div className="flex lg:hidden justify-center items-center gap-6 lg:pb-0 lg:pt-20 bottom-0 bottom-buttons z-50">
-                    <button className="flex occasion-continue-button mb-4 justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200" onClick={handleCreateCover} >
+                    <button className={`flex occasion-continue-button mb-4 justify-center items-center bg-[#FF318C] text-white rounded-full py-3 px-6 text-base font-semibold hover:bg-[#FF318C] transition duration-200 ${isEnabledContinue ? 'continue-active' : ''}`} onClick={handleCreateCover} >
                         Continue
                     </button>
                 </div>

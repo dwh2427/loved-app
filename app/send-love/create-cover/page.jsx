@@ -230,7 +230,7 @@ const handleSaveImage = async () => {
     return (
         <>
             <CardHeader pageLink="dashboard" />
-            <div className="bg-[#FFF] min-h-screen flex flex-col justify-between p-[12px] p-24-for-xl">
+            <div className="bg-[#FFF] min-h-screen flex flex-col justify-between items-center p-[12px] p-24-for-xl">
                 <div className="bg-[#F8F9FB] flex flex-col items-center text-center fix-space pb-[48px] occasion-inner-div" >
                     <h1 className="text-[24px] font-bold text-[#202020] font-comfortaa leading-[1.4] pt-[48px] md:pt-[0px] pb-[48px] text-center">
                         Add a cover image
