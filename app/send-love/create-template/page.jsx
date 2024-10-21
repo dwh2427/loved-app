@@ -29,9 +29,9 @@ export default function CreateTemplate() {
     const [otpModalOpen, setOtpModalOpen] = useState(false);
     const [closeLogin, setOnCloseLogin] = useState(false);
     const [closeOtp, setOnCloseOtp] = useState(false);
+    const [changeNumber, setChangeNumber] = useState(false);
     
-    
-    
+
     const [addTocartText, setAddTocartText] = useState("");
 
     useEffect(() => {
@@ -58,6 +58,13 @@ export default function CreateTemplate() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+    // useEffect(() => {
+    //     setOtpModalOpen(false); // Trig
+    //     setLoginModalOpen(true); 
+ 
+    // }, [changeNumber]);
+
 
     // Handle file input and display the image
     const handleFileChange = (e) => {
@@ -234,7 +241,7 @@ export default function CreateTemplate() {
             )}
 
             { otpModalOpen && (
-                <OtpModal isOpen={otpModalOpen} setOnCloseOtp={setOnCloseOtp} />
+                <OtpModal isOpen={otpModalOpen} setOnCloseOtp={setOnCloseOtp} setChangeNumber={setChangeNumber} />
             )}
         
             

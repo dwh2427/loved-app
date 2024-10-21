@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
-const Verifycode = () => {
+const Verifycode = ({setChangeNumber}) => {
   const [code, setCode] = useState(new Array(4).fill(""));
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
@@ -141,7 +141,7 @@ const Verifycode = () => {
       </h2>
 
       <small className="text-start code-sent-to inline-flex items-center space-x-1 show-min-1025">
-        <span>Code sent to +{phone}</span><small className="changText cursor-pointer"><a href="#">Change number?</a></small>
+        <span>Code sent to +{phone}</span><small className="changText cursor-pointer"><button onClick={setChangeNumber(true)}>Change number?</button></small>
       </small>
 
       <small className="text-start code-sent-to space-x-1 show-max-1024">

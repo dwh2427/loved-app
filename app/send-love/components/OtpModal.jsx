@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import Heart from "@/public/assets/img/heart.svg";
 
 
-export default function VerifyOtp({ isOpen, setOnCloseOtp }) {
+export default function VerifyOtp({ isOpen, setOnCloseOtp, setChangeNumber}) {
   const [pageLink, setPageLink] = useState("");
   
   return (
@@ -36,7 +36,7 @@ export default function VerifyOtp({ isOpen, setOnCloseOtp }) {
 
             {/* Form and Verify Code Section */}
             <div className="w-full lg:w-[530px]  lg:rounded-[16px] verify-code-section">
-              <Verifycode />
+              <Verifycode setChangeNumber={setChangeNumber} />
             </div>
           </div>
 
